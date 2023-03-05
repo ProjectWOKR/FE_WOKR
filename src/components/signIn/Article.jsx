@@ -20,7 +20,7 @@ export default function Article() {
   const [userInfo, setUserInfo] = useState({ email: '', password: '' });
   return (
     <>
-      <MainHeader>로그인12345678</MainHeader>
+      <MainHeader>로그인55555</MainHeader>
       <ArticleHeader>
         <div className='div1' />
         이메일
