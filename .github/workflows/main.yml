@@ -1,22 +1,23 @@
-name: cicd
-
+name: CICD
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
-
 jobs:
-  cicd:
+  build:
     runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: 'ap-northeast-2'
+
     steps:
-      - uses: actions/checkout@master
-      - run: npm install
-      - run: npm run build
-      - uses: jakejarvis/s3-sync-action@master
+      - name: Checkout source code.
+        uses: actions/checkout@master
+
+      - name: Upload binary to S3 bucket
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --exclude '*' --include 'index.html'
         env:
-          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: 'ap-northeast-2'
-          SOURCE_DIR: 'build'
+          AWS_S3_BUCKET: ${{ secrets.BUCKET_NAME }}
