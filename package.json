@@ -29,7 +29,7 @@
     "postinstall": "husky install",
     "format": "prettier --cache --write .",
     "lint": "eslint --cache .",
-    "deploy": "npm run build && aws s3 sync ./build s3://projectwokr --profile=projectwokr"
+    "deploy": "npm run build && aws s3 sync build/ s3://projectwokr --profile=projectwokr"
   },
   "eslintConfig": {
     "extends": [

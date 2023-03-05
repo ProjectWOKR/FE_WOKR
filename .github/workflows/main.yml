@@ -14,9 +14,6 @@ jobs:
       - uses: actions/checkout@master
       - run: npm install
       - run: npm run build
-      - run: npm run test
-      - run: echo SUCCESS
-      - name: deploy to s3
       - uses: jakejarvis/s3-sync-action@master
         with:
           args: --delete
