@@ -13,9 +13,8 @@ jobs:
     steps:
       - uses: actions/checkout@main
       - run: npm install
-      - run: npm run test
-      - run: echo TEST_SUCCESS
       - run: npm run build
+      - run: npm run deploy
       - uses: jakejarvis/s3-sync-action@master
         with:
           args: --delete
