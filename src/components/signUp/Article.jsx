@@ -31,7 +31,6 @@ export default function Article() {
   const OnChangeOptionValue = event => {
     const { name, value } = event.target;
     setUserInfo({ ...userInfo, [name]: value });
-    console.log(userInfo);
   };
   return (
     <>
