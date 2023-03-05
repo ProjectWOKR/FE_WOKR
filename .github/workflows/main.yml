@@ -1,9 +1,9 @@
-name: main
+name: cicd
 
 on:
   push:
     branches:
-      - master
+      - main
   workflow_dispatch:
 
 jobs:
