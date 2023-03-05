@@ -55,7 +55,12 @@ export default function Article() {
           }}
         />
       </InputBox>
-      <LoginBtn>로그인 하기</LoginBtn>
+      <LoginBtn
+        onClick={() => {
+          navigate('/mainpage');
+        }}>
+        로그인 하기
+      </LoginBtn>
       <HelpBox>
         <span className='p1'>비밀번호 찾기</span>
         <span className='p2' onClick={() => navigate('/signup')}>
