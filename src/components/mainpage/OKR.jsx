@@ -16,16 +16,14 @@ import OkrModal from '../global/globalModal/OkrModal';
 
 export default function OKR() {
   //모달 상태관리
-
   const [modalOn, setModalOn] = useState(false);
-  console.log(modalOn);
+  // console.log(modalOn);
   const onCloseModal = () => {
     setModalOn(!modalOn);
   };
 
   /** +버튼 누르면 OKR 생성하는 모달 띄움 */
   const createOKR = () => {
-    // console.log('눌림');
     setModalOn(!modalOn);
   };
 
