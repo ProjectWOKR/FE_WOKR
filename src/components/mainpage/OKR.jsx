@@ -1,6 +1,6 @@
 import React from 'react';
 import Potal from '../global/globalModal/Potal';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Kr from './Kr';
 import OkrObject from './OkrItem';
 import {
@@ -25,6 +25,15 @@ export default function OKR() {
   /** +버튼 누르면 OKR 생성하는 모달 띄움 */
   const createOKR = () => {
     setModalOn(!modalOn);
+  };
+
+  // 모달 외 클릭시 닫기위해 ref생성
+  const modalRef = useRef(null);
+  /** 모달위에 있는 배경이랑 ref가 같으면 modalOn을 false로 바꾸는 함수 */
+  const modalOutSideClick = e => {
+    if (modalRef.current === e.target) {
+      setModalOn(!modalOn);
+    }
   };
 
   return (
@@ -52,9 +61,8 @@ export default function OKR() {
         {modalOn && (
           <OkrModal
             onCloseModal={onCloseModal}
-            // modalIcon={modalIcon}
-            // alertMsg={alertMsg}
-            // onClickYes={onClickYes}
+            modalRef={modalRef}
+            modalOutSideClick={modalOutSideClick}
           />
         )}
       </Potal>
