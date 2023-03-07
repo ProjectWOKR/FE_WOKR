@@ -29,6 +29,9 @@ export const ArticleHeader = styled.div`
   .div3 {
     margin-top: 47px;
   }
+  .p1 {
+    font-size: 14px;
+  }
 `;
 
 export const InputBox = styled.div`
@@ -71,7 +74,8 @@ export const LoginBtn = styled.button`
   height: 67px;
   margin-left: 618px;
   margin-top: 63px;
-  background: #ff8336;
+  background-color: ${({ btnState }) =>
+    `${btnState === false ? '#9f9f9f' : '#FF8336'}`};
   border-radius: 12px;
   font-weight: 700;
   font-size: 23px;
