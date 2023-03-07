@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   MainHeader,
   ArticleHeader,
@@ -27,11 +27,71 @@ export default function Article() {
     team: '',
     position: '',
   });
+  const [emailValidation, setemailValidation] = useState('');
+  const [passwordValildation, setPasswordValidation] = useState('');
+  const [pwCheckValidation, setPwCheckValidation] = useState('');
+  const [btnState, setBtnState] = useState(false);
+  const [pwCheck, setPwCheck] = useState('');
+
+  // 이메일 유효성 검사
+  useEffect(() => {
+    let whelkValidation = userInfo.email.toString().includes('@');
+    let dotValidation = userInfo.email.toString().includes('.');
+    if (whelkValidation === true && dotValidation === true) {
+      setemailValidation('');
+    } else {
+      setemailValidation('@과 .을 포함한 이메일을 입력해주세요');
+    }
+  }, [userInfo]);
+
+  // 비밀번호 유효성 검사
+  useEffect(() => {
+    let pw = userInfo.password.toString();
+    let reg =
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,12}$/;
+    if (reg.test(pw) === false) {
+      setPasswordValidation(
+        '비밀번호를 8자리 이상 12자리 이하, 숫자/대소문자/특수문자를 포함하여 입력해주세요'
+      );
+      setBtnState(false);
+    } else if (pw.search(/\s/) !== -1) {
+      setPasswordValidation('공백없이 입력해주세요');
+    } else {
+      setPasswordValidation('');
+    }
+  }, [userInfo]);
+
+  // 비밀번호 확인 유효성 검사
+  useEffect(() => {
+    if (userInfo.password !== pwCheck && passwordValildation === '') {
+      setPwCheckValidation('비밀번호를 올바르게 입력해주세요.');
+    } else {
+      setPwCheckValidation('');
+    }
+  }, [userInfo, pwCheck, passwordValildation]);
+
+  // 버튼 상태 변경
+  useEffect(() => {
+    if (
+      emailValidation === '' &&
+      passwordValildation === '' &&
+      pwCheckValidation === ''
+    ) {
+      setBtnState(true);
+    } else {
+      setBtnState(false);
+    }
+  }, [emailValidation, passwordValildation, pwCheckValidation]);
 
   const OnChangeOptionValue = event => {
     const { name, value } = event.target;
     setUserInfo({ ...userInfo, [name]: value });
   };
+
+  const onChangePwCheck = event => {
+    setPwCheck(event.target.value);
+  };
+
   return (
     <>
       <MainHeader>회원가입</MainHeader>
@@ -49,6 +109,9 @@ export default function Article() {
           }}
         />
       </InputBox>
+      <ArticleHeader>
+        <p className='p1'>{emailValidation}</p>
+      </ArticleHeader>
       <ArticleHeader>
         <div className='div2' />
         비밀번호
@@ -70,12 +133,18 @@ export default function Article() {
         />
       </InputBox>
       <ArticleHeader>
+        <p className='p1'>{passwordValildation}</p>
+      </ArticleHeader>
+      <ArticleHeader>
         <div className='div2' />
         비밀번호 확인
       </ArticleHeader>
       <InputBox>
         <EmailInput
           type={pwCheckEyeState}
+          onChange={event => {
+            onChangePwCheck(event);
+          }}
           placeholder='비밀번호를 입력하세요'
         />
         <PwEye
@@ -85,6 +154,9 @@ export default function Article() {
           }}
         />
       </InputBox>
+      <ArticleHeader>
+        <p className='p1'>{pwCheckValidation}</p>
+      </ArticleHeader>
       <ArticleHeader>
         <div className='div3' />
         이름
@@ -144,6 +216,8 @@ export default function Article() {
         </Dropdown>
       </InputBox>
       <LoginBtn
+        btnState={btnState}
+        disabled={!btnState}
         onClick={() => {
           navigate('/');
         }}>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import {
   MainHeader,
@@ -18,10 +18,50 @@ export default function Article() {
   const navigate = useNavigate();
   const [pwEyeState, setPwEyeState] = useState('');
   const [userInfo, setUserInfo] = useState({ email: '', password: '' });
+  const [emailValidation, setemailValidation] = useState('');
+  const [passwordValildation, setPasswordValidation] = useState('');
+  const [btnState, setBtnState] = useState(false);
+
+  // 이메일 유효성 검사
+  useEffect(() => {
+    let whelkValidation = userInfo.email.toString().includes('@');
+    let dotValidation = userInfo.email.toString().includes('.');
+    if (whelkValidation === true && dotValidation === true) {
+      setemailValidation('');
+    } else {
+      setemailValidation('@과 .을 포함한 이메일을 입력해주세요');
+    }
+  }, [userInfo]);
+
+  // 비밀번호 유효성 검사
+  useEffect(() => {
+    let pw = userInfo.password.toString();
+    let reg =
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,12}$/;
+    if (reg.test(pw) === false) {
+      setPasswordValidation(
+        '비밀번호를 8자리 이상 12자리 이하, 숫자/대소문자/특수문자를 포함하여 입력해주세요'
+      );
+      setBtnState(false);
+    } else if (pw.search(/\s/) !== -1) {
+      setPasswordValidation('공백없이 입력해주세요');
+    } else {
+      setPasswordValidation('');
+    }
+  }, [userInfo]);
+
+  // 버튼 상태 변경
+  useEffect(() => {
+    if (emailValidation === '' && passwordValildation === '') {
+      setBtnState(true);
+    } else {
+      setBtnState(false);
+    }
+  }, [emailValidation, passwordValildation]);
 
   return (
     <>
-      <MainHeader>로그인 CICD 테스트12345</MainHeader>
+      <MainHeader>로그인</MainHeader>
       <ArticleHeader>
         <div className='div1' />
         이메일
@@ -36,6 +76,9 @@ export default function Article() {
           }}
         />
       </InputBox>
+      <ArticleHeader>
+        <p className='p1'>{emailValidation}</p>
+      </ArticleHeader>
       <ArticleHeader>
         <div className='div2' />
         비밀번호
@@ -56,7 +99,12 @@ export default function Article() {
           }}
         />
       </InputBox>
+      <ArticleHeader>
+        <p className='p1'>{passwordValildation}</p>
+      </ArticleHeader>
       <LoginBtn
+        btnState={btnState}
+        disabled={!btnState}
         onClick={() => {
           navigate('/mainpage');
         }}>
