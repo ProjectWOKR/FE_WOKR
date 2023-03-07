@@ -2,12 +2,14 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   margin-left: 50px;
-  margin-top: 20px;
+  margin-top: 10px;
+
+  background-color: red;
 `;
 
 export const HeaderBox = styled.div`
   display: flex;
-  flex-direction: row;
+  /* flex-direction: row; */
   justify-content: space-between;
 `;
 
@@ -29,4 +31,7 @@ export const Container2 = styled.div`
   height: 400px;
   margin-top: 10px;
   background-color: #d2d2d2;
+
+  padding: 10px 15px;
+  box-sizing: border-box;
 `;
