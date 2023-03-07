@@ -8,6 +8,8 @@ export const Container = styled.div`
 export const HeaderBox = styled.div`
   display: flex;
   justify-content: space-between;
+  height: 100px;
+  align-items: center;
 `;
 
 export const CreateBtn = styled.button`
@@ -67,6 +69,8 @@ export const OkrItem = styled.div`
       height: 100%;
       display: flex;
       justify-content: space-between;
+      padding: 0 10px;
+      box-sizing: border-box;
 
       .name_date {
         display: flex;
@@ -117,6 +121,8 @@ export const OkrItem = styled.div`
       justify-content: space-between;
       font-size: 18px;
       font-weight: bold;
+      padding: 0 10px;
+      box-sizing: border-box;
     }
     .percent {
       display: flex;
@@ -125,7 +131,6 @@ export const OkrItem = styled.div`
         margin-right: 30px;
       }
       p {
-        /* margin-right: 50px; */
         font-size: 18px;
         font-weight: bold;
       }
