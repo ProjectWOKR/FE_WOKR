@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ModalBackground, ModalBox } from './modal.styled';
+import { ModalBackground, OkrModalBox } from './modal.styled';
 
 import DatePicker from 'react-multi-date-picker';
 import transition from 'react-element-popper/animations/transition';
@@ -43,15 +43,22 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
     };
   }, []);
 
+  const plusKr = () => {
+    console.log('눌림');
+    alert('추가됨');
+  };
+
   return (
     <div>
       <ModalBackground ref={modalRef} onClick={modalOutSideClick} />
-      <ModalBox>
+      <OkrModalBox>
         <form>
           <input type='text' placeholder='목표' />
           <div className='object'>
             <input type='text' placeholder='핵심결과' />
-            <div className='plus'>+</div>
+            <div className='plus' onClick={plusKr}>
+              +
+            </div>
           </div>
           {/* <input type='text' />
           <input type='text' /> */}
@@ -62,6 +69,7 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
               months={months}
               weekDays={weekDays}
               format={format}
+              placeholder='시작 기간'
               animations={[
                 opacity(),
                 transition({
@@ -81,6 +89,7 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
               months={months}
               weekDays={weekDays}
               format={format}
+              placeholder='종료 기간'
               animations={[
                 opacity(),
                 transition({
@@ -105,7 +114,7 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
             <button className='submit'>저장</button>
           </div>
         </form>
-      </ModalBox>
+      </OkrModalBox>
     </div>
   );
 };

@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   margin-left: 50px;
-  margin-top: 10px;
 `;
 
 export const HeaderBox = styled.div`
@@ -38,7 +37,6 @@ export const Container2 = styled.div`
 export const OkrContainer = styled.div`
   width: 100%;
   height: 100%;
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -62,7 +60,7 @@ export const OkrItem = styled.div`
       text-align: center;
       font-size: 35px;
       font-weight: bold;
-      background-color: red;
+      background-color: #ff5757;
     }
     .detail {
       width: calc(100% - 80px);
@@ -111,7 +109,7 @@ export const OkrItem = styled.div`
       text-align: center;
       font-size: 35px;
       font-weight: bold;
-      background-color: red;
+      background-color: #ff5757;
     }
     .detail {
       width: calc(100% - 80px);
