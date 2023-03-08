@@ -6,18 +6,7 @@ const Modal = children => {
   return (
     <>
       <ModalBackground />
-      <ModalBox>
-        {/* <input type='text' />
-        <input type='text' />
-        <input type='text' />
-        <input type='text' />
-        <div>
-          <div className='date'></div>
-          <select name='color'>
-            <option value=''></option>
-          </select>
-        </div> */}
-      </ModalBox>
+      <ModalBox></ModalBox>
     </>
   );
 };
