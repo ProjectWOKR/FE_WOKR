@@ -15,6 +15,8 @@ import {
 import OkrModal from '../global/globalModal/OkrModal';
 import { NotHave } from '../global/globalModal/modal.styled';
 
+import eye from '../../assets/closedEye.png';
+
 export default function OKR() {
   //모달 상태관리
   const [okrModalOn, setOkrModalOn] = useState(false);
@@ -45,7 +47,7 @@ export default function OKR() {
       </HeaderBox>
       <Container2>
         <OkrContainer>
-          {/* <OkrItem>
+          <OkrItem>
             <OkrObject />
             <Kr />
             <Kr />
@@ -55,8 +57,8 @@ export default function OKR() {
             <Kr />
             <Kr />
             <Kr />
-          </OkrItem> */}
-          {!OkrItem ? (
+          </OkrItem>
+          {/* {!OkrItem ? (
             <>
               <OkrItem>
                 <OkrObject />
@@ -75,7 +77,7 @@ export default function OKR() {
               <h2>설정된 OKR이 없습니다.</h2>
               <button onClick={createOKR}>추가하기</button>
             </NotHave>
-          )}
+          )} */}
         </OkrContainer>
       </Container2>
       <Potal>

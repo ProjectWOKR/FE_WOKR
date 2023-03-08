@@ -40,16 +40,16 @@ export default function ToDo() {
       </HeaderBox>
       <Container2>
         <TodoContainer>
-          {/* <StTodoItem>
-            <TodoItem />
-          </StTodoItem>
           <StTodoItem>
             <TodoItem />
           </StTodoItem>
           <StTodoItem>
             <TodoItem />
-          </StTodoItem> */}
-          {!TodoItem ? (
+          </StTodoItem>
+          <StTodoItem>
+            <TodoItem />
+          </StTodoItem>
+          {/* {!TodoItem ? (
             <StTodoItem>
               <TodoItem />
             </StTodoItem>
@@ -58,7 +58,7 @@ export default function ToDo() {
               <h2>설정된 To-Do가 없습니다.</h2>
               <button onClick={createTodo}>추가하기</button>
             </NotHave>
-          )}
+          )} */}
         </TodoContainer>
       </Container2>
       <Potal>
