@@ -32,6 +32,14 @@ export const ArticleHeader = styled.div`
   .p1 {
     font-size: 14px;
   }
+  .p2 {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 550px;
+    color: red;
+  }
 `;
 
 export const InputBox = styled.div`

@@ -13,6 +13,8 @@ import Eye from '../../sources/passwordEye.png';
 import { useNavigate } from 'react-router-dom';
 import { onPwEyeState } from '../global/pwEyeState';
 import { OnChange } from '../global/onChange';
+import { useMutation } from '@tanstack/react-query';
+import { SignIn } from '../../apis/apiPOST';
 
 export default function Article() {
   const navigate = useNavigate();
@@ -21,6 +23,7 @@ export default function Article() {
   const [emailValidation, setemailValidation] = useState('');
   const [passwordValildation, setPasswordValidation] = useState('');
   const [btnState, setBtnState] = useState(false);
+  const [signValidation, setSignValidation] = useState('');
 
   // 이메일 유효성 검사
   useEffect(() => {
@@ -58,6 +61,16 @@ export default function Article() {
       setBtnState(false);
     }
   }, [emailValidation, passwordValildation]);
+
+  const { mutate: signInMutate } = useMutation(SignIn, {
+    onSuccess: response => {
+      localStorage.setItem('accesstoken', response.accessToken);
+      navigate('/mainpage');
+    },
+    onError: () => {
+      setSignValidation('아이디 또는 비밀번호가 올바르지 않습니다.');
+    },
+  });
 
   return (
     <>
@@ -106,10 +119,13 @@ export default function Article() {
         btnState={btnState}
         disabled={!btnState}
         onClick={() => {
-          navigate('/mainpage');
+          signInMutate(userInfo);
         }}>
         로그인 하기
       </LoginBtn>
+      <ArticleHeader>
+        <p className='p2'>{signValidation}</p>
+      </ArticleHeader>
       <HelpBox>
         <span className='p1'>비밀번호 찾기</span>
         <span className='p2' onClick={() => navigate('/signup')}>

@@ -14,24 +14,27 @@ import Eye from '../../sources/passwordEye.png';
 import { useNavigate } from 'react-router-dom';
 import { onPwEyeState } from '../global/pwEyeState';
 import { OnChange } from '../global/onChange';
+import { useMutation } from '@tanstack/react-query';
+import { SignUp } from '../../apis/apiPOST';
 
 export default function Article() {
+  console.log(process.env.REACT_APP_API);
   const navigate = useNavigate();
   const [pwEyeState, setPwEyeState] = useState('');
   const [pwCheckEyeState, setPwCheckEyeState] = useState('');
   const [userInfo, setUserInfo] = useState({
     email: '',
     password: '',
+    confirmpassword: '',
     name: '',
-    company: '',
-    team: '',
-    position: '',
+    team: '0',
+    teamposition: '0',
   });
   const [emailValidation, setemailValidation] = useState('');
   const [passwordValildation, setPasswordValidation] = useState('');
   const [pwCheckValidation, setPwCheckValidation] = useState('');
+  const [signValidation, setSignValidation] = useState('');
   const [btnState, setBtnState] = useState(false);
-  const [pwCheck, setPwCheck] = useState('');
 
   // 이메일 유효성 검사
   useEffect(() => {
@@ -63,34 +66,48 @@ export default function Article() {
 
   // 비밀번호 확인 유효성 검사
   useEffect(() => {
-    if (userInfo.password !== pwCheck && passwordValildation === '') {
+    if (
+      userInfo.password !== userInfo.confirmpassword &&
+      passwordValildation === ''
+    ) {
       setPwCheckValidation('비밀번호를 올바르게 입력해주세요.');
     } else {
       setPwCheckValidation('');
     }
-  }, [userInfo, pwCheck, passwordValildation]);
+  }, [userInfo, passwordValildation]);
 
   // 버튼 상태 변경
   useEffect(() => {
     if (
       emailValidation === '' &&
       passwordValildation === '' &&
-      pwCheckValidation === ''
+      pwCheckValidation === '' &&
+      userInfo.name !== '' &&
+      userInfo.team !== '0' &&
+      userInfo.teamposition !== '0'
     ) {
       setBtnState(true);
     } else {
       setBtnState(false);
     }
-  }, [emailValidation, passwordValildation, pwCheckValidation]);
+  }, [userInfo, emailValidation, passwordValildation, pwCheckValidation]);
 
   const OnChangeOptionValue = event => {
     const { name, value } = event.target;
     setUserInfo({ ...userInfo, [name]: value });
+    console.log(name);
+    console.log(value);
+    console.log(userInfo);
   };
 
-  const onChangePwCheck = event => {
-    setPwCheck(event.target.value);
-  };
+  const { mutate: signUpMutate } = useMutation(SignUp, {
+    onSuccess: response => {
+      navigate('/signUp');
+    },
+    onError: () => {
+      setSignValidation('이미 존재하는 이메일입니다.');
+    },
+  });
 
   return (
     <>
@@ -142,10 +159,11 @@ export default function Article() {
       <InputBox>
         <EmailInput
           type={pwCheckEyeState}
-          onChange={event => {
-            onChangePwCheck(event);
-          }}
+          name='confirmpassword'
           placeholder='비밀번호를 입력하세요'
+          onChange={event => {
+            OnChange(event, userInfo, setUserInfo);
+          }}
         />
         <PwEye
           src={Eye}
@@ -170,21 +188,7 @@ export default function Article() {
           placeholder='이름를 입력하세요'
         />
       </InputBox>
-      <ArticleHeader>
-        <div className='div2' />
-        회사명
-      </ArticleHeader>
-      <InputBox>
-        <Dropdown
-          name='company'
-          onChange={event => {
-            OnChangeOptionValue(event, 'company');
-          }}>
-          <option value=''>회사명을 선택하세요</option>
-          <option value='A회사'>A회사</option>
-          <option value='B회사'>B회사</option>
-        </Dropdown>
-      </InputBox>
+
       <ArticleHeader>
         <div className='div2' />팀
       </ArticleHeader>
@@ -194,10 +198,10 @@ export default function Article() {
           onChange={event => {
             OnChangeOptionValue(event, 'company');
           }}>
-          <option value='1'>팀을 선택하세요</option>
-          <option value='2'>기획팀</option>
-          <option value='3'>개발팀</option>
-          <option value='4'>인사팀</option>
+          <option value='0'>팀을 선택하세요</option>
+          <option value='기획팀'>기획팀</option>
+          <option value='개발팀'>개발팀</option>
+          <option value='인사팀'>인사팀</option>
         </Dropdown>
       </InputBox>
       <ArticleHeader>
@@ -206,23 +210,26 @@ export default function Article() {
       </ArticleHeader>
       <InputBox>
         <Dropdown
-          name='position'
+          name='teamposition'
           onChange={event => {
             OnChangeOptionValue(event, 'company');
           }}>
-          <option value='1'>직급을 선택하세요</option>
-          <option value='2'>팀장</option>
-          <option value='3'>팀원</option>
+          <option value='0'>직급을 선택하세요</option>
+          <option value='팀장'>팀장</option>
+          <option value='팀원'>팀원</option>
         </Dropdown>
       </InputBox>
       <LoginBtn
         btnState={btnState}
         disabled={!btnState}
         onClick={() => {
-          navigate('/');
+          signUpMutate(userInfo);
         }}>
         <p>회원가입</p>
       </LoginBtn>
+      <ArticleHeader>
+        <p className='p2'>{signValidation}</p>
+      </ArticleHeader>
       <SignUpBtnMargin />
     </>
   );
