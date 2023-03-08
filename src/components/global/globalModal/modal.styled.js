@@ -20,6 +20,7 @@ export const OkrModalBox = styled.div`
   background-color: #fff;
   border-radius: 15px;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  /* box-shadow: var(--box-shadow); */
   z-index: 21;
   text-align: center;
   padding: 20px 30px;

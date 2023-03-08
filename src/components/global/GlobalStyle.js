@@ -9,9 +9,21 @@ const GlobalStyle = createGlobalStyle`
 } */
 
 :root {
-  body{}
+  --bg-color : #ffffff;
+  --main-color : #FF8336;
+  --main-bg : #BEBEBE;
+  --box-shadow : 0px 3px 15px rgba(124,124,124,0.25) ;
+  --btn-shadow : 0px 2px 5px rgba(210, 210, 210, 0.70);
+  --main-border-color : rgba(232,232,232,1);
+  body{
+    background-color: var(--bg-color);
+  }
   *{
-   
+    /* font-size: 1rem;
+    margin: 0; 
+    padding: 0;
+    box-sizing: border-box;
+    word-break: break-all; */
   }
   ul li, ol li {
     list-style: none;
