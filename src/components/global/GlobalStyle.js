@@ -18,14 +18,13 @@ const GlobalStyle = createGlobalStyle`
   }
   input{
     border: none;
-    border: 1px solid #ccc;
     box-sizing: border-box;
     padding: 0 15px;
     margin: 0;
     outline: none;
     height: 40px;
     border-radius: 8px;
-    cursor: pointer;
+    cursor: text;
   }
   button{
     /* background-color: #fff;
