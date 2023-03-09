@@ -6,9 +6,9 @@ import {
   EmailInput,
   PwEye,
   LoginBtn,
-  Dropdown,
   SignUpBtnMargin,
-  DropBox,
+  SignWrap,
+  SignContainer,
 } from '../../styles/sign.styled';
 import Eye from '../../assets/eye.png';
 import CloseEye from '../../assets/closedEye.png';
@@ -16,6 +16,8 @@ import { OnChange } from '../global/onChange';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { SignUp } from '../../apis/apiPOST';
+import TeamDropDown from '../../components/global/globaldropdown/TeamDropDown.jsx';
+import TeamPosiDropDown from '../global/globaldropdown/TeamPosiDropDown';
 
 const Test = () => {
   const navigate = useNavigate();
@@ -61,9 +63,11 @@ const Test = () => {
 
   /**드롭박스 값 추출해오는 함수 */
   const OnChangeOptionValue = e => {
+    console.log('dd');
     const { name, value } = e.target;
     setUserInfo({ ...userInfo, [name]: value });
   };
+  // console.log(userInfo);
 
   // 이메일
   useEffect(() => {
@@ -131,6 +135,8 @@ const Test = () => {
     }
   }, [userInfo.team]);
 
+  // console.log(userInfo.team);
+
   // 직급 확인
   useEffect(() => {
     if (userInfo.teamposition === '') {
@@ -177,12 +183,9 @@ const Test = () => {
   });
 
   return (
-    <>
+    <SignWrap>
       <MainHeader>회원가입</MainHeader>
-      <ArticleHeader>
-        <div className='div1' />
-        이메일
-      </ArticleHeader>
+      <ArticleHeader>이메일</ArticleHeader>
       <InputBox>
         <EmailInput
           type='text'
@@ -200,11 +203,7 @@ const Test = () => {
           </p>
         )}
       </ArticleHeader>
-      <ArticleHeader>
-        <div className='div2' />
-        비밀번호
-      </ArticleHeader>
-
+      <ArticleHeader>비밀번호</ArticleHeader>
       <InputBox>
         <EmailInput
           type={pwEyeOpen ? 'text' : 'password'}
@@ -227,10 +226,7 @@ const Test = () => {
           </p>
         )}
       </ArticleHeader>
-      <ArticleHeader>
-        <div className='div2' />
-        비밀번호 확인
-      </ArticleHeader>
+      <ArticleHeader>비밀번호 확인</ArticleHeader>
       <InputBox>
         <EmailInput
           type={pwEyeOpen ? 'text' : 'password'}
@@ -253,10 +249,7 @@ const Test = () => {
           </p>
         )}
       </ArticleHeader>
-      <ArticleHeader>
-        <div className='div3' />
-        이름
-      </ArticleHeader>
+      <ArticleHeader>이름</ArticleHeader>
       <InputBox>
         <EmailInput
           name='name'
@@ -273,21 +266,8 @@ const Test = () => {
           </p>
         )}
       </ArticleHeader>
-      <ArticleHeader>
-        <div className='div2' />팀
-      </ArticleHeader>
-      <DropBox>
-        <Dropdown
-          name='team'
-          onChange={event => {
-            OnChangeOptionValue(event, 'company');
-          }}>
-          <option value='0'>팀을 선택하세요</option>
-          <option value='기획팀'>기획팀</option>
-          <option value='개발팀'>개발팀</option>
-          <option value='인사팀'>인사팀</option>
-        </Dropdown>
-      </DropBox>
+      <ArticleHeader>팀</ArticleHeader>
+      <TeamDropDown></TeamDropDown>
       <ArticleHeader>
         {teamValidation ? null : (
           <p className='p1' style={{ color: 'red' }}>
@@ -295,21 +275,12 @@ const Test = () => {
           </p>
         )}
       </ArticleHeader>
-      <ArticleHeader>
-        <div className='div2' />
-        직급
-      </ArticleHeader>
-      <DropBox>
-        <Dropdown
-          name='teamposition'
-          onChange={event => {
-            OnChangeOptionValue(event, 'company');
-          }}>
-          <option value='0'>직급을 선택하세요</option>
-          <option value='팀장'>팀장</option>
-          <option value='팀원'>팀원</option>
-        </Dropdown>
-      </DropBox>
+      <ArticleHeader>직급</ArticleHeader>
+      <TeamPosiDropDown
+        OnChangeOptionValue={OnChangeOptionValue}
+        setUserInfo={setUserInfo}
+        userInfo={userInfo}
+      />
       <ArticleHeader>
         {teamPosiValidation ? null : (
           <p className='p1' style={{ color: 'red' }}>
@@ -323,13 +294,10 @@ const Test = () => {
         onClick={() => {
           signUpMutate(userInfo);
         }}>
-        <p>회원가입</p>
+        회원가입
       </LoginBtn>
-      {/* <ArticleHeader>
-        <p className='p1'>{signValidation}</p>
-      </ArticleHeader> */}
       <SignUpBtnMargin />
-    </>
+    </SignWrap>
   );
 };
 
