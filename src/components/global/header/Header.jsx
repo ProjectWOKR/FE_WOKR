@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout, LogoImg, Logout } from './header.styled';
-import Logo from '../../../sources/WORK.png';
+import Logo from '../../../assets/WORK.png';
 import { useNavigate } from 'react-router-dom';
 
 export default function Header() {

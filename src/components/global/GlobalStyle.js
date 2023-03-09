@@ -15,6 +15,8 @@ const GlobalStyle = createGlobalStyle`
   --box-shadow : 0px 3px 15px rgba(124,124,124,0.25) ;
   --btn-shadow : 0px 2px 5px rgba(210, 210, 210, 0.70);
   --main-border-color : rgba(232,232,232,1);
+  --input-hover : 1.5px solid #FF8336;
+  --input-focus : drop-shadow(0px 3px 10px #FF8336);
   body{
     background-color: var(--bg-color);
   }
@@ -29,13 +31,12 @@ const GlobalStyle = createGlobalStyle`
     list-style: none;
   }
   input{
-    border: none;
+    /* border: none; */
     box-sizing: border-box;
     padding: 0 15px;
     margin: 0;
     outline: none;
-    height: 40px;
-    border-radius: 8px;
+    /* border-radius: 8px; */
     cursor: text;
   }
   button{

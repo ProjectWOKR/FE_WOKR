@@ -16,11 +16,11 @@ import { useNavigate } from 'react-router-dom';
 export default function Mainpage() {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (localStorage.accesstoken === undefined) {
-      navigate('/');
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (localStorage.accesstoken === undefined) {
+  //     navigate('/');
+  //   }
+  // }, []);
 
   const tabState = useRecoilValue(TabState);
   return (
