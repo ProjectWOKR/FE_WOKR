@@ -32,8 +32,8 @@ const Test = () => {
     password: '',
     confirmpassword: '',
     name: '',
-    team: '',
-    teamposition: '',
+    // team: '',
+    // teamposition: '',
   });
 
   // 정규식
@@ -277,7 +277,7 @@ const Test = () => {
       </ArticleHeader>
       <ArticleHeader>직급</ArticleHeader>
       <TeamPosiDropDown
-        OnChangeOptionValue={OnChangeOptionValue}
+        // OnChangeOptionValue={OnChangeOptionValue}
         setUserInfo={setUserInfo}
         userInfo={userInfo}
       />

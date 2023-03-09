@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { DropDownItem, useDropDown, teamPosi } from './dropdown';
 import { DropdownContainer, DropIcon } from './dropDown.styled';
 import Arrow from '../../../assets/dropdownArrow.png';
@@ -12,15 +12,17 @@ const TeamPosiDropDown = ({ OnChangeOptionValue, setUserInfo, userInfo }) => {
 
   const name1 = teamPosi.name;
   // console.log(name);
-  console.log(userInfo);
+  // console.log(userInfo);
 
-  console.log(finalValue);
+  // console.log(finalValue);
 
-  const setData = () => {
-    if (finalValue !== '직급을 선택하세요') {
-      setUserInfo({ ...userInfo, teamposition: finalValue });
-    }
-  };
+  // const setData = e => {
+  //   // if (finalValue !== '직급을 선택하세요') {
+  //   // }
+  //   console.log(e);
+  //   // setUserInfo({ ...userInfo, teamposition: finalValue });
+  // };
+  // console.log(setData);
 
   return (
     <DropdownContainer ref={dropDownRef}>
@@ -28,7 +30,7 @@ const TeamPosiDropDown = ({ OnChangeOptionValue, setUserInfo, userInfo }) => {
         type='button'
         value={finalValue}
         onClick={() => setIsOpen(!isOpen)}
-        onChange={setData}
+        // onChange={onChange}
       />
       <DropIcon src={Arrow} />
       {isOpen && (
@@ -40,6 +42,9 @@ const TeamPosiDropDown = ({ OnChangeOptionValue, setUserInfo, userInfo }) => {
               setIsOpen={setIsOpen}
               isOpen={isOpen}
               setFinalValue={setFinalValue}
+              userInfo={userInfo}
+              setUserInfo={setUserInfo}
+              finalValue={finalValue}
             />
           ))}
         </ul>
