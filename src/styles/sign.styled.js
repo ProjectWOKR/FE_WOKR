@@ -22,6 +22,7 @@ export const ArticleHeader = styled.div`
   cursor: default;
   .div1 {
     margin-top: 67px;
+    background-color: pink;
   }
   .div2 {
     margin-top: 28px;
@@ -47,21 +48,27 @@ export const InputBox = styled.div`
   margin-top: 10px;
   width: 684px;
   height: 67px;
-  border: 1.5px solid #d9d9d9;
-  border-radius: 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 `;
 
 export const EmailInput = styled.input`
-  width: 500px;
-  border: none;
-  margin-left: 22px;
   outline: none;
   font-weight: 500;
   font-size: 21px;
-  line-height: 29px;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  border: 1.5px solid #d9d9d9;
+  :hover {
+    border: var(--input-hover);
+  }
+  :focus {
+    filter: var(--input-focus);
+  }
+
   ::placeholder {
     font-weight: 500;
     font-size: 21px;
@@ -71,7 +78,8 @@ export const EmailInput = styled.input`
 `;
 
 export const PwEye = styled.img`
-  margin-right: 25px;
+  position: absolute;
+  right: 25px;
   width: 36px;
   height: 27.5px;
   cursor: pointer;
@@ -114,11 +122,30 @@ export const HelpBox = styled.div`
     margin-left: 55px;
   }
 `;
-
+export const DropBox = styled.div`
+  margin-left: 617px;
+  margin-top: 10px;
+  width: 684px;
+  height: 67px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  border: 1.5px solid #d9d9d9;
+  border-radius: 12px;
+  /* background-color: pink; */
+  :hover {
+    border: var(--input-hover);
+  }
+  :focus {
+    filter: var(--input-focus);
+  }
+`;
 export const Dropdown = styled.select`
-  border: none;
   font-weight: 500;
   font-size: 21px;
   line-height: 29px;
   margin-left: 22px;
+  border: none;
+  outline: none;
 `;

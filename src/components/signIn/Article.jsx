@@ -1,5 +1,10 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import Eye from '../../assets/eye.png';
+import CloseEye from '../../assets/closedEye.png';
+import { OnChange } from '../global/onChange';
+import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
+import { SignIn } from '../../apis/apiPOST';
 import {
   MainHeader,
   ArticleHeader,
@@ -9,59 +14,70 @@ import {
   LoginBtn,
   HelpBox,
 } from '../../styles/sign.styled';
-import Eye from '../../sources/passwordEye.png';
-import { useNavigate } from 'react-router-dom';
-import { onPwEyeState } from '../global/pwEyeState';
-import { OnChange } from '../global/onChange';
-import { useMutation } from '@tanstack/react-query';
-import { SignIn } from '../../apis/apiPOST';
 
-export default function Article() {
+const Test = () => {
   const navigate = useNavigate();
-  const [pwEyeState, setPwEyeState] = useState('');
+  // 눈 아이콘
+  const [pwEyeOpen, setPwEyeOpen] = useState(false);
+  const eyeState = () => {
+    setPwEyeOpen(!pwEyeOpen);
+  };
+
   const [userInfo, setUserInfo] = useState({ email: '', password: '' });
-  const [emailValidation, setemailValidation] = useState('');
-  const [passwordValildation, setPasswordValidation] = useState('');
-  const [btnState, setBtnState] = useState(false);
-  const [signValidation, setSignValidation] = useState('');
 
-  // 이메일 유효성 검사
+  // 유효성 검사
+  const [emailValidation, setemailValidation] = useState(false);
+  const [passwordValildation, setPasswordValidation] = useState(false);
+
+  // 정규식
+  const email = userInfo.email;
+  const regemail =
+    /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+  const pw = userInfo.password;
+  let regpw =
+    /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,12}$/;
+
+  // 에러메시지
+  const [emailMessage, setEmailMessage] = useState('');
+  const [pwMessage, setPwMessage] = useState('');
+
   useEffect(() => {
-    let whelkValidation = userInfo.email.toString().includes('@');
-    let dotValidation = userInfo.email.toString().includes('.');
-    if (whelkValidation === true && dotValidation === true) {
-      setemailValidation('');
+    if (email === '') {
+      setEmailMessage('이메일을 입력해주세요.');
+      setemailValidation(false);
+    } else if (regemail.test(email) === false) {
+      setEmailMessage('이메일 양식으로 입력해주세요.');
+      setemailValidation(false);
     } else {
-      setemailValidation('@과 .을 포함한 이메일을 입력해주세요');
+      setEmailMessage('올바른 이메일 형식이에요');
+      setemailValidation(true);
     }
-  }, [userInfo]);
+  }, [email]);
 
-  // 비밀번호 유효성 검사
   useEffect(() => {
-    let pw = userInfo.password.toString();
-    let reg =
-      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,12}$/;
-    if (reg.test(pw) === false) {
-      setPasswordValidation(
-        '비밀번호를 8자리 이상 12자리 이하, 숫자/대소문자/특수문자를 포함하여 입력해주세요'
+    if (pw === '') {
+      setPwMessage('비밀번호를 입력해주세요.');
+      setPasswordValidation(false);
+    } else if (regpw.test(pw) === false) {
+      setPwMessage(
+        '비밀번호를 8자리 이상 12자리 이하, 숫자/대소문자/특수문자를 포함하여 입력해주세요.'
       );
-      setBtnState(false);
-    } else if (pw.search(/\s/) !== -1) {
-      setPasswordValidation('공백없이 입력해주세요');
+      setPasswordValidation(false);
     } else {
-      setPasswordValidation('');
+      setPwMessage('올바른 비밀번호 형식이에요');
+      setPasswordValidation(true);
     }
-  }, [userInfo]);
+  }, [pw]);
 
-  // 버튼 상태 변경
+  //버튼 상태
+  const [btnState, setBtnState] = useState(false);
   useEffect(() => {
-    if (emailValidation === '' && passwordValildation === '') {
+    if (emailValidation && passwordValildation) {
       setBtnState(true);
-    } else {
-      setBtnState(false);
     }
   }, [emailValidation, passwordValildation]);
 
+  const [signValidation, setSignValidation] = useState('');
   const { mutate: signInMutate } = useMutation(SignIn, {
     onSuccess: response => {
       localStorage.setItem('accesstoken', response.accessToken);
@@ -69,6 +85,7 @@ export default function Article() {
     },
     onError: () => {
       setSignValidation('아이디 또는 비밀번호가 올바르지 않습니다.');
+      alert(`${signValidation}`);
     },
   });
 
@@ -81,7 +98,7 @@ export default function Article() {
       </ArticleHeader>
       <InputBox>
         <EmailInput
-          type='email'
+          type='text'
           name='email'
           placeholder='이메일을 입력하세요'
           onChange={event => {
@@ -90,42 +107,48 @@ export default function Article() {
         />
       </InputBox>
       <ArticleHeader>
-        <p className='p1'>{emailValidation}</p>
+        {emailValidation ? null : (
+          <p className='p1' style={{ color: 'red' }}>
+            {emailMessage}
+          </p>
+        )}
       </ArticleHeader>
       <ArticleHeader>
         <div className='div2' />
         비밀번호
       </ArticleHeader>
+
       <InputBox>
         <EmailInput
-          type={pwEyeState}
+          type={pwEyeOpen ? 'text' : 'password'}
           name='password'
           placeholder='비밀번호를 입력하세요'
           onChange={event => {
             OnChange(event, userInfo, setUserInfo);
           }}
         />
-        <PwEye
-          src={Eye}
-          onClick={() => {
-            onPwEyeState(pwEyeState, setPwEyeState);
-          }}
-        />
+        {pwEyeOpen ? (
+          <PwEye src={Eye} onClick={eyeState} />
+        ) : (
+          <PwEye src={CloseEye} onClick={eyeState} />
+        )}
       </InputBox>
       <ArticleHeader>
-        <p className='p1'>{passwordValildation}</p>
+        {passwordValildation ? null : (
+          <p className='p1' style={{ color: 'red' }}>
+            {pwMessage}
+          </p>
+        )}
       </ArticleHeader>
+
       <LoginBtn
         btnState={btnState}
         disabled={!btnState}
         onClick={() => {
           signInMutate(userInfo);
         }}>
-        로그인 하기
+        <p>로그인 하기</p>
       </LoginBtn>
-      <ArticleHeader>
-        <p className='p2'>{signValidation}</p>
-      </ArticleHeader>
       <HelpBox>
         <span className='p1'>비밀번호 찾기</span>
         <span className='p2' onClick={() => navigate('/signup')}>
@@ -134,4 +157,6 @@ export default function Article() {
       </HelpBox>
     </>
   );
-}
+};
+
+export default Test;
