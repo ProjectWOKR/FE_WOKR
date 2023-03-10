@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { NotHave } from '../global/globalModal/modal.styled';
-import Potal from '../global/globalModal/Potal';
-import TodoModal from '../global/globalModal/TodoModal';
+import { NotHave } from '../global/globalmodal/modal.styled';
+import Potal from '../global/globalmodal/Potal';
+import TodoModal from '../global/globalmodal/TodoModal';
 import {
   Container,
   Container2,

@@ -1,5 +1,5 @@
 import React from 'react';
-import Potal from '../global/globalModal/Potal';
+import Potal from '../global/globalmodal/Potal';
 import { useState, useRef } from 'react';
 import Kr from './Kr';
 import OkrObject from './OkrItem';
@@ -12,8 +12,8 @@ import {
   OkrContainer,
   OkrItem,
 } from './OKR.styled';
-import OkrModal from '../global/globalModal/OkrModal';
-import { NotHave } from '../global/globalModal/modal.styled';
+import OkrModal from '../global/globalmodal/OkrModal';
+import { NotHave } from '../global/globalmodal/modal.styled';
 
 import eye from '../../assets/closedEye.png';
 
@@ -47,7 +47,7 @@ export default function OKR() {
       </HeaderBox>
       <Container2>
         <OkrContainer>
-          <OkrItem>
+          {/* <OkrItem>
             <OkrObject />
             <Kr />
             <Kr />
@@ -57,8 +57,8 @@ export default function OKR() {
             <Kr />
             <Kr />
             <Kr />
-          </OkrItem>
-          {/* {!OkrItem ? (
+          </OkrItem> */}
+          {!OkrItem ? (
             <>
               <OkrItem>
                 <OkrObject />
@@ -77,7 +77,7 @@ export default function OKR() {
               <h2>설정된 OKR이 없습니다.</h2>
               <button onClick={createOKR}>추가하기</button>
             </NotHave>
-          )} */}
+          )}
         </OkrContainer>
       </Container2>
       <Potal>

@@ -1,0 +1,24 @@
+const theme = {
+  main_color: '#FF8336',
+  font_color: '#2b2b2b',
+
+  flex_column_between:
+    'display: flex; flex-direction:column; align-items: center; justify-content: space-between; ',
+  colum_center:
+    'display:flex; flex-direction:column; align-items : center; justify-content: center;',
+
+  flex_row_between:
+    'display: flex; align-items: center; justify-content: space-between;',
+
+  flex_row: 'display: flex; align-items: center;',
+  row_center: 'display:flex; align-items : center; justify-content: center;',
+  // max_width: `max-width:768px`,
+
+  // border_box: `box-sizing:border-box;`,
+
+  // mobile: `(max-width: 639px)`,
+  // tablet: `(max-width: 767px)`,
+  // desktop: `(min-width: 1023px)`,
+};
+
+export default theme;
