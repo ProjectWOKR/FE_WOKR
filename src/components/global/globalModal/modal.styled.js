@@ -6,149 +6,131 @@ export const ModalBackground = styled.div`
   position: fixed;
   left: 0;
   top: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.15);
   z-index: 20;
 `;
 
-export const OkrModalBox = styled.div`
+export const ModalBox = styled.div`
   position: fixed;
   /* height: 470px; */
-  width: 750px;
+  width: 71.5rem;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;
   border-radius: 15px;
-  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   /* box-shadow: var(--box-shadow); */
   z-index: 21;
   text-align: center;
   padding: 20px 30px;
+  border: var(--main-border);
+  padding: 1.3rem;
   form {
-    input {
-      width: 100%;
-    }
-    .object {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 10px;
-      margin-bottom: 10px;
-      input {
-        width: 92%;
-      }
-      .plus {
-        background-color: #a6a6a6;
-        width: 40px;
-        height: 40px;
-        font-size: 25px;
-        font-weight: bold;
-        border-radius: 50%;
-        color: #fff;
-      }
-    }
-    .date {
+    position: relative;
+    .header {
       display: flex;
       align-items: center;
-      font-size: 20px;
-      height: 40px;
-    }
-    select {
-      width: 100px;
-      height: 40px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 0 10px;
-      outline: none;
-    }
-    .btnBox {
-      width: 400px;
-      height: 35px;
-      margin: 30px auto 15px auto;
-      button {
-        width: 60px;
-        height: 100%;
-        margin: 0 8px;
-        border: 1px solid #ccc;
-        font-weight: bold;
-        background-color: #fff;
-        border-radius: 8px;
-      }
-      .submit {
-        background-color: #a6a6a6;
-        color: #fff;
+      justify-content: center;
+      margin-bottom: 1.3rem;
+      img {
+        position: absolute;
+        top: 1.6rem;
+        right: 3.4rem;
+        cursor: pointer;
       }
     }
   }
 `;
 
-export const TodoModalBox = styled.div`
-  position: fixed;
-  /* height: 470px; */
-  width: 750px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  border-radius: 15px;
-  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-  z-index: 21;
-  text-align: center;
-  padding: 20px 30px;
-  form {
+export const OKRBox = styled.div`
+  width: 100%;
+  background-color: #f8f8f8;
+  border-radius: 7px;
+  padding: 1.3rem 0;
+
+  .object {
+  }
+  & .itemBox {
+    width: 100%;
+    height: 4rem;
+    padding: 0.9rem 1.4rem;
+    display: flex;
+    align-items: center;
     /* background-color: pink; */
-    .selectBox {
-      width: 100%;
-      /* background-color: skyblue; */
-      height: 40px;
-      margin-bottom: 10px;
-      select {
-        width: 100%;
-        height: 100%;
-        border-radius: 12px;
-        outline: none;
-        border-color: #ccc;
-      }
-    }
     input {
       width: 100%;
-      margin-bottom: 10px;
+      height: 4rem;
+      /* border: var(--main-border); */
+      border: 1.5px solid rgba(232, 232, 232, 1);
+      border-radius: 7px;
+      :hover {
+        border: 1.5px solid var(--main-color);
+      }
+      ::placeholder {
+        color: var(--placeholder-color);
+      }
     }
-    .date {
+    img {
+      margin-right: 1.3rem;
+    }
+  }
+
+  .kr {
+    margin: 0.9rem 0;
+    justify-content: space-between;
+    /* background-color: pink; */
+    .plus {
+      margin-left: 0.8rem;
+    }
+  }
+
+  .date {
+    /* background-color: skyblue; */
+    .dateBox {
+      width: 44rem;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      input {
-        margin: 0;
-      }
-      select {
-        width: 100px;
-        height: 40px;
-        border-radius: 8px;
-        border-color: #ccc;
-        outline: none;
-        text-align: center;
+      justify-content: start;
+      margin-right: 2.1rem;
+      background-color: pink;
+      .start {
+        background-color: yellow;
+        display: flex;
+        .rmdp-container {
+          border-radius: 7px 0 0 7px !important;
+        }
+        .triangle {
+          border-top: 20px solid transparent;
+          border-left: 42px solid pink;
+          border-bottom: 20px solid transparent;
+          /* background-color: skyblue; */
+        }
       }
     }
-    .btnBox {
-      width: 400px;
-      height: 35px;
-      margin: 30px auto 15px auto;
-      button {
-        width: 60px;
-        height: 100%;
-        margin: 0 8px;
-        border: 1px solid #ccc;
-        font-weight: bold;
-        background-color: #fff;
-        border-radius: 8px;
-      }
-      .submit {
-        background-color: #a6a6a6;
-        color: #fff;
-      }
+    .colorBox {
+      display: flex;
     }
   }
 `;
+
+// export const TodoModalBox = styled.div`
+//   position: fixed;
+//   /* height: 470px; */
+//   width: 71.5rem;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+//   background-color: #fff;
+//   border-radius: 15px;
+//   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+//   /* box-shadow: var(--box-shadow); */
+//   z-index: 21;
+//   text-align: center;
+//   padding: 20px 30px;
+//   border: var(--main-border);
+//   form {
+//   }
+// `;
 
 export const NotHave = styled.div`
   width: 100%;
@@ -157,14 +139,29 @@ export const NotHave = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  button {
-    width: 150px;
-    height: 40px;
-    border-radius: 12px;
-    background-color: #bbb;
-    border: none;
-    color: #fff;
-    font-size: 18px;
-    font-weight: bold;
+  color: var(--main-color);
+  font-size: 2rem;
+  font-weight: 500;
+  .btnFlex {
+    ${props => props.theme.row_center}
+    gap: 1rem;
+    width: 17rem;
+    height: 4.7rem;
+    border-radius: 4px;
+    border: 1px solid #e8e8e8;
+    background-color: #fff;
+    padding: 0 1rem;
+    color: #000;
+    font-size: 1.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    img {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+  & :hover {
+    border-color: var(--main-color);
   }
 `;

@@ -12,10 +12,5 @@ export default function SignUp() {
       navigate('/mainpage');
     }
   }, []);
-  return (
-    <>
-      <Header />
-      <Article />
-    </>
-  );
+  return <Article />;
 }

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ModalBackground, TodoModalBox } from './modal.styled';
+import { ModalBackground, ModalBox } from './modal.styled';
 
 import DatePicker from 'react-multi-date-picker';
 import transition from 'react-element-popper/animations/transition';
@@ -47,7 +47,7 @@ const TodoModal = ({
   return (
     <div>
       <ModalBackground ref={todoModalRef} onClick={todoModalOutSideClick} />
-      <TodoModalBox>
+      <ModalBox>
         <form>
           <div className='selectBox'>
             <select name='result'>
@@ -94,7 +94,7 @@ const TodoModal = ({
             <button className='submit'>저장</button>
           </div>
         </form>
-      </TodoModalBox>
+      </ModalBox>
     </div>
   );
 };

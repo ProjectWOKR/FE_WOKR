@@ -1,3 +1,3 @@
 import { atom } from 'recoil';
 
-export const TabState = atom({ key: 'tabstate', default: '0' });
+export const NowState = atom({ key: 'now', default: '0' });

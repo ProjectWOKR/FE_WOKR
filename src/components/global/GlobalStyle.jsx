@@ -18,7 +18,9 @@ const GlobalStyle = createGlobalStyle`
   --text-color : #2b2b2b;
   --default-bolder : 1.5px solid #d9d9d9;
   --main-border-color : rgba(232,232,232,1);
-  --placeholder-color : #d2d2d2;
+  --main-box-shadow : 0px 4px 4px rgba(0,0,0,0.25)
+  --main-border : 1.5px solid rgb(232, 232, 232);
+  --placeholder-color : #BEBEBE ;
 
   --box-shadow : 0px 3px 15px rgba(124,124,124,0.25) ;
   --btn-shadow : 0px 2px 5px rgba(210, 210, 210, 0.70);

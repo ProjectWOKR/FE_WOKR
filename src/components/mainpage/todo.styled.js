@@ -1,43 +1,55 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  margin-left: 50px;
+  width: 75.8rem;
+  height: 56rem;
+  border: 1px solid rgba(232, 232, 232, 1);
+  margin-left: 3.9rem;
 `;
 
 export const HeaderBox = styled.div`
   display: flex;
   justify-content: space-between;
-  height: 100px;
+  height: 5.2rem;
   align-items: center;
-`;
-
-export const CreateBtn = styled.button`
-  width: 50px;
-  height: 50px;
-  border-radius: 45px;
-  font-size: 35px;
-  cursor: pointer;
+  padding: 1.3rem 3rem;
+  .btnBox {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    div {
+      cursor: pointer;
+    }
+  }
 `;
 
 export const Header = styled.p`
-  font-size: 50px;
-  font-weight: 900;
+  font-size: 2rem;
+  font-weight: 500;
+  color: #4b4b4b;
+  margin: 0;
 `;
 
-export const Container2 = styled.div`
-  width: 700px;
-  height: 400px;
-  margin-top: 10px;
-  background-color: #efeaea;
-  padding: 10px 15px 10px 15px;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-`;
+// export const Container2 = styled.div`
+//   width: 700px;
+//   height: 400px;
+//   margin-top: 10px;
+//   background-color: #efeaea;
+//   padding: 10px 15px 10px 15px;
+//   box-sizing: border-box;
+//   border: 1px solid #ccc;
+// `;
 
 export const TodoContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
+  margin: 0 auto;
+  width: 73.4rem;
+  height: 48.3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  border: 1px solid #e8e8e8;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
 export const StTodoItem = styled.div`

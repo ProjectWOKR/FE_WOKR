@@ -1,28 +1,5 @@
 import { useState, useEffect } from 'react';
 
-export const DropDownItem = ({
-  value,
-  setFinalValue,
-  setIsOpen,
-  isOpen,
-  setUserInfo,
-  userInfo,
-  finalValue,
-}) => {
-  const ValueClick = () => {
-    setFinalValue(value);
-    setIsOpen(!isOpen);
-
-    console.log(isOpen);
-    console.log(value);
-    console.log('valueClick - finalValue :', finalValue);
-
-    setUserInfo({ ...userInfo, teamposition: value });
-  };
-
-  return <li onClick={ValueClick}>{value}</li>;
-};
-
 export const useDropDown = (ref, initialState) => {
   const [isOpen, setIsOpen] = useState(initialState);
 
