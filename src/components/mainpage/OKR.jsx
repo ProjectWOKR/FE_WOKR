@@ -1,5 +1,5 @@
 import React from 'react';
-import Potal from '../global/globalmodal/Potal';
+import Potal from '../global/globalmodal/Potal.jsx';
 import { useState, useRef } from 'react';
 import Kr from './Kr';
 import OkrObject from './OkrItem';

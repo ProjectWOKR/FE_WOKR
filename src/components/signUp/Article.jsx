@@ -32,8 +32,8 @@ const Test = () => {
     password: '',
     confirmpassword: '',
     name: '',
-    // team: '',
-    // teamposition: '',
+    team: '',
+    teamposition: '',
   });
 
   // 정규식
