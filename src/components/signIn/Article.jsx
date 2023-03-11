@@ -13,6 +13,7 @@ import {
   PwEye,
   LoginBtn,
   HelpBox,
+  SignWrap,
 } from '../../styles/sign.styled';
 
 const Test = () => {
@@ -90,7 +91,7 @@ const Test = () => {
   });
 
   return (
-    <>
+    <SignWrap>
       <MainHeader>로그인</MainHeader>
       <ArticleHeader>
         <div className='div1' />
@@ -147,15 +148,13 @@ const Test = () => {
         onClick={() => {
           signInMutate(userInfo);
         }}>
-        <p>로그인 하기</p>
+        로그인 하기
       </LoginBtn>
       <HelpBox>
-        <span className='p1'>비밀번호 찾기</span>
-        <span className='p2' onClick={() => navigate('/signup')}>
-          회원가입
-        </span>
+        <span>비밀번호 찾기</span>
+        <span onClick={() => navigate('/signup')}>회원가입</span>
       </HelpBox>
-    </>
+    </SignWrap>
   );
 };
 

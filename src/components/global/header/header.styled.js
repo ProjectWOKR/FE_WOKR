@@ -6,6 +6,14 @@ export const Layout = styled.div`
   ${props => props.theme.flex_row_between}
   padding: 0 5rem;
   /* background-color: skyblue; */
+  div {
+    display: flex;
+    align-items: center;
+    gap: 3.4rem;
+  }
+  img {
+    cursor: pointer;
+  }
 `;
 
 export const LogoImg = styled.img`

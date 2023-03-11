@@ -89,19 +89,20 @@ export const SignUpBtnMargin = styled.div`
 `;
 
 export const HelpBox = styled.div`
-  display: flex;
+  /* display: flex;
   align-items: center;
-  justify-content: center;
-  /* margin-top: 50px; */
+  justify-content: center; */
+  ${props => props.theme.row_center}
+  gap: 50px;
   font-weight: 400;
-  font-size: 21px;
-  line-height: 29px;
+  font-size: 2.1rem;
+  height: 3rem;
+  /* line-height: 29px; */
   width: 100%;
   color: #7c7c7c;
-  cursor: pointer;
-  .p1 {
-  }
-  .p2 {
+  /* background-color: pink; */
+  span {
+    cursor: pointer;
   }
 `;
 export const DropBox = styled.div`

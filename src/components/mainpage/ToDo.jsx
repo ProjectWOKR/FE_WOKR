@@ -12,6 +12,10 @@ import {
   StTodoItem,
 } from './todo.styled';
 import TodoItem from './TodoItem';
+
+import plus from '../../assets/plus.png';
+import more from '../../assets/more.png';
+
 export default function ToDo() {
   //모달 상태관리
   const [todoModalOn, setTodoModalOn] = useState(false);
@@ -36,11 +40,18 @@ export default function ToDo() {
     <Container>
       <HeaderBox>
         <Header>To-do</Header>
-        <CreateBtn onClick={createTodo}>+</CreateBtn>
+        <div className='btnBox'>
+          <div onClick={createTodo}>
+            <img src={plus} alt='' />
+          </div>
+          <div>
+            <img src={more} alt='' />
+          </div>
+        </div>
       </HeaderBox>
-      <Container2>
-        <TodoContainer>
-          <StTodoItem>
+
+      <TodoContainer>
+        {/* <StTodoItem>
             <TodoItem />
           </StTodoItem>
           <StTodoItem>
@@ -48,19 +59,22 @@ export default function ToDo() {
           </StTodoItem>
           <StTodoItem>
             <TodoItem />
+          </StTodoItem> */}
+        {!TodoItem ? (
+          <StTodoItem>
+            <TodoItem />
           </StTodoItem>
-          {/* {!TodoItem ? (
-            <StTodoItem>
-              <TodoItem />
-            </StTodoItem>
-          ) : (
-            <NotHave>
-              <h2>설정된 To-Do가 없습니다.</h2>
-              <button onClick={createTodo}>추가하기</button>
-            </NotHave>
-          )} */}
-        </TodoContainer>
-      </Container2>
+        ) : (
+          <NotHave>
+            <h2>설정된 To Do 없습니다.</h2>
+            <div className='btnFlex' onClick={createTodo}>
+              <img src={plus} alt='' />
+              <div>To Do추가</div>
+            </div>
+          </NotHave>
+        )}
+      </TodoContainer>
+
       <Potal>
         {todoModalOn && (
           <TodoModal

@@ -1,10 +1,16 @@
 import React, { useEffect } from 'react';
-import { ModalBackground, OkrModalBox } from './modal.styled';
+import { ModalBackground, ModalBox, OKRBox } from './modal.styled';
 
 import DatePicker from 'react-multi-date-picker';
 import transition from 'react-element-popper/animations/transition';
 import opacity from 'react-element-popper/animations/opacity';
-import InputIcon from 'react-multi-date-picker/components/input_icon';
+// import InputIcon from 'react-multi-date-picker/components/input_icon';
+
+import close from '../../../assets/close.png';
+import object from '../../../assets/object.png';
+import kr from '../../../assets/kr.png';
+import notFillPlus from '../../../assets/notfillPlus.png';
+import calender from '../../../assets/calender.png';
 
 const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   // console.log(modalOutSideClick);
@@ -44,25 +50,92 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   }, []);
 
   const plusKr = () => {
-    console.log('눌림');
+    // console.log('눌림');
     alert('추가됨');
   };
 
   return (
     <div>
       <ModalBackground ref={modalRef} onClick={modalOutSideClick} />
-      <OkrModalBox>
+      <ModalBox>
         <form>
-          <input type='text' placeholder='목표' />
+          <div className='header'>
+            <h2>OKR 추가 - 목표, 기간, 색상</h2>
+            <img src={close} alt='' />
+          </div>
+
+          <OKRBox>
+            <div className='object itemBox'>
+              <img src={object} alt='' />
+              <input type='text' placeholder='목표' />
+            </div>
+
+            <div className='kr itemBox'>
+              <img src={kr} alt='' />
+              <input type='text' placeholder='핵심결과' />
+              <img src={notFillPlus} alt='' className='plus' />
+            </div>
+
+            <div className='date itemBox'>
+              <img src={calender} alt='' />
+              <div className='dateBox'>
+                <div className='start'>
+                  <DatePicker
+                    className='startDate'
+                    // style={{ width: '300px', marginRight: '10px' }}
+                    // render={<InputIcon />}
+                    months={months}
+                    weekDays={weekDays}
+                    format={format}
+                    placeholder='시작일'
+                    animations={[
+                      opacity(),
+                      transition({
+                        from: 40,
+                        transition:
+                          'all 400ms cubic-bezier(0.335, 0.010, 0.030, 1.360)',
+                      }),
+                    ]}
+                  />
+                  <div className='triangle'></div>
+                </div>
+                <div className='end'>
+                  <DatePicker
+                    className='endDate'
+                    // style={{
+                    //   width: '300px',
+                    //   marginLeft: '10px',
+                    //   marginRight: '20px',
+                    // }}
+                    months={months}
+                    weekDays={weekDays}
+                    format={format}
+                    placeholder='종료일'
+                    animations={[
+                      opacity(),
+                      transition({
+                        from: 40,
+                        transition:
+                          'all 400ms cubic-bezier(0.335, 0.010, 0.030, 1.360)',
+                      }),
+                    ]}
+                  />
+                </div>
+              </div>
+              <div className='colorBox'>
+                <div className='color'></div>
+                <div className='colorSelect'></div>
+              </div>
+            </div>
+          </OKRBox>
+          {/* <input type='text' placeholder='목표' />
           <div className='object'>
             <input type='text' placeholder='핵심결과' />
             <div className='plus' onClick={plusKr}>
               +
             </div>
-          </div>
-          {/* <input type='text' />
-          <input type='text' /> */}
-          <div className='date'>
+          </div> */}
+          {/* <div className='date'>
             <DatePicker
               style={{ width: '300px', marginRight: '10px' }}
               // render={<InputIcon />}
@@ -108,13 +181,13 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
               <option value='yellow'>노랑</option>
               <option value='green'>초록</option>
             </select>
-          </div>
+          </div> */}
           <div className='btnBox'>
             <button onClick={onCloseModal}>취소</button>
             <button className='submit'>저장</button>
           </div>
         </form>
-      </OkrModalBox>
+      </ModalBox>
     </div>
   );
 };

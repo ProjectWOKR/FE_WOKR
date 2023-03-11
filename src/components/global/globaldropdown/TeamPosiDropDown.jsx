@@ -1,17 +1,32 @@
-import { useState, useRef, useEffect } from 'react';
-import { DropDownItem, useDropDown, teamPosi } from './dropdown';
+import { useState, useRef } from 'react';
+import { useDropDown, teamPosi } from './dropdown';
 import { DropdownContainer, DropIcon } from './dropDown.styled';
 import Arrow from '../../../assets/dropdownArrow.png';
 
-const TeamPosiDropDown = ({ OnChangeOptionValue, setUserInfo, userInfo }) => {
-  // console.log(OnChangeOptionValue);
+const TeamPosiDropDown = ({ setUserInfo, userInfo }) => {
   // 드롭다운 상태
   const dropDownRef = useRef(null);
   const [isOpen, setIsOpen] = useDropDown(dropDownRef, false);
 
   const [finalValue, setFinalValue] = useState('');
 
-  console.log(userInfo);
+  const DropDownItem = ({
+    value,
+    setFinalValue,
+    setIsOpen,
+    isOpen,
+    setUserInfo,
+    userInfo,
+  }) => {
+    const ValueClick = () => {
+      setFinalValue(value);
+      setIsOpen(!isOpen);
+
+      setUserInfo({ ...userInfo, teamposition: value });
+    };
+
+    return <li onClick={ValueClick}>{value}</li>;
+  };
 
   return (
     <DropdownContainer ref={dropDownRef} className='container'>
@@ -34,7 +49,6 @@ const TeamPosiDropDown = ({ OnChangeOptionValue, setUserInfo, userInfo }) => {
               setFinalValue={setFinalValue}
               userInfo={userInfo}
               setUserInfo={setUserInfo}
-              finalValue={finalValue}
             />
           ))}
         </ul>

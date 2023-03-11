@@ -15,7 +15,8 @@ import {
 import OkrModal from '../global/globalmodal/OkrModal';
 import { NotHave } from '../global/globalmodal/modal.styled';
 
-import eye from '../../assets/closedEye.png';
+import plus from '../../assets/plus.png';
+import more from '../../assets/more.png';
 
 export default function OKR() {
   //모달 상태관리
@@ -43,11 +44,18 @@ export default function OKR() {
     <Container>
       <HeaderBox>
         <Header>팀 OKR</Header>
-        <CreateBtn onClick={createOKR}>+</CreateBtn>
+        <div className='btnBox'>
+          <div onClick={createOKR}>
+            <img src={plus} alt='' />
+          </div>
+          <div>
+            <img src={more} alt='' />
+          </div>
+        </div>
       </HeaderBox>
-      <Container2>
-        <OkrContainer>
-          {/* <OkrItem>
+      {/* <Container2> */}
+      <OkrContainer>
+        {/* <OkrItem>
             <OkrObject />
             <Kr />
             <Kr />
@@ -58,28 +66,31 @@ export default function OKR() {
             <Kr />
             <Kr />
           </OkrItem> */}
-          {!OkrItem ? (
-            <>
-              <OkrItem>
-                <OkrObject />
-                <Kr />
-                <Kr />
-              </OkrItem>
-              <OkrItem>
-                <OkrObject />
-                <Kr />
-                <Kr />
-                <Kr />
-              </OkrItem>
-            </>
-          ) : (
-            <NotHave>
-              <h2>설정된 OKR이 없습니다.</h2>
-              <button onClick={createOKR}>추가하기</button>
-            </NotHave>
-          )}
-        </OkrContainer>
-      </Container2>
+        {!OkrItem ? (
+          <>
+            <OkrItem>
+              <OkrObject />
+              <Kr />
+              <Kr />
+            </OkrItem>
+            <OkrItem>
+              <OkrObject />
+              <Kr />
+              <Kr />
+              <Kr />
+            </OkrItem>
+          </>
+        ) : (
+          <NotHave>
+            <h2>설정된 OKR이 없습니다.</h2>
+            <div className='btnFlex' onClick={createOKR}>
+              <img src={plus} alt='' />
+              <div>OKR추가</div>
+            </div>
+          </NotHave>
+        )}
+      </OkrContainer>
+      {/* </Container2> */}
       <Potal>
         {okrModalOn && (
           <OkrModal

@@ -8,7 +8,6 @@ import {
   LoginBtn,
   SignUpBtnMargin,
   SignWrap,
-  SignContainer,
 } from '../../styles/sign.styled';
 import Eye from '../../assets/eye.png';
 import CloseEye from '../../assets/closedEye.png';
@@ -149,6 +148,7 @@ const Test = () => {
   }, [userInfo.teamposition]);
 
   //버튼 상태
+  //userInfo의 값으로 확인해야함 버그 찾음
   const [btnState, setBtnState] = useState(false);
   useEffect(() => {
     if (
@@ -174,7 +174,8 @@ const Test = () => {
   const [signValidation, setSignValidation] = useState('');
   const { mutate: signUpMutate } = useMutation(SignUp, {
     onSuccess: response => {
-      navigate('/signUp');
+      // navigate('/signUp');
+      navigate('/mainpage');
     },
     onError: () => {
       setSignValidation('이미 존재하는 이메일입니다.');
@@ -267,7 +268,7 @@ const Test = () => {
         )}
       </ArticleHeader>
       <ArticleHeader>팀</ArticleHeader>
-      <TeamDropDown></TeamDropDown>
+      <TeamDropDown setUserInfo={setUserInfo} userInfo={userInfo} />
       <ArticleHeader>
         {teamValidation ? null : (
           <p className='p1' style={{ color: 'red' }}>
