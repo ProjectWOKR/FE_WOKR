@@ -10,17 +10,15 @@ export const DropDownItem = ({
   finalValue,
 }) => {
   const ValueClick = () => {
-    console.log(value);
-    setIsOpen(!isOpen);
     setFinalValue(value);
+    setIsOpen(!isOpen);
+
+    console.log(isOpen);
+    console.log(value);
+    console.log('valueClick - finalValue :', finalValue);
+
     setUserInfo({ ...userInfo, teamposition: value });
-    console.log('눌림');
   };
-  useEffect(() => {
-    // setFinalValue(value);
-    // setUserInfo({ ...userInfo, teamposition: value });
-    console.log(userInfo);
-  }, [value]);
 
   return <li onClick={ValueClick}>{value}</li>;
 };

@@ -8,29 +8,19 @@ const TeamPosiDropDown = ({ OnChangeOptionValue, setUserInfo, userInfo }) => {
   // 드롭다운 상태
   const dropDownRef = useRef(null);
   const [isOpen, setIsOpen] = useDropDown(dropDownRef, false);
-  const [finalValue, setFinalValue] = useState(teamPosi.defaultValue);
 
-  const name1 = teamPosi.name;
-  // console.log(name);
-  // console.log(userInfo);
+  const [finalValue, setFinalValue] = useState('');
 
-  // console.log(finalValue);
-
-  // const setData = e => {
-  //   // if (finalValue !== '직급을 선택하세요') {
-  //   // }
-  //   console.log(e);
-  //   // setUserInfo({ ...userInfo, teamposition: finalValue });
-  // };
-  // console.log(setData);
+  console.log(userInfo);
 
   return (
-    <DropdownContainer ref={dropDownRef}>
+    <DropdownContainer ref={dropDownRef} className='container'>
       <input
-        type='button'
+        type='text'
         value={finalValue}
+        readOnly={true}
         onClick={() => setIsOpen(!isOpen)}
-        // onChange={onChange}
+        placeholder='직급을 선택하세요'
       />
       <DropIcon src={Arrow} />
       {isOpen && (
