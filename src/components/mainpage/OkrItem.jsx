@@ -3,9 +3,9 @@ import React from 'react';
 const OkrObject = ({ objectiveData }) => {
   return (
     <>
-      {objectiveData?.map(data => {
+      {objectiveData?.map((data, index) => {
         return (
-          <div className='object'>
+          <div className='object' key={index}>
             <div className='title'>O</div>
             <div className='detail'>
               <div className='name_date'>

@@ -64,73 +64,89 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
     color: '',
   });
 
-  // console.log(objInfo);
-
   const [startDate, setStartDate] = useState({ format: 'MM/DD/YYYY' });
-  // console.log(startDate);
   const [endDate, setEndDate] = useState({ format: 'MM/DD/YYYY' });
 
   //startDate 변환 함수
   const convertStart = (date, format = startDate.format) => {
     let object = { date, format };
     setStartDate(new DateObject(object).format());
-
     setObjInfo({ ...objInfo, startdate: new DateObject(object).format() });
-    // console.log('start :', startDate);
   };
 
   //endDate 변환 함수
   const convertEnd = (date, format = startDate.format) => {
     let object = { date, format };
-
     setEndDate(new DateObject(object).format());
-    // console.log('end :', endDate);
-
     setObjInfo({ ...objInfo, enddate: new DateObject(object).format() });
   };
 
+  // Object가 있는지 여부
   const [haveObj, setHaveObj] = useState(false);
 
-  const onSubmit = () => {
-    // setObjInfo({ ...objInfo, enddate: endDate, startdate: startDate });
-    setHaveObj(!haveObj);
-    // console.log(objInfo);
-    creObjectiveMutate(objInfo);
-  };
-
+  const [popUp, setPopUp] = useState(false);
   // console.log(objInfo);
-  //팝업
-  // const PopUp = () => {};
-  // useEffect(() => {
-  //   // console.log(objInfo.objective.length);
 
-  //   const throwError = async () => {
-  //     if (objInfo.objective.length >= 5) {
-  //       setTimeout(() => {
-  //         return (
-  //           <Potal>
-  //             <ErrorPopUp>30자 이상 입력할 수 없습니다.</ErrorPopUp>;
-  //           </Potal>
-  //         );
-  //       }, 1000);
-  //     }
-  //   };
-  //   throwError();
-  // }, [objInfo]);
+  const createO = () => {
+    creObjectiveMutate(objInfo);
+    setHaveObj(true);
 
-  // return <div></div>
+    // const startd = new Date(objInfo.startdate);
+    // const endd = new Date(objInfo.enddate);
 
-  // if (objInfo.objective.length >= 30) {
-  // }
+    // if (objInfo.objective === '') {
+    //   setPopUp(true)
+    //   console.log('목표 작성해');
+    //   return <ErrorPopUp>O 목표를 작성해 주세요.</ErrorPopUp>;
+    // } else if (objInfo.objective.length >= 30) {
+    //   console.log('30보다 적게해');
+    //   return <ErrorPopUp>30자 이상 입력할 수 없습니다.</ErrorPopUp>;
+    // } else if (objInfo.startdate === '') {
+    //   console.log('시작 날짜 입력해');
+    //   return <ErrorPopUp>시작일을 선택해 주세요.</ErrorPopUp>;
+    // } else if (objInfo.startdate !== '' && objInfo.enddate === '') {
+    //   console.log('종료 날짜 입력해');
+    //   return <ErrorPopUp>종료일을 선택해 주세요.</ErrorPopUp>;
+    // } else if (endd < startd) {
+    //   console.log('빠르게 설정할 수 없어');
+    //   return (
+    //     <ErrorPopUp>종료일은 시작일보다 빠르게 설정할 수 없습니다.</ErrorPopUp>
+    //   );
+    // } else if (objInfo.color === '') {
+    //   console.log('색은 기본값');
+    //   setObjInfo({ ...objInfo, color: '#9B9B9B' });
+    // } else {
+    //   setPopUp(false);
+    // }
+  };
 
   const { mutate: creObjectiveMutate } = useMutation(CreateObjective, {
     onSuccess: response => {
       console.log(response);
+      // setHaveObj(true);
     },
     onError: response => {
       console.log(response);
     },
   });
+
+  const [creKr, setCreKr] = useState({
+    keyResultDate: '',
+  });
+
+  const [title, setTitle] = useState([]);
+  const onChange = e => {
+    const { name, value } = e.target;
+    setTitle({ ...title, [name]: value });
+  };
+
+  const array = Object.values(title);
+
+  const createKr = () => {
+    setCreKr({ ...creKr, keyResultDate: array });
+    console.log(creKr);
+    // console.log('kr 저장');
+  };
 
   return (
     <>
@@ -142,38 +158,48 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
               <h2>OKR 추가 - 핵심 결과</h2>
               <img src={close} alt='' onClick={onCloseModal} />
             </div>
-
             <OKRBox>
               <div className='kr itemBox'>
                 <img src={kr} alt='' />
-                <input type='text' placeholder='핵심결과' className='input' />
+                <input
+                  type='text'
+                  placeholder='핵심결과를 작성하세요.'
+                  className='input'
+                  name='one'
+                  onChange={onChange}
+                />
               </div>
 
               <div className='kr itemBox'>
                 <img src={kr} alt='' />
-                <input type='text' placeholder='핵심결과' className='input' />
+                <input
+                  type='text'
+                  placeholder='핵심결과를 작성하세요.'
+                  className='input'
+                  name='two'
+                  onChange={onChange}
+                />
               </div>
 
               <div className='kr itemBox'>
                 <img src={kr} alt='' />
-                <input type='text' placeholder='핵심결과' className='input' />
+                <input
+                  type='text'
+                  placeholder='핵심결과를 작성하세요.'
+                  className='input'
+                  name='three'
+                  onChange={onChange}
+                />
               </div>
             </OKRBox>
-
             <div className='btnBox'>
               <button onClick={onCloseModal} className='cancel'>
                 취소
               </button>
-              <button onClick={onSubmit} className='next'>
+              <button onClick={createKr} className='next'>
                 저장
               </button>
-              <ErrorPopUp>30자 이상 입력할 수 없습니다.</ErrorPopUp>;
             </div>
-            {/* {objInfo.objective.length >= 5 ? (
-              <Potal>
-                <ErrorPopUp>30자 이상 입력할 수 없습니다.</ErrorPopUp>;
-              </Potal>
-            ) : null} */}
           </>
         ) : (
           <>
@@ -181,7 +207,6 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
               <h2>OKR 추가 - 목표, 기간, 색상</h2>
               <img src={close} alt='' onClick={onCloseModal} />
             </div>
-
             <OKRBox>
               <div className='object itemBox'>
                 <img src={object} alt='' />
@@ -252,15 +277,15 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
                 </div>
               </div>
             </OKRBox>
-
             <div className='btnBox'>
               <button onClick={onCloseModal} className='cancel'>
                 취소
               </button>
-              <button onClick={onSubmit} className='next'>
+              <button onClick={createO} className='next'>
                 다음
               </button>
             </div>
+            {popUp ? <ErrorPopUp /> : null}
           </>
         )}
       </ModalBox>

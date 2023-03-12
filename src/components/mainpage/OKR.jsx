@@ -10,7 +10,7 @@ import {
   OkrContainer,
   OkrItem,
 } from './OKR.styled';
-import OkrModal from '../global/globalModal/OkrModal';
+import OkrModal from '../global/globalModal/OkrModal.jsx';
 import { NotHave } from '../global/globalModal/modal.styled';
 
 import plus from '../../assets/plus.png';
