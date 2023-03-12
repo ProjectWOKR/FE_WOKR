@@ -18,6 +18,9 @@ import ColorDropDown from '../globaldropdown/ColorDropDown';
 import { OnChange } from '../onChange';
 import Potal from './Potal';
 
+import { CreateObjective } from '../../../apis/apiPOST';
+import { useMutation } from '@tanstack/react-query';
+
 const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const months = [
     '1월',
@@ -61,7 +64,7 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
     color: '',
   });
 
-  console.log(objInfo);
+  // console.log(objInfo);
 
   const [startDate, setStartDate] = useState({ format: 'MM/DD/YYYY' });
   // console.log(startDate);
@@ -71,6 +74,8 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const convertStart = (date, format = startDate.format) => {
     let object = { date, format };
     setStartDate(new DateObject(object).format());
+
+    setObjInfo({ ...objInfo, startdate: new DateObject(object).format() });
     // console.log('start :', startDate);
   };
 
@@ -80,40 +85,52 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
 
     setEndDate(new DateObject(object).format());
     // console.log('end :', endDate);
+
+    setObjInfo({ ...objInfo, enddate: new DateObject(object).format() });
   };
 
   const [haveObj, setHaveObj] = useState(false);
 
   const onSubmit = () => {
-    setObjInfo({ ...objInfo, enddate: endDate, startdate: startDate });
+    // setObjInfo({ ...objInfo, enddate: endDate, startdate: startDate });
     setHaveObj(!haveObj);
+    // console.log(objInfo);
+    creObjectiveMutate(objInfo);
   };
 
-  console.log(objInfo);
+  // console.log(objInfo);
   //팝업
   // const PopUp = () => {};
-  useEffect(() => {
-    // console.log(objInfo.objective.length);
+  // useEffect(() => {
+  //   // console.log(objInfo.objective.length);
 
-    const throwError = async () => {
-      if (objInfo.objective.length >= 5) {
-        // setTimeout(() => {
-
-        // }, 1000);
-        return (
-          <Potal>
-            <ErrorPopUp>30자 이상 입력할 수 없습니다.</ErrorPopUp>;
-          </Potal>
-        );
-      }
-    };
-    throwError();
-  }, [objInfo]);
+  //   const throwError = async () => {
+  //     if (objInfo.objective.length >= 5) {
+  //       setTimeout(() => {
+  //         return (
+  //           <Potal>
+  //             <ErrorPopUp>30자 이상 입력할 수 없습니다.</ErrorPopUp>;
+  //           </Potal>
+  //         );
+  //       }, 1000);
+  //     }
+  //   };
+  //   throwError();
+  // }, [objInfo]);
 
   // return <div></div>
 
   // if (objInfo.objective.length >= 30) {
   // }
+
+  const { mutate: creObjectiveMutate } = useMutation(CreateObjective, {
+    onSuccess: response => {
+      console.log(response);
+    },
+    onError: response => {
+      console.log(response);
+    },
+  });
 
   return (
     <>

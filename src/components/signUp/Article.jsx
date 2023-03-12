@@ -175,7 +175,7 @@ const Test = () => {
   const { mutate: signUpMutate } = useMutation(SignUp, {
     onSuccess: response => {
       // navigate('/signUp');
-      navigate('/mainpage');
+      navigate('/');
     },
     onError: () => {
       setSignValidation('이미 존재하는 이메일입니다.');
