@@ -1,20 +1,28 @@
 import React from 'react';
 
-const OkrObject = () => {
+const OkrObject = ({ objectiveData }) => {
   return (
-    <div className='object'>
-      <div className='title'>O</div>
-      <div className='detail'>
-        <div className='name_date'>
-          <div>찰스 몸짱 만들기</div>
-          <p>2023-01-27 ~ 2023-04-26</p>
-        </div>
-        <div className='percent'>
-          <input type='range' />
-          <p>20%</p>
-        </div>
-      </div>
-    </div>
+    <>
+      {objectiveData?.map(data => {
+        return (
+          <div className='object'>
+            <div className='title'>O</div>
+            <div className='detail'>
+              <div className='name_date'>
+                <div>{data.objective}</div>
+                <p>
+                  {data.startdate} ~ {data.enddate}
+                </p>
+              </div>
+              <div className='percent'>
+                <input type='range' />
+                <p>{data.progress}%</p>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </>
   );
 };
 

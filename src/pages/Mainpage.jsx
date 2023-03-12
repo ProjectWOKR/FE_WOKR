@@ -6,7 +6,7 @@ import DashBoardOKR from '../components/mainpage/OKR';
 import DashBoardTodo from '../components/mainpage/ToDo';
 import DashBoardCalendar from '../components/mainpage/Calendar';
 import Todo from '../components/todo/todo';
-import TeamOKR from '../components/teamOKR/teamOKR';
+import TeamOKR from '../components/teamOKR/TeamOKR';
 import Calendar from '../components/calendar/Calendar';
 import CompanyOKR from '../components/companyOKR/companyOKR';
 // import { useRecoilValue } from 'recoil';

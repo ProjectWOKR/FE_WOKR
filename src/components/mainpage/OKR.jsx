@@ -1,26 +1,35 @@
-import React from 'react';
-import Potal from '../global/globalmodal/Potal.jsx';
+import React, { useEffect } from 'react';
+import Potal from '../global/globalModal/Potal.jsx';
 import { useState, useRef } from 'react';
 import Kr from './Kr';
 import OkrObject from './OkrItem';
 import {
   Container,
-  Container2,
-  CreateBtn,
   Header,
   HeaderBox,
   OkrContainer,
   OkrItem,
 } from './OKR.styled';
-import OkrModal from '../global/globalmodal/OkrModal';
-import { NotHave } from '../global/globalmodal/modal.styled';
+import OkrModal from '../global/globalModal/OkrModal';
+import { NotHave } from '../global/globalModal/modal.styled';
 
 import plus from '../../assets/plus.png';
 import more from '../../assets/more.png';
+import { useQuery } from '@tanstack/react-query';
+import { GetObjective } from '../../apis/apiGET.js';
 
 export default function OKR() {
   //모달 상태관리
   const [okrModalOn, setOkrModalOn] = useState(false);
+
+  const { data: getObjectiveData } = useQuery(['getObjective'], GetObjective, {
+    refetchOnWindowFocus: false,
+    onSuccess: response => {},
+    onError: response => {},
+  });
+
+  useEffect(() => {}, []);
+
   /**모달 닫는 함수 */
   const onCloseModal = () => {
     setOkrModalOn(!okrModalOn);
@@ -55,17 +64,17 @@ export default function OKR() {
       </HeaderBox>
       {/* <Container2> */}
       <OkrContainer>
+        <OkrItem>
+          <OkrObject objectiveData={getObjectiveData} />
+          {/* <Kr />
+          <Kr /> */}
+        </OkrItem>
         {/* <OkrItem>
-            <OkrObject />
-            <Kr />
-            <Kr />
-          </OkrItem>
-          <OkrItem>
-            <OkrObject />
-            <Kr />
-            <Kr />
-            <Kr />
-          </OkrItem> */}
+          <OkrObject />
+          <Kr />
+          <Kr />
+          <Kr />
+        </OkrItem> */}
         {!OkrItem ? (
           <>
             <OkrItem>
