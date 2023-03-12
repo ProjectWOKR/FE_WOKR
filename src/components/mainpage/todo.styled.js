@@ -5,6 +5,8 @@ export const Container = styled.div`
   height: 56rem;
   border: 1px solid rgba(232, 232, 232, 1);
   margin-left: 3.9rem;
+  box-shadow: 0 3px 15px rgba(124, 124, 124, 0.25);
+  border-radius: 12px;
 `;
 
 export const HeaderBox = styled.div`
@@ -50,6 +52,7 @@ export const TodoContainer = styled.div`
   box-sizing: border-box;
   border: 1px solid #e8e8e8;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
 `;
 
 export const StTodoItem = styled.div`

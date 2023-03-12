@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { color } from './dropdown';
 
 export const DropdownContainer = styled.div`
   width: 100%;
@@ -68,4 +69,64 @@ export const DropIcon = styled.img`
   top: 50%;
   right: 2.3rem;
   transform: translateY(-50%);
+`;
+
+export const ColorSelect = styled.div`
+  width: 9.5rem;
+  height: 4rem;
+  position: relative;
+  input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 12px;
+    text-align: start;
+    box-sizing: border-box;
+    border: var(--default-bolder);
+    font-size: 1.7rem;
+
+    :hover {
+      border: var(--input-hover);
+    }
+    :focus {
+      border: var(--input-hover);
+    }
+    font-weight: 500;
+    /* font-size: 2.1rem; */
+  }
+  img {
+    width: 1.4rem;
+    height: 1.4rem;
+    right: 0;
+  }
+  ul {
+    width: 5.4rem;
+    text-align: center;
+    border-radius: 12px;
+    padding: 1.5rem 1rem;
+    margin: 10px auto;
+    /* filter: var(--input-focus); */
+    /* border: var(--input-hover); */
+    box-sizing: border-box;
+    position: relative;
+    box-shadow: 0px 2px 5px rgba(150, 150, 150, 0.65);
+    z-index: 9;
+    background-color: #ffffff;
+    li {
+      width: 3.3rem;
+      height: 3.1rem;
+      font-size: 2.1rem;
+      font-weight: 500;
+      text-align: start;
+      margin-bottom: 1rem;
+      border-radius: 7px;
+      transition: all 0.3s;
+      :nth-last-child(1) {
+        margin-bottom: 0rem;
+      }
+      :hover {
+        transform: scale(1.16);
+      }
+    }
+  }
 `;

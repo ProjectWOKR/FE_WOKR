@@ -27,11 +27,20 @@ export const useDropDown = (ref, initialState) => {
 export const team = {
   list: ['기획팀', '개발팀', '인사팀'],
   defaultValue: '부서를 선택해주세요',
-  name: 'team',
 };
 
 export const teamPosi = {
   list: ['팀장', '팀원'],
   defaultValue: '직급을 선택하세요',
-  name: 'teamposition',
+};
+
+export const color = {
+  list: [
+    { index: 1, color: '#9B9B9B', name: '그레이' },
+    { index: 2, color: '#D2EB8A', name: '라임' },
+    { index: 3, color: '#FFF384', name: '레몬' },
+    { index: 4, color: '#FFC6D7', name: '바비' },
+    { index: 5, color: '#BFD9FF', name: '소라' },
+    { index: 6, color: '#D6B6FF', name: '보라' },
+  ],
 };
