@@ -203,13 +203,17 @@ export const OKRBox = styled.div`
 
 export const ErrorPopUp = styled.div`
   padding: 0.7rem 1.7rem;
-  background-color: #ffd68d;
-  border: 1px solid #ffd68d;
+  background-color: #ffd6bd;
+  border: 1px solid #ffd6bd;
   border-radius: 7px;
   position: absolute;
-  top: 50%;
+  top: 5.8rem;
   left: 50%;
+  transform: translateX(-50%);
   z-index: 19;
+  color: #ec5a00;
+  font-size: 1.7rem;
+  font-weight: 700;
 `;
 
 // export const TodoModalBox = styled.div`
