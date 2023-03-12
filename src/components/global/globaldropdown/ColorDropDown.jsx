@@ -22,7 +22,9 @@ const ColorDropDown = ({ setObjInfo, objInfo }) => {
     const ValueClick = () => {
       setFinalValue(name);
       setIsOpen(!isOpen);
-      setObjInfo({ ...objInfo, color: value });
+
+      setObjInfo({ ...objInfo, color: value }); // 색상 hex코드
+      // setObjInfo({ ...objInfo, color: 1 }); // int
     };
 
     return <li onClick={ValueClick} style={{ backgroundColor: value }} />;
