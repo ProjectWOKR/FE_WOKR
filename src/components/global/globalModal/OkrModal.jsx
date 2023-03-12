@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { ModalBackground, ModalBox, OKRBox } from './modal.styled';
+import React, { useEffect, useState } from 'react';
+import { ErrorPopUp, ModalBackground, ModalBox, OKRBox } from './modal.styled';
 
-import DatePicker from 'react-multi-date-picker';
+import DatePicker, { DateObject, toDateObject } from 'react-multi-date-picker';
 import transition from 'react-element-popper/animations/transition';
 import opacity from 'react-element-popper/animations/opacity';
 // import InputIcon from 'react-multi-date-picker/components/input_icon';
@@ -12,8 +12,13 @@ import kr from '../../../assets/kr.png';
 import notFillPlus from '../../../assets/notfillPlus.png';
 import calender from '../../../assets/calender.png';
 
+import start from '../../../assets/start.png';
+import startHover from '../../../assets/startHover.png';
+import ColorDropDown from '../globaldropdown/ColorDropDown';
+import { OnChange } from '../onChange';
+import Potal from './Potal';
+
 const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
-  // console.log(modalOutSideClick);
   const months = [
     '1월',
     '2월',
@@ -49,45 +54,149 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
     };
   }, []);
 
-  const plusKr = () => {
-    // console.log('눌림');
-    alert('추가됨');
+  const [objInfo, setObjInfo] = useState({
+    objective: '',
+    startdate: '',
+    enddate: '',
+    color: '',
+  });
+
+  console.log(objInfo);
+
+  const [startDate, setStartDate] = useState({ format: 'MM/DD/YYYY' });
+  // console.log(startDate);
+  const [endDate, setEndDate] = useState({ format: 'MM/DD/YYYY' });
+
+  //startDate 변환 함수
+  const convertStart = (date, format = startDate.format) => {
+    let object = { date, format };
+    setStartDate(new DateObject(object).format());
+    // console.log('start :', startDate);
   };
 
+  //endDate 변환 함수
+  const convertEnd = (date, format = startDate.format) => {
+    let object = { date, format };
+
+    setEndDate(new DateObject(object).format());
+    // console.log('end :', endDate);
+  };
+
+  const [haveObj, setHaveObj] = useState(false);
+
+  const onSubmit = () => {
+    setObjInfo({ ...objInfo, enddate: endDate, startdate: startDate });
+    setHaveObj(!haveObj);
+  };
+
+  console.log(objInfo);
+  //팝업
+  // const PopUp = () => {};
+  useEffect(() => {
+    // console.log(objInfo.objective.length);
+
+    const throwError = async () => {
+      if (objInfo.objective.length >= 5) {
+        // setTimeout(() => {
+
+        // }, 1000);
+        return (
+          <Potal>
+            <ErrorPopUp>30자 이상 입력할 수 없습니다.</ErrorPopUp>;
+          </Potal>
+        );
+      }
+    };
+    throwError();
+  }, [objInfo]);
+
+  // return <div></div>
+
+  // if (objInfo.objective.length >= 30) {
+  // }
+
   return (
-    <div>
+    <>
       <ModalBackground ref={modalRef} onClick={modalOutSideClick} />
       <ModalBox>
-        <form>
-          <div className='header'>
-            <h2>OKR 추가 - 목표, 기간, 색상</h2>
-            <img src={close} alt='' />
-          </div>
-
-          <OKRBox>
-            <div className='object itemBox'>
-              <img src={object} alt='' />
-              <input type='text' placeholder='목표' />
+        {haveObj ? (
+          <>
+            <div className='header'>
+              <h2>OKR 추가 - 핵심 결과</h2>
+              <img src={close} alt='' onClick={onCloseModal} />
             </div>
 
-            <div className='kr itemBox'>
+            <OKRBox>
+              <div className='kr itemBox'>
+                <img src={kr} alt='' />
+                <input type='text' placeholder='핵심결과' className='input' />
+              </div>
+
+              <div className='kr itemBox'>
+                <img src={kr} alt='' />
+                <input type='text' placeholder='핵심결과' className='input' />
+              </div>
+
+              <div className='kr itemBox'>
+                <img src={kr} alt='' />
+                <input type='text' placeholder='핵심결과' className='input' />
+              </div>
+            </OKRBox>
+
+            <div className='btnBox'>
+              <button onClick={onCloseModal} className='cancel'>
+                취소
+              </button>
+              <button onClick={onSubmit} className='next'>
+                저장
+              </button>
+              <ErrorPopUp>30자 이상 입력할 수 없습니다.</ErrorPopUp>;
+            </div>
+            {/* {objInfo.objective.length >= 5 ? (
+              <Potal>
+                <ErrorPopUp>30자 이상 입력할 수 없습니다.</ErrorPopUp>;
+              </Potal>
+            ) : null} */}
+          </>
+        ) : (
+          <>
+            <div className='header'>
+              <h2>OKR 추가 - 목표, 기간, 색상</h2>
+              <img src={close} alt='' onClick={onCloseModal} />
+            </div>
+
+            <OKRBox>
+              <div className='object itemBox'>
+                <img src={object} alt='' />
+                <input
+                  type='text'
+                  placeholder='목표'
+                  className='input'
+                  name='objective'
+                  onChange={event => {
+                    OnChange(event, objInfo, setObjInfo);
+                  }}
+                />
+              </div>
+
+              {/* <div className='kr itemBox'>
               <img src={kr} alt='' />
-              <input type='text' placeholder='핵심결과' />
+              <input type='text' placeholder='핵심결과' className='input' />
               <img src={notFillPlus} alt='' className='plus' />
-            </div>
+            </div> */}
 
-            <div className='date itemBox'>
-              <img src={calender} alt='' />
-              <div className='dateBox'>
-                <div className='start'>
+              <div className='date'>
+                <img src={calender} alt='' />
+                <div className='dateBox'>
                   <DatePicker
-                    className='startDate'
-                    // style={{ width: '300px', marginRight: '10px' }}
-                    // render={<InputIcon />}
+                    inputClass='start-input'
+                    containerClassName='start-container'
                     months={months}
                     weekDays={weekDays}
                     format={format}
                     placeholder='시작일'
+                    value={startDate.date}
+                    onChange={convertStart}
                     animations={[
                       opacity(),
                       transition({
@@ -97,20 +206,16 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
                       }),
                     ]}
                   />
-                  <div className='triangle'></div>
-                </div>
-                <div className='end'>
+
                   <DatePicker
-                    className='endDate'
-                    // style={{
-                    //   width: '300px',
-                    //   marginLeft: '10px',
-                    //   marginRight: '20px',
-                    // }}
+                    inputClass='end-input'
+                    containerClassName='end-container'
                     months={months}
                     weekDays={weekDays}
                     format={format}
                     placeholder='종료일'
+                    value={endDate.date}
+                    onChange={convertEnd}
                     animations={[
                       opacity(),
                       transition({
@@ -121,74 +226,28 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
                     ]}
                   />
                 </div>
+                <div className='colorBox'>
+                  <div
+                    className='color'
+                    style={{ backgroundColor: `${objInfo.color}` }}
+                  />
+                  <ColorDropDown objInfo={objInfo} setObjInfo={setObjInfo} />
+                </div>
               </div>
-              <div className='colorBox'>
-                <div className='color'></div>
-                <div className='colorSelect'></div>
-              </div>
+            </OKRBox>
+
+            <div className='btnBox'>
+              <button onClick={onCloseModal} className='cancel'>
+                취소
+              </button>
+              <button onClick={onSubmit} className='next'>
+                다음
+              </button>
             </div>
-          </OKRBox>
-          {/* <input type='text' placeholder='목표' />
-          <div className='object'>
-            <input type='text' placeholder='핵심결과' />
-            <div className='plus' onClick={plusKr}>
-              +
-            </div>
-          </div> */}
-          {/* <div className='date'>
-            <DatePicker
-              style={{ width: '300px', marginRight: '10px' }}
-              // render={<InputIcon />}
-              months={months}
-              weekDays={weekDays}
-              format={format}
-              placeholder='시작 기간'
-              animations={[
-                opacity(),
-                transition({
-                  from: 40,
-                  transition:
-                    'all 400ms cubic-bezier(0.335, 0.010, 0.030, 1.360)',
-                }),
-              ]}
-            />
-            <p>~</p>
-            <DatePicker
-              style={{
-                width: '300px',
-                marginLeft: '10px',
-                marginRight: '20px',
-              }}
-              months={months}
-              weekDays={weekDays}
-              format={format}
-              placeholder='종료 기간'
-              animations={[
-                opacity(),
-                transition({
-                  from: 40,
-                  transition:
-                    'all 400ms cubic-bezier(0.335, 0.010, 0.030, 1.360)',
-                }),
-              ]}
-            />
-            <select name='color'>
-              <option value='none' hidden>
-                색상
-              </option>
-              <option value='red'>빨강</option>
-              <option value='blue'>파랑</option>
-              <option value='yellow'>노랑</option>
-              <option value='green'>초록</option>
-            </select>
-          </div> */}
-          <div className='btnBox'>
-            <button onClick={onCloseModal}>취소</button>
-            <button className='submit'>저장</button>
-          </div>
-        </form>
+          </>
+        )}
       </ModalBox>
-    </div>
+    </>
   );
 };
 
