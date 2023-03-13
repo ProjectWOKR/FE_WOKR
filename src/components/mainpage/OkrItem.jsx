@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { OKRBox, Objective } from './OKR.styled';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { GetObjective } from '../../apis/apiGET.js';
 import { PatchObjectiveProgress } from '../../apis/apiFETCH';
 
 const OkrObject = () => {
+  const queryClient = useQueryClient();
+
   const { data: getObjectiveData } = useQuery(['getObjective'], GetObjective, {
     onSuccess: response => {
-      console.log(response);
       setSlicedArray(response?.slice(0, 2));
     },
     onError: response => {},
@@ -15,11 +16,9 @@ const OkrObject = () => {
 
   const { mutate: rangeMutate } = useMutation(PatchObjectiveProgress, {
     onSuccess: response => {
-      console.log(response);
+      queryClient.invalidateQueries(['getObjective']);
     },
-    onError: response => {
-      console.log(response);
-    },
+    onError: response => {},
   });
 
   const [slicedArray, setSlicedArray] = useState([]);
@@ -27,10 +26,6 @@ const OkrObject = () => {
     range1: 0,
     range2: 0,
   });
-
-  const onProgressMouseUp = (event, num) => {
-    console.log(event);
-  };
 
   const onRangeChange = (event, index) => {
     if (index === 0) {
@@ -74,7 +69,7 @@ const OkrObject = () => {
                 onRangeMouseUp(index, data.objectiveId);
               }}
             />
-            <div className='percent'>1</div>
+            <div className='percent'>{data.progress}</div>
           </Objective>
         );
       })}
