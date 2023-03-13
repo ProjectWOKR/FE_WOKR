@@ -3,30 +3,16 @@ import Potal from '../global/globalModal/Potal.jsx';
 import { useState, useRef } from 'react';
 import Kr from './Kr';
 import OkrObject from './OkrItem';
-import {
-  Container,
-  Header,
-  HeaderBox,
-  OkrContainer,
-  OkrItem,
-} from './OKR.styled';
+import { Container, Header, HeaderBox, OkrContainer } from './OKR.styled';
 import OkrModal from '../global/globalModal/OkrModal.jsx';
 import { NotHave } from '../global/globalModal/modal.styled';
 
 import plus from '../../assets/plus.png';
 import more from '../../assets/more.png';
-import { useQuery } from '@tanstack/react-query';
-import { GetObjective } from '../../apis/apiGET.js';
 
 export default function OKR() {
   //모달 상태관리
   const [okrModalOn, setOkrModalOn] = useState(false);
-
-  const { data: getObjectiveData } = useQuery(['getObjective'], GetObjective, {
-    refetchOnWindowFocus: false,
-    onSuccess: response => {},
-    onError: response => {},
-  });
 
   useEffect(() => {}, []);
 
@@ -52,7 +38,7 @@ export default function OKR() {
   return (
     <Container>
       <HeaderBox>
-        <Header>팀 OKR</Header>
+        <Header>Team OKR</Header>
         <div className='btnBox'>
           <div onClick={createOKR}>
             <img src={plus} alt='' />
@@ -64,40 +50,15 @@ export default function OKR() {
       </HeaderBox>
       {/* <Container2> */}
       <OkrContainer>
-        <OkrItem>
-          <OkrObject objectiveData={getObjectiveData} />
-          {/* <Kr />
-          <Kr /> */}
-        </OkrItem>
-        {/* <OkrItem>
-          <OkrObject />
-          <Kr />
-          <Kr />
-          <Kr />
-        </OkrItem> */}
-        {!OkrItem ? (
-          <>
-            <OkrItem>
-              <OkrObject />
-              <Kr />
-              <Kr />
-            </OkrItem>
-            <OkrItem>
-              <OkrObject />
-              <Kr />
-              <Kr />
-              <Kr />
-            </OkrItem>
-          </>
-        ) : (
-          <NotHave>
-            <h2>설정된 OKR이 없습니다.</h2>
-            <div className='btnFlex' onClick={createOKR}>
-              <img src={plus} alt='' />
-              <div>OKR추가</div>
-            </div>
-          </NotHave>
-        )}
+        <OkrObject />
+
+        <NotHave>
+          <h2>설정된 OKR이 없습니다.</h2>
+          <div className='btnFlex' onClick={createOKR}>
+            <img src={plus} alt='' />
+            <div>OKR추가</div>
+          </div>
+        </NotHave>
       </OkrContainer>
       {/* </Container2> */}
       <Potal>
