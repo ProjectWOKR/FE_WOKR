@@ -1,9 +1,17 @@
-import React, { useEffect } from 'react';
-import { ModalBackground, ModalBox } from './modal.styled';
+import React, { useEffect, useState } from 'react';
+import { ModalBackground, ModalBox, OKRBox } from './modal.styled';
 
-import DatePicker from 'react-multi-date-picker';
+import DatePicker, { DateObject } from 'react-multi-date-picker';
 import transition from 'react-element-popper/animations/transition';
 import opacity from 'react-element-popper/animations/opacity';
+
+import close from '../../../assets/close.png';
+import todoOkr from '../../../assets/todoOKR.png';
+import todo from '../../../assets/todoTODO.png';
+import memo from '../../../assets/memo.png';
+import calender from '../../../assets/calender.png';
+import { OnChange } from '../onChange';
+import OkrDropDown from '../globaldropdown/OkrDropDown';
 
 const TodoModal = ({
   onCloseTodoModal,
@@ -44,56 +52,120 @@ const TodoModal = ({
       window.scrollTo(0, parseInt(scrollY, 10) * -1);
     };
   }, []);
+
+  const [todoInfo, setTodoInfo] = useState({
+    todo: '',
+    memo: '',
+    dDay: '',
+    priority: '',
+  });
+
+  const [startDate, setStartDate] = useState({ format: 'MM/DD/YYYY' });
+  const [endDate, setEndDate] = useState({ format: 'MM/DD/YYYY' });
+
+  //startDate 변환 함수
+  const convertStart = (date, format = startDate.format) => {
+    let object = { date, format };
+    setStartDate(new DateObject(object).format());
+    setTodoInfo({ ...todoInfo, startdate: new DateObject(object).format() });
+  };
+
+  //endDate 변환 함수
+  const convertEnd = (date, format = startDate.format) => {
+    let object = { date, format };
+    setEndDate(new DateObject(object).format());
+    setTodoInfo({ ...todoInfo, enddate: new DateObject(object).format() });
+  };
   return (
     <div>
       <ModalBackground ref={todoModalRef} onClick={todoModalOutSideClick} />
       <ModalBox>
-        <form>
-          <div className='selectBox'>
-            <select name='result'>
-              <option value='default' hidden>
-                목표 / 핵심결과
-              </option>
-              <option value='object'>찰스 몸짱 만들기</option>
-              <option value='kr1'> 체지방 7% 감소</option>
-              <option value='kr2'>근육략 7% 증가</option>
-              <option value='none'>선택안함(none)</option>
-            </select>
-          </div>
-          <input type='text' placeholder='할 일' />
-          <input type='text' placeholder='메모' />
-          <div className='date'>
-            <DatePicker
-              style={{ width: '150px', marginRight: '10px' }}
-              // render={<InputIcon />}
-              months={months}
-              weekDays={weekDays}
-              format={format}
-              placeholder='기한 설정'
-              animations={[
-                opacity(),
-                transition({
-                  from: 40,
-                  transition:
-                    'all 400ms cubic-bezier(0.335, 0.010, 0.030, 1.360)',
-                }),
-              ]}
+        <div className='header'>
+          <h2>OKR 추가 - 목표, 기간, 색상</h2>
+          <img src={close} alt='' onClick={onCloseTodoModal} />
+        </div>
+        <OKRBox>
+          <OkrDropDown />
+
+          <div className='object itemBox'>
+            <img src={todoOkr} alt='' />
+            <input
+              type='text'
+              placeholder='To Do 내용을 작성하세요'
+              className='input'
+              name='todo'
+              onChange={event => {
+                OnChange(event, todoInfo, setTodoInfo);
+              }}
             />
-            <select name='first'>
-              <option value='default' hidden>
-                우선순위
-              </option>
-              <option value='one'>1</option>
-              <option value='two'>2</option>
-              <option value='three'>3</option>
-              <option value='four'>4</option>
-            </select>
           </div>
-          <div className='btnBox'>
-            <button onClick={onCloseTodoModal}>취소</button>
-            <button className='submit'>저장</button>
+
+          <div className='object itemBox'>
+            <img src={memo} alt='' />
+            <input
+              type='text'
+              placeholder='To Do 내용을 작성하세요'
+              className='input'
+              name='memo'
+              onChange={event => {
+                OnChange(event, todoInfo, setTodoInfo);
+              }}
+            />
           </div>
-        </form>
+
+          <div className='date'>
+            <img src={calender} alt='' />
+            <div className='dateBox'>
+              <DatePicker
+                inputClass='start-input'
+                containerClassName='start-container'
+                months={months}
+                weekDays={weekDays}
+                format={format}
+                placeholder='시작일'
+                value={startDate.date}
+                onChange={convertStart}
+                animations={[
+                  opacity(),
+                  transition({
+                    from: 40,
+                    transition:
+                      'all 400ms cubic-bezier(0.335, 0.010, 0.030, 1.360)',
+                  }),
+                ]}
+              />
+
+              <DatePicker
+                inputClass='end-input'
+                containerClassName='end-container'
+                months={months}
+                weekDays={weekDays}
+                format={format}
+                placeholder='종료일'
+                value={endDate.date}
+                onChange={convertEnd}
+                animations={[
+                  opacity(),
+                  transition({
+                    from: 40,
+                    transition:
+                      'all 400ms cubic-bezier(0.335, 0.010, 0.030, 1.360)',
+                  }),
+                ]}
+              />
+            </div>
+            <div className='colorBox'>
+              <OkrDropDown />
+            </div>
+          </div>
+        </OKRBox>
+
+        <div className='btnBox'>
+          <button onClick={onCloseTodoModal} className='cancel'>
+            취소
+          </button>
+          <button className='next'>저장</button>
+        </div>
       </ModalBox>
     </div>
   );

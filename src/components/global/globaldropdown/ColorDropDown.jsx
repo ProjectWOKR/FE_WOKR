@@ -17,7 +17,6 @@ const ColorDropDown = ({ setObjInfo, objInfo }) => {
     setObjInfo,
     objInfo,
     name,
-    number,
   }) => {
     const ValueClick = () => {
       setFinalValue(name);
@@ -31,7 +30,6 @@ const ColorDropDown = ({ setObjInfo, objInfo }) => {
     return <li onClick={ValueClick} style={{ backgroundColor: value }} />;
   };
 
-  console.log();
   return (
     <ColorSelect ref={dropDownRef}>
       <input
