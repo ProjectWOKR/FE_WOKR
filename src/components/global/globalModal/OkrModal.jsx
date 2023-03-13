@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ErrorPopUp, ModalBackground, ModalBox, OKRBox } from './modal.styled';
 
-import DatePicker, { DateObject, toDateObject } from 'react-multi-date-picker';
+import DatePicker, { DateObject } from 'react-multi-date-picker';
 import transition from 'react-element-popper/animations/transition';
 import opacity from 'react-element-popper/animations/opacity';
 // import InputIcon from 'react-multi-date-picker/components/input_icon';
@@ -9,17 +9,15 @@ import opacity from 'react-element-popper/animations/opacity';
 import close from '../../../assets/close.png';
 import object from '../../../assets/object.png';
 import kr from '../../../assets/kr.png';
-import notFillPlus from '../../../assets/notfillPlus.png';
 import calender from '../../../assets/calender.png';
 
-import start from '../../../assets/start.png';
-import startHover from '../../../assets/startHover.png';
 import ColorDropDown from '../globaldropdown/ColorDropDown';
 import { OnChange } from '../onChange';
-import Potal from './Potal';
 
 import { CreateObjective } from '../../../apis/apiPOST';
 import { useMutation } from '@tanstack/react-query';
+import Toast from '../Toast';
+import { toast } from 'react-toastify';
 
 const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const months = [
@@ -81,43 +79,32 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
     setObjInfo({ ...objInfo, enddate: new DateObject(object).format() });
   };
 
-  // Object가 있는지 여부
+  // Object가 있는지 여부----- 추후 수정
   const [haveObj, setHaveObj] = useState(false);
-
-  const [popUp, setPopUp] = useState(false);
   // console.log(objInfo);
 
   const createO = () => {
-    creObjectiveMutate(objInfo);
-    setHaveObj(true);
+    const startd = new Date(objInfo.startdate);
+    const endd = new Date(objInfo.enddate);
 
-    // const startd = new Date(objInfo.startdate);
-    // const endd = new Date(objInfo.enddate);
-
-    // if (objInfo.objective === '') {
-    //   setPopUp(true)
-    //   console.log('목표 작성해');
-    //   return <ErrorPopUp>O 목표를 작성해 주세요.</ErrorPopUp>;
-    // } else if (objInfo.objective.length >= 30) {
-    //   console.log('30보다 적게해');
-    //   return <ErrorPopUp>30자 이상 입력할 수 없습니다.</ErrorPopUp>;
-    // } else if (objInfo.startdate === '') {
-    //   console.log('시작 날짜 입력해');
-    //   return <ErrorPopUp>시작일을 선택해 주세요.</ErrorPopUp>;
-    // } else if (objInfo.startdate !== '' && objInfo.enddate === '') {
-    //   console.log('종료 날짜 입력해');
-    //   return <ErrorPopUp>종료일을 선택해 주세요.</ErrorPopUp>;
-    // } else if (endd < startd) {
-    //   console.log('빠르게 설정할 수 없어');
-    //   return (
-    //     <ErrorPopUp>종료일은 시작일보다 빠르게 설정할 수 없습니다.</ErrorPopUp>
-    //   );
-    // } else if (objInfo.color === '') {
-    //   console.log('색은 기본값');
-    //   setObjInfo({ ...objInfo, color: '#9B9B9B' });
-    // } else {
-    //   setPopUp(false);
-    // }
+    if (objInfo.objective === '') {
+      return toast('목표를 작성해 주세요.');
+    } else if (objInfo.objective.length >= 30) {
+      return toast('30자 이상 입력할 수 없습니다.');
+    } else if (objInfo.startdate === '') {
+      return toast('시작일을 선택해 주세요.');
+    } else if (objInfo.startdate !== '' && objInfo.enddate === '') {
+      return toast('종료일을 선택해 주세요.');
+    } else if (endd < startd) {
+      return toast('종료일은 시작일보다 빠르게 설정할 수 없습니다.');
+    } else if (objInfo.color === '') {
+      setObjInfo({ ...objInfo, color: '#9B9B9B' });
+      toast('색상을 선택하지 않으면 회색이 기본입니다.');
+    } else {
+      console.log('성공');
+      creObjectiveMutate(objInfo);
+      setHaveObj(true);
+    }
   };
 
   const { mutate: creObjectiveMutate } = useMutation(CreateObjective, {
@@ -135,6 +122,7 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   });
 
   const [title, setTitle] = useState([]);
+
   const onChange = e => {
     const { name, value } = e.target;
     setTitle({ ...title, [name]: value });
@@ -145,7 +133,6 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const createKr = () => {
     setCreKr({ ...creKr, keyResultDate: array });
     console.log(creKr);
-    // console.log('kr 저장');
   };
 
   return (
@@ -158,14 +145,25 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
               <h2>OKR 추가 - 핵심 결과</h2>
               <img src={close} alt='' onClick={onCloseModal} />
             </div>
+
             <OKRBox>
               <div className='kr itemBox'>
                 <img src={kr} alt='' />
                 <input
                   type='text'
                   placeholder='핵심결과를 작성하세요.'
-                  className='input'
-                  name='one'
+                  name='first'
+                  onChange={onChange}
+                />
+              </div>
+
+              <div className='kr itemBox'>
+                <img src={kr} alt='' />
+                <input
+                  type='text'
+                  placeholder='핵심결과를 작성하세요.'
+                  // className='input'
+                  name='second'
                   onChange={onChange}
                 />
               </div>
@@ -176,18 +174,7 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
                   type='text'
                   placeholder='핵심결과를 작성하세요.'
                   className='input'
-                  name='two'
-                  onChange={onChange}
-                />
-              </div>
-
-              <div className='kr itemBox'>
-                <img src={kr} alt='' />
-                <input
-                  type='text'
-                  placeholder='핵심결과를 작성하세요.'
-                  className='input'
-                  name='three'
+                  name='third'
                   onChange={onChange}
                 />
               </div>
@@ -220,12 +207,6 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
                   }}
                 />
               </div>
-
-              {/* <div className='kr itemBox'>
-              <img src={kr} alt='' />
-              <input type='text' placeholder='핵심결과' className='input' />
-              <img src={notFillPlus} alt='' className='plus' />
-            </div> */}
 
               <div className='date'>
                 <img src={calender} alt='' />
@@ -285,7 +266,8 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
                 다음
               </button>
             </div>
-            {popUp ? <ErrorPopUp /> : null}
+            <Toast />
+            {/* {popUp ? <ErrorPopUp /> : null} */}
           </>
         )}
       </ModalBox>
