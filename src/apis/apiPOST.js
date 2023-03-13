@@ -14,3 +14,8 @@ export async function CreateObjective(Info) {
   const { data } = await api.post('api/objective', Info);
   return data;
 }
+
+export async function CreateKR({ value, id }) {
+  const { data } = await api.post(`api/${id}/keyresult`, value);
+  return data;
+}

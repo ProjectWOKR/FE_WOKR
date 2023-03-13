@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { OKRBox, Objective } from './OKR.styled';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { GetObjective } from '../../apis/apiGET.js';
+import { GetDetailKR, GetKR, GetObjective } from '../../apis/apiGET.js';
 import { PatchObjectiveProgress } from '../../apis/apiFETCH';
 
 const OkrObject = () => {
@@ -10,6 +10,20 @@ const OkrObject = () => {
   const { data: getObjectiveData } = useQuery(['getObjective'], GetObjective, {
     onSuccess: response => {
       setSlicedArray(response?.slice(0, 2));
+    },
+    onError: response => {},
+  });
+
+  const { data: getKRData } = useQuery(['getObjective'], GetKR, {
+    onSuccess: response => {
+      console.log('11', response);
+    },
+    onError: response => {},
+  });
+
+  const { data: getDeatilKRData } = useQuery(['getObjective'], GetDetailKR, {
+    onSuccess: response => {
+      console.log('11dd', response);
     },
     onError: response => {},
   });
