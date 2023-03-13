@@ -130,3 +130,67 @@ export const ColorSelect = styled.div`
     }
   }
 `;
+
+export const PrioritySelect = styled.div`
+  width: 14rem;
+  height: 4rem;
+  position: relative;
+  input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 12px;
+    text-align: start;
+    box-sizing: border-box;
+    border: var(--default-bolder);
+    font-size: 1.7rem;
+    text-align: center;
+
+    :hover {
+      border: var(--input-hover);
+    }
+    :focus {
+      border: var(--input-hover);
+    }
+    font-weight: 500;
+  }
+  img {
+    width: 1.4rem;
+    height: 1.4rem;
+    right: 0;
+  }
+  ul {
+    width: 9.7rem;
+    text-align: center;
+    border-radius: 12px;
+    padding: 1.5rem 0.5rem;
+    margin: 10px 0 0 auto;
+    box-sizing: border-box;
+    position: relative;
+    box-shadow: 0px 2px 5px rgba(150, 150, 150, 0.65);
+    z-index: 9;
+    background-color: #ffffff;
+    li {
+      width: 100%;
+      height: 3.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      border-radius: 6px;
+      padding: 0 0.5rem;
+      box-sizing: border-box;
+      .img {
+        width: 3.3rem;
+        height: 100%;
+        margin: 0;
+      }
+      :hover {
+        background-color: #f3f1f1;
+      }
+      :nth-last-child(1) {
+        margin-bottom: 0rem;
+      }
+    }
+  }
+`;

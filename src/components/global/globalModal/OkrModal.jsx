@@ -267,7 +267,6 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
               </button>
             </div>
             <Toast />
-            {/* {popUp ? <ErrorPopUp /> : null} */}
           </>
         )}
       </ModalBox>

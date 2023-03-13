@@ -12,6 +12,7 @@ import memo from '../../../assets/memo.png';
 import calender from '../../../assets/calender.png';
 import { OnChange } from '../onChange';
 import OkrDropDown from '../globaldropdown/OkrDropDown';
+import PriorityDropDown from '../globaldropdown/PriorityDropDown';
 
 const TodoModal = ({
   onCloseTodoModal,
@@ -155,7 +156,7 @@ const TodoModal = ({
               />
             </div>
             <div className='colorBox'>
-              <OkrDropDown />
+              <PriorityDropDown todoInfo={todoInfo} setTodoInfo={setTodoInfo} />
             </div>
           </div>
         </OKRBox>
