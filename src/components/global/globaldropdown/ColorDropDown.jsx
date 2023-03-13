@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { useDropDown, color } from './dropdown';
-import { ColorSelect, DropdownContainer, DropIcon } from './dropDown.styled';
+import { ColorSelect, DropIcon } from './dropDown.styled';
 import Arrow from '../../../assets/dropdownArrow.png';
 
 const ColorDropDown = ({ setObjInfo, objInfo }) => {

@@ -1,5 +1,14 @@
 import { useState, useEffect } from 'react';
 
+import redF from '../../../assets/red.png';
+import yellowF from '../../../assets/yellow.png';
+import blueF from '../../../assets/blue.png';
+import grayF from '../../../assets/gray.png';
+import one from '../../../assets/one.png';
+import two from '../../../assets/two.png';
+import three from '../../../assets/three.png';
+import four from '../../../assets/four.png';
+
 export const useDropDown = (ref, initialState) => {
   const [isOpen, setIsOpen] = useState(initialState);
 
@@ -42,5 +51,14 @@ export const color = {
     { index: 4, color: '#FFC6D7', name: '바비' },
     { index: 5, color: '#BFD9FF', name: '소라' },
     { index: 6, color: '#D6B6FF', name: '보라' },
+  ],
+};
+
+export const priority = {
+  list: [
+    { flag: redF, number: one, desc: '1순위', name: '1' },
+    { flag: yellowF, number: two, desc: '2순위', name: '2' },
+    { flag: blueF, number: three, desc: '3순위', name: '3' },
+    { flag: grayF, number: four, desc: '4순위', name: '4' },
   ],
 };
