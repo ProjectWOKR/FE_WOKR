@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ErrorPopUp, ModalBackground, ModalBox, OKRBox } from './modal.styled';
+import { ModalBackground, ModalBox, OKRBox } from './modal.styled';
 
 import DatePicker, { DateObject } from 'react-multi-date-picker';
 import transition from 'react-element-popper/animations/transition';
@@ -14,7 +14,7 @@ import calender from '../../../assets/calender.png';
 import ColorDropDown from '../globaldropdown/ColorDropDown';
 import { OnChange } from '../onChange';
 
-import { CreateObjective } from '../../../apis/apiPOST';
+import { CreateObjective, CreateKR } from '../../../apis/apiPOST';
 import { useMutation } from '@tanstack/react-query';
 import Toast from '../Toast';
 import { toast } from 'react-toastify';
@@ -102,37 +102,50 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
       toast('색상을 선택하지 않으면 회색이 기본입니다.');
     } else {
       console.log('성공');
-      creObjectiveMutate(objInfo);
+      createObjectiveMutate(objInfo);
       setHaveObj(true);
     }
   };
 
-  const { mutate: creObjectiveMutate } = useMutation(CreateObjective, {
+  const { mutate: createObjectiveMutate } = useMutation(CreateObjective, {
     onSuccess: response => {
-      console.log(response);
-      // setHaveObj(true);
+      setObjectId(response.objectiveId);
     },
-    onError: response => {
-      console.log(response);
-    },
+    onError: response => {},
   });
 
-  const [creKr, setCreKr] = useState({
-    keyResultDate: '',
+  const { mutate: createKrMutate } = useMutation(CreateKR, {
+    onSuccess: response => {
+      onCloseModal();
+    },
+    onError: response => {},
   });
 
-  const [title, setTitle] = useState([]);
+  const [objectId, setObjectId] = useState();
+  const [title, setTitle] = useState({ keyResultDate: ['', '', ''] });
 
-  const onChange = e => {
-    const { name, value } = e.target;
-    setTitle({ ...title, [name]: value });
+  const onChangeKR = (e, index) => {
+    if (index === 0) {
+      const tempTitle = { ...title };
+      tempTitle.keyResultDate[index] = e.target.value;
+      setTitle(tempTitle);
+    }
+    if (index === 1) {
+      const tempTitle = { ...title };
+      tempTitle.keyResultDate[index] = e.target.value;
+      setTitle(tempTitle);
+    }
+    if (index === 2) {
+      const tempTitle = { ...title };
+      tempTitle.keyResultDate[index] = e.target.value;
+      setTitle(tempTitle);
+    }
   };
 
-  const array = Object.values(title);
-
   const createKr = () => {
-    setCreKr({ ...creKr, keyResultDate: array });
-    console.log(creKr);
+    const value = title;
+    const id = objectId;
+    createKrMutate({ value, id });
   };
 
   return (
@@ -153,7 +166,10 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
                   type='text'
                   placeholder='핵심결과를 작성하세요.'
                   name='first'
-                  onChange={onChange}
+                  value={title.keyResultDate[0]}
+                  onChange={event => {
+                    onChangeKR(event, 0);
+                  }}
                 />
               </div>
 
@@ -164,7 +180,10 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
                   placeholder='핵심결과를 작성하세요.'
                   // className='input'
                   name='second'
-                  onChange={onChange}
+                  value={title.keyResultDate[1]}
+                  onChange={event => {
+                    onChangeKR(event, 1);
+                  }}
                 />
               </div>
 
@@ -175,7 +194,10 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
                   placeholder='핵심결과를 작성하세요.'
                   className='input'
                   name='third'
-                  onChange={onChange}
+                  value={title.keyResultDate[2]}
+                  onChange={event => {
+                    onChangeKR(event, 2);
+                  }}
                 />
               </div>
             </OKRBox>

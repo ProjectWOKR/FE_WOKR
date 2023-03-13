@@ -21,7 +21,6 @@ const ColorDropDown = ({ setObjInfo, objInfo }) => {
     const ValueClick = () => {
       setFinalValue(name);
       setIsOpen(!isOpen);
-      console.log(value);
 
       // setObjInfo({ ...objInfo, color: value }); // 색상 hex코드
       setObjInfo({ ...objInfo, color: 1 }); // int
