@@ -7,26 +7,22 @@ import { PatchObjectiveProgress } from '../../apis/apiFETCH';
 const OkrObject = () => {
   const queryClient = useQueryClient();
 
-  const { data: getObjectiveData } = useQuery(['getObjective'], GetObjective, {
+  const { data: getObjectiveData } = useQuery(['Objective'], GetObjective, {
     onSuccess: response => {
       setSlicedArray(response?.slice(0, 2));
     },
     onError: response => {},
   });
 
-  const { data: getKRData } = useQuery(['getObjective'], GetKR, {
-    onSuccess: response => {
-      console.log('11', response);
-    },
-    onError: response => {},
-  });
+  // const { data: getKRData } = useQuery(['KR'], GetKR, {
+  //   onSuccess: response => {},
+  //   onError: response => {},
+  // });
 
-  const { data: getDeatilKRData } = useQuery(['getObjective'], GetDetailKR, {
-    onSuccess: response => {
-      console.log('11dd', response);
-    },
-    onError: response => {},
-  });
+  // const { data: getDeatilKRData } = useQuery(['DetailKR'], GetDetailKR, {
+  //   onSuccess: response => {},
+  //   onError: response => {},
+  // });
 
   const { mutate: rangeMutate } = useMutation(PatchObjectiveProgress, {
     onSuccess: response => {
