@@ -37,7 +37,9 @@ export default function OKR() {
   };
 
   const { data: getOKRData } = useQuery(['OKR'], GetOKR, {
-    onSuccess: response => {},
+    onSuccess: response => {
+      console.log(response);
+    },
     onError: response => {},
   });
 
@@ -56,9 +58,7 @@ export default function OKR() {
       </HeaderBox>
       {/* <Container2> */}
       <OkrContainer>
-        {getOKRData.length !== 0 ? (
-          <OkrObject />
-        ) : (
+        {getOKRData?.length === 0 ? (
           <NotHave>
             <h2>설정된 OKR이 없습니다.</h2>
             <div className='btnFlex' onClick={createOKR}>
@@ -66,6 +66,8 @@ export default function OKR() {
               <div>OKR추가</div>
             </div>
           </NotHave>
+        ) : (
+          <OkrObject />
         )}
       </OkrContainer>
       {/* </Container2> */}
