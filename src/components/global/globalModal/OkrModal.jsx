@@ -15,11 +15,12 @@ import ColorDropDown from '../globaldropdown/ColorDropDown';
 import { OnChange } from '../onChange';
 
 import { CreateObjective, CreateKR } from '../../../apis/apiPOST';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Toast from '../Toast';
 import { toast } from 'react-toastify';
 
 const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
+  const queryClient = useQueryClient();
   const months = [
     '1월',
     '2월',
@@ -106,22 +107,25 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
       setHaveObj(true);
     }
   };
+  const [objectId, setObjectId] = useState();
 
   const { mutate: createObjectiveMutate } = useMutation(CreateObjective, {
     onSuccess: response => {
+      queryClient.invalidateQueries(['OKR']);
       setObjectId(response.objectiveId);
+      console.log('rr', response);
     },
     onError: response => {},
   });
 
   const { mutate: createKrMutate } = useMutation(CreateKR, {
     onSuccess: response => {
+      queryClient.invalidateQueries(['OKR']);
       onCloseModal();
     },
     onError: response => {},
   });
 
-  const [objectId, setObjectId] = useState();
   const [title, setTitle] = useState({ keyResultDate: ['', '', ''] });
 
   const onChangeKR = (e, index) => {
@@ -145,6 +149,7 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const createKr = () => {
     const value = title;
     const id = objectId;
+    console.log('id', id);
     createKrMutate({ value, id });
   };
 
