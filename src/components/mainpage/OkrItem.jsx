@@ -1,28 +1,18 @@
 import React, { useState } from 'react';
-import { OKRBox, Objective } from './OKR.styled';
+import { OKRBox, Objective, OKRSpace, KRBox } from './OKR.styled';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { GetDetailKR, GetKR, GetObjective } from '../../apis/apiGET.js';
+import { GetDetailKR, GetKR, GetObjective, GetOKR } from '../../apis/apiGET.js';
 import { PatchObjectiveProgress } from '../../apis/apiFETCH';
 
 const OkrObject = () => {
   const queryClient = useQueryClient();
 
-  const { data: getObjectiveData } = useQuery(['Objective'], GetObjective, {
+  const { data: getOKRData } = useQuery(['OKR'], GetOKR, {
     onSuccess: response => {
       setSlicedArray(response?.slice(0, 2));
     },
     onError: response => {},
   });
-
-  // const { data: getKRData } = useQuery(['KR'], GetKR, {
-  //   onSuccess: response => {},
-  //   onError: response => {},
-  // });
-
-  // const { data: getDeatilKRData } = useQuery(['DetailKR'], GetDetailKR, {
-  //   onSuccess: response => {},
-  //   onError: response => {},
-  // });
 
   const { mutate: rangeMutate } = useMutation(PatchObjectiveProgress, {
     onSuccess: response => {
@@ -56,34 +46,61 @@ const OkrObject = () => {
       rangeMutate({ value, id });
     }
   };
-  return (
-    <OKRBox>
-      {slicedArray?.map((data, index) => {
-        return (
-          <Objective key={data.objectiveId}>
-            <div className='Box'>
-              <div className='Logo'>O</div>
-            </div>
-            <div className='Name'>{data.objective}</div>
 
-            <input
-              className='Range'
-              type='range'
-              min='0'
-              max='100'
-              step='1'
-              onChange={event => {
-                onRangeChange(event, index);
-              }}
-              onMouseUp={() => {
-                onRangeMouseUp(index, data.objectiveId);
-              }}
-            />
-            <div className='percent'>{data.progress}</div>
-          </Objective>
+  return (
+    <div>
+      {slicedArray?.map((data, index) => {
+        const color = index % 2 === 0 ? 'red' : 'blue';
+        return (
+          <OKRBox key={index}>
+            <>
+              <Objective key={data.objectiveId} color={color}>
+                <div className='Box'>
+                  <div className='Logo'>O</div>
+                </div>
+                <div className='Name'>{data.objective}</div>
+
+                <input
+                  className='Range'
+                  type='range'
+                  min='0'
+                  max='100'
+                  step='1'
+                  onChange={event => {
+                    onRangeChange(event, index);
+                  }}
+                  onMouseUp={() => {
+                    onRangeMouseUp(index, data.objectiveId);
+                  }}
+                />
+                <div className='percent'>{data.progress}%</div>
+              </Objective>
+
+              {data?.keyresult.map((KR, index) => {
+                return (
+                  <KRBox key={KR.keyResultId} color={color}>
+                    <div className='Logo'>KR{index + 1}</div>
+                    <div className='Name'>{KR.keyResult}</div>
+                    <input
+                      className='Range'
+                      type='range'
+                      min='0'
+                      max='100'
+                      step='1'
+                    />
+                    <div className='percent'>{KR.progress}%</div>
+                    <div className='emotionBox'>
+                      <div className='emotion'>🙂</div>
+                    </div>
+                  </KRBox>
+                );
+              })}
+              <OKRSpace />
+            </>
+          </OKRBox>
         );
       })}
-    </OKRBox>
+    </div>
   );
 };
 
