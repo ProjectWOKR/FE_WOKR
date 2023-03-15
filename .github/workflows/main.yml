@@ -11,9 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - run: npm i
       - run: npm ci
-      - run: npm run build
+      - run: CI=false npm run build
       - name: deploy to s3
         uses: jakejarvis/s3-sync-action@master
         with:
