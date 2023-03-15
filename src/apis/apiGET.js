@@ -21,3 +21,8 @@ export async function GetDetailKR(id) {
   const { data } = await api.get(`api/keyresult/detail/${id}`);
   return data;
 }
+
+export async function GetOKR() {
+  const { data } = await api.get(`api/okr`);
+  return data;
+}

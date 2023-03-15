@@ -29,6 +29,7 @@ export const Header = styled.p`
   font-weight: 500;
   color: #4b4b4b;
   margin: 0;
+  cursor: default;
 `;
 
 export const OkrContainer = styled.div`
@@ -44,7 +45,7 @@ export const OkrContainer = styled.div`
 export const OKRBox = styled.div`
   width: 734px;
   height: 236px;
-
+  margin-top: 11px;
   background: #f8f8f8;
   box-shadow: 0px 3px 10px rgba(124, 124, 124, 0.25);
   border-radius: 8px;
@@ -67,7 +68,8 @@ export const Objective = styled.div`
     font-weight: 700;
     font-size: 54.2282px;
     line-height: 74px;
-    color: #457eff;
+    color: ${({ color }) => `${color === 'red' ? '#ff8336' : '#457eff'}`};
+    cursor: default;
   }
   .Name {
     width: 300px;
@@ -77,6 +79,8 @@ export const Objective = styled.div`
     font-size: 24px;
     line-height: 33px;
     letter-spacing: -0.01em;
+    color: ${({ color }) => `${color === 'red' ? '#ff8336' : '#457eff'}`};
+    cursor: default;
   }
   .Range {
     width: 205px;
@@ -89,130 +93,85 @@ export const Objective = styled.div`
     font-size: 18px;
     line-height: 25px;
     letter-spacing: -0.01em;
-    color: #ff8336;
     margin-top: 26px;
     margin-left: 14px;
-  }
-  &:nth-of-type(1) {
-    .Logo {
-      color: #ff8336;
-    }
-    .Name {
-      color: #ff8336;
-    }
-    .Range {
-    }
-  }
-  &:nth-of-type(2) {
-    .Logo {
-      color: #457eff;
-    }
-    .Name {
-      color: #457eff;
-    }
-    .Range {
-    }
+    color: ${({ color }) => `${color === 'red' ? '#ff8336' : '#457eff'}`};
+    cursor: default;
   }
 `;
 
-// export const OkrItem = styled.div`
-//   width: 100%;
-//   height: 185px;
-//   box-sizing: border-box;
-//   .object {
-//     display: flex;
-//     align-items: center;
-//     justify-content: space-between;
-//     height: calc(100% / 4);
-//     background-color: #ffffff;
-//     border: 1px solid #000;
-//     box-sizing: border-box;
-//   }
-// `;
+export const OKRSpace = styled.div`
+  margin-top: 110px;
+`;
 
-// export const OKRBox = styled.div`
-//   background-color: #f8f8f8;
-//   .title {
-//     width: 70px;
-//     height: 100%;
-//     text-align: center;
-//     font-size: 54.2282px;
-//     color: #ff8336;
-//     font-weight: bold;
-//   }
-//   .detail {
-//     width: calc(100% - 80px);
-//     height: 100%;
-//     display: flex;
-//     justify-content: space-between;
-//     padding: 0 10px;
-//     box-sizing: border-box;
-//     .name_date {
-//       display: flex;
-//       flex-direction: column;
-//       justify-content: space-between;
-//       font-size: 15px;
-//       font-weight: bold;
-//       div {
-//         font-size: 18px;
-//       }
-//     }
-//     .percent {
-//       display: flex;
-//       align-items: center;
-//       input {
-//         margin-right: 30px;
-//       }
-//       p {
-//         margin-right: 50px;
-//         font-size: 18px;
-//         font-weight: bold;
-//       }
-//     }
-//   }
-//   .kr {
-//     display: flex;
-//     align-items: center;
-//     justify-content: space-between;
-//     height: calc(100% / 4);
-//     background-color: #fff;
-//     border: 1px solid #000;
-//     border-top: none;
-//     box-sizing: border-box;
-//     .title {
-//       width: 70px;
-//       height: 100%;
-//       text-align: center;
-//       font-size: 35px;
-//       font-weight: bold;
-//       background-color: #ff5757;
-//     }
-//     .detail {
-//       width: calc(100% - 80px);
-//       height: 100%;
-//       display: flex;
-//       align-items: center;
-//       justify-content: space-between;
-//       font-size: 18px;
-//       font-weight: bold;
-//       padding: 0 10px;
-//       box-sizing: border-box;
-//     }
-//     .percent {
-//       display: flex;
-//       align-items: center;
-//       input {
-//         margin-right: 30px;
-//       }
-//       p {
-//         font-size: 18px;
-//         font-weight: bold;
-//       }
-//       .expression {
-//         width: 40px;
-//         height: 40px;
-//         background-color: #ccc;
-//         margin-left: 10px;
-//       }
-//   }
-// `;
+export const KRBox = styled.div`
+  width: 722px;
+  height: 40px;
+  background: #ffffff;
+  border-radius: 7px;
+  margin-top: 8px;
+  margin-left: 6px;
+  display: flex;
+  flex-direction: row;
+  .Logo {
+    margin-left: 15px;
+    margin-top: 6px;
+    width: 36px;
+    height: 27px;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 27px;
+    text-align: center;
+    letter-spacing: -0.02em;
+    color: ${({ color }) => `${color === 'red' ? '#ff8336' : '#457eff'}`};
+    cursor: default;
+  }
+  .Name {
+    margin-top: 6px;
+    margin-left: 20px;
+    width: 274px;
+    height: 27px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 27px;
+    letter-spacing: -0.01em;
+    color: #4b4b4b;
+    cursor: default;
+  }
+  .Range {
+    width: 205px;
+    height: 11px;
+    margin-top: 15px;
+    margin-left: 73px;
+  }
+  .percent {
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 25px;
+    letter-spacing: -0.01em;
+    margin-top: 8px;
+    margin-left: 14px;
+    color: ${({ color }) => `${color === 'red' ? '#ff8336' : '#457eff'}`};
+    cursor: default;
+  }
+  .emotionBox {
+    margin-top: 5px;
+    margin-left: 10px;
+    width: 33px;
+    height: 31px;
+    background: #f8f8f8;
+    border-radius: 7px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .emotion {
+    font-weight: 300;
+    font-size: 20px;
+    letter-spacing: -0.01em;
+    color: #ff8336;
+  }
+`;
