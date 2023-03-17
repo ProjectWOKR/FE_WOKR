@@ -8,7 +8,7 @@ const PriorityDropDown = ({ todoInfo, setTodoInfo }) => {
   const dropDownRef = useRef(null);
   const [isOpen, setIsOpen] = useDropDown(dropDownRef, false);
   const [finalValue, setFinalValue] = useState('');
-  console.log(todoInfo);
+  // console.log(todoInfo);
   const DropDownItem = ({
     value,
     setFinalValue,

@@ -194,3 +194,105 @@ export const PrioritySelect = styled.div`
     }
   }
 `;
+
+export const OkrDropBox = styled.div`
+  width: 100%;
+  position: relative;
+  img {
+    position: absolute;
+    top: 50%;
+    right: 0;
+  }
+`;
+
+export const OkrDropContainer = styled.div`
+  width: 49rem;
+  height: 28rem;
+  background-color: #ffffff;
+  position: absolute;
+  right: 0;
+  top: 110%;
+  z-index: 2;
+  overflow: auto;
+  border-radius: 15px;
+  box-shadow: 0px 2px 5px rgba(150, 150, 150, 0.65);
+  padding-right: 0.7rem;
+  h2 {
+    height: 5.6rem;
+    line-height: 5.6rem;
+    font-size: 1.6rem;
+    font-weight: 500;
+    margin: 0;
+  }
+  .none {
+    height: 3.6rem;
+    width: 100%;
+    border: 1px solid #f5f5f5;
+    border-radius: 0px 7px 7px 0px;
+    display: flex;
+    align-items: center;
+    padding: 0 0 0 7px;
+    font-size: 1.5rem;
+    border-left: none;
+    margin-bottom: 6px;
+    cursor: pointer;
+    color: #bebebe;
+    box-sizing: border-box;
+    margin-bottom: 2.9rem;
+    border-left: none;
+    span {
+      color: #9b9b9b;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-right: 0.7rem;
+    }
+    :hover {
+      border: 1px solid #ff8336;
+      background-color: #f5f5f5;
+      border-left: none;
+    }
+  }
+`;
+
+export const OkrItem = styled.div`
+  margin-bottom: 1.5rem;
+  .title {
+    width: 100%;
+    border: 1px solid #f5f5f5;
+    border-radius: 0px 7px 7px 0px;
+    display: flex;
+    align-items: center;
+    padding: 0 0 0 7px;
+    font-size: 1.5rem;
+    border-left: none;
+    margin-bottom: 6px;
+    span {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-right: 0.7rem;
+    }
+  }
+  .keyresult {
+    margin: 3px 0 3px auto;
+    width: 42rem;
+    height: 3.6rem;
+    border: 1px solid #f5f5f5;
+    border-radius: 7px;
+    /* text-align: left; */
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding-left: 1rem;
+    font-size: 1.45rem;
+    color: #000;
+    cursor: pointer;
+    :hover {
+      border: 1px solid #ff8336;
+      background-color: #f5f5f5;
+    }
+    span {
+      font-size: 1.4rem;
+      margin-right: 0.7rem;
+    }
+  }
+`;

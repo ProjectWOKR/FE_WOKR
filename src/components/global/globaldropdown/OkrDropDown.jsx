@@ -1,67 +1,80 @@
 import { useState, useRef } from 'react';
 import { useDropDown, color } from './dropdown';
-import { DropIcon } from './dropDown.styled';
+import {
+  DropIcon,
+  OkrDropBox,
+  OkrDropContainer,
+  OkrItem,
+} from './dropDown.styled';
 import Arrow from '../../../assets/dropdownArrow.png';
+import styled from 'styled-components';
+import { useQuery } from '@tanstack/react-query';
+import { GetOKR } from '../../../apis/apiGET';
+import { Objective } from './../../mainpage/OKR.styled';
 
-const OkrDropDown = () => {
+const OkrDropDown = ({ setTodoInfo, todoInfo }) => {
   const dropDownRef = useRef(null);
   const [isOpen, setIsOpen] = useDropDown(dropDownRef, false);
   const [finalValue, setFinalValue] = useState('');
 
-  const DropDownItem = ({
-    value,
-    setFinalValue,
-    setIsOpen,
-    isOpen,
-    setObjInfo,
-    objInfo,
-    name,
-  }) => {
-    const ValueClick = () => {
-      setFinalValue(name);
-      setIsOpen(!isOpen);
-      console.log(value);
+  const [okrData, setOkrData] = useState();
 
-      setObjInfo({ ...objInfo, color: value }); // 색상 hex코드
-      // setObjInfo({ ...objInfo, color: 1 }); // int
-    };
+  const { data: getOkrData } = useQuery(['getOkr'], GetOKR, {
+    onSuccess: response => {
+      console.log(response);
+      setOkrData(response);
+    },
+    onError: response => {
+      // console.log('실패');
+      console.log(response);
+    },
+  });
 
-    return <li onClick={ValueClick} style={{ backgroundColor: value }} />;
+  const ValueClick = e => {
+    setIsOpen(!isOpen);
+    setFinalValue(e.target.outerText);
+
+    setTodoInfo({ ...todoInfo, okr: e.target.outerText });
   };
 
+  console.log('todoInfo :', todoInfo);
+  // console.log('finalValue :', finalValue);
+
   return (
-    // <ColorSelect ref={dropDownRef}>
-    //   <input
-    //     type='text'
-    //     value={finalValue}
-    //     readOnly={true}
-    //     onClick={() => setIsOpen(!isOpen)}
-    //     placeholder='색상'
-    //   />
-    //   <DropIcon src={Arrow} />
-    //   {isOpen && (
-    //     <ul>
-    //       {color.list.map(el => (
-    //         <DropDownItem
-    //           key={el.index}
-    //           number={el.index}
-    //           name={el.name}
-    //           value={el.color}
-    //           setIsOpen={setIsOpen}
-    //           isOpen={isOpen}
-    //           setFinalValue={setFinalValue}
-    //           objInfo={objInfo}
-    //           setObjInfo={setObjInfo}
-    //         />
-    //       ))}
-    //     </ul>
-    //   )}
-    // </ColorSelect>
-    <ul>
-      하이
-      <li>1</li>
-      <li>2</li>
-    </ul>
+    <OkrDropBox ref={dropDownRef}>
+      <input
+        type='text'
+        value={finalValue}
+        readOnly={true}
+        onClick={() => setIsOpen(!isOpen)}
+        placeholder='KR 핵심 결과 선택'
+      />
+      <DropIcon src={Arrow} />
+      {isOpen && (
+        <OkrDropContainer>
+          <h2>KR 핵심 결과 선택</h2>
+          {okrData.map(data => (
+            <OkrItem key={data.objectiveId} style={{ color: `${data.color}` }}>
+              <div className='title'>
+                <span>O</span> {data.objective}
+              </div>
+              {data.keyresult.map((el, index) => (
+                <div key={index} className='keyresult' onClick={ValueClick}>
+                  <span style={{ color: `${data.color}` }}>KR{index + 1}</span>{' '}
+                  {el.keyResult}
+                </div>
+              ))}
+            </OkrItem>
+          ))}
+          <div
+            className='none'
+            onClick={ValueClick}
+            name='none 핵심결과 선택하지 않고 To Do 작성'>
+            <span>none</span> 핵심결과 선택하지 않고 To Do 작성
+          </div>
+        </OkrDropContainer>
+      )}
+    </OkrDropBox>
   );
 };
 

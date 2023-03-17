@@ -15,6 +15,7 @@ export const useDropDown = (ref, initialState) => {
   // 밖에 누르면 닫히기
   useEffect(() => {
     const clickOutside = e => {
+      // console.log(e.target);
       if (ref.current && !ref.current.contains(e.target)) {
         setIsOpen(!isOpen);
       }
