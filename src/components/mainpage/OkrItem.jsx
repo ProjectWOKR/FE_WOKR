@@ -14,6 +14,21 @@ const OkrObject = () => {
     onError: response => {},
   });
 
+  const { data: getKRData } = useQuery(['getObjective'], GetKR, {
+    onSuccess: response => {
+      // console.log('11', response);
+    },
+    onError: response => {},
+  });
+
+  const { data: getDeatilKRData } = useQuery(['getObjective'], GetDetailKR, {
+    onSuccess: response => {
+      // console.log('11dd', response);
+    },
+    onError: response => {},
+  });
+
+
   const { mutate: rangeMutate } = useMutation(PatchObjectiveProgress, {
     onSuccess: response => {
       queryClient.invalidateQueries(['getObjective']);

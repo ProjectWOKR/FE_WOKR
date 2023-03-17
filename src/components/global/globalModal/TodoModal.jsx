@@ -1,7 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { ModalBackground, ModalBox, OKRBox } from './modal.styled';
+import React, { useEffect, useState, useRef } from 'react';
+import {
+  ModalBackground,
+  ModalBox,
+  OKRBox,
+  ToggleContainer,
+} from './modal.styled';
 
 import DatePicker, { DateObject } from 'react-multi-date-picker';
+import TimePicker from 'react-multi-date-picker/plugins/time_picker';
 import transition from 'react-element-popper/animations/transition';
 import opacity from 'react-element-popper/animations/opacity';
 
@@ -13,6 +19,8 @@ import calender from '../../../assets/calender.png';
 import { OnChange } from '../onChange';
 import OkrDropDown from '../globaldropdown/OkrDropDown';
 import PriorityDropDown from '../globaldropdown/PriorityDropDown';
+import { useRecoilState } from 'recoil';
+import { ToggleEndState, ToggleStartState } from '../../../store/store';
 
 const TodoModal = ({
   onCloseTodoModal,
@@ -55,10 +63,13 @@ const TodoModal = ({
   }, []);
 
   const [todoInfo, setTodoInfo] = useState({
-    todo: '',
+    toDo: '',
     memo: '',
-    dDay: '',
     priority: '',
+    startDate: '',
+    endDate: '',
+    okr: '',
+    // display: '',
   });
 
   const [startDate, setStartDate] = useState({ format: 'MM/DD/YYYY' });
@@ -68,15 +79,37 @@ const TodoModal = ({
   const convertStart = (date, format = startDate.format) => {
     let object = { date, format };
     setStartDate(new DateObject(object).format());
-    setTodoInfo({ ...todoInfo, startdate: new DateObject(object).format() });
+    setTodoInfo({ ...todoInfo, startDate: new DateObject(object).format() });
   };
 
   //endDate 변환 함수
   const convertEnd = (date, format = startDate.format) => {
     let object = { date, format };
     setEndDate(new DateObject(object).format());
-    setTodoInfo({ ...todoInfo, enddate: new DateObject(object).format() });
+    setTodoInfo({ ...todoInfo, endDate: new DateObject(object).format() });
   };
+
+  // 시간 포함 토글
+  const [startWithTime, setStartWithTime] = useState(false);
+  const [endWithTime, setEndWithTime] = useState(false);
+
+  const [isStartOn, setIsStartOn] = useRecoilState(ToggleStartState);
+  const [isEndOn, setIsEndOn] = useRecoilState(ToggleEndState);
+
+  const startHandler = () => {
+    setIsStartOn(!isStartOn);
+    setStartWithTime(!startWithTime);
+  };
+
+  const endHandler = () => {
+    setIsEndOn(!isEndOn);
+    setEndWithTime(!endWithTime);
+  };
+
+  const submitBtn = () => {
+    console.log(todoInfo);
+  };
+
   return (
     <div>
       <ModalBackground ref={todoModalRef} onClick={todoModalOutSideClick} />
@@ -86,15 +119,18 @@ const TodoModal = ({
           <img src={close} alt='' onClick={onCloseTodoModal} />
         </div>
         <OKRBox>
-          <OkrDropDown />
-
           <div className='object itemBox'>
             <img src={todoOkr} alt='' />
+            <OkrDropDown todoInfo={todoInfo} setTodoInfo={setTodoInfo} />
+          </div>
+
+          <div className='object itemBox'>
+            <img src={todo} alt='' />
             <input
               type='text'
               placeholder='To Do 내용을 작성하세요'
               className='input'
-              name='todo'
+              name='toDo'
               onChange={event => {
                 OnChange(event, todoInfo, setTodoInfo);
               }}
@@ -117,45 +153,158 @@ const TodoModal = ({
           <div className='date'>
             <img src={calender} alt='' />
             <div className='dateBox'>
-              <DatePicker
-                inputClass='start-input'
-                containerClassName='start-container'
-                months={months}
-                weekDays={weekDays}
-                format={format}
-                placeholder='시작일'
-                value={startDate.date}
-                onChange={convertStart}
-                animations={[
-                  opacity(),
-                  transition({
-                    from: 40,
-                    transition:
-                      'all 400ms cubic-bezier(0.335, 0.010, 0.030, 1.360)',
-                  }),
-                ]}
-              />
+              {!startWithTime ? (
+                //시작시간이 false일 때
 
-              <DatePicker
-                inputClass='end-input'
-                containerClassName='end-container'
-                months={months}
-                weekDays={weekDays}
-                format={format}
-                placeholder='종료일'
-                value={endDate.date}
-                onChange={convertEnd}
-                animations={[
-                  opacity(),
-                  transition({
-                    from: 40,
-                    transition:
-                      'all 400ms cubic-bezier(0.335, 0.010, 0.030, 1.360)',
-                  }),
-                ]}
-              />
+                <DatePicker
+                  inputClass='start-input'
+                  containerClassName='start-container'
+                  months={months}
+                  weekDays={weekDays}
+                  format={format}
+                  placeholder='시작일'
+                  value={startDate.date}
+                  onChange={convertStart}
+                  animations={[
+                    opacity(),
+                    transition({
+                      from: 40,
+                      transition:
+                        'all 400ms cubic-bezier(0.335, 0.010, 0.030, 1.360)',
+                    }),
+                  ]}>
+                  <div className='border' />
+                  <div className='timeBox'>
+                    <span>시간 포함</span>
+                    <ToggleContainer onClick={startHandler}>
+                      <div
+                        className={`toggle-container ${
+                          startWithTime ? 'toggle--checked' : null
+                        }`}
+                      />
+                      <div
+                        className={`toggle-circle ${
+                          startWithTime ? 'toggle--checked' : null
+                        }`}
+                      />
+                    </ToggleContainer>
+                  </div>
+                </DatePicker>
+              ) : (
+                //시작 시간이 true 일때 (시,분 나옴)
+                <DatePicker
+                  inputClass='start-input'
+                  containerClassName='start-container'
+                  months={months}
+                  weekDays={weekDays}
+                  format='YYYY-MM-DD HH:mm'
+                  plugins={[<TimePicker position='bottom' hideSeconds />]}
+                  placeholder='시작일'
+                  value={startDate.date}
+                  onChange={convertStart}
+                  animations={[
+                    opacity(),
+                    transition({
+                      from: 40,
+                      transition:
+                        'all 400ms cubic-bezier(0.335, 0.010, 0.030, 1.360)',
+                    }),
+                  ]}>
+                  <div className='border' />
+                  <div className='timeBox'>
+                    <span>시간 포함</span>
+                    <ToggleContainer onClick={startHandler}>
+                      <div
+                        className={`toggle-container ${
+                          startWithTime ? 'toggle--checked' : null
+                        }`}
+                      />
+                      <div
+                        className={`toggle-circle ${
+                          startWithTime ? 'toggle--checked' : null
+                        }`}
+                      />
+                    </ToggleContainer>
+                  </div>
+                </DatePicker>
+              )}
+
+              {!endWithTime ? (
+                <DatePicker
+                  inputClass='end-input'
+                  containerClassName='end-container'
+                  months={months}
+                  weekDays={weekDays}
+                  format={format}
+                  placeholder='종료일'
+                  value={endDate.date}
+                  onChange={convertEnd}
+                  animations={[
+                    opacity(),
+                    transition({
+                      from: 40,
+                      transition:
+                        'all 400ms cubic-bezier(0.335, 0.010, 0.030, 1.360)',
+                    }),
+                  ]}>
+                  <div className='border' />
+                  <div className='timeBox'>
+                    <span>시간 포함</span>
+                    <ToggleContainer onClick={endHandler}>
+                      <div
+                        className={`toggle-container ${
+                          endWithTime ? 'toggle--checked' : null
+                        }`}
+                      />
+                      <div
+                        className={`toggle-circle ${
+                          endWithTime ? 'toggle--checked' : null
+                        }`}
+                      />
+                    </ToggleContainer>
+                  </div>
+                </DatePicker>
+              ) : (
+                <DatePicker
+                  inputClass='end-input'
+                  containerClassName={
+                    !endWithTime ? 'end-container' : 'end-container-time'
+                  }
+                  months={months}
+                  weekDays={weekDays}
+                  format='YYYY-MM-DD HH:mm'
+                  plugins={[<TimePicker position='bottom' />]}
+                  placeholder='종료일'
+                  value={endDate.date}
+                  onChange={convertEnd}
+                  animations={[
+                    opacity(),
+                    transition({
+                      from: 40,
+                      transition:
+                        'all 400ms cubic-bezier(0.335, 0.010, 0.030, 1.360)',
+                    }),
+                  ]}>
+                  <div className='border' />
+                  <div className='timeBox'>
+                    <span>시간 포함</span>
+                    <ToggleContainer onClick={endHandler}>
+                      <div
+                        className={`toggle-container ${
+                          endWithTime ? 'toggle--checked' : null
+                        }`}
+                      />
+                      <div
+                        className={`toggle-circle ${
+                          endWithTime ? 'toggle--checked' : null
+                        }`}
+                      />
+                    </ToggleContainer>
+                  </div>
+                </DatePicker>
+              )}
             </div>
-            <div className='colorBox'>
+            <div className='priorityBox'>
               <PriorityDropDown todoInfo={todoInfo} setTodoInfo={setTodoInfo} />
             </div>
           </div>
@@ -165,7 +314,9 @@ const TodoModal = ({
           <button onClick={onCloseTodoModal} className='cancel'>
             취소
           </button>
-          <button className='next'>저장</button>
+          <button className='next' onClick={submitBtn}>
+            저장
+          </button>
         </div>
       </ModalBox>
     </div>

@@ -158,6 +158,24 @@ export const OKRBox = styled.div`
           position: relative;
           top: -1rem;
         }
+        .border {
+          width: 21.8rem;
+          height: 1px;
+          border: 1px solid #f5f5f5;
+          margin: 0 auto;
+        }
+        .timeBox {
+          width: 21.8rem;
+          margin: 0 auto;
+          font-size: 1.4rem;
+          font-weight: 500;
+          padding: 1.1rem 0;
+          box-sizing: border-box;
+
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
       }
       .end-container {
         .end-input {
@@ -169,8 +187,6 @@ export const OKRBox = styled.div`
           top: 0px;
           right: 0px;
           text-align: center;
-          /* background-color: pink; */
-          /* z-index: 1; */
           background: url(${end}) no-repeat center / 100%;
           :hover {
             background: url(${endHover}) no-repeat center / 100%;
@@ -182,6 +198,65 @@ export const OKRBox = styled.div`
         .rmdp-wrapper {
           position: absolute;
           top: 3.5rem;
+        }
+        .border {
+          width: 21.8rem;
+          height: 1px;
+          border: 1px solid #f5f5f5;
+          margin: 0 auto;
+        }
+        .timeBox {
+          width: 21.8rem;
+          margin: 0 auto;
+          font-size: 1.4rem;
+          font-weight: 500;
+          padding: 1.1rem 0;
+          box-sizing: border-box;
+
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+      }
+      .end-container-time {
+        .end-input {
+          width: 23rem;
+          height: 4.5rem;
+          border: none;
+          outline: none;
+          position: absolute;
+          top: 0px;
+          right: 0px;
+          text-align: center;
+          background: url(${end}) no-repeat center / 100%;
+          :hover {
+            background: url(${endHover}) no-repeat center / 100%;
+          }
+        }
+        .ep-arrow {
+          display: none;
+        }
+        .rmdp-wrapper {
+          position: absolute;
+          bottom: 3.5rem;
+        }
+        .border {
+          width: 21.8rem;
+          height: 1px;
+          border: 1px solid #f5f5f5;
+          margin: 0 auto;
+        }
+        .timeBox {
+          width: 21.8rem;
+          margin: 0 auto;
+          font-size: 1.4rem;
+          font-weight: 500;
+          padding: 1.1rem 0;
+          box-sizing: border-box;
+
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
         }
       }
     }
@@ -197,6 +272,12 @@ export const OKRBox = styled.div`
         background-color: #9b9b9b;
         margin-right: 1.3rem;
       }
+    }
+    .priorityBox {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
     }
   }
 `;
@@ -266,5 +347,35 @@ export const NotHave = styled.div`
   }
   & :hover {
     border-color: var(--main-color);
+  }
+`;
+
+export const ToggleContainer = styled.div`
+  position: relative;
+  margin-top: 0.8rem;
+  cursor: pointer;
+  .toggle-container {
+    width: 50px;
+    height: 24px;
+    border-radius: 30px;
+    background-color: rgb(233, 233, 234);
+  }
+  .toggle--checked {
+    background-color: #ff8336;
+    transition: 0.5s;
+  }
+  .toggle-circle {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: rgb(255, 254, 255);
+    transition: 0.5s;
+  }
+  .toggle--checked {
+    left: 27px;
+    transition: 0.5s;
   }
 `;

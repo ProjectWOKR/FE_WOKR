@@ -15,8 +15,6 @@ export default function OKR() {
   //모달 상태관리
   const [okrModalOn, setOkrModalOn] = useState(false);
 
-  useEffect(() => {}, []);
-
   /**모달 닫는 함수 */
   const onCloseModal = () => {
     setOkrModalOn(!okrModalOn);
