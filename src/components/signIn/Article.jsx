@@ -81,6 +81,7 @@ const Test = () => {
   const [signValidation, setSignValidation] = useState('');
   const { mutate: signInMutate } = useMutation(SignIn, {
     onSuccess: response => {
+      console.log(response);
       localStorage.setItem('accesstoken', response.accessToken);
       navigate('/mainpage');
     },
