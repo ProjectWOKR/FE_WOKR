@@ -36,7 +36,7 @@ export default function OKR() {
 
   const { data: getOKRData } = useQuery(['OKR'], GetOKR, {
     onSuccess: response => {
-      console.log(response);
+      // console.log(response);
     },
     onError: response => {},
   });
@@ -54,7 +54,6 @@ export default function OKR() {
           </div>
         </div>
       </HeaderBox>
-      {/* <Container2> */}
       <OkrContainer>
         {getOKRData?.length === 0 ? (
           <NotHave>
@@ -68,7 +67,6 @@ export default function OKR() {
           <OkrObject />
         )}
       </OkrContainer>
-      {/* </Container2> */}
       <Potal>
         {okrModalOn && (
           <OkrModal

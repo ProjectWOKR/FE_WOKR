@@ -30,7 +30,6 @@ const OkrDropDown = ({ setTodoInfo, todoInfo }) => {
     },
   });
 
-
   const ValueClick = e => {
     setIsOpen(!isOpen);
     setFinalValue(e.target.outerText);

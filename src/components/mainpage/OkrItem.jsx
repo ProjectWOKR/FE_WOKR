@@ -3,6 +3,7 @@ import { OKRBox, Objective, OKRSpace, KRBox } from './OKR.styled';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { GetDetailKR, GetKR, GetObjective, GetOKR } from '../../apis/apiGET.js';
 import { PatchObjectiveProgress } from '../../apis/apiFETCH';
+import Test from './Test';
 
 const OkrObject = () => {
   const queryClient = useQueryClient();
@@ -27,7 +28,6 @@ const OkrObject = () => {
     },
     onError: response => {},
   });
-
 
   const { mutate: rangeMutate } = useMutation(PatchObjectiveProgress, {
     onSuccess: response => {
@@ -61,6 +61,7 @@ const OkrObject = () => {
       rangeMutate({ value, id });
     }
   };
+  // console.log(slicedArray);
 
   return (
     <div>
@@ -88,6 +89,7 @@ const OkrObject = () => {
                     onRangeMouseUp(index, data.objectiveId);
                   }}
                 />
+                <div className='background' />
                 <div className='percent'>{data.progress}%</div>
               </Objective>
 
@@ -116,6 +118,7 @@ const OkrObject = () => {
         );
       })}
     </div>
+    // <Test />
   );
 };
 
