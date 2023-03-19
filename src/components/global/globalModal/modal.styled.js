@@ -70,6 +70,9 @@ export const ModalBox = styled.div`
       box-shadow: 0px 2px 4px rgba(255, 131, 54, 0.7);
     }
   }
+  .rangeInfo {
+    font-size: 20px;
+  }
 `;
 
 export const OKRBox = styled.div`

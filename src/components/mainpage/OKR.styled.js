@@ -71,6 +71,21 @@ export const Objective = styled.div`
     color: ${({ color }) => `${color === 'red' ? '#ff8336' : '#457eff'}`};
     cursor: default;
   }
+  .NameBox {
+    display: flex;
+    flex-direction: column;
+    .Cal {
+      margin-left: 16px;
+      width: 185px;
+      height: 18px;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12.5px;
+      line-height: 17px;
+      color: #4b4b4b;
+    }
+  }
+
   .Name {
     width: 300px;
     margin-top: 23px;
@@ -83,10 +98,11 @@ export const Objective = styled.div`
     cursor: default;
   }
   .Range {
-    width: 205px;
+    width: 123px;
     height: 11px;
     margin-top: 34px;
     margin-left: 47px;
+    cursor: pointer;
   }
   .percent {
     font-weight: 300;
@@ -97,6 +113,12 @@ export const Objective = styled.div`
     margin-left: 14px;
     color: ${({ color }) => `${color === 'red' ? '#ff8336' : '#457eff'}`};
     cursor: default;
+  }
+  .patchbtn {
+    margin-top: 26px;
+    margin-left: 5px;
+    width: 50px;
+    height: 30px;
   }
 `;
 
@@ -140,10 +162,11 @@ export const KRBox = styled.div`
     cursor: default;
   }
   .Range {
-    width: 205px;
+    width: 123px;
     height: 11px;
     margin-top: 15px;
     margin-left: 73px;
+    cursor: pointer;
   }
   .percent {
     font-weight: 300;
@@ -173,5 +196,31 @@ export const KRBox = styled.div`
     font-size: 20px;
     letter-spacing: -0.01em;
     color: #ff8336;
+  }
+  .patchbtn {
+    margin-top: 7px;
+    width: 50px;
+    height: 30px;
+  }
+`;
+
+export const EmptyKR = styled.button`
+  width: 722px;
+  height: 40px;
+  background: #ffffff;
+  color: #aaaaaa;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 27px;
+  letter-spacing: -0.01em;
+  border: none;
+  border-radius: 7px;
+  margin-top: 8px;
+  margin-left: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .img {
+    padding: 5px;
   }
 `;
