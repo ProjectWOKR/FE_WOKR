@@ -72,6 +72,7 @@ export default function Mainpage() {
 const Wrap = styled.div`
   display: flex;
   height: auto;
+  /* background-color: pink; */
 `;
 
 const MainContainer = styled.div`
@@ -83,4 +84,5 @@ const MainContainer = styled.div`
 
 const OkrContainer = styled.div`
   display: flex;
+  /* background-color: skyblue; */
 `;

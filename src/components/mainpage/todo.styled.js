@@ -50,58 +50,69 @@ export const TodoContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   box-sizing: border-box;
-  border: 1px solid #e8e8e8;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 8px;
 `;
 
 export const StTodoItem = styled.div`
   width: 100%;
-  height: calc(100% / 8);
-  border-top: 1px solid #000;
-  border-left: 1px solid #000;
-  border-right: 1px solid #000;
-  box-sizing: border-box;
-  :nth-last-child(1) {
+  height: 5.3rem;
+
+  /* :nth-last-child(1) {
     border-bottom: 1px solid #000;
-  }
+  } */
   .todo {
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
+    padding: 0 13px 0 20px;
+    margin-bottom: 8px;
+    background-color: #f8f8f8;
+    box-shadow: 0px 1px 4px rgba(210, 210, 210, 0.7);
+    border-radius: 8px;
+    :nth-last-child(1) {
+      margin-bottom: 0;
+    }
     .title {
-      width: 100px;
-      height: 100%;
+      width: 43px;
+      /* height: 19px; */
+      /* background-color: skyblue; */
       text-align: center;
-      font-size: 35px;
-      font-weight: bold;
-      background-color: #ff5757;
-      /* line-height: 46.25px; */
+      color: #9b9b9b;
+      font-size: 14px;
+      font-weight: 700;
+      margin-right: 31px;
     }
     .detail {
-      width: calc(100% - 80px);
+      /* width: calc(100% - 80px); */
+      width: 100%;
       height: 100%;
       display: flex;
       justify-content: space-between;
-      padding: 0 10px;
       box-sizing: border-box;
-      background-color: #fff;
+      padding: 3px 0 5px 0;
+      /* background-color: pink; */
+      /* background-color: #fff; */
       .name_date {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         font-size: 15px;
         font-weight: bold;
+        color: #4b4b4b;
+        font-weight: 500;
         div {
-          font-size: 18px;
+          font-size: 19px;
+        }
+        p {
+          margin: 0;
+          font-size: 12.5px;
         }
       }
       .priorityBox {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        gap: 8px;
+        gap: 20px;
         .priority {
           width: 30px;
           height: 30px;
@@ -113,6 +124,13 @@ export const StTodoItem = styled.div`
           height: 30px;
           border-radius: 50%;
           background-color: #ccc;
+          position: relative;
+          img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+          }
         }
       }
     }

@@ -49,9 +49,9 @@ export default function OKR() {
           <div onClick={createOKR}>
             <img src={plus} alt='' />
           </div>
-          <div>
+          {/* <div>
             <img src={more} alt='' />
-          </div>
+          </div> */}
         </div>
       </HeaderBox>
       <OkrContainer>

@@ -74,7 +74,7 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   };
 
   //endDate 변환 함수
-  const convertEnd = (date, format = startDate.format) => {
+  const convertEnd = (date, format = endDate.format) => {
     let object = { date, format };
     setEndDate(new DateObject(object).format());
     setObjInfo({ ...objInfo, enddate: new DateObject(object).format() });
@@ -99,8 +99,7 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
     } else if (endd < startd) {
       return toast('종료일은 시작일보다 빠르게 설정할 수 없습니다.');
     } else if (objInfo.color === '') {
-      setObjInfo({ ...objInfo, color: '#9B9B9B' });
-      toast('색상을 선택하지 않으면 회색이 기본입니다.');
+      toast('색상을 선택해 주세요.');
     } else {
       console.log('성공');
       createObjectiveMutate(objInfo);
@@ -146,12 +145,24 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
     }
   };
 
+  // console.log('title :', title.keyResultDate);
   const createKr = () => {
     const value = title;
     const id = objectId;
     console.log('id', id);
-    createKrMutate({ value, id });
+
+    if (
+      title.keyResultDate[0] === '' &&
+      title.keyResultDate[1] === '' &&
+      title.keyResultDate[2] === ''
+    ) {
+      return toast('KR핵심 결과를 한 개 이상 작성해주세요.');
+    } else {
+      createKrMutate({ value, id });
+    }
   };
+
+  // console.log(startDate.date);
 
   return (
     <>
@@ -214,6 +225,7 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
                 저장
               </button>
             </div>
+            <Toast />
           </>
         ) : (
           <>
@@ -245,7 +257,7 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
                     weekDays={weekDays}
                     format={format}
                     placeholder='시작일'
-                    value={startDate.date}
+                    value={startDate.date || ''}
                     onChange={convertStart}
                     animations={[
                       opacity(),
@@ -264,7 +276,7 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
                     weekDays={weekDays}
                     format={format}
                     placeholder='종료일'
-                    value={endDate.date}
+                    value={endDate.date || ''}
                     onChange={convertEnd}
                     animations={[
                       opacity(),
@@ -279,7 +291,9 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
                 <div className='colorBox'>
                   <div
                     className='color'
-                    style={{ backgroundColor: `${objInfo.color}` }}
+                    style={{
+                      backgroundColor: `${objInfo.color}`,
+                    }}
                   />
                   <ColorDropDown objInfo={objInfo} setObjInfo={setObjInfo} />
                 </div>
