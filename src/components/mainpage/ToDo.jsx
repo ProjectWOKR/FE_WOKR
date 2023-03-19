@@ -4,8 +4,6 @@ import Potal from '../global/globalModal/Potal';
 import TodoModal from '../global/globalModal/TodoModal';
 import {
   Container,
-  Container2,
-  CreateBtn,
   Header,
   HeaderBox,
   TodoContainer,
@@ -15,6 +13,8 @@ import TodoItem from './TodoItem';
 
 import plus from '../../assets/plus.png';
 import more from '../../assets/more.png';
+import { useQuery } from '@tanstack/react-query';
+import { GetTodo } from '../../apis/apiGET';
 
 export default function ToDo() {
   //모달 상태관리
@@ -36,6 +36,14 @@ export default function ToDo() {
       setTodoModalOn(!todoModalOn);
     }
   };
+
+  // 임시
+  const { data: getTodo } = useQuery(['TODO'], GetTodo, {
+    onSuccess: response => {
+      // console.log(getTodo);
+    },
+    onError: response => {},
+  });
   return (
     <Container>
       <HeaderBox>
@@ -51,18 +59,9 @@ export default function ToDo() {
       </HeaderBox>
 
       <TodoContainer>
-        {/* <StTodoItem>
-            <TodoItem />
-          </StTodoItem>
+        {getTodo?.length !== 0 ? (
           <StTodoItem>
-            <TodoItem />
-          </StTodoItem>
-          <StTodoItem>
-            <TodoItem />
-          </StTodoItem> */}
-        {!TodoItem ? (
-          <StTodoItem>
-            <TodoItem />
+            <TodoItem getTodo={getTodo} />
           </StTodoItem>
         ) : (
           <NotHave>

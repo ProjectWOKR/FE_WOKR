@@ -1,8 +1,8 @@
 import React from 'react';
 import { Layout, LogoImg, Logout } from './header.styled';
-import Logo from '../../../assets/WORK.png';
-import { useNavigate } from 'react-router-dom';
 
+import { useNavigate } from 'react-router-dom';
+import logo from '../../../assets/logo.png';
 import alarm from '../../../assets/alarm.png';
 import user from '../../../assets/user.png';
 
@@ -16,7 +16,7 @@ export default function Header() {
   return (
     <Layout>
       <LogoImg
-        src={Logo}
+        src={logo}
         onClick={() => {
           navigate('/');
         }}

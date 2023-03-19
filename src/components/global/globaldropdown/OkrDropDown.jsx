@@ -17,24 +17,32 @@ const OkrDropDown = ({ setTodoInfo, todoInfo }) => {
   const [isOpen, setIsOpen] = useDropDown(dropDownRef, false);
   const [finalValue, setFinalValue] = useState('');
 
-  const [okrData, setOkrData] = useState();
+  // const [okrData, setOkrData] = useState();
 
   const { data: getOkrData } = useQuery(['getOkr'], GetOKR, {
     onSuccess: response => {
-      console.log(response);
-      setOkrData(response);
+      // console.log(response);
+      // setOkrData(response);
     },
     onError: response => {
       // console.log('실패');
       console.log(response);
     },
   });
+  // console.log(getOkrData);
 
   const ValueClick = e => {
     setIsOpen(!isOpen);
+    // console.log('e.target :', e.target.id);
     setFinalValue(e.target.outerText);
 
-    setTodoInfo({ ...todoInfo, okr: e.target.outerText });
+    if (e.target.id === '') {
+      // console.log('none일때');
+      setTodoInfo({ ...todoInfo, keyResultId: 0 });
+    } else {
+      // console.log('id가 있을때');
+      setTodoInfo({ ...todoInfo, keyResultId: Number(e.target.id) });
+    }
   };
 
   console.log('todoInfo :', todoInfo);
@@ -53,14 +61,18 @@ const OkrDropDown = ({ setTodoInfo, todoInfo }) => {
       {isOpen && (
         <OkrDropContainer>
           <h2>KR 핵심 결과 선택</h2>
-          {okrData.map(data => (
+          {getOkrData.map(data => (
             <OkrItem key={data.objectiveId} style={{ color: `${data.color}` }}>
               <div className='title'>
                 <span>O</span> {data.objective}
               </div>
               {data.keyresult.map((el, index) => (
-                <div key={index} className='keyresult' onClick={ValueClick}>
-                  <span style={{ color: `${data.color}` }}>KR{index + 1}</span>{' '}
+                <div
+                  key={el.keyResultId}
+                  className='keyresult'
+                  id={el.keyResultId}
+                  onClick={ValueClick}>
+                  <span style={{ color: `${data.color}` }}>KR{index + 1}</span>
                   {el.keyResult}
                 </div>
               ))}

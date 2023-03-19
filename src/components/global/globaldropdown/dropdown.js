@@ -46,12 +46,12 @@ export const teamPosi = {
 
 export const color = {
   list: [
-    { index: 1, color: '#9B9B9B', name: '그레이' },
-    { index: 2, color: '#D2EB8A', name: '라임' },
-    { index: 3, color: '#FFF384', name: '레몬' },
-    { index: 4, color: '#FFC6D7', name: '바비' },
-    { index: 5, color: '#BFD9FF', name: '소라' },
-    { index: 6, color: '#D6B6FF', name: '보라' },
+    { index: 1, color: '#F35330', name: '파이어' },
+    { index: 2, color: '#457EFF', name: '워터' },
+    { index: 3, color: '#9747FF', name: '퍼플' },
+    { index: 4, color: '#00E58C', name: '그린' },
+    // { index: 5, color: '#BFD9FF', name: '소라' },
+    // { index: 6, color: '#D6B6FF', name: '보라' },
   ],
 };
 

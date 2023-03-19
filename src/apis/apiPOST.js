@@ -19,3 +19,10 @@ export async function CreateKR({ value, id }) {
   const { data } = await api.post(`api/${id}/keyresult`, value);
   return data;
 }
+
+export async function CreateTodo(Info) {
+  console.log('ddd');
+  console.log(Info);
+  const { data } = await api.post(`api/todo`, Info);
+  return data;
+}

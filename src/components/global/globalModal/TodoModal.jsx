@@ -21,12 +21,16 @@ import OkrDropDown from '../globaldropdown/OkrDropDown';
 import PriorityDropDown from '../globaldropdown/PriorityDropDown';
 import { useRecoilState } from 'recoil';
 import { ToggleEndState, ToggleStartState } from '../../../store/store';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { CreateTodo } from '../../../apis/apiPOST';
 
 const TodoModal = ({
   onCloseTodoModal,
   todoModalRef,
   todoModalOutSideClick,
 }) => {
+  const queryClient = useQueryClient();
+
   const months = [
     '1월',
     '2월',
@@ -68,21 +72,23 @@ const TodoModal = ({
     priority: '',
     startDate: '',
     endDate: '',
-    okr: '',
-    // display: '',
+    keyResultId: '',
   });
 
-  const [startDate, setStartDate] = useState({ format: 'MM/DD/YYYY' });
-  const [endDate, setEndDate] = useState({ format: 'MM/DD/YYYY' });
+  // const [startDate, setStartDate] = useState({ format: 'MM/DD/YYYY' });
+  // const [endDate, setEndDate] = useState({ format: 'MM/DD/YYYY' });
 
-  //startDate 변환 함수
+  const [startDate, setStartDate] = useState({ format: 'MM/DD/YYYY HH:mm' });
+  const [endDate, setEndDate] = useState({ format: 'MM/DD/YYYY HH:mm' });
+
+  //startDate 변환 함수 년,월
   const convertStart = (date, format = startDate.format) => {
     let object = { date, format };
     setStartDate(new DateObject(object).format());
     setTodoInfo({ ...todoInfo, startDate: new DateObject(object).format() });
   };
 
-  //endDate 변환 함수
+  //endDate 변환 함수 년, 월
   const convertEnd = (date, format = startDate.format) => {
     let object = { date, format };
     setEndDate(new DateObject(object).format());
@@ -106,8 +112,21 @@ const TodoModal = ({
     setEndWithTime(!endWithTime);
   };
 
+  const { mutate: createTodo } = useMutation(CreateTodo, {
+    onSuccess: response => {
+      console.log('성공');
+      queryClient.invalidateQueries(['TODO']);
+    },
+    onError: response => {
+      console.log('실패');
+    },
+  });
+
   const submitBtn = () => {
+    const startd = new Date(todoInfo.endDate);
+    console.log('start :', startd);
     console.log(todoInfo);
+    createTodo(todoInfo);
   };
 
   return (
@@ -273,7 +292,7 @@ const TodoModal = ({
                   months={months}
                   weekDays={weekDays}
                   format='YYYY-MM-DD HH:mm'
-                  plugins={[<TimePicker position='bottom' />]}
+                  plugins={[<TimePicker position='bottom' hideSeconds />]}
                   placeholder='종료일'
                   value={endDate.date}
                   onChange={convertEnd}

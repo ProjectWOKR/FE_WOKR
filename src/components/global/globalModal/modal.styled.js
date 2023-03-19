@@ -269,8 +269,9 @@ export const OKRBox = styled.div`
         width: 3.9rem;
         height: 3.7rem;
         border-radius: 10px;
-        background-color: #9b9b9b;
+        background-color: #fff;
         margin-right: 1.3rem;
+        border: 1.5px solid rgb(232, 232, 232);
       }
     }
     .priorityBox {

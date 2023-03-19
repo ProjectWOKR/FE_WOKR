@@ -27,6 +27,7 @@ const GlobalStyle = createGlobalStyle`
 
   --input-hover : 1.5px solid #FF8336;
   --input-focus : drop-shadow(0px 3px 10px #FF8336);
+  --toastify-toast-width: 380px;
   body{
     background-color: var(--bg-color);
     margin: 0;
