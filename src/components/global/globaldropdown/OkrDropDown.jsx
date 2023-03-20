@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { useDropDown, color } from './dropdown';
+import { useDropDown } from './dropdown';
 import {
   DropIcon,
   OkrDropBox,
@@ -7,12 +7,10 @@ import {
   OkrItem,
 } from './dropDown.styled';
 import Arrow from '../../../assets/dropdownArrow.png';
-import styled from 'styled-components';
 import { useQuery } from '@tanstack/react-query';
 import { GetOKR } from '../../../apis/apiGET';
-import { Objective } from './../../mainpage/OKR.styled';
 
-const OkrDropDown = ({ setTodoInfo, todoInfo }) => {
+const OkrDropDown = ({ setTodoInfo, todoInfo, setKid, setOid }) => {
   const dropDownRef = useRef(null);
   const [isOpen, setIsOpen] = useDropDown(dropDownRef, false);
   const [finalValue, setFinalValue] = useState('');
@@ -21,32 +19,30 @@ const OkrDropDown = ({ setTodoInfo, todoInfo }) => {
 
   const { data: getOkrData } = useQuery(['getOkr'], GetOKR, {
     onSuccess: response => {
-      // console.log(response);
+      console.log(response);
       // setOkrData(response);
     },
-    onError: response => {
-      // console.log('실패');
-      console.log(response);
-    },
+    onError: response => {},
   });
-  // console.log(getOkrData);
 
   const ValueClick = e => {
     setIsOpen(!isOpen);
-    // console.log('e.target :', e.target.id);
+    console.log();
+    // console.log('name :', name);
+    console.log(e.target.outerText);
     setFinalValue(e.target.outerText);
 
     if (e.target.id === '') {
       // console.log('none일때');
-      setTodoInfo({ ...todoInfo, keyResultId: 0 });
+      setKid(0);
+      setOid(0);
     } else {
       // console.log('id가 있을때');
-      setTodoInfo({ ...todoInfo, keyResultId: Number(e.target.id) });
+      // console.log(e.target.attributes.name.value);
+      setOid(Number(e.target.attributes.name.value));
+      setKid(Number(e.target.id));
     }
   };
-
-  console.log('todoInfo :', todoInfo);
-  // console.log('finalValue :', finalValue);
 
   return (
     <OkrDropBox ref={dropDownRef}>
@@ -55,7 +51,7 @@ const OkrDropDown = ({ setTodoInfo, todoInfo }) => {
         value={finalValue}
         readOnly={true}
         onClick={() => setIsOpen(!isOpen)}
-        placeholder='KR 핵심 결과 선택'
+        placeholder='none 핵심결과 선택하지 않고 To Do 작성'
       />
       <DropIcon src={Arrow} />
       {isOpen && (
@@ -71,6 +67,8 @@ const OkrDropDown = ({ setTodoInfo, todoInfo }) => {
                   key={el.keyResultId}
                   className='keyresult'
                   id={el.keyResultId}
+                  name={data.objectiveId}
+                  value={data.objectiveId}
                   onClick={ValueClick}>
                   <span style={{ color: `${data.color}` }}>KR{index + 1}</span>
                   {el.keyResult}

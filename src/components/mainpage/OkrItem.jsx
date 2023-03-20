@@ -104,7 +104,7 @@ const OkrObject = () => {
   // console.log('slicedArray:,');
   const { data: getOKRData } = useQuery(['OKR'], GetOKR, {
     onSuccess: response => {
-      console.log(response);
+      // console.log(response);
       // queryClient.invalidateQueries(['OKR']);
       // console.log('getOKRData :', response);
       setSlicedArray(response?.slice(0, 2));

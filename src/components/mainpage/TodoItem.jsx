@@ -7,32 +7,21 @@ import blue from '../../assets/todoBlue.png';
 import check from '../../assets/check.png';
 
 const TodoItem = () => {
-  // console.log(getTodo);
-
   const { data: getTodo } = useQuery(['TODO'], GetTodo, {
     onSuccess: response => {
-      // console.log(getTodo);
+      // console.log(response);
     },
     onError: response => {},
   });
 
+  // 체크 확인
   const [completionInfo, setCompletionInfo] = useState({
     completion: false,
   });
 
   const Check = ({ el }) => {
-    // console.log(el);
     const onClickCheck = () => {
       console.log('눌림');
-      // if (el.completion === true) {
-      //   setCompletionInfo({ ...completionInfo, completion: false });
-      //   console.log(el.completion);
-      //   console.log(completionInfo);
-      // } else {
-      //   setCompletionInfo({ ...completionInfo, completion: true });
-      //   console.log(el.completion);
-      //   console.log(completionInfo);
-      // }
     };
     if (!el.completion) {
       return <div className='check' onClick={onClickCheck} />;
@@ -60,22 +49,16 @@ const TodoItem = () => {
     <>
       {getTodo?.map((el, index) => (
         <div className='todo' key={index}>
-          <div className='title'>none</div>
+          <div className='title' style={{ color: el.color }}>
+            none
+          </div>
           <div className='detail'>
             <div className='name_date'>
               <div>{el.toDo}</div>
-              <p>2월 3일</p>
+              <p>{el.fstartDate}</p>
             </div>
             <div className='priorityBox'>
-              {/* <img src={flag} alt='' /> */}
               <Priority el={el} />
-              {/* {el.completion === false ? (
-                <div className='check' onClick={onClick} />
-              ) : (
-                <div className='check' onClick={onClick}>
-                  <img src={check} alt='' />
-                </div>
-              )} */}
               <Check el={el} />
             </div>
           </div>
