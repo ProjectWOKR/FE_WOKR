@@ -9,13 +9,20 @@ import two from '../../../assets/two.png';
 import three from '../../../assets/three.png';
 import four from '../../../assets/four.png';
 
+import good from '../../../assets/good.png';
+import normal from '../../../assets/normal.png';
+import bad from '../../../assets/bad.png';
+
 export const useDropDown = (ref, initialState) => {
   const [isOpen, setIsOpen] = useState(initialState);
 
   // 밖에 누르면 닫히기
   useEffect(() => {
     const clickOutside = e => {
-      // console.log(e.target);
+      console.log(ref.current);
+      console.log(e.target);
+      console.log(ref.current.contains(e.target)); //true
+      console.log(ref.current && !ref.current.contains(e.target)); // false
       if (ref.current && !ref.current.contains(e.target)) {
         setIsOpen(!isOpen);
       }
@@ -50,8 +57,6 @@ export const color = {
     { index: 2, color: '#457EFF', name: '워터' },
     { index: 3, color: '#9747FF', name: '퍼플' },
     { index: 4, color: '#00E58C', name: '그린' },
-    // { index: 5, color: '#BFD9FF', name: '소라' },
-    // { index: 6, color: '#D6B6FF', name: '보라' },
   ],
 };
 
@@ -61,5 +66,13 @@ export const priority = {
     { flag: yellowF, number: two, desc: '2순위', name: '2' },
     { flag: blueF, number: three, desc: '3순위', name: '3' },
     { flag: grayF, number: four, desc: '4순위', name: '4' },
+  ],
+};
+
+export const emotion = {
+  list: [
+    { emotion: good, name: 1 },
+    { emotion: normal, name: 0 },
+    { emotion: bad, name: 2 },
   ],
 };

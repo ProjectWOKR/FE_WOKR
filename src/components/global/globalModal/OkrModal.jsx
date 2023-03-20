@@ -18,6 +18,7 @@ import { CreateObjective, CreateKR } from '../../../apis/apiPOST';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Toast from '../Toast';
 import { toast } from 'react-toastify';
+import { reactDom } from 'react-dom';
 
 const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const queryClient = useQueryClient();
@@ -257,6 +258,7 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
                     weekDays={weekDays}
                     format={format}
                     placeholder='시작일'
+                    // readOnly
                     value={startDate.date || ''}
                     onChange={convertStart}
                     animations={[
@@ -276,6 +278,7 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
                     weekDays={weekDays}
                     format={format}
                     placeholder='종료일'
+                    // readOnly
                     value={endDate.date || ''}
                     onChange={convertEnd}
                     animations={[

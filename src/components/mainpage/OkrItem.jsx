@@ -5,15 +5,17 @@ import Portal from '../global/globalModal/Potal';
 import OkrPatchModal from '../global/globalModal/OkrPatchModal';
 import KrPatchModal from '../global/globalModal/KrPatchModal';
 import ProgressPatchModal from '../global/globalModal/ProgressPatchModal';
-import { GetOKR } from '../../apis/apiGET.js';
+import { GetKR, GetOKR } from '../../apis/apiGET.js';
 import { PatchObjectiveProgress } from '../../apis/apiPATCH';
 import {
   patchOKRInfo,
   patchKRInfo,
   patchProgressInfo,
+  IsOpen,
 } from '../../store/store';
-import { useSetRecoilState } from 'recoil';
+import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil';
 import kRAdd from '../../assets/KRAdd.png';
+import Emotion from '../global/globaldropdown/Emotion';
 
 const OkrObject = () => {
   const queryClient = useQueryClient();
@@ -48,6 +50,7 @@ const OkrObject = () => {
 
   /** +버튼 누르면 KR 생성하는 모달 띄움 */
   const patchKR = (id, KR) => {
+    // console.log(id, KR);
     setPatchkrInfo({
       id: id,
       kr: KR,
@@ -96,20 +99,29 @@ const OkrObject = () => {
     }
   };
 
+  const [slicedArray, setSlicedArray] = useState([]);
+
+  // console.log('slicedArray:,');
   const { data: getOKRData } = useQuery(['OKR'], GetOKR, {
     onSuccess: response => {
+      console.log(response);
+      // queryClient.invalidateQueries(['OKR']);
+      // console.log('getOKRData :', response);
       setSlicedArray(response?.slice(0, 2));
-      console.log(slicedArray);
     },
     onError: response => {},
   });
 
-  const [slicedArray, setSlicedArray] = useState([]);
+  // console.log(slicedArray);
 
+  // const [isOpen, setIsOpen] = useState(false);
+
+  // const [isOpen, setIsOpen] = useRecoilState(IsOpen);
   return (
     <div>
       {slicedArray?.map((data, index) => {
         const color = index % 2 === 0 ? 'red' : 'blue';
+        // console.log(data);
         return (
           <OKRBox key={index}>
             <>
@@ -162,6 +174,7 @@ const OkrObject = () => {
                 </>
               ) : (
                 data?.keyresult.map((KR, index) => {
+                  // console.log(KR);
                   return KR.keyResult !== '' ? (
                     <KRBox key={KR.keyResultId} color={color}>
                       <div className='Logo'>KR{index + 1}</div>
@@ -179,7 +192,12 @@ const OkrObject = () => {
                       />
                       <div className='percent'>{KR.progress}%</div>
                       <div className='emotionBox'>
-                        <div className='emotion'>🙂</div>
+                        {slicedArray && (
+                          <Emotion
+                            keyResultId={KR.keyResultId}
+                            emotionState={KR.emotion}
+                          />
+                        )}
                       </div>
                       <button
                         className='patchbtn'

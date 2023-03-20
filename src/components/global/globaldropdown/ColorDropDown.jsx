@@ -29,7 +29,7 @@ const ColorDropDown = ({ setObjInfo, objInfo }) => {
   };
 
   return (
-    <ColorSelect ref={dropDownRef}>
+    <ColorSelect ref={dropDownRef} className='ref'>
       <input
         type='text'
         value={finalValue}

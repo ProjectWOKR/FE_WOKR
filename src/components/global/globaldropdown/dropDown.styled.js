@@ -296,3 +296,38 @@ export const OkrItem = styled.div`
     }
   }
 `;
+
+export const EmotionSelect = styled.div`
+  width: 35px;
+  height: 35px;
+  position: relative;
+  /* background-color: pink; */
+  .emotion {
+    width: 100%;
+    height: 100%;
+    background-color: skyblue;
+  }
+  ul {
+    width: 5.4rem;
+    position: absolute;
+    z-index: 9;
+    margin: 0 auto;
+    padding: 1.5rem 1rem;
+    box-sizing: border-box;
+    background-color: #fff;
+    box-shadow: 0px 2px 5px rgba(150, 150, 150, 0.65);
+    border-radius: 12px;
+    transition: all 0.3s;
+    li {
+      width: 3.5rem;
+      height: 3.5rem;
+      margin-bottom: 1rem;
+      :nth-last-child(1) {
+        margin-bottom: 0rem;
+      }
+      :hover {
+        transform: scale(1.16);
+      }
+    }
+  }
+`;

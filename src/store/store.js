@@ -33,3 +33,10 @@ export const patchProgressInfo = atom({
     state: '',
   },
 });
+
+// export const patchEmotion = atom({
+//   key: 'emotionInfo',
+//   default: {
+//     emotion: '',
+//   },
+// });

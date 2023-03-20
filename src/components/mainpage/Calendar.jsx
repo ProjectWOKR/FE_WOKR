@@ -11,9 +11,8 @@ export default function Calendar() {
 
   const { data: getTodo } = useQuery(['TODO'], GetTodo, {
     onSuccess: response => {
-      // console.log(getTodo);
-      // setCalendarData(getTodo);
-      getTodo?.map(el => {
+      // console.log(response);
+      response?.map(el => {
         let obj = {
           title: el.toDo,
           date: el.startDate,
@@ -21,16 +20,15 @@ export default function Calendar() {
           // borderColor: '',
           textColr: '#fff',
         };
-        // console.log('obj:', obj);
         array.push(obj);
         setCalendarData(array);
-        // setCalendarData(obj);
       });
     },
     onError: response => {},
   });
   // console.log('array', array);
-  console.log('calendarData :', calendarData);
+
+  // console.log('calendarData :', calendarData);
 
   return (
     <Container>

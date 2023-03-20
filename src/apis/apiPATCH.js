@@ -19,3 +19,8 @@ export async function PatchKRProgress({ value, id }) {
   const { data } = await api.patch(`api/keyresult/progress/${id}`, value);
   return data;
 }
+
+export async function PatchEmotion({ id, value }) {
+  const { data } = await api.patch(`api/keyresult/emoticon/${id}`, value);
+  return data;
+}

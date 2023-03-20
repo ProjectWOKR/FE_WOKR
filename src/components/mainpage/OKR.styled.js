@@ -191,12 +191,12 @@ export const KRBox = styled.div`
     justify-content: center;
     cursor: pointer;
   }
-  .emotion {
+  /* .emotion {
     font-weight: 300;
     font-size: 20px;
     letter-spacing: -0.01em;
     color: #ff8336;
-  }
+  } */
   .patchbtn {
     margin-top: 7px;
     width: 50px;

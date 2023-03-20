@@ -28,8 +28,6 @@ export async function GetOKR() {
 }
 
 export async function GetTodo() {
-  const { data } = await api.get(
-    `https://run.mocky.io/v3/9877d59e-8e5e-478d-85f4-3a7cdfd0fa6a`
-  );
+  const { data } = await api.get(`api/todo`);
   return data;
 }
