@@ -185,6 +185,14 @@ export const PrioritySelect = styled.div`
         height: 100%;
         margin: 0;
       }
+      .default {
+        width: 3.3rem;
+        height: 100%;
+        margin: 0;
+        background-color: #ffffff;
+        border: 1px solid #f8f8f8;
+        border-radius: 8px;
+      }
       :hover {
         background-color: #f3f1f1;
       }

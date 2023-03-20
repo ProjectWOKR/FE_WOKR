@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ModalBackground,
   ModalBox,
@@ -21,8 +21,11 @@ import OkrDropDown from '../globaldropdown/OkrDropDown';
 import PriorityDropDown from '../globaldropdown/PriorityDropDown';
 import { useRecoilState } from 'recoil';
 import { ToggleEndState, ToggleStartState } from '../../../store/store';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { CreateTodo } from '../../../apis/apiPOST';
+import { toast } from 'react-toastify';
+import Toast from '../Toast';
+import { GetOKR } from '../../../apis/apiGET';
 
 const TodoModal = ({
   onCloseTodoModal,
@@ -47,21 +50,17 @@ const TodoModal = ({
   ];
 
   const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
-  const format = 'YYYY-MM-DD';
 
   // 모달 스크롤 방지
   useEffect(() => {
-    // 현재 위치에 고정시킴
     document.body.style.cssText = `
       position: fixed;
       top: -${window.scrollY}px;
       overflow-y: scroll;
       width: 100%;`;
     return () => {
-      // 모달이 false면 style을  지우고 원래 있던 위치로 돌려주기
       const scrollY = document.body.style.top;
       document.body.style.cssText = '';
-      //-숫자px 형식으로나와서 파싱 후 음수를 정수로 바꾸기 위해 *-1
       window.scrollTo(0, parseInt(scrollY, 10) * -1);
     };
   }, []);
@@ -69,35 +68,71 @@ const TodoModal = ({
   const [todoInfo, setTodoInfo] = useState({
     toDo: '',
     memo: '',
-    priority: '',
     startDate: '',
+    startDateTime: '',
     endDate: '',
-    keyResultId: '',
+    endDateTime: '',
+    priority: '',
   });
 
-  // const [startDate, setStartDate] = useState({ format: 'MM/DD/YYYY' });
-  // const [endDate, setEndDate] = useState({ format: 'MM/DD/YYYY' });
-
-  const [startDate, setStartDate] = useState({ format: 'MM/DD/YYYY HH:mm' });
-  const [endDate, setEndDate] = useState({ format: 'MM/DD/YYYY HH:mm' });
-
-  //startDate 변환 함수 년,월
-  const convertStart = (date, format = startDate.format) => {
-    let object = { date, format };
-    setStartDate(new DateObject(object).format());
-    setTodoInfo({ ...todoInfo, startDate: new DateObject(object).format() });
-  };
-
-  //endDate 변환 함수 년, 월
-  const convertEnd = (date, format = startDate.format) => {
-    let object = { date, format };
-    setEndDate(new DateObject(object).format());
-    setTodoInfo({ ...todoInfo, endDate: new DateObject(object).format() });
-  };
+  // 포맷
+  const [timeFormat, setTimeFormat] = useState({ format: 'YYYY-MM-DD HH:mm' });
+  const [defaultFormat, setDefaultFormat] = useState({ format: 'YYYY-MM-DD' });
 
   // 시간 포함 토글
   const [startWithTime, setStartWithTime] = useState(false);
   const [endWithTime, setEndWithTime] = useState(false);
+
+  //startDate 변환 함수 년-월
+  const convertStart = (date, format = defaultFormat.format) => {
+    let object = { date, format };
+    setDefaultFormat(new DateObject(object).format());
+
+    setTodoInfo({
+      ...todoInfo,
+      startDate: new DateObject(object).format(),
+      startDateTime: '00:00',
+    });
+  };
+
+  //endDate 변환 함수 년-월
+  const convertEnd = (date, format = defaultFormat.format) => {
+    let object = { date, format };
+    setDefaultFormat(new DateObject(object).format());
+
+    setTodoInfo({
+      ...todoInfo,
+      endDate: new DateObject(object).format(),
+      endDateTime: '00:00',
+    });
+  };
+
+  // startDateWithTime 변환 함수 년, 월 시:분
+  const convertStartWithTime = (date, format = timeFormat.format) => {
+    let object = { date, format };
+    console.log(new DateObject(object).format());
+    setTimeFormat(new DateObject(object).format());
+    console.log('start :', new DateObject(object).format());
+
+    setTodoInfo({
+      ...todoInfo,
+      startDate: new DateObject(object).format().split(' ')[0],
+      startDateTime: new DateObject(object).format().split(' ')[1],
+    });
+  };
+
+  // endDateWithTime 변환 함수 년, 월 시:분
+  const convertEndWithTime = (date, format = timeFormat.format) => {
+    let object = { date, format };
+    // console.log(object);
+    setTimeFormat(new DateObject(object).format());
+    console.log(new DateObject(object).format());
+    setTodoInfo({
+      ...todoInfo,
+      endDate: new DateObject(object).format().split(' ')[0],
+      endDateTime: new DateObject(object).format().split(' ')[1],
+    });
+  };
 
   const [isStartOn, setIsStartOn] = useRecoilState(ToggleStartState);
   const [isEndOn, setIsEndOn] = useRecoilState(ToggleEndState);
@@ -114,19 +149,51 @@ const TodoModal = ({
 
   const { mutate: createTodo } = useMutation(CreateTodo, {
     onSuccess: response => {
-      console.log('성공');
       queryClient.invalidateQueries(['TODO']);
+      console.log(response);
     },
-    onError: response => {
-      console.log('실패');
-    },
+    onError: response => {},
   });
 
-  const submitBtn = () => {
-    const startd = new Date(todoInfo.endDate);
-    console.log('start :', startd);
-    console.log(todoInfo);
-    createTodo(todoInfo);
+  const { data: getOkrData } = useQuery(['getOkr'], GetOKR, {
+    onSuccess: response => {
+      console.log('df');
+      console.log(response);
+    },
+    onError: response => {},
+  });
+
+  const [oid, setOid] = useState(0);
+  const [kid, setKid] = useState(0);
+
+  // 저장 버튼 누르면 생성
+  const createT = () => {
+    const startd = new Date(todoInfo.startDate);
+    const endd = new Date(todoInfo.endDate);
+
+    if (todoInfo.startDate.length === 10) {
+      setTodoInfo({ ...todoInfo, startDateTime: '00:00' });
+    }
+
+    if (todoInfo.toDo === '') {
+      return toast('To Do는 필수 입니다.');
+    } else if (todoInfo.toDo.length > 30) {
+      return toast('To Do는 30글자 미만이어야합니다.');
+    } else if (todoInfo.memo.length > 30) {
+      return toast('메모는 30글자 미만이어야합니다.');
+    } else if (todoInfo.startDate === '') {
+      return toast('시작일을 설정해주세요.');
+    } else if (todoInfo.endDate === '') {
+      return toast('종료일을 설정해주세요.');
+    } else if (endd < startd) {
+      return toast('종료일은 시작일보다 빠르게 설정할 수 없습니다.');
+    } else {
+      let Oid = oid;
+      let Kid = kid;
+      let Info = todoInfo;
+      createTodo({ Oid, Kid, Info });
+      onCloseTodoModal();
+    }
   };
 
   return (
@@ -140,7 +207,12 @@ const TodoModal = ({
         <OKRBox>
           <div className='object itemBox'>
             <img src={todoOkr} alt='' />
-            <OkrDropDown todoInfo={todoInfo} setTodoInfo={setTodoInfo} />
+            <OkrDropDown
+              todoInfo={todoInfo}
+              setTodoInfo={setTodoInfo}
+              setKid={setKid}
+              setOid={setOid}
+            />
           </div>
 
           <div className='object itemBox'>
@@ -174,15 +246,14 @@ const TodoModal = ({
             <div className='dateBox'>
               {!startWithTime ? (
                 //시작시간이 false일 때
-
                 <DatePicker
                   inputClass='start-input'
                   containerClassName='start-container'
                   months={months}
                   weekDays={weekDays}
-                  format={format}
+                  format='YYYY-MM-DD'
                   placeholder='시작일'
-                  value={startDate.date}
+                  value={defaultFormat.date}
                   onChange={convertStart}
                   animations={[
                     opacity(),
@@ -219,8 +290,8 @@ const TodoModal = ({
                   format='YYYY-MM-DD HH:mm'
                   plugins={[<TimePicker position='bottom' hideSeconds />]}
                   placeholder='시작일'
-                  value={startDate.date}
-                  onChange={convertStart}
+                  value={timeFormat.date}
+                  onChange={convertStartWithTime}
                   animations={[
                     opacity(),
                     transition({
@@ -254,9 +325,9 @@ const TodoModal = ({
                   containerClassName='end-container'
                   months={months}
                   weekDays={weekDays}
-                  format={format}
+                  format='YYYY-MM-DD'
                   placeholder='종료일'
-                  value={endDate.date}
+                  value={defaultFormat.date}
                   onChange={convertEnd}
                   animations={[
                     opacity(),
@@ -294,8 +365,8 @@ const TodoModal = ({
                   format='YYYY-MM-DD HH:mm'
                   plugins={[<TimePicker position='bottom' hideSeconds />]}
                   placeholder='종료일'
-                  value={endDate.date}
-                  onChange={convertEnd}
+                  value={timeFormat.date}
+                  onChange={convertEndWithTime}
                   animations={[
                     opacity(),
                     transition({
@@ -333,10 +404,11 @@ const TodoModal = ({
           <button onClick={onCloseTodoModal} className='cancel'>
             취소
           </button>
-          <button className='next' onClick={submitBtn}>
+          <button className='next' onClick={createT}>
             저장
           </button>
         </div>
+        <Toast />
       </ModalBox>
     </div>
   );

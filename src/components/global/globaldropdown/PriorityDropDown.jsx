@@ -19,6 +19,7 @@ const PriorityDropDown = ({ todoInfo, setTodoInfo }) => {
     name,
     el,
   }) => {
+    console.log(el);
     const ValueClick = () => {
       setFinalValue(name);
       setIsOpen(!isOpen);
@@ -27,10 +28,19 @@ const PriorityDropDown = ({ todoInfo, setTodoInfo }) => {
     };
 
     return (
-      <li onClick={ValueClick}>
-        <img src={el.flag} alt='' className='img' />
-        <img src={el.number} alt='' className='img' />
-      </li>
+      <>
+        {el.name === '4' ? (
+          <li onClick={ValueClick} className='defaultLi'>
+            <div className='default'></div>
+            <img src={el.number} alt='' className='img' />
+          </li>
+        ) : (
+          <li onClick={ValueClick}>
+            <img src={el.flag} alt='' className='img' />
+            <img src={el.number} alt='' className='img' />
+          </li>
+        )}
+      </>
     );
   };
 
