@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import logo from '../../../assets/logo.png';
 
 export const Layout = styled.div`
   width: 100%;
@@ -16,10 +17,11 @@ export const Layout = styled.div`
   }
 `;
 
-export const LogoImg = styled.img`
+export const LogoImg = styled.div`
   width: 10.5rem;
   height: 4.5rem;
   cursor: pointer;
+  background: url(${logo}) no-repeat center / 100%;
 `;
 
 export const Logout = styled.button`

@@ -1,37 +1,22 @@
-import { useEffect, useRef, useState } from 'react';
-import { useDropDown, emotion, useEmotionDropDown } from './dropdown';
+import { useState } from 'react';
+import { emotion, useEmotionDropDown } from './dropdown';
 import { EmotionSelect } from './dropDown.styled';
-import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil';
-import { IsOpen, patchEmotion } from './../../../store/store';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { PatchEmotion } from '../../../apis/apiPATCH';
-import { GetKR } from '../../../apis/apiGET';
 
 import normal from '../../../assets/normal.png';
 import good from '../../../assets/good.png';
 import bad from '../../../assets/bad.png';
 
-const Emotion = ({ slicedArray, keyResultId, emotionState }) => {
-  // const setPatchEmotionInfo = useSetRecoilState(patchEmotion);
-
-  // const [patchEmotionInfo, setPatchEmotionInfo] = useRecoilState(patchEmotion);
-
+const Emotion = ({ keyResultId, emotionState }) => {
   const queryClient = useQueryClient();
 
-  const [patchEmotionInfo, setPatchEmotionInfo] = useState({
-    emoticon: emotionState,
-  });
-
-  // console.log(patchEmotionInfo);
   // 자신감 수정
   const { mutate: patchEmotionmutate } = useMutation(PatchEmotion, {
     onSuccess: response => {
       queryClient.invalidateQueries(['OKR']);
-      console.log('성공');
     },
-    onError: response => {
-      console.log('실패');
-    },
+    onError: response => {},
   });
 
   // 드롭다운 상태
@@ -39,8 +24,6 @@ const Emotion = ({ slicedArray, keyResultId, emotionState }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const DropDownItem = ({ setIsOpen, isOpen, el, name, keyResultId }) => {
-    // console.log('keyResultId :', keyResultId);
-    // console.log(name);
     const ValueClick = () => {
       let id = keyResultId;
       let value = { emoticon: Number(name) };
