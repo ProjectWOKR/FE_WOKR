@@ -122,7 +122,7 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
     onError: response => {},
   });
 
-  const [title, setTitle] = useState({ keyResultDate: ['', '', ''] });
+  const [title, setTitle] = useState({ keyResultDate: [] });
 
   const onChangeKR = (e, index) => {
     if (index === 0) {
@@ -148,14 +148,11 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
     const id = objectId;
     console.log('id', id);
 
-    if (
-      title.keyResultDate[0] === '' &&
-      title.keyResultDate[1] === '' &&
-      title.keyResultDate[2] === ''
-    ) {
+    if (title.keyResultDate.length === 0) {
       return toast('KR핵심 결과를 한 개 이상 작성해주세요.');
     } else {
       createKrMutate({ value, id });
+      setTitle({ keyResultDate: [] });
     }
   };
 

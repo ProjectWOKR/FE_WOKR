@@ -10,10 +10,19 @@ import { useQuery } from '@tanstack/react-query';
 import plus from '../../assets/plus.png';
 import more from '../../assets/more.png';
 import { GetOKR } from '../../apis/apiGET.js';
+import AlertModal from '../global/globalModal/AlertModal.jsx';
 
 export default function OKR() {
   //모달 상태관리
   const [okrModalOn, setOkrModalOn] = useState(false);
+  const [alertModalOn, setAlertModalOn] = useState(false);
+
+  const { data: getOKRData } = useQuery(['OKR'], GetOKR, {
+    onSuccess: response => {
+      console.log(response);
+    },
+    onError: response => {},
+  });
 
   /**모달 닫는 함수 */
   const onCloseModal = () => {
@@ -22,7 +31,11 @@ export default function OKR() {
 
   /** +버튼 누르면 OKR 생성하는 모달 띄움 */
   const createOKR = () => {
-    setOkrModalOn(!okrModalOn);
+    if (getOKRData.length < 2) {
+      setOkrModalOn(!okrModalOn);
+    } else {
+      setAlertModalOn(!alertModalOn);
+    }
   };
 
   // 모달 외 클릭시 닫기위해 ref생성
@@ -34,12 +47,20 @@ export default function OKR() {
     }
   };
 
-  const { data: getOKRData } = useQuery(['OKR'], GetOKR, {
-    onSuccess: response => {
-      // console.log(response);
-    },
-    onError: response => {},
-  });
+  /**모달 닫는 함수 */
+  const onCloseAlertModal = () => {
+    setAlertModalOn(!alertModalOn);
+  };
+
+  // 모달 외 클릭시 닫기위해 ref생성
+  const alertModalRef = useRef(null);
+
+  /** 모달위에 있는 배경이랑 ref가 같으면 modalOn을 false로 바꾸는 함수 */
+  const alertModalOutSideClick = e => {
+    if (alertModalRef.current === e.target) {
+      setAlertModalOn(!alertModalOn);
+    }
+  };
 
   return (
     <Container>
@@ -70,6 +91,15 @@ export default function OKR() {
             onCloseModal={onCloseModal}
             modalRef={modalRef}
             modalOutSideClick={modalOutSideClick}
+          />
+        )}
+      </Potal>
+      <Potal>
+        {alertModalOn && (
+          <AlertModal
+            onCloseModal={onCloseAlertModal}
+            modalRef={alertModalRef}
+            modalOutSideClick={alertModalOutSideClick}
           />
         )}
       </Potal>
