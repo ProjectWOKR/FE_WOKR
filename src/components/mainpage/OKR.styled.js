@@ -240,6 +240,10 @@ export const KRBox = styled.div`
   }
 `;
 
+export const OKRSpace = styled.div`
+  margin-top: 110px;
+`;
+
 export const EmptyKR = styled.button`
   width: 100%;
   height: 40px;

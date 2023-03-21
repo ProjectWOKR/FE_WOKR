@@ -136,7 +136,6 @@ const OkrObject = () => {
                   </div>
                 </div>
 
-
                 <input
                   className='Range'
                   type='range'
@@ -150,7 +149,6 @@ const OkrObject = () => {
                 />
                 <div className='background' />
                 <div className='percent'>{data.progress}%</div>
-
               </Objective>
               {data?.keyresult.map((KR, index) => {
                 return KR.keyResult ? (
@@ -198,10 +196,8 @@ const OkrObject = () => {
                     KR을 추가하기
                     <img className='img' src={kRAdd} alt='' />
                   </EmptyKR>
-
                 ))}
               <OKRSpace />
-
             </>
           </OKRBox>
         );
