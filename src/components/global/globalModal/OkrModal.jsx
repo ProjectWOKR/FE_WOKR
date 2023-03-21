@@ -123,7 +123,7 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   });
 
   const [title, setTitle] = useState({ keyResultDate: [] });
-
+  console.log(title);
   const onChangeKR = (e, index) => {
     if (index === 0) {
       const tempTitle = { ...title };

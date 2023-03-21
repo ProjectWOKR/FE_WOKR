@@ -229,6 +229,7 @@ export const EmptyKR = styled.button`
   .img {
     padding: 5px;
   }
+  margin-bottom: 8px;
 `;
 
 export const OKRSpace = styled.div`
