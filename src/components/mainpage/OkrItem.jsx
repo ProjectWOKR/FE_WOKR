@@ -172,14 +172,17 @@ const OkrObject = () => {
                         patchProgress(KR.keyResultId, KR.progress, 'KR');
                       }}
                     />
+                    <OKRSpace />
                     <div className='percent'>{KR.progress}%</div>
-                    <div className='emotionBox'>
-                      {slicedArray && (
-                        <Emotion
-                          keyResultId={KR.keyResultId}
-                          emotionState={KR.emotion}
-                        />
-                      )}
+                    <div className='right'>
+                      <div className='emotionBox'>
+                        {slicedArray && (
+                          <Emotion
+                            keyResultId={KR.keyResultId}
+                            emotionState={KR.emotion}
+                          />
+                        )}
+                      </div>
                     </div>
                   </KRBox>
                 ) : null;
@@ -197,7 +200,6 @@ const OkrObject = () => {
                     <img className='img' src={kRAdd} alt='' />
                   </EmptyKR>
                 ))}
-              <OKRSpace />
             </>
           </OKRBox>
         );

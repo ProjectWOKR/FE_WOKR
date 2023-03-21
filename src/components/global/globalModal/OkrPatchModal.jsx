@@ -116,7 +116,9 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
       console.log('rr', response);
       onCloseModal();
     },
-    onError: response => {},
+    onError: response => {
+      alert('팀장 및 본인이 작성한 OKR만 수정가능합니다.');
+    },
   });
 
   const { mutate: deleteObjective } = useMutation(DeleteObjective, {
@@ -124,6 +126,9 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
       queryClient.invalidateQueries(['OKR']);
       console.log(response);
       onCloseModal();
+    },
+    onError: response => {
+      alert('팀장 및 본인이 작성한 OKR만 수정가능합니다.');
     },
   });
 

@@ -38,7 +38,9 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
       queryClient.invalidateQueries(['OKR']);
       onCloseModal();
     },
-    onError: response => {},
+    onError: response => {
+      alert('팀장 및 본인이 작성한 OKR만 수정가능합니다.');
+    },
   });
 
   const [title, setTitle] = useState({ keyResult: krInfo.kr });
@@ -65,12 +67,18 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
       queryClient.invalidateQueries(['OKR']);
       onCloseModal();
     },
+    onError: response => {
+      alert('팀장 및 본인이 작성한 OKR만 수정가능합니다.');
+    },
   });
 
   const { mutate: postKR } = useMutation(CreateKR, {
     onSuccess: response => {
       queryClient.invalidateQueries(['OKR']);
       onCloseModal();
+    },
+    onError: response => {
+      alert('팀장 및 본인이 작성한 OKR만 수정가능합니다.');
     },
   });
 

@@ -63,69 +63,40 @@ export const OKRBox = styled.div`
 export const Objective = styled.div`
   display: flex;
   flex-direction: row;
-  .Box {
-    width: 44px;
-    height: 74px;
-    margin-left: 17px;
-  }
   .Logo {
     font-weight: 700;
     font-size: 54.2282px;
     line-height: 74px;
+    margin-left: 17px;
     color: ${({ color }) => color};
     cursor: default;
   }
   .NameBox {
     width: 300px;
-    display: flex;
-    align-items: center;
-    .box {
-      width: 44px;
-      .logo {
-        font-weight: 700;
-        font-size: 54.2282px;
-        line-height: 74px;
-        color: ${({ color }) => `${color === 'red' ? '#ff8336' : '#457eff'}`};
-        cursor: default;
-      }
-    }
-    .nameBox {
-      display: flex;
-      flex-direction: column;
+    .Name {
+      margin-top: 16px;
       margin-left: 16px;
-      .name {
-        /* width: 300px; */
-        font-weight: 500;
-        font-size: 24px;
-        line-height: 33px;
-        color: ${({ color }) => `${color === 'red' ? '#ff8336' : '#457eff'}`};
-        cursor: default;
-      }
-      .cal {
-        height: 18px;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 12.5px;
-        color: #4b4b4b;
-      }
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 33px;
+      letter-spacing: -0.01em;
+      color: ${({ color }) => color};
+      cursor: pointer;
     }
-  }
-  .Name {
-    width: 250px;
-    margin-top: 23px;
-    margin-left: 16px;
-    font-weight: 500;
-    font-size: 24px;
-    line-height: 33px;
-    letter-spacing: -0.01em;
-    color: ${({ color }) => color};
-    cursor: pointer;
+    .Cal {
+      height: 18px;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12.5px;
+      margin-left: 15px;
+      color: #4b4b4b;
+    }
   }
   .Range {
     width: 123px;
     height: 11px;
     margin-top: 34px;
-    margin-left: 145px;
+    margin-left: 130px;
     cursor: pointer;
   }
   .percent {
@@ -153,10 +124,11 @@ export const KRBox = styled.div`
   height: 40px;
   background: #ffffff;
   border-radius: 7px;
+  margin-bottom: 8px;
   display: flex;
   flex-direction: row;
   .Logo {
-    margin-left: 15px;
+    margin-left: 20px;
     margin-top: 6px;
     width: 36px;
     height: 27px;
@@ -185,7 +157,7 @@ export const KRBox = styled.div`
     width: 123px;
     height: 11px;
     margin-top: 15px;
-    margin-left: 29px;
+    margin-left: 13px;
     cursor: pointer;
   }
   .percent {
@@ -201,6 +173,7 @@ export const KRBox = styled.div`
   .right {
     display: flex;
     align-items: center;
+    cursor: pointer;
     .range {
       width: 123px;
       height: 11px;
@@ -212,7 +185,7 @@ export const KRBox = styled.div`
       font-size: 18px;
       line-height: 25px;
       letter-spacing: -0.01em;
-      color: ${({ color }) => `${color === 'red' ? '#ff8336' : '#457eff'}`};
+      color: ${({ color }) => color};
       cursor: default;
     }
     .emotionBox {
@@ -240,10 +213,6 @@ export const KRBox = styled.div`
   }
 `;
 
-export const OKRSpace = styled.div`
-  margin-top: 110px;
-`;
-
 export const EmptyKR = styled.button`
   width: 100%;
   height: 40px;
@@ -260,4 +229,9 @@ export const EmptyKR = styled.button`
   .img {
     padding: 5px;
   }
+`;
+
+export const OKRSpace = styled.div`
+  margin-top: 110px;
+  background-color: black;
 `;
