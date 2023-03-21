@@ -9,5 +9,4 @@ export default GlobalLayout;
 
 const StGlobalLayout = styled.div`
   width: 100%;
-  /* background-color: pink; */
 `;

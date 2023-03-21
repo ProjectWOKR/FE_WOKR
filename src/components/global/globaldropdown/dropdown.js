@@ -10,8 +10,8 @@ import three from '../../../assets/three.png';
 import four from '../../../assets/four.png';
 
 import good from '../../../assets/good.png';
-import normal from '../../../assets/normal.png';
-import bad from '../../../assets/bad.png';
+import normal from '../../../assets/normal2.png';
+import bad from '../../../assets/bad2.png';
 
 export const useDropDown = (ref, initialState) => {
   const [isOpen, setIsOpen] = useState(initialState);
@@ -19,10 +19,10 @@ export const useDropDown = (ref, initialState) => {
   // 밖에 누르면 닫히기
   useEffect(() => {
     const clickOutside = e => {
-      console.log(ref.current);
-      console.log(e.target);
-      console.log(ref.current.contains(e.target)); //true
-      console.log(ref.current && !ref.current.contains(e.target)); // false
+      // console.log(ref.current);
+      // console.log(e.target);
+      // console.log(ref.current.contains(e.target)); //true
+      // console.log(ref.current && !ref.current.contains(e.target)); // false
       if (ref.current && !ref.current.contains(e.target)) {
         setIsOpen(!isOpen);
       }

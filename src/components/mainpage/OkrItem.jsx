@@ -101,18 +101,12 @@ const OkrObject = () => {
   };
 
   const [slicedArray, setSlicedArray] = useState([]);
-
-  // console.log('slicedArray:,');
   const { data: getOKRData } = useQuery(['OKR'], GetOKR, {
     onSuccess: response => {
-      console.log(response);
-      // queryClient.invalidateQueries(['OKR']);
-      // console.log('getOKRData :', response);
       setSlicedArray(response?.slice(0, 2));
     },
     onError: response => {},
   });
-
   return (
     <div>
       {slicedArray?.map((data, index) => {
@@ -141,7 +135,7 @@ const OkrObject = () => {
                     {data.startdate} - {data.enddate}
                   </div>
                 </div>
-                <div></div>
+
 
                 <input
                   className='Range'
@@ -156,6 +150,7 @@ const OkrObject = () => {
                 />
                 <div className='background' />
                 <div className='percent'>{data.progress}%</div>
+
               </Objective>
               {data?.keyresult.map((KR, index) => {
                 return KR.keyResult ? (
@@ -203,8 +198,10 @@ const OkrObject = () => {
                     KR을 추가하기
                     <img className='img' src={kRAdd} alt='' />
                   </EmptyKR>
+
                 ))}
               <OKRSpace />
+
             </>
           </OKRBox>
         );

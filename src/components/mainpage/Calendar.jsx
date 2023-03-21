@@ -11,37 +11,46 @@ export default function Calendar() {
 
   const { data: getTodo } = useQuery(['TODO'], GetTodo, {
     onSuccess: response => {
-      // console.log(response);
+      console.log(response);
       response?.map(el => {
         let obj = {
           title: el.toDo,
-          date: el.startDate,
-          // backgroundColor: '',
-          // borderColor: '',
+          start: `${el.startDate} ${el.startDateTime}`,
+          end: `${el.endDate} ${el.endDateTime}`,
+          backgroundColor: `${el.color === null ? '#9B9B9B' : el.color}`,
+          borderColor: `${el.color === null ? '#9B9B9B' : el.color}`,
           textColr: '#fff',
+          fontSize: '17px',
         };
         array.push(obj);
-        setCalendarData(array);
+        return setCalendarData(array);
       });
     },
     onError: response => {},
   });
-  // console.log('array', array);
-
-  // console.log('calendarData :', calendarData);
 
   return (
     <Container>
       <FullCalendar
         plugins={[dayGridPlugin]}
         initialView='dayGridMonth'
+        dayMaxEvents={true}
+        locale='ko'
+        // navLinks={true}
         // showNonCurrentDates={false}
         // allDaySlot={true}
-        // headerToolbar={{
-        //   start: 'title',
-        //   center: '',
-        //   end: 'listDay,listWeek,listMonth prev,next',
-        // }}
+        views={{
+          listDay: { buttonText: 'list day' },
+          listWeek: { buttonText: 'list week' },
+          listMonth: { buttonText: 'list month' },
+        }}
+        headerToolbar={{
+          left: 'Calendar, 오늘, prev, next',
+          center: 'title',
+          right: 'listDay, listWeek, listMonth',
+          // ,'timeGridWeek','timeGridDay'
+          // end: 'listMonth,listWeek, listDay,listYear',
+        }}
         // headerToolbar={{
         //   start: 'dayGridMonth,timeGridWeek,timeGridDay custom1',
         //   center: 'title',

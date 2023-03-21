@@ -4,7 +4,6 @@ import { ModalBackground, ModalBox, OKRBox } from './modal.styled';
 import DatePicker, { DateObject } from 'react-multi-date-picker';
 import transition from 'react-element-popper/animations/transition';
 import opacity from 'react-element-popper/animations/opacity';
-// import InputIcon from 'react-multi-date-picker/components/input_icon';
 
 import close from '../../../assets/close.png';
 import object from '../../../assets/object.png';
@@ -18,7 +17,7 @@ import { CreateObjective, CreateKR } from '../../../apis/apiPOST';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Toast from '../Toast';
 import { toast } from 'react-toastify';
-import { reactDom } from 'react-dom';
+// import { reactDom } from 'react-dom';
 
 const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const queryClient = useQueryClient();
@@ -42,17 +41,14 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
 
   // 모달 스크롤 방지
   useEffect(() => {
-    // 현재 위치에 고정시킴
     document.body.style.cssText = `
       position: fixed;
       top: -${window.scrollY}px;
       overflow-y: scroll;
       width: 100%;`;
     return () => {
-      // 모달이 false면 style을  지우고 원래 있던 위치로 돌려주기
       const scrollY = document.body.style.top;
       document.body.style.cssText = '';
-      //-숫자px 형식으로나와서 파싱 후 음수를 정수로 바꾸기 위해 *-1
       window.scrollTo(0, parseInt(scrollY, 10) * -1);
     };
   }, []);

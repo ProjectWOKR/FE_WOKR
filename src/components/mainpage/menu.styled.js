@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const MenuContainer = styled.div`
-  width: 32rem;
+  width: 28rem;
   /* height: 1650px; */
   height: 100%;
   display: flex;
@@ -9,6 +9,7 @@ export const MenuContainer = styled.div`
   align-items: center;
   margin-top: 1.8rem;
   padding: 0 2rem 0 0;
+  /* background-color: skyblue; */
 `;
 
 export const MenuItem = styled.button`

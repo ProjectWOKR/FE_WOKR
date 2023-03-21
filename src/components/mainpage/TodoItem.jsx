@@ -1,48 +1,52 @@
-import { useQuery } from '@tanstack/react-query';
-import React, { useState } from 'react';
-import { GetTodo } from '../../apis/apiGET';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import React, { useEffect, useState } from 'react';
+import { GetOKR, GetTodo } from '../../apis/apiGET';
 import red from '../../assets/todoRed.png';
 import yellow from '../../assets/todoYellow.png';
 import blue from '../../assets/todoBlue.png';
-import check from '../../assets/check.png';
+import { PatchCheck } from '../../apis/apiPATCH';
+import { toast } from 'react-toastify';
+import Toast from '../global/Toast';
 
 const TodoItem = () => {
-  // console.log(getTodo);
+  const queryClient = useQueryClient();
 
   const { data: getTodo } = useQuery(['TODO'], GetTodo, {
     onSuccess: response => {
-      // console.log(getTodo);
+      // console.log(response);
     },
     onError: response => {},
   });
 
-  const [completionInfo, setCompletionInfo] = useState({
-    completion: false,
+  // filter 함수 사용
+  const now = new Date();
+  const today = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+
+  const filterArray = getTodo?.filter(el => {
+    if (el.completion === false) {
+      if (new Date(today) > new Date(el.startDate)) {
+        return true;
+      }
+    }
+    return false;
+  });
+
+  // 체크 수정
+  const { mutate: patchCheckmutate } = useMutation(PatchCheck, {
+    onSuccess: response => {
+      queryClient.invalidateQueries(['TODO']);
+    },
+    onError: response => {},
   });
 
   const Check = ({ el }) => {
-    // console.log(el);
     const onClickCheck = () => {
-      console.log('눌림');
-      // if (el.completion === true) {
-      //   setCompletionInfo({ ...completionInfo, completion: false });
-      //   console.log(el.completion);
-      //   console.log(completionInfo);
-      // } else {
-      //   setCompletionInfo({ ...completionInfo, completion: true });
-      //   console.log(el.completion);
-      //   console.log(completionInfo);
-      // }
+      const id = el.toDoId;
+      patchCheckmutate({ id });
+      toast('할 일을 완료했습니다.');
     };
-    if (!el.completion) {
-      return <div className='check' onClick={onClickCheck} />;
-    } else {
-      return (
-        <div className='check' onClick={onClickCheck}>
-          <img src={check} alt='' />
-        </div>
-      );
-    }
+
+    return <div className='check' onClick={onClickCheck} />;
   };
 
   const Priority = ({ el }) => {
@@ -56,31 +60,43 @@ const TodoItem = () => {
       return;
     }
   };
+
+  // const { data: getOkrData } = useQuery(['getOkr'], GetOKR, {
+  //   onSuccess: response => {
+  //     console.log(response);
+  //     console.log('filter :', filterArray);
+  //   },
+  //   onError: response => {},
+  // });
+
+  // const Title = (el, index) => {
+  //   console.log(el);
+  //   console.log('index :', index);
+  //   return <div className='title'></div>;
+  // };
+
   return (
     <>
-      {getTodo?.map((el, index) => (
+      {filterArray?.map((el, index) => (
         <div className='todo' key={index}>
-          <div className='title'>none</div>
+          <div className='title' style={{ color: el.color }}>
+            none
+          </div>
           <div className='detail'>
             <div className='name_date'>
               <div>{el.toDo}</div>
-              <p>2월 3일</p>
+              <p>
+                {el.fstartDate}~{el.fendDate} 까지
+              </p>
             </div>
             <div className='priorityBox'>
-              {/* <img src={flag} alt='' /> */}
               <Priority el={el} />
-              {/* {el.completion === false ? (
-                <div className='check' onClick={onClick} />
-              ) : (
-                <div className='check' onClick={onClick}>
-                  <img src={check} alt='' />
-                </div>
-              )} */}
               <Check el={el} />
             </div>
           </div>
         </div>
       ))}
+      <Toast />
     </>
   );
 };

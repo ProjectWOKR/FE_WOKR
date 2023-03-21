@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { color } from './dropdown';
 
 export const DropdownContainer = styled.div`
   width: 100%;
@@ -184,6 +183,14 @@ export const PrioritySelect = styled.div`
         width: 3.3rem;
         height: 100%;
         margin: 0;
+      }
+      .default {
+        width: 3.3rem;
+        height: 100%;
+        margin: 0;
+        background-color: #ffffff;
+        border: 1px solid #f8f8f8;
+        border-radius: 8px;
       }
       :hover {
         background-color: #f3f1f1;
