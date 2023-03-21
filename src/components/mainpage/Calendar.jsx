@@ -16,12 +16,12 @@ export default function Calendar() {
         let obj = {
           title: el.toDo,
           date: el.startDate,
-          // backgroundColor: '',
-          // borderColor: '',
+          backgroundColor: `${el.color === null ? '#9B9B9B' : el.color}`,
+          borderColor: `${el.color === null ? '#9B9B9B' : el.color}`,
           textColr: '#fff',
         };
         array.push(obj);
-        setCalendarData(array);
+        return setCalendarData(array);
       });
     },
     onError: response => {},

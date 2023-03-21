@@ -37,6 +37,7 @@ const StToastContainer = styled(ToastContainer)`
   .Toastify__toast {
     padding: 0;
     background-color: #ffd6bd;
+    text-align: center;
   }
   .Toastify__toast-body {
     color: #ec5a00;

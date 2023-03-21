@@ -21,9 +21,6 @@ export async function CreateKR({ value, id }) {
 }
 
 export async function CreateTodo({ Oid, Kid, Info }) {
-  // console.log('ddd');
-  // console.log(Info);
-  console.log(Oid, Kid, Info);
   const { data } = await api.post(`api/${Oid}/${Kid}/todo`, Info);
   return data;
 }

@@ -4,9 +4,9 @@ import { EmotionSelect } from './dropDown.styled';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { PatchEmotion } from '../../../apis/apiPATCH';
 
-import normal from '../../../assets/normal.png';
+import normal from '../../../assets/normal2.png';
 import good from '../../../assets/good.png';
-import bad from '../../../assets/bad.png';
+import bad from '../../../assets/bad2.png';
 
 const Emotion = ({ keyResultId, emotionState }) => {
   const queryClient = useQueryClient();

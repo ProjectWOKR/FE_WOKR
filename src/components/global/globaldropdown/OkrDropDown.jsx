@@ -19,17 +19,13 @@ const OkrDropDown = ({ setTodoInfo, todoInfo, setKid, setOid }) => {
 
   const { data: getOkrData } = useQuery(['getOkr'], GetOKR, {
     onSuccess: response => {
-      console.log(response);
-      // setOkrData(response);
+      // console.log(response);
     },
     onError: response => {},
   });
 
   const ValueClick = e => {
     setIsOpen(!isOpen);
-    console.log();
-    // console.log('name :', name);
-    console.log(e.target.outerText);
     setFinalValue(e.target.outerText);
 
     if (e.target.id === '') {
@@ -38,7 +34,6 @@ const OkrDropDown = ({ setTodoInfo, todoInfo, setKid, setOid }) => {
       setOid(0);
     } else {
       // console.log('id가 있을때');
-      // console.log(e.target.attributes.name.value);
       setOid(Number(e.target.attributes.name.value));
       setKid(Number(e.target.id));
     }

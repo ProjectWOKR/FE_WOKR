@@ -10,8 +10,8 @@ import three from '../../../assets/three.png';
 import four from '../../../assets/four.png';
 
 import good from '../../../assets/good.png';
-import normal from '../../../assets/normal.png';
-import bad from '../../../assets/bad.png';
+import normal from '../../../assets/normal2.png';
+import bad from '../../../assets/bad2.png';
 
 export const useDropDown = (ref, initialState) => {
   const [isOpen, setIsOpen] = useState(initialState);

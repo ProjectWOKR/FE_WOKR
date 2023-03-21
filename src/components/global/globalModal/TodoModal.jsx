@@ -150,15 +150,15 @@ const TodoModal = ({
   const { mutate: createTodo } = useMutation(CreateTodo, {
     onSuccess: response => {
       queryClient.invalidateQueries(['TODO']);
-      console.log(response);
+      // console.log(response);
     },
     onError: response => {},
   });
 
   const { data: getOkrData } = useQuery(['getOkr'], GetOKR, {
     onSuccess: response => {
-      console.log('df');
-      console.log(response);
+      // console.log('df');
+      // console.log(response);
     },
     onError: response => {},
   });
@@ -232,7 +232,7 @@ const TodoModal = ({
             <img src={memo} alt='' />
             <input
               type='text'
-              placeholder='To Do 내용을 작성하세요'
+              placeholder='Momo 내용을 작성하세요'
               className='input'
               name='memo'
               onChange={event => {
