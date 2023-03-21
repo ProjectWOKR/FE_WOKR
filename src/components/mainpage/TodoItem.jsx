@@ -1,12 +1,16 @@
-import { useQuery } from '@tanstack/react-query';
-import React, { useState } from 'react';
-import { GetTodo } from '../../apis/apiGET';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import React, { useEffect, useState } from 'react';
+import { GetOKR, GetTodo } from '../../apis/apiGET';
 import red from '../../assets/todoRed.png';
 import yellow from '../../assets/todoYellow.png';
 import blue from '../../assets/todoBlue.png';
-import check from '../../assets/check.png';
+import { PatchCheck } from '../../apis/apiPATCH';
+import { toast } from 'react-toastify';
+import Toast from '../global/Toast';
 
 const TodoItem = () => {
+  const queryClient = useQueryClient();
+
   const { data: getTodo } = useQuery(['TODO'], GetTodo, {
     onSuccess: response => {
       // console.log(response);
@@ -14,24 +18,26 @@ const TodoItem = () => {
     onError: response => {},
   });
 
-  // 체크 확인
-  const [completionInfo, setCompletionInfo] = useState({
-    completion: false,
+  // filter 함수 사용
+  const filterArray = getTodo?.filter(el => el.completion === false);
+  // console.log(filterArray);
+
+  // 체크 수정
+  const { mutate: patchCheckmutate } = useMutation(PatchCheck, {
+    onSuccess: response => {
+      queryClient.invalidateQueries(['TODO']);
+    },
+    onError: response => {},
   });
 
   const Check = ({ el }) => {
     const onClickCheck = () => {
-      console.log('눌림');
+      const id = el.toDoId;
+      patchCheckmutate({ id });
+      toast('할 일을 완료했습니다.');
     };
-    if (!el.completion) {
-      return <div className='check' onClick={onClickCheck} />;
-    } else {
-      return (
-        <div className='check' onClick={onClickCheck}>
-          <img src={check} alt='' />
-        </div>
-      );
-    }
+
+    return <div className='check' onClick={onClickCheck} />;
   };
 
   const Priority = ({ el }) => {
@@ -45,9 +51,24 @@ const TodoItem = () => {
       return;
     }
   };
+
+  // const { data: getOkrData } = useQuery(['getOkr'], GetOKR, {
+  //   onSuccess: response => {
+  //     console.log(response);
+  //     console.log('filter :', filterArray);
+  //   },
+  //   onError: response => {},
+  // });
+
+  // const Title = (el, index) => {
+  //   console.log(el);
+  //   console.log('index :', index);
+  //   return <div className='title'></div>;
+  // };
+
   return (
     <>
-      {getTodo?.map((el, index) => (
+      {filterArray?.map((el, index) => (
         <div className='todo' key={index}>
           <div className='title' style={{ color: el.color }}>
             none
@@ -55,7 +76,7 @@ const TodoItem = () => {
           <div className='detail'>
             <div className='name_date'>
               <div>{el.toDo}</div>
-              <p>{el.fstartDate}</p>
+              <p>{el.fendDate} 까지</p>
             </div>
             <div className='priorityBox'>
               <Priority el={el} />
@@ -64,6 +85,7 @@ const TodoItem = () => {
           </div>
         </div>
       ))}
+      <Toast />
     </>
   );
 };

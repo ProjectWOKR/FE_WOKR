@@ -24,3 +24,8 @@ export async function PatchEmotion({ id, value }) {
   const { data } = await api.patch(`api/keyresult/emoticon/${id}`, value);
   return data;
 }
+
+export async function PatchCheck({ id }) {
+  const { data } = await api.patch(`api/todo/check/${id}`);
+  return data;
+}

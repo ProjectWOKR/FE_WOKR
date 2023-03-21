@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { color } from './dropdown';
 
 export const DropdownContainer = styled.div`
   width: 100%;
