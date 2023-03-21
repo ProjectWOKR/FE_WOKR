@@ -39,14 +39,18 @@ const ProgressPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
     onSuccess: response => {
       queryClient.invalidateQueries(['OKR']);
     },
-    onError: response => {},
+    onError: response => {
+      alert('팀장 및 본인이 작성한 OKR만 수정가능합니다.');
+    },
   });
 
   const { mutate: PatchKRMutate } = useMutation(PatchKRProgress, {
     onSuccess: response => {
       queryClient.invalidateQueries(['OKR']);
     },
-    onError: response => {},
+    onError: response => {
+      alert('팀장 및 본인이 작성한 OKR만 수정가능합니다.');
+    },
   });
 
   const patchProgress = () => {

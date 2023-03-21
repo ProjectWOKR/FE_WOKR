@@ -4,7 +4,7 @@ import { ModalBackground, ModalBox, OKRBox } from './modal.styled';
 import DatePicker, { DateObject } from 'react-multi-date-picker';
 import transition from 'react-element-popper/animations/transition';
 import opacity from 'react-element-popper/animations/opacity';
-
+import trash from '../../../assets/trash.png';
 import close from '../../../assets/close.png';
 import object from '../../../assets/object.png';
 import calender from '../../../assets/calender.png';
@@ -17,6 +17,7 @@ import { toast } from 'react-toastify';
 import { PatchObjective } from '../../../apis/apiPATCH';
 import { patchOKRInfo } from '../../../store/store';
 import { useRecoilValue } from 'recoil';
+import { DeleteObjective } from '../../../apis/apiDELETE';
 
 const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const queryClient = useQueryClient();
@@ -118,9 +119,25 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
       console.log('rr', response);
       onCloseModal();
     },
-    onError: response => {},
+    onError: response => {
+      alert('팀장 및 본인이 작성한 OKR만 수정가능합니다.');
+    },
   });
 
+  const { mutate: deleteObjective } = useMutation(DeleteObjective, {
+    onSuccess: response => {
+      queryClient.invalidateQueries(['OKR']);
+      console.log(response);
+      onCloseModal();
+    },
+    onError: response => {
+      alert('팀장 및 본인이 작성한 OKR만 수정가능합니다.');
+    },
+  });
+
+  const onDeleteObjective = () => {
+    deleteObjective(objectiveInfo.id);
+  };
   return (
     <>
       <ModalBackground ref={modalRef} onClick={modalOutSideClick} />
@@ -202,6 +219,14 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
             <button onClick={createO} className='next'>
               확인
             </button>
+            <div
+              className='deletebtn'
+              onClick={() => {
+                onDeleteObjective();
+              }}>
+              <img className='deleteImg' src={trash} alt='' />
+              <p className='deleteName'>삭제</p>
+            </div>
           </div>
           <Toast />
         </>

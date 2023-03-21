@@ -63,60 +63,51 @@ export const OKRBox = styled.div`
 export const Objective = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 5rem 0 1.7rem;
-  position: relative;
-  .left {
-    display: flex;
-    align-items: center;
-    .box {
-      width: 44px;
-      .logo {
-        font-weight: 700;
-        font-size: 54.2282px;
-        line-height: 74px;
-        color: ${({ color }) => `${color === 'red' ? '#ff8336' : '#457eff'}`};
-        cursor: default;
-      }
-    }
-    .nameBox {
-      display: flex;
-      flex-direction: column;
-      margin-left: 16px;
-      .name {
-        /* width: 300px; */
-        font-weight: 500;
-        font-size: 24px;
-        line-height: 33px;
-        color: ${({ color }) => `${color === 'red' ? '#ff8336' : '#457eff'}`};
-        cursor: default;
-      }
-      .cal {
-        height: 18px;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 12.5px;
-        color: #4b4b4b;
-      }
-    }
+  .Logo {
+    font-weight: 700;
+    font-size: 54.2282px;
+    line-height: 74px;
+    margin-left: 17px;
+    color: ${({ color }) => color};
+    cursor: default;
   }
-  .objRight {
-    display: flex;
-    align-items: center;
-    .range {
-      width: 123px;
-      height: 11px;
+  .NameBox {
+    width: 300px;
+    .Name {
+      margin-top: 16px;
+      margin-left: 16px;
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 33px;
+      letter-spacing: -0.01em;
+      color: ${({ color }) => color};
       cursor: pointer;
     }
-    .percent {
-      font-weight: 300;
-      font-size: 18px;
-      line-height: 25px;
-      margin-left: 14px;
-      color: ${({ color }) => `${color === 'red' ? '#ff8336' : '#457eff'}`};
-      cursor: default;
+    .Cal {
+      height: 18px;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12.5px;
+      margin-left: 15px;
+      color: #4b4b4b;
     }
+  }
+  .Range {
+    width: 123px;
+    height: 11px;
+    margin-top: 34px;
+    margin-left: 130px;
+    cursor: pointer;
+  }
+  .percent {
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 25px;
+    letter-spacing: -0.01em;
+    margin-top: 26px;
+    margin-left: 14px;
+    color: ${({ color }) => color};
+    cursor: default;
   }
   .patchbtn {
     width: 50px;
@@ -133,47 +124,56 @@ export const KRBox = styled.div`
   height: 40px;
   background: #ffffff;
   border-radius: 7px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 5px 0 17px;
-  position: relative;
   margin-bottom: 8px;
-  :nth-last-child(1) {
-    margin-bottom: 0;
+  display: flex;
+  flex-direction: row;
+  .Logo {
+    margin-left: 20px;
+    margin-top: 6px;
+    width: 36px;
+    height: 27px;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 27px;
+    text-align: center;
+    letter-spacing: -0.02em;
+    color: ${({ color }) => color};
+    cursor: default;
   }
-  .krLeft {
-    display: flex;
-    .logo {
-      width: 36px;
-      height: 27px;
-      font-weight: 500;
-      font-size: 20px;
-      line-height: 27px;
-      text-align: center;
-      color: ${({ color }) => `${color === 'red' ? '#ff8336' : '#457eff'}`};
-      cursor: default;
-    }
-    .name {
-      /* width: 300px; */
-      height: 27px;
-      margin-left: 20px;
-      font-style: normal;
-      font-weight: 500;
-      font-size: 20px;
-      line-height: 27px;
-      letter-spacing: -0.01em;
-      color: #4b4b4b;
-      cursor: default;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: normal;
-      word-wrap: break-word;
-    }
+  .Name {
+    margin-top: 6px;
+    margin-left: 20px;
+    width: 400px;
+    height: 27px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 27px;
+    letter-spacing: -0.01em;
+    color: #4b4b4b;
+    cursor: pointer;
+  }
+  .Range {
+    width: 123px;
+    height: 11px;
+    margin-top: 15px;
+    margin-left: 13px;
+    cursor: pointer;
+  }
+  .percent {
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 25px;
+    letter-spacing: -0.01em;
+    margin-top: 8px;
+    margin-left: 14px;
+    color: ${({ color }) => color};
+    cursor: default;
   }
   .right {
     display: flex;
     align-items: center;
+    cursor: pointer;
     .range {
       width: 123px;
       height: 11px;
@@ -185,7 +185,7 @@ export const KRBox = styled.div`
       font-size: 18px;
       line-height: 25px;
       letter-spacing: -0.01em;
-      color: ${({ color }) => `${color === 'red' ? '#ff8336' : '#457eff'}`};
+      color: ${({ color }) => color};
       cursor: default;
     }
     .emotionBox {
@@ -229,4 +229,10 @@ export const EmptyKR = styled.button`
   .img {
     padding: 5px;
   }
+  margin-bottom: 8px;
+`;
+
+export const OKRSpace = styled.div`
+  margin-top: 110px;
+  background-color: black;
 `;
