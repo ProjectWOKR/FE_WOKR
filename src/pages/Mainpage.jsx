@@ -70,19 +70,23 @@ export default function Mainpage() {
 }
 
 const Wrap = styled.div`
+  width: 100%;
   display: flex;
   height: auto;
   /* background-color: pink; */
 `;
 
 const MainContainer = styled.div`
-  /* width: 148rem; */
+  width: 100%;
+  max-width: 147.9rem;
   display: flex;
   flex-direction: column;
   margin-left: 2rem;
+  /* background-color: pink; */
 `;
 
 const OkrContainer = styled.div`
+  width: 100%;
   display: flex;
   /* background-color: skyblue; */
 `;
