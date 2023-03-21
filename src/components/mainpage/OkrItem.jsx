@@ -100,56 +100,51 @@ const OkrObject = () => {
   };
 
   const [slicedArray, setSlicedArray] = useState([]);
-
-  // console.log('slicedArray:,');
   const { data: getOKRData } = useQuery(['OKR'], GetOKR, {
     onSuccess: response => {
-      // console.log(response);
-      // queryClient.invalidateQueries(['OKR']);
-      // console.log('getOKRData :', response);
       setSlicedArray(response?.slice(0, 2));
     },
     onError: response => {},
   });
-
-  // console.log(slicedArray);
-
-  // const [isOpen, setIsOpen] = useState(false);
-
-  // const [isOpen, setIsOpen] = useRecoilState(IsOpen);
   return (
     <div>
       {slicedArray?.map((data, index) => {
         const color = index % 2 === 0 ? 'red' : 'blue';
-        // console.log(data);
         return (
           <OKRBox key={index}>
             <>
               <Objective key={data.objectiveId} color={color}>
-                <div className='Box'>
-                  <div className='Logo'>O</div>
-                </div>
-                <div className='NameBox'>
-                  <div className='Name'>{data.objective}</div>
-                  <div className='Cal'>
-                    {data.startdate} - {data.enddate}
+                <div className='left'>
+                  <div className='box'>
+                    <div className='logo'>O</div>
+                  </div>
+                  <div className='nameBox'>
+                    <div className='name'>{data.objective}</div>
+                    <div className='cal'>
+                      {data.startdate} - {data.enddate}
+                    </div>
                   </div>
                 </div>
-                <div></div>
 
-                <input
-                  className='Range'
-                  type='range'
-                  min='0'
-                  max='100'
-                  step='1'
-                  value={data.progress}
-                  onClick={() => {
-                    patchProgress(data.objectiveId, data.progress, 'Objective');
-                  }}
-                />
-                <div className='background' />
-                <div className='percent'>{data.progress}%</div>
+                <div className='objRight'>
+                  <input
+                    className='range'
+                    type='range'
+                    min='0'
+                    max='100'
+                    step='1'
+                    value={data.progress}
+                    onClick={() => {
+                      patchProgress(
+                        data.objectiveId,
+                        data.progress,
+                        'Objective'
+                      );
+                    }}
+                  />
+
+                  <div className='percent'>{data.progress}%</div>
+                </div>
                 <button
                   className='patchbtn'
                   onClick={() => {
@@ -174,30 +169,34 @@ const OkrObject = () => {
                 </>
               ) : (
                 data?.keyresult.map((KR, index) => {
-                  // console.log(KR);
                   return KR.keyResult !== '' ? (
                     <KRBox key={KR.keyResultId} color={color}>
-                      <div className='Logo'>KR{index + 1}</div>
-                      <div className='Name'>{KR.keyResult}</div>
-                      <input
-                        className='Range'
-                        type='range'
-                        min='0'
-                        max='100'
-                        step='1'
-                        value={KR.progress}
-                        onClick={() => {
-                          patchProgress(KR.keyResultId, KR.progress, 'KR');
-                        }}
-                      />
-                      <div className='percent'>{KR.progress}%</div>
-                      <div className='emotionBox'>
-                        {slicedArray && (
-                          <Emotion
-                            keyResultId={KR.keyResultId}
-                            emotionState={KR.emotion}
-                          />
-                        )}
+                      <div className='krLeft'>
+                        <div className='logo'>KR{index + 1}</div>
+                        <div className='name'>{KR.keyResult}</div>
+                      </div>
+
+                      <div className='right'>
+                        <input
+                          className='range'
+                          type='range'
+                          min='0'
+                          max='100'
+                          step='1'
+                          value={KR.progress}
+                          onClick={() => {
+                            patchProgress(KR.keyResultId, KR.progress, 'KR');
+                          }}
+                        />
+                        <div className='percent'>{KR.progress}%</div>
+                        <div className='emotionBox'>
+                          {slicedArray && (
+                            <Emotion
+                              keyResultId={KR.keyResultId}
+                              emotionState={KR.emotion}
+                            />
+                          )}
+                        </div>
                       </div>
                       <button
                         className='patchbtn'
@@ -215,7 +214,6 @@ const OkrObject = () => {
                   );
                 })
               )}
-              <OKRSpace />
             </>
           </OKRBox>
         );

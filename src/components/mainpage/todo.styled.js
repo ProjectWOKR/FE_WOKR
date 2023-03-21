@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  width: 75.8rem;
+  width: 100%;
+  max-width: 68.2rem;
   height: 56rem;
   border: 1px solid rgba(232, 232, 232, 1);
   margin-left: 3.9rem;
@@ -32,20 +33,14 @@ export const Header = styled.p`
   margin: 0;
 `;
 
-// export const Container2 = styled.div`
-//   width: 700px;
-//   height: 400px;
-//   margin-top: 10px;
-//   background-color: #efeaea;
-//   padding: 10px 15px 10px 15px;
-//   box-sizing: border-box;
-//   border: 1px solid #ccc;
-// `;
-
 export const TodoContainer = styled.div`
   margin: 0 auto;
-  width: 73.4rem;
-  height: 48.3rem;
+  /* width: 73.4rem; */
+  max-width: 68.2rem;
+  /* min-width: 45.2rem; */
+  width: 100%;
+  padding: 0 1.2rem;
+  /* height: 48.3rem; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;

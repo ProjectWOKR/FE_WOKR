@@ -19,8 +19,17 @@ const TodoItem = () => {
   });
 
   // filter 함수 사용
-  const filterArray = getTodo?.filter(el => el.completion === false);
-  // console.log(filterArray);
+  const now = new Date();
+  const today = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+
+  const filterArray = getTodo?.filter(el => {
+    if (el.completion === false) {
+      if (new Date(today) > new Date(el.startDate)) {
+        return true;
+      }
+    }
+    return false;
+  });
 
   // 체크 수정
   const { mutate: patchCheckmutate } = useMutation(PatchCheck, {
@@ -76,7 +85,9 @@ const TodoItem = () => {
           <div className='detail'>
             <div className='name_date'>
               <div>{el.toDo}</div>
-              <p>{el.fendDate} 까지</p>
+              <p>
+                {el.fstartDate}~{el.fendDate} 까지
+              </p>
             </div>
             <div className='priorityBox'>
               <Priority el={el} />
