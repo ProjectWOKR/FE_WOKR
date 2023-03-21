@@ -11,7 +11,7 @@ export default function Calendar() {
 
   const { data: getTodo } = useQuery(['TODO'], GetTodo, {
     onSuccess: response => {
-      console.log(response);
+      // console.log(response);
       response?.map(el => {
         let obj = {
           title: el.toDo,

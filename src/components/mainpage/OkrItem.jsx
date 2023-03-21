@@ -219,7 +219,7 @@ const OkrObject = () => {
         );
       })}
       <Portal>
-        {okrModalOn && (
+        {/* {okrModalOn(
           <OkrPatchModal
             onCloseModal={onObjectiveCloseModal}
             modalRef={okrModalRef}
@@ -243,7 +243,26 @@ const OkrObject = () => {
             modalRef={progressModalRef}
             modalOutSideClick={progressModalOutSideClick}
           />
-        )}
+        )} */}
+        {okrModalOn ? (
+          <OkrPatchModal
+            onCloseModal={onObjectiveCloseModal}
+            modalRef={okrModalRef}
+            modalOutSideClick={okrModalOutSideClick}
+          />
+        ) : krModalOn ? (
+          <KrPatchModal
+            onCloseModal={onKRCloseModal}
+            modalRef={krModalRef}
+            modalOutSideClick={krModalOutSideClick}
+          />
+        ) : progressModalOn ? (
+          <ProgressPatchModal
+            onCloseModal={onProgressCloseModal}
+            modalRef={progressModalRef}
+            modalOutSideClick={progressModalOutSideClick}
+          />
+        ) : null}
       </Portal>
     </div>
 

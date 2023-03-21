@@ -36,7 +36,10 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   ];
 
   const objectiveInfo = useRecoilValue(patchOKRInfo);
-  console.log(objectiveInfo);
+  // console.log(objectiveInfo);
+  // console.log(modalOutSideClick);
+  // console.log(onCloseModal);
+  // console.log(modalRef);
 
   const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
   const format = 'YYYY-MM-DD';
