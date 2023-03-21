@@ -45,9 +45,7 @@ export const ModalBox = styled.div`
   }
   .btnBox {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 3rem;
+    flex-direction: row;
     margin-top: 2.3rem;
     button {
       width: 8.7rem;
@@ -60,6 +58,7 @@ export const ModalBox = styled.div`
       background-color: #f8f8f8;
       color: #4b4b4b;
       border: none;
+      margin-left: 255px;
       box-shadow: 0px 2px 4px rgba(124, 124, 124, 0.25);
     }
     .next {
@@ -67,6 +66,7 @@ export const ModalBox = styled.div`
       color: #fff;
       /* border: 1px solid #ff8336; */
       border: none;
+      margin-left: 30px;
       box-shadow: 0px 2px 4px rgba(255, 131, 54, 0.7);
     }
   }
@@ -77,6 +77,33 @@ export const ModalBox = styled.div`
     font-size: 20px;
   }
   .alertbtn {
+  }
+  .deletebtn {
+    display: flex;
+    margin-left: 123px;
+    width: 106px;
+    height: 36px;
+    background: #f8f8f8;
+    box-shadow: 0px 2px 4px rgba(124, 124, 124, 0.25);
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+  }
+  .deleteImg {
+    margin-left: 20px;
+    margin-top: 8.5px;
+    width: 18.4px;
+    height: 20px;
+  }
+  .deleteName {
+    margin-left: 15.6px;
+    margin-top: 6px;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 23px;
+    text-align: center;
+    letter-spacing: -0.02em;
+    color: #4b4b4b;
   }
 `;
 

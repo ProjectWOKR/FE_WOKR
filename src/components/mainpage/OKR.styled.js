@@ -68,10 +68,11 @@ export const Objective = styled.div`
     font-weight: 700;
     font-size: 54.2282px;
     line-height: 74px;
-    color: ${({ color }) => `${color === 'red' ? '#ff8336' : '#457eff'}`};
+    color: ${({ color }) => color};
     cursor: default;
   }
   .NameBox {
+    width: 300px;
     display: flex;
     flex-direction: column;
     .Cal {
@@ -87,21 +88,21 @@ export const Objective = styled.div`
   }
 
   .Name {
-    width: 300px;
+    width: 250px;
     margin-top: 23px;
     margin-left: 16px;
     font-weight: 500;
     font-size: 24px;
     line-height: 33px;
     letter-spacing: -0.01em;
-    color: ${({ color }) => `${color === 'red' ? '#ff8336' : '#457eff'}`};
+    color: ${({ color }) => color};
     cursor: pointer;
   }
   .Range {
     width: 123px;
     height: 11px;
     margin-top: 34px;
-    margin-left: 47px;
+    margin-left: 145px;
     cursor: pointer;
   }
   .percent {
@@ -111,7 +112,7 @@ export const Objective = styled.div`
     letter-spacing: -0.01em;
     margin-top: 26px;
     margin-left: 14px;
-    color: ${({ color }) => `${color === 'red' ? '#ff8336' : '#457eff'}`};
+    color: ${({ color }) => color};
     cursor: default;
   }
   .patchbtn {
@@ -145,13 +146,13 @@ export const KRBox = styled.div`
     line-height: 27px;
     text-align: center;
     letter-spacing: -0.02em;
-    color: ${({ color }) => `${color === 'red' ? '#ff8336' : '#457eff'}`};
+    color: ${({ color }) => color};
     cursor: default;
   }
   .Name {
     margin-top: 6px;
     margin-left: 20px;
-    width: 274px;
+    width: 400px;
     height: 27px;
     font-style: normal;
     font-weight: 500;
@@ -165,7 +166,7 @@ export const KRBox = styled.div`
     width: 123px;
     height: 11px;
     margin-top: 15px;
-    margin-left: 73px;
+    margin-left: 29px;
     cursor: pointer;
   }
   .percent {
@@ -175,7 +176,7 @@ export const KRBox = styled.div`
     letter-spacing: -0.01em;
     margin-top: 8px;
     margin-left: 14px;
-    color: ${({ color }) => `${color === 'red' ? '#ff8336' : '#457eff'}`};
+    color: ${({ color }) => color};
     cursor: default;
   }
   .emotionBox {

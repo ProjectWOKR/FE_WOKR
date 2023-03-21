@@ -49,11 +49,12 @@ const OkrObject = () => {
   };
 
   /** +버튼 누르면 KR 생성하는 모달 띄움 */
-  const patchKR = (id, KR) => {
+  const patchKR = (id, KR, state) => {
     // console.log(id, KR);
     setPatchkrInfo({
       id: id,
       kr: KR,
+      state: state,
     });
     setkrModalOn(!krModalOn);
   };
@@ -112,20 +113,13 @@ const OkrObject = () => {
     onError: response => {},
   });
 
-  // console.log(slicedArray);
-
-  // const [isOpen, setIsOpen] = useState(false);
-
-  // const [isOpen, setIsOpen] = useRecoilState(IsOpen);
   return (
     <div>
       {slicedArray?.map((data, index) => {
-        const color = index % 2 === 0 ? 'red' : 'blue';
-        // console.log(data);
         return (
           <OKRBox key={index}>
             <>
-              <Objective key={data.objectiveId} color={color}>
+              <Objective key={data.objectiveId} color={data.color}>
                 <div className='Box'>
                   <div className='Logo'>O</div>
                 </div>
@@ -163,56 +157,53 @@ const OkrObject = () => {
                 <div className='background' />
                 <div className='percent'>{data.progress}%</div>
               </Objective>
+              {data?.keyresult.map((KR, index) => {
+                return KR.keyResult ? (
+                  <KRBox key={KR.keyResultId} color={data.color}>
+                    <div className='Logo'>KR{index + 1}</div>
+                    <div
+                      className='Name'
+                      onClick={() => {
+                        patchKR(KR.keyResultId, KR.keyResult, 'patch');
+                      }}>
+                      {KR.keyResult}
+                    </div>
+                    <input
+                      className='Range'
+                      type='range'
+                      min='0'
+                      max='100'
+                      step='1'
+                      value={KR.progress}
+                      onClick={() => {
+                        patchProgress(KR.keyResultId, KR.progress, 'KR');
+                      }}
+                    />
+                    <div className='percent'>{KR.progress}%</div>
+                    <div className='emotionBox'>
+                      {slicedArray && (
+                        <Emotion
+                          keyResultId={KR.keyResultId}
+                          emotionState={KR.emotion}
+                        />
+                      )}
+                    </div>
+                  </KRBox>
+                ) : null;
+              })}
 
-              {data.keyresult.length === 0 ? (
-                <>
-                  <EmptyKR>
+              {Array(3 - data?.keyresult.length)
+                .fill()
+                .map((_, index) => (
+                  <EmptyKR
+                    key={`empty-kr-${index}`}
+                    onClick={() => {
+                      patchKR(data.objectiveId, '', 'post');
+                    }}>
                     KR을 추가하기
                     <img className='img' src={kRAdd} alt='' />
                   </EmptyKR>
-                </>
-              ) : (
-                data?.keyresult.map((KR, index) => {
-                  // console.log(KR);
-                  return KR.keyResult !== '' ? (
-                    <KRBox key={KR.keyResultId} color={color}>
-                      <div className='Logo'>KR{index + 1}</div>
-                      <div
-                        className='Name'
-                        onClick={() => {
-                          patchKR(KR.keyResultId, KR.keyResult);
-                        }}>
-                        {KR.keyResult}
-                      </div>
-                      <input
-                        className='Range'
-                        type='range'
-                        min='0'
-                        max='100'
-                        step='1'
-                        value={KR.progress}
-                        onClick={() => {
-                          patchProgress(KR.keyResultId, KR.progress, 'KR');
-                        }}
-                      />
-                      <div className='percent'>{KR.progress}%</div>
-                      <div className='emotionBox'>
-                        {slicedArray && (
-                          <Emotion
-                            keyResultId={KR.keyResultId}
-                            emotionState={KR.emotion}
-                          />
-                        )}
-                      </div>
-                    </KRBox>
-                  ) : (
-                    <EmptyKR>
-                      KR을 추가하기
-                      <img className='img' src={kRAdd} alt='' />
-                    </EmptyKR>
-                  );
-                })
-              )}
+                ))}
               <OKRSpace />
             </>
           </OKRBox>

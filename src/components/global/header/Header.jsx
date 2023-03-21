@@ -20,10 +20,10 @@ export default function Header() {
         }}
       />
       {/* <Logout onClick={() => onLogout()}>로그아웃</Logout> */}
-      <div>
+      {/* <div>
         <img src={alarm} alt='' />
         <img src={user} alt='' className='user' onClick={() => onLogout()} />
-      </div>
+      </div> */}
     </Layout>
   );
 }

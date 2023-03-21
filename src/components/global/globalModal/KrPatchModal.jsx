@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { ModalBackground, ModalBox, OKRBox } from './modal.styled';
 import close from '../../../assets/close.png';
 import kr from '../../../assets/kr.png';
+import trash from '../../../assets/trash.png';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { PatchKR } from '../../../apis/apiPATCH';
 import { useRecoilValue } from 'recoil';
 import { patchKRInfo } from '../../../store/store';
+import { DeleteKR } from '../../../apis/apiDELETE';
+import { CreateKR } from '../../../apis/apiPOST';
 
 const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const queryClient = useQueryClient();
@@ -46,9 +49,33 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   };
 
   const createKr = () => {
-    const id = krInfo.id;
-    const value = title;
-    patchKRMutate({ value, id });
+    if (krInfo.state === 'patch') {
+      const id = krInfo.id;
+      const value = title;
+      patchKRMutate({ value, id });
+    } else if (krInfo.state === 'post') {
+      const id = krInfo.id;
+      const value = { keyResultDate: [title.keyResult] };
+      postKR({ value, id });
+    }
+  };
+
+  const { mutate: deleteKR } = useMutation(DeleteKR, {
+    onSuccess: response => {
+      queryClient.invalidateQueries(['OKR']);
+      onCloseModal();
+    },
+  });
+
+  const { mutate: postKR } = useMutation(CreateKR, {
+    onSuccess: response => {
+      queryClient.invalidateQueries(['OKR']);
+      onCloseModal();
+    },
+  });
+
+  const deleteKr = () => {
+    deleteKR(krInfo.id);
   };
 
   return (
@@ -56,7 +83,7 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
       <ModalBackground ref={modalRef} onClick={modalOutSideClick} />
       <ModalBox>
         <div className='header'>
-          <h2>OKR 추가 - 핵심 결과</h2>
+          <h2>KR 추가/수정</h2>
           <img src={close} alt='' onClick={onCloseModal} />
         </div>
 
@@ -81,6 +108,16 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
           <button onClick={createKr} className='next'>
             확인
           </button>
+          {krInfo.state === 'patch' ? (
+            <div
+              className='deletebtn'
+              onClick={() => {
+                deleteKr();
+              }}>
+              <img className='deleteImg' src={trash} alt='' />
+              <p className='deleteName'>삭제</p>
+            </div>
+          ) : null}
         </div>
       </ModalBox>
     </>
