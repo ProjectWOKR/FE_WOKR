@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 // import Header from '../components/global/header/Header';
 // import Menu from '../components/mainpage/Menu';
@@ -13,15 +13,16 @@ import CompanyOKR from '../components/companyOKR/companyOKR';
 // import { NowState } from '../store/store';
 // import { useNavigate } from 'react-router-dom';
 import { MenuContainer, MenuItem } from './../components/mainpage/menu.styled';
+import { useNavigate } from 'react-router-dom';
 
 export default function Mainpage() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (localStorage.accesstoken === undefined) {
-  //     navigate('/');
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (localStorage.accesstoken === undefined) {
+      navigate('/');
+    }
+  }, []);
 
   const menuList = ['Dashboard', 'All OKR', 'TEAM OKR', 'TO - DO', 'Calendar'];
 
