@@ -95,7 +95,7 @@ export const Objective = styled.div`
     line-height: 33px;
     letter-spacing: -0.01em;
     color: ${({ color }) => `${color === 'red' ? '#ff8336' : '#457eff'}`};
-    cursor: default;
+    cursor: pointer;
   }
   .Range {
     width: 123px;
@@ -159,7 +159,7 @@ export const KRBox = styled.div`
     line-height: 27px;
     letter-spacing: -0.01em;
     color: #4b4b4b;
-    cursor: default;
+    cursor: pointer;
   }
   .Range {
     width: 123px;

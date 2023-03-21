@@ -73,6 +73,11 @@ export const ModalBox = styled.div`
   .rangeInfo {
     font-size: 20px;
   }
+  .alertHeader {
+    font-size: 20px;
+  }
+  .alertbtn {
+  }
 `;
 
 export const OKRBox = styled.div`

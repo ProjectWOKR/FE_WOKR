@@ -130,7 +130,19 @@ const OkrObject = () => {
                   <div className='Logo'>O</div>
                 </div>
                 <div className='NameBox'>
-                  <div className='Name'>{data.objective}</div>
+                  <div
+                    className='Name'
+                    onClick={() => {
+                      patchOKR(
+                        data.objectiveId,
+                        data.objective,
+                        data.startdate,
+                        data.enddate,
+                        data.color
+                      );
+                    }}>
+                    {data.objective}
+                  </div>
                   <div className='Cal'>
                     {data.startdate} - {data.enddate}
                   </div>
@@ -150,19 +162,6 @@ const OkrObject = () => {
                 />
                 <div className='background' />
                 <div className='percent'>{data.progress}%</div>
-                <button
-                  className='patchbtn'
-                  onClick={() => {
-                    patchOKR(
-                      data.objectiveId,
-                      data.objective,
-                      data.startdate,
-                      data.enddate,
-                      data.color
-                    );
-                  }}>
-                  수정
-                </button>
               </Objective>
 
               {data.keyresult.length === 0 ? (
@@ -178,7 +177,13 @@ const OkrObject = () => {
                   return KR.keyResult !== '' ? (
                     <KRBox key={KR.keyResultId} color={color}>
                       <div className='Logo'>KR{index + 1}</div>
-                      <div className='Name'>{KR.keyResult}</div>
+                      <div
+                        className='Name'
+                        onClick={() => {
+                          patchKR(KR.keyResultId, KR.keyResult);
+                        }}>
+                        {KR.keyResult}
+                      </div>
                       <input
                         className='Range'
                         type='range'
@@ -199,13 +204,6 @@ const OkrObject = () => {
                           />
                         )}
                       </div>
-                      <button
-                        className='patchbtn'
-                        onClick={() => {
-                          patchKR(KR.keyResultId, KR.keyResult);
-                        }}>
-                        수정
-                      </button>
                     </KRBox>
                   ) : (
                     <EmptyKR>
