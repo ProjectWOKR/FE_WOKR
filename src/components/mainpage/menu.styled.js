@@ -9,7 +9,9 @@ export const MenuContainer = styled.div`
   align-items: center;
   margin-top: 1.8rem;
   padding: 0 2rem 0 0;
-  /* background-color: skyblue; */
+
+  position: sticky;
+  top: 20px;
 `;
 
 export const MenuItem = styled.button`

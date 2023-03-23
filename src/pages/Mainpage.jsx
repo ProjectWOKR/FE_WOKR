@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import DashBoardOKR from '../components/mainpage/OKR';
 import DashBoardTodo from '../components/mainpage/ToDo';
 import DashBoardCalendar from '../components/mainpage/Calendar';
-import Todo from '../components/todo/todo';
+import Todo from '../components/todo/Todo';
 import TeamOKR from '../components/teamOKR/TeamOKR';
 import Calendar from '../components/calendar/Calendar';
 import CompanyOKR from '../components/companyOKR/companyOKR';
@@ -79,7 +79,7 @@ const Wrap = styled.div`
 
 const MainContainer = styled.div`
   width: 100%;
-  max-width: 147.9rem;
+  max-width: 154rem;
   display: flex;
   flex-direction: column;
   margin-left: 2rem;

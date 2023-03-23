@@ -12,19 +12,20 @@ const TodoItem = () => {
   const queryClient = useQueryClient();
 
   const { data: getTodo } = useQuery(['TODO'], GetTodo, {
-    onSuccess: response => {
-      // console.log(response);
-    },
+    onSuccess: response => {},
     onError: response => {},
   });
 
   // filter 함수 사용
   const now = new Date();
   const today = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+  const plusToday = `${now.getFullYear()}-${now.getMonth() + 1}-${
+    now.getDate() + 1
+  }`;
 
   const filterArray = getTodo?.filter(el => {
     if (el.completion === false) {
-      if (new Date(today) > new Date(el.startDate)) {
+      if (new Date(plusToday) > new Date(el.startDate)) {
         return true;
       }
     }
@@ -61,26 +62,12 @@ const TodoItem = () => {
     }
   };
 
-  // const { data: getOkrData } = useQuery(['getOkr'], GetOKR, {
-  //   onSuccess: response => {
-  //     console.log(response);
-  //     console.log('filter :', filterArray);
-  //   },
-  //   onError: response => {},
-  // });
-
-  // const Title = (el, index) => {
-  //   console.log(el);
-  //   console.log('index :', index);
-  //   return <div className='title'></div>;
-  // };
-
   return (
     <>
       {filterArray?.map((el, index) => (
         <div className='todo' key={index}>
           <div className='title' style={{ color: el.color }}>
-            none
+            {el.keyResultId === null ? 'none' : 'KR'}
           </div>
           <div className='detail'>
             <div className='name_date'>
