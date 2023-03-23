@@ -116,7 +116,7 @@ const OkrObject = () => {
     console.log('kr', id, KR, state, index);
     console.log(patchKRInfo);
     console.log('okr', getOKRData[index]);
-
+    //test
     if (state === 'patch')
       setPatchkrInfo({
         id: id,
