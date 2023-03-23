@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { OKRBox, Objective, OKRSpace, KRBox, EmptyKR } from './OKR.styled';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Portal from '../global/globalModal/Potal';
@@ -48,17 +48,6 @@ const OkrObject = () => {
     setOkrModalOn(!okrModalOn);
   };
 
-  /** +버튼 누르면 KR 생성하는 모달 띄움 */
-  const patchKR = (id, KR, state) => {
-    // console.log(id, KR);
-    setPatchkrInfo({
-      id: id,
-      kr: KR,
-      state: state,
-    });
-    setkrModalOn(!krModalOn);
-  };
-
   /**KR 모달 닫는 함수 */
   const onProgressCloseModal = () => {
     setprogressModalOn(!progressModalOn);
@@ -100,16 +89,87 @@ const OkrObject = () => {
     }
   };
 
-  const [slicedArray, setSlicedArray] = useState([]);
+  // const [slicedArray, setSlicedArray] = useState([]);
+  const [KRArray, setKRArray] = useState([]);
   const { data: getOKRData } = useQuery(['OKR'], GetOKR, {
     onSuccess: response => {
-      setSlicedArray(response?.slice(0, 2));
+      console.log(response);
+      // setSlicedArray(response?.slice(0, 2));
+      const newArray = response.map(data => {
+        const newKRArray = [...data.keyresult];
+        newKRArray.sort((a, b) => a.krNumber - b.krNumber);
+        return {
+          ...data,
+          keyresult: newKRArray,
+        };
+      });
+      setKRArray(newArray);
+      console.log(KRArray);
     },
     onError: response => {},
+    enabled: true,
   });
+
+  useEffect(() => {});
+  /** +버튼 누르면 KR 생성하는 모달 띄움 */
+  const patchKR = (id, KR, state, index) => {
+    console.log('kr', id, KR, state, index);
+    console.log(patchKRInfo);
+    console.log('okr', getOKRData[index]);
+
+    if (state === 'patch')
+      setPatchkrInfo({
+        id: id,
+        kr: KR,
+        state: state,
+      });
+    else if (state === 'post') {
+      let index1 = false;
+      let index2 = false;
+      let index3 = false;
+      for (let i = 0; i < getOKRData[index]?.keyresult.length; i++) {
+        const forNum = Number(getOKRData[index]?.keyresult[i].krNumber);
+        console.log('fn', forNum);
+        if (forNum === 1) {
+          index1 = true;
+        }
+        if (forNum === 2) {
+          index2 = true;
+        }
+        if (forNum === 3) {
+          index3 = true;
+        }
+      }
+      console.log('index', index1, index2, index3);
+      if (index1 === false) {
+        setPatchkrInfo({
+          id: id,
+          kr: KR,
+          state: state,
+          num: 1,
+        });
+      } else if (index1 === true && index2 === false) {
+        setPatchkrInfo({
+          id: id,
+          kr: KR,
+          state: state,
+          num: 2,
+        });
+      } else if (index1 === true && index2 === true && index3 === false) {
+        setPatchkrInfo({
+          id: id,
+          kr: KR,
+          state: state,
+          num: 3,
+        });
+      }
+    }
+    setkrModalOn(!krModalOn);
+  };
+
   return (
     <div>
-      {slicedArray?.map((data, index) => {
+      {KRArray?.map((data, index) => {
         return (
           <OKRBox key={index}>
             <>
@@ -150,57 +210,54 @@ const OkrObject = () => {
                 <div className='background' />
                 <div className='percent'>{data.progress}%</div>
               </Objective>
-              {data?.keyresult.map((KR, index) => {
-                return KR.keyResult ? (
-                  <KRBox key={KR.keyResultId} color={data.color}>
-                    <div className='Logo'>KR{index + 1}</div>
-                    <div
-                      className='Name'
-                      onClick={() => {
-                        patchKR(KR.keyResultId, KR.keyResult, 'patch');
-                      }}>
-                      {KR.keyResult}
-                    </div>
-                    <input
-                      className='Range'
-                      type='range'
-                      min='0'
-                      max='100'
-                      step='1'
-                      value={KR.progress}
-                      onClick={() => {
-                        patchProgress(KR.keyResultId, KR.progress, 'KR');
-                      }}
-                    />
-                    <OKRSpace />
-                    <div className='percent'>{KR.progress}%</div>
-                    <div className='right'>
-                      <div className='emotionBox'>
-                        {slicedArray && (
-                          <Emotion
-                            keyResultId={KR.keyResultId}
-                            emotionState={KR.emotion}
-                          />
-                        )}
-                      </div>
-                    </div>
-                  </KRBox>
-                ) : null;
-              })}
-
-              {Array(3 - data?.keyresult.length)
-                .fill()
-                .map((_, index) => (
-                  <EmptyKR
-                    key={`empty-kr-${index}`}
-                    onClick={() => {
-                      patchKR(data.objectiveId, '', 'post');
-                    }}>
-                    KR을 추가하기
-                    <img className='img' src={kRAdd} alt='' />
-                  </EmptyKR>
-                ))}
             </>
+            {data.keyresult.map(data => {
+              return (
+                <KRBox key={data.keyResultId} color={data.color}>
+                  <div className='Logo'>KR{data.krNumber}</div>
+                  <div
+                    className='Name'
+                    onClick={() => {
+                      patchKR(data.keyResultId, data.keyResult, 'patch');
+                    }}>
+                    {data.keyResult}
+                  </div>
+                  <input
+                    className='Range'
+                    type='range'
+                    min='0'
+                    max='100'
+                    step='1'
+                    value={data.progress}
+                    onClick={() => {
+                      patchProgress(data.keyResultId, data.progress, 'KR');
+                    }}
+                  />
+                  <OKRSpace />
+                  <div className='percent'>{data.progress}%</div>
+                  <div className='right'>
+                    <div className='emotionBox'>
+                      {KRArray && (
+                        <Emotion
+                          keyResultId={data.keyResultId}
+                          emotionState={data.emotion}
+                        />
+                      )}
+                    </div>
+                  </div>
+                </KRBox>
+              );
+            })}
+            {data.keyresult.length < 3 ? (
+              <EmptyKR
+                key={`empty-kr-${index}`}
+                onClick={() => {
+                  patchKR(data.objectiveId, '', 'post', index);
+                }}>
+                KR을 추가하기
+                <img className='img' src={kRAdd} alt='' />
+              </EmptyKR>
+            ) : null}
           </OKRBox>
         );
       })}
@@ -232,8 +289,6 @@ const OkrObject = () => {
         )}
       </Portal>
     </div>
-
-    // <Test />
   );
 };
 

@@ -43,23 +43,14 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
     },
   });
 
-  const [title, setTitle] = useState({ keyResult: krInfo.kr });
+  const [title, setTitle] = useState({
+    krNumber: krInfo.num,
+    keyResult: krInfo.kr,
+  });
 
   const onChangeKR = e => {
     console.log(e.target.value);
-    setTitle({ keyResult: e.target.value });
-  };
-
-  const createKr = () => {
-    if (krInfo.state === 'patch') {
-      const id = krInfo.id;
-      const value = title;
-      patchKRMutate({ value, id });
-    } else if (krInfo.state === 'post') {
-      const id = krInfo.id;
-      const value = { keyResultDate: [title.keyResult] };
-      postKR({ value, id });
-    }
+    setTitle({ ...title, keyResult: e.target.value });
   };
 
   const { mutate: deleteKR } = useMutation(DeleteKR, {
@@ -81,6 +72,20 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
       alert('팀장 및 본인이 작성한 OKR만 수정가능합니다.');
     },
   });
+
+  const createKr = () => {
+    if (krInfo.state === 'patch') {
+      const id = krInfo.id;
+      const value = title;
+      patchKRMutate({ value, id });
+    } else if (krInfo.state === 'post') {
+      const id = krInfo.id;
+      const value = title;
+      console.log(title);
+      console.log(value);
+      postKR({ value, id });
+    }
+  };
 
   const deleteKr = () => {
     deleteKR(krInfo.id);
