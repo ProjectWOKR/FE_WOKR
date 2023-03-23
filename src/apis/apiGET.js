@@ -31,3 +31,18 @@ export async function GetTodo() {
   const { data } = await api.get(`api/todo`);
   return data;
 }
+
+export async function GetAllTodo() {
+  const { data } = await api.get(`api/todo/progress`);
+  return data;
+}
+
+export async function GetUser() {
+  const { data } = await api.get(`api/user/team/member`);
+  return data;
+}
+
+export async function GetPastTodo() {
+  const { data } = await api.get(`api/todo/expiration`);
+  return data;
+}

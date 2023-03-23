@@ -19,7 +19,7 @@ const PriorityDropDown = ({ todoInfo, setTodoInfo }) => {
     name,
     el,
   }) => {
-    console.log(el);
+    // console.log(el);
     const ValueClick = () => {
       setFinalValue(name);
       setIsOpen(!isOpen);

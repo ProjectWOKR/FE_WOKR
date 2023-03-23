@@ -6,6 +6,9 @@ export const Layout = styled.div`
   height: 9.7rem;
   ${props => props.theme.flex_row_between}
   padding: 0 5rem;
+  /* position: sticky;
+  top: 0; */
+  /* margin-bottom: 97px; */
   div {
     display: flex;
     align-items: center;

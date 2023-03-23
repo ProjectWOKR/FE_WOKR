@@ -42,7 +42,7 @@ export const useDropDown = (ref, initialState) => {
 };
 
 export const team = {
-  list: ['기획팀', '개발팀', '인사팀'],
+  list: ['기획팀', '개발팀', '인사팀', '채운팀'],
   defaultValue: '부서를 선택해주세요',
 };
 

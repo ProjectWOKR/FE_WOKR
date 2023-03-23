@@ -45,9 +45,9 @@ export default function Calendar() {
           listMonth: { buttonText: 'list month' },
         }}
         headerToolbar={{
-          left: 'Calendar, 오늘, prev, next',
+          left: 'prev',
           center: 'title',
-          right: 'listDay, listWeek, listMonth',
+          right: 'next',
           // ,'timeGridWeek','timeGridDay'
           // end: 'listMonth,listWeek, listDay,listYear',
         }}
