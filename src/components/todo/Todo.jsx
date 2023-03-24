@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { GetAllTodo, GetPostTodo, GetUser } from '../../apis/apiGET';
 import DetailTodoItem from './DetailTodoItem';
@@ -15,18 +16,34 @@ export default function Todo() {
       console.log('todo :', response);
     },
     onError: response => {
-      console.log(response.response.data);
+      // console.log(response.response.data);
     },
   });
 
-  // const { data: getMember } = useQuery(['MEMBER'], GetUser, {
-  //   onSuccess: response => {
-  //     console.log('user :', response);
-  //   },
-  //   onError: response => {
-  //     console.log(response);
-  //   },
-  // });
+  const now = new Date();
+  let today = '';
+  let tomorrow;
+  if (now.getMonth() + 1 < 10) {
+    today = `0${now.getMonth() + 1}월 ${now.getDate()}일`;
+    tomorrow = `0${now.getMonth() + 1}월 ${now.getDate() + 1}일`;
+  } else if (now.getDate() < 10) {
+    today = `${now.getMonth() + 1}월 0${now.getDate()}일`;
+    tomorrow = `${now.getMonth() + 1}월 0${now.getDate() + 1}일`;
+  } else {
+    today = `${now.getMonth() + 1}월 ${now.getDate()}일`;
+    tomorrow = `${now.getMonth() + 1}월 ${now.getDate() + 1}일`;
+  }
+
+  const { data: getMember } = useQuery(['MEMBER'], GetUser, {
+    onSuccess: response => {
+      console.log('user :', response);
+    },
+    onError: response => {
+      // console.log(response);
+    },
+  });
+
+  // console.log(today, yesterday, tomorrow);
 
   return (
     <StSticky>
@@ -34,10 +51,12 @@ export default function Todo() {
       <TodoDashboard>
         <TodoNavi />
         <PastTodo />
-        <DetailTodoWrap>
-          <DetailTodoItem />
-          <FinishTodo />
-        </DetailTodoWrap>
+        {getAllTodo?.map(el => (
+          <DetailTodoWrap key={el.targetDate}>
+            <DetailTodoItem el={el} today={today} tomorrow={tomorrow} />
+            <FinishTodo el={el} />
+          </DetailTodoWrap>
+        ))}
       </TodoDashboard>
       <TeamTodo />
     </StSticky>
@@ -46,7 +65,6 @@ export default function Todo() {
 
 const StSticky = styled.div`
   display: flex;
-  /* background-color: pink; */
   h2 {
     font-size: 2.4rem;
     font-weight: 700;
@@ -55,10 +73,7 @@ const StSticky = styled.div`
 `;
 
 const TodoDashboard = styled.div`
-  /* background-color: #fbe6e9; */
   max-width: 1195px;
   width: 100%;
-  /* overflow-y: scroll; */
-  height: 3000px;
   padding: 0 27px;
 `;

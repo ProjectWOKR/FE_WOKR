@@ -1,5 +1,7 @@
 import React from 'react';
 
 export default function companyOKR() {
-  return <div>companyOKR</div>;
+  return (
+    <h2 style={{ fontSize: '3rem', fontWeight: 'bold' }}>Coming Soon..!</h2>
+  );
 }

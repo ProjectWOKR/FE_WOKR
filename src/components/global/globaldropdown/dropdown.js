@@ -42,7 +42,23 @@ export const useDropDown = (ref, initialState) => {
 };
 
 export const team = {
-  list: ['기획팀', '개발팀', '인사팀', '채운팀'],
+  // list: ['기획팀', '개발팀', '인사팀', '채운팀'],
+  list: [
+    'P01',
+    'P02',
+    'P03',
+    'P04',
+    'P05',
+    'P06',
+    'P07',
+    'P08',
+    'P09',
+    'P010',
+    'P011',
+    'P012',
+    'P013',
+  ],
+  // list: ['팀슬램덩크1', '팀슬램덩크2', '팀슬램덩크3'],
   defaultValue: '부서를 선택해주세요',
 };
 
@@ -53,7 +69,7 @@ export const teamPosi = {
 
 export const color = {
   list: [
-    { index: 1, color: '#F35330', name: '파이어' },
+    { index: 1, color: '#FF739D', name: '복숭아' },
     { index: 2, color: '#457EFF', name: '워터' },
     { index: 3, color: '#9747FF', name: '퍼플' },
     { index: 4, color: '#00E58C', name: '그린' },
