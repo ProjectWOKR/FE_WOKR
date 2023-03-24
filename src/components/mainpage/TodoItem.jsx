@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { GetOKR, GetTodo } from '../../apis/apiGET';
 import red from '../../assets/todoRed.png';
 import yellow from '../../assets/todoYellow.png';
@@ -7,6 +7,10 @@ import blue from '../../assets/todoBlue.png';
 import { PatchCheck } from '../../apis/apiPATCH';
 import { toast } from 'react-toastify';
 import Toast from '../global/Toast';
+import { patchTodoInfo } from '../../store/store';
+import { useSetRecoilState } from 'recoil';
+import Potal from '../global/globalModal/Potal';
+import TodoPathModal from '../global/globalModal/TodoPathModal';
 
 const TodoItem = () => {
   const queryClient = useQueryClient();
@@ -62,10 +66,56 @@ const TodoItem = () => {
     }
   };
 
+  const [todoModalOn, setTodoModalOn] = useState(false);
+  console.log(todoModalOn);
+
+  const onTodoCloseModal = () => {
+    setTodoModalOn(!todoModalOn);
+  };
+
+  const setPatchTodoInfo = useSetRecoilState(patchTodoInfo);
+
+  const patchTodo = (
+    id,
+    todo,
+    memo,
+    startDate,
+    startDateTime,
+    endDate,
+    endDateTime,
+    priority
+  ) => {
+    setPatchTodoInfo({
+      id,
+      todo,
+      memo,
+      startDate,
+      startDateTime,
+      endDate,
+      endDateTime,
+      priority,
+    });
+    setTodoModalOn(!todoModalOn);
+  };
+  console.log(filterArray);
   return (
     <>
       {filterArray?.map((el, index) => (
-        <div className='todo' key={index}>
+        <div
+          className='todo'
+          key={index}
+          onClick={() => {
+            patchTodo(
+              el.toDoId,
+              el.toDo,
+              el.memo,
+              el.startDate,
+              el.startDateTime,
+              el.endDate,
+              el.endDateTime,
+              el.priority
+            );
+          }}>
           <div className='title' style={{ color: el.color }}>
             {el.keyResultId === null ? 'none' : 'KR'}
           </div>
@@ -83,6 +133,9 @@ const TodoItem = () => {
           </div>
         </div>
       ))}
+      <Potal>
+        {todoModalOn ? <TodoPathModal onCloseModal={onTodoCloseModal} /> : null}
+      </Potal>
       <Toast />
     </>
   );

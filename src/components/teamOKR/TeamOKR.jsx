@@ -15,5 +15,7 @@ export default function TeamOKR() {
     }
   );
 
-  return <div>teamOKR</div>;
+  return (
+    <h2 style={{ fontSize: '3rem', fontWeight: 'bold' }}>Coming Soon..!</h2>
+  );
 }

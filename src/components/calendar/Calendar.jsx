@@ -1,5 +1,7 @@
 import React from 'react';
 
 export default function Calendar() {
-  return <div>Calendar</div>;
+  return (
+    <h2 style={{ fontSize: '3rem', fontWeight: 'bold' }}>Coming Soon..!</h2>
+  );
 }

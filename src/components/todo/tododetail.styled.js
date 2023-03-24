@@ -4,6 +4,8 @@ import next from '../../assets/next.png';
 import more from '../../assets/more.png';
 import down from '../../assets/down.png';
 import check from '../../assets/todoCheck.png';
+import up from '../../assets/up.png';
+import checkicon from '../../assets/checkFull.png';
 
 export const StNavi = styled.div`
   position: sticky;
@@ -32,16 +34,24 @@ export const TodoHeader = styled.div`
       background: url(${down}) no-repeat center / 100%;
       cursor: pointer;
     }
+    .up {
+      width: 13px;
+      height: 7px;
+      background: url(${up}) no-repeat center / 100%;
+      cursor: pointer;
+    }
   }
   .right {
     display: flex;
     align-items: center;
     .prev {
+      cursor: pointer;
       width: 14px;
       height: 33px;
       background: url(${prev}) no-repeat center / 100%;
     }
     .next {
+      cursor: pointer;
       width: 14px;
       height: 33px;
       background: url(${next}) no-repeat center / 100%;
@@ -99,6 +109,7 @@ export const DateNavi = styled.div`
 
 export const DetailTodoWrap = styled.div`
   width: 100%;
+  /* background-color: pink; */
 `;
 
 export const StPastTodo = styled.div`
@@ -117,11 +128,20 @@ export const TodoDetailHeader = styled.div`
     width: 100%;
     display: flex;
     align-items: center;
-    margin-bottom: 10.5px;
+    /* margin-bottom: 10.5px; */
+    padding-bottom: 10.5px;
+    box-sizing: content-box;
     .down {
       width: 13px;
       height: 7px;
       background: url(${down}) no-repeat center / 100%;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    .up {
+      width: 13px;
+      height: 7px;
+      background: url(${up}) no-repeat center / 100%;
       margin-right: 10px;
       cursor: pointer;
     }
@@ -148,14 +168,29 @@ export const TodoDetailItem = styled.div`
     background-color: #f8f8f8;
     border-radius: 8px;
     padding: 0 19px 0 17px;
-    :nth-last-child(1) {
-      margin-bottom: 0;
-    }
+    margin-bottom: 10px;
+    /* background-color: pink; */
+  }
+  .notHave {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    padding: 0 19px 0 17px;
+    margin-bottom: 10px;
+    font-size: 2rem;
+    height: 45px;
   }
   .flexLeft {
     display: flex;
     align-items: center;
     .kr {
+      font-size: 2rem;
+      margin-right: 31px;
+    }
+    .colorNull {
       font-size: 2rem;
       margin-right: 31px;
     }
@@ -206,14 +241,22 @@ export const TodoDetailItem = styled.div`
     }
   }
   .flexRight {
-    .flag {
-    }
+    display: flex;
+    align-items: center;
     .check {
       width: 30px;
       height: 30px;
       border-radius: 50%;
-      background-color: #7c7c7c;
+      background-color: #e8e8e8;
       margin-left: 21px;
+    }
+    .checkbg {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: #e8e8e8;
+      margin-left: 21px;
+      background: url(${checkicon}) no-repeat center / 100%;
     }
   }
 `;

@@ -38,6 +38,22 @@ export const DropdownContainer = styled.div`
     box-sizing: border-box;
     position: relative;
     z-index: 9;
+
+    height: 300px;
+    overflow-y: auto;
+    ::-webkit-scrollbar {
+      width: 12px;
+    }
+    ::-webkit-scrollbar-thumb {
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 1);
+      /* background-color: #e8e8e8; */
+      border-radius: 0 12px 12px 0;
+    }
+    ::-webkit-scrollbar-track {
+      background-color: #e4e4e4;
+      border-radius: 0 12px 12px 0;
+      background-color: rgba(228, 228, 228, 0.7);
+    }
     li {
       background-color: #ffffff;
       width: 100%;
@@ -49,10 +65,12 @@ export const DropdownContainer = styled.div`
       padding: 0 20px;
       border-bottom: 1px solid #ccc;
       :nth-last-child(1) {
-        border-radius: 0px 0px 12px 12px;
+        // 금욜날
+        /* border-radius: 0px 0px 12px 12px; */
       }
       :nth-child(1) {
-        border-radius: 12px 12px 0px 0px;
+        //금욜날
+        /* border-radius: 12px 12px 0px 0px; */
       }
       :hover {
         background-color: #e8e8e8;

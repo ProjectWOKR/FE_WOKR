@@ -34,9 +34,16 @@ export const patchProgressInfo = atom({
   },
 });
 
-// export const patchEmotion = atom({
-//   key: 'emotionInfo',
-//   default: {
-//     emotion: '',
-//   },
-// });
+export const patchTodoInfo = atom({
+  key: 'todoInfo',
+  default: {
+    id: 0,
+    todo: '',
+    memo: '',
+    startDate: '',
+    startDateTime: '',
+    endDate: '',
+    endDateTime: '',
+    priority: 0,
+  },
+});
