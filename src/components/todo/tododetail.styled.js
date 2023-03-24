@@ -109,6 +109,9 @@ export const DateNavi = styled.div`
 
 export const DetailTodoWrap = styled.div`
   width: 100%;
+  border-bottom: 1px solid #e8e8e8;
+  margin-bottom: 10px;
+
   /* background-color: pink; */
 `;
 
@@ -183,6 +186,9 @@ export const TodoDetailItem = styled.div`
     font-size: 2rem;
     height: 45px;
   }
+  .dayLine {
+    /* border-bottom: 2px solid #e8e8e8; */
+  }
   .flexLeft {
     display: flex;
     align-items: center;
@@ -234,6 +240,10 @@ export const TodoDetailItem = styled.div`
         }
         .fDate {
           text-decoration: line-through;
+          color: #9b9b9b;
+          font-size: 1.4rem;
+        }
+        .normalDate {
           color: #9b9b9b;
           font-size: 1.4rem;
         }

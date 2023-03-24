@@ -16,7 +16,9 @@ const TodoItem = () => {
   const queryClient = useQueryClient();
 
   const { data: getTodo } = useQuery(['TODO'], GetTodo, {
-    onSuccess: response => {},
+    onSuccess: response => {
+      console.log('getTodo :', response);
+    },
     onError: response => {},
   });
 
@@ -132,9 +134,9 @@ const TodoItem = () => {
           </div>
         </div>
       ))}
-      <Potal>
+      {/* <Potal>
         {todoModalOn ? <TodoPathModal onCloseModal={onTodoCloseModal} /> : null}
-      </Potal>
+      </Potal> */}
       <Toast />
     </>
   );
