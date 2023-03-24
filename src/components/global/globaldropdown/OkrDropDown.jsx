@@ -11,36 +11,54 @@ import Arrow from '../../../assets/dropdownArrow.png';
 import { useQuery } from '@tanstack/react-query';
 import { GetOKR } from '../../../apis/apiGET';
 
-const OkrDropDown = ({ setTodoInfo, todoInfo, setKid, setOid }) => {
+const OkrDropDown = ({ setKid, setOid, title }) => {
   const dropDownRef = useRef(null);
   const [isOpen, setIsOpen] = useDropDown(dropDownRef, false);
-  const [finalValueKR, setFinalValueKR] = useState('');
+  const [finalValueKR, setFinalValueKR] =
+    useState('선택하지 않으면 기존꺼와 동일');
   const [finalValueText, setFinalValueText] = useState('');
   const [finalValueKRColor, setFinalValueKRColor] = useState('');
   // const [okrData, setOkrData] = useState();
 
+  const [finalValue, setFinalValue] = useState('');
+
   const { data: getOkrData } = useQuery(['getOkr'], GetOKR, {
-    onSuccess: response => {},
+    onSuccess: response => {
+      // console.log(getOkrData);
+    },
     onError: response => {},
   });
 
-  const ValueClick = (e, index) => {
+  const ValueClick = e => {
     setIsOpen(!isOpen);
-    console.log(index);
-    console.log('aaa', e.target.outerText);
-    setFinalValueKR(e.target.childNodes[0].textContent);
-    setFinalValueText(e.target.childNodes[1].textContent);
-    if (index === 'none') {
-      setFinalValueKRColor('#BEBEBE');
+    setFinalValue(e.target.outerText);
+
+    if (e.target.id === '') {
+      // console.log('none일때');
+      setKid(0);
+      setOid(0);
     } else {
-      setFinalValueKRColor(getOkrData[index].color);
-      console.log(finalValueKRColor);
+      // console.log('id가 있을때');
+      setOid(Number(e.target.attributes.name.value));
+      setKid(Number(e.target.id));
     }
   };
 
   return (
     <OkrDropBox ref={dropDownRef}>
-      <KRTodoBox className='input-container' onClick={() => setIsOpen(!isOpen)}>
+      <input
+        type='text'
+        value={finalValue}
+        readOnly={true}
+        onClick={() => setIsOpen(!isOpen)}
+        // placeholder='none 핵심결과 선택하지 않고 To Do 작성'
+        placeholder={
+          title
+            ? '선택하지 않으면 기존과 동일합니다.'
+            : 'none 핵심결과 선택하지 않고 To Do 작성'
+        }
+      />
+      {/* <KRTodoBox className='input-container' onClick={() => setIsOpen(!isOpen)}>
         <div
           style={{
             color: finalValueKR ? finalValueKRColor : 'black',
@@ -48,7 +66,7 @@ const OkrDropDown = ({ setTodoInfo, todoInfo, setKid, setOid }) => {
           {finalValueKR}
         </div>
         <div className='black'>{finalValueText}</div>
-      </KRTodoBox>
+      </KRTodoBox> */}
       <DropIcon src={Arrow} />
       {isOpen && (
         <OkrDropContainer>

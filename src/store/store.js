@@ -37,8 +37,7 @@ export const patchProgressInfo = atom({
 export const patchTodoInfo = atom({
   key: 'todoInfo',
   default: {
-    id: 0,
-    todo: '',
+    toDo: '',
     memo: '',
     startDate: '',
     startDateTime: '',

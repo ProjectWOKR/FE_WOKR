@@ -9,3 +9,8 @@ export async function DeleteObjective(id) {
   const { data } = await api.delete(`api/objective/${id}`);
   return data;
 }
+
+export async function DeleteTodo(id) {
+  const { data } = await api.delete(`api/todo/${id}`);
+  return data;
+}

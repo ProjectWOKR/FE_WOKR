@@ -193,8 +193,9 @@ export const TodoDetailItem = styled.div`
     display: flex;
     align-items: center;
     .kr {
+      width: 50px;
       font-size: 2rem;
-      margin-right: 31px;
+      margin-right: 15px;
     }
     .colorNull {
       font-size: 2rem;
