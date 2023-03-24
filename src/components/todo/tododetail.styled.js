@@ -239,7 +239,7 @@ export const TodoDetailItem = styled.div`
           font-size: 1.4rem;
           color: #7c7c7c;
           margin-bottom: 1px;
-          margin-right: 2px;
+          margin: 0 5px;
         }
         .fDate {
           text-decoration: line-through;
