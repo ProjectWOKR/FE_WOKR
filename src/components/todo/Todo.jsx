@@ -36,14 +36,14 @@ export default function Todo() {
 
   const { data: getMember } = useQuery(['MEMBER'], GetUser, {
     onSuccess: response => {
-      console.log('user :', response);
+      // console.log('user :', response);
     },
     onError: response => {
       // console.log(response);
     },
   });
 
-  // console.log(today, yesterday, tomorrow);
+  // -------------------------- 여기서 부터 이제 무한스크롤
 
   return (
     <StSticky>

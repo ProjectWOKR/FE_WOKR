@@ -93,7 +93,7 @@ const OkrObject = () => {
   const [KRArray, setKRArray] = useState([]);
   const { data: getOKRData } = useQuery(['OKR'], GetOKR, {
     onSuccess: response => {
-      console.log(response);
+      // console.log(response);
       // setSlicedArray(response?.slice(0, 2));
       const newArray = response.map(data => {
         const newKRArray = [...data.keyresult];
@@ -104,7 +104,7 @@ const OkrObject = () => {
         };
       });
       setKRArray(newArray);
-      console.log(KRArray);
+      // console.log(KRArray);
     },
     onError: response => {},
     enabled: true,

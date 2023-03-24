@@ -72,6 +72,7 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
       alert('팀장 및 본인이 작성한 OKR만 수정가능합니다.');
     },
   });
+  console.log(krInfo);
 
   const createKr = () => {
     if (krInfo.state === 'patch') {

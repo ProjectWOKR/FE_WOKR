@@ -46,3 +46,9 @@ export async function GetPastTodo() {
   const { data } = await api.get(`api/todo/expiration`);
   return data;
 }
+
+export async function GetInfinityTodo(page) {
+  page = 1;
+  const { data } = await api.get(`api/todo/progress?page=${page}`);
+  return data;
+}

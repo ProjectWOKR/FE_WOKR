@@ -74,7 +74,7 @@ const DetailTodoItem = ({ el, today, tomorrow }) => {
       );
     } else {
       return (
-        <div className='fDate'>
+        <div className='normalDate'>
           {pt.fstartDate}
           {pt.startDateTime === '00:00' ? null : pt.startDateTime} ~{' '}
           {pt.fendDate}
@@ -84,8 +84,27 @@ const DetailTodoItem = ({ el, today, tomorrow }) => {
     }
   };
 
+  const KrColor = ({ pt }) => {
+    // console.log(pt);
+    // console.log(el);
+    if (pt.color === null) {
+      return (
+        <div className='kr' style={{ color: 'rgb(155, 155, 155)' }}>
+          none
+        </div>
+      );
+    } else {
+      return (
+        <div className='kr' style={{ color: pt.color }}>
+          KR
+        </div>
+      );
+    }
+  };
+
   //해당 날짜에 todo가 없을 때
   const HavePt = () => {
+    // console.log(el);
     if (el.progressTodo.length === 0) {
       return (
         <TodoDetailItem>
@@ -99,7 +118,8 @@ const DetailTodoItem = ({ el, today, tomorrow }) => {
           <TodoDetailItem key={pt.toDoId}>
             <div className='item'>
               <div className='flexLeft'>
-                <div className='kr'>KR1</div>
+                {/* <div className='kr'>KR1</div> */}
+                <KrColor pt={pt} />
                 <div className='krBox'>
                   <div className='krTitle'>{pt.toDo}</div>
                   <div className='krManager'>
@@ -110,8 +130,8 @@ const DetailTodoItem = ({ el, today, tomorrow }) => {
                       pt={pt}
                     />
 
-                    <div className='kmName'>정혜민</div>
-                    <img src={badgeS} alt='' />
+                    {/* <div className='kmName'>정혜민</div>
+                    <img src={badgeS} alt='' /> */}
                   </div>
                 </div>
               </div>
@@ -134,6 +154,35 @@ const DetailTodoItem = ({ el, today, tomorrow }) => {
           </div>
         </div>
       </TodoDetailHeader>
+
+      {/* {el.progressTodo.map(pt => (
+        <TodoDetailItem key={pt.toDoId}>
+          <div className='item'>
+            <div className='flexLeft'>
+              <div className='kr'>KR1</div>
+              <div className='krBox'>
+                <div className='krTitle'>{pt.toDo}</div>
+                <div className='krManager'>
+                  <DateColor
+                    el={el}
+                    today={today}
+                    tomorrow={tomorrow}
+                    pt={pt}
+                  />
+
+                  <div className='kmName'>정혜민</div>
+                    <img src={badgeS} alt='' />
+                </div>
+              </div>
+            </div>
+            <div className='flexRight'>
+              <Priority pt={pt} />
+              <Check pt={pt} />
+            </div>
+          </div>
+        </TodoDetailItem>
+      ))} */}
+
       <HavePt />
     </DDay>
   );

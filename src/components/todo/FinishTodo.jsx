@@ -25,6 +25,21 @@ const FinishTodo = ({ el }) => {
     }
   };
 
+  const KrColor = ({ ct }) => {
+    // console.log(ct);
+    if (ct.color === null) {
+      <div className='kr' style={{ color: 'rgb(155, 155, 155)' }}>
+        none
+      </div>;
+    } else {
+      return (
+        <div className='kr' style={{ color: ct.color }}>
+          KR
+        </div>
+      );
+    }
+  };
+
   return (
     <Finsh>
       <TodoDetailHeader>
@@ -34,26 +49,6 @@ const FinishTodo = ({ el }) => {
         </div>
       </TodoDetailHeader>
 
-      {/* <TodoDetailItem style={show ? { display: 'flex' } : { display: 'none' }}>
-        <div className='item'>
-          <div className='flexLeft'>
-            <div className='kr'>KR1</div>
-            <div className='krBox'>
-              <div className='fKrTitle'>KR1에 따른 To-Do 내용</div>
-              <div className='krManager'>
-                <div className='fDate'>3월 1일 ~ 3월 3일</div>
-                <div className='kmName'>정혜민</div>
-                <img src={badgeS} alt='' />
-              </div>
-            </div>
-          </div>
-          <div className='flexRight'>
-            <div className='flag'></div>
-            <div className='check'></div>
-          </div>
-        </div>
-      </TodoDetailItem> */}
-
       {el.completionTodo.length === 0
         ? null
         : el.completionTodo?.map(ct => (
@@ -62,7 +57,8 @@ const FinishTodo = ({ el }) => {
               style={show ? { display: 'flex' } : { display: 'none' }}>
               <div className='item'>
                 <div className='flexLeft'>
-                  <div className='kr'>KR1</div>
+                  {/* <div className='kr'>KR1</div> */}
+                  <KrColor ct={ct} />
                   <div className='krBox'>
                     <div className='fKrTitle'>{ct.toDo}</div>
                     <div className='krManager'>
