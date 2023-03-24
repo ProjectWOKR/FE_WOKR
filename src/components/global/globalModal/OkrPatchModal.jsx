@@ -41,7 +41,7 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   // console.log(modalOutSideClick);
   // console.log(onCloseModal);
   // console.log(modalRef);
-
+  console.log(objectiveInfo);
   const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
   const format = 'YYYY-MM-DD';
 
@@ -69,13 +69,17 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
     color: objectiveInfo.color,
   });
 
-  const [startDate, setStartDate] = useState({ format: 'MM/DD/YYYY' });
+  const [startDate, setStartDate] = useState(objectiveInfo.startData);
   const [endDate, setEndDate] = useState({ format: 'MM/DD/YYYY' });
 
   //startDate 변환 함수
   const convertStart = (date, format = startDate.format) => {
     let object = { date, format };
     setStartDate(new DateObject(object).format());
+    console.log(startDate);
+    console.log(typeof startDate);
+    console.log(objectiveInfo.startData);
+    console.log(typeof objectiveInfo.startData);
     setObjInfo({ ...objInfo, startdate: new DateObject(object).format() });
   };
 
@@ -188,8 +192,8 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
                   inputClass='end-input'
                   containerClassName='end-container'
                   months={months}
-                  weekDays={weekDays}
                   format={format}
+                  weekDays={weekDays}
                   placeholder='종료일'
                   value={endDate.date}
                   onChange={convertEnd}

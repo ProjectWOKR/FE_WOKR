@@ -279,6 +279,27 @@ export const OkrDropContainer = styled.div`
   }
 `;
 
+export const KRTodoBox = styled.div`
+  width: 610px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding-left: 13px;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 23px;
+  letter-spacing: -0.02em;
+  background-color: white;
+  color: #bebebe;
+  border: 1.5px solid #e8e8e8;
+  border-radius: 7px;
+  cursor: pointer;
+
+  .black {
+    color: black;
+  }
+`;
+
 export const OkrItem = styled.div`
   margin-bottom: 1.5rem;
   .title {

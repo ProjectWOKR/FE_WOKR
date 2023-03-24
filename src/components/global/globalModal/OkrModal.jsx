@@ -65,13 +65,17 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const convertStart = (date, format = startDate.format) => {
     let object = { date, format };
     setStartDate(new DateObject(object).format());
+    console.log(startDate);
+    console.log(startDate.date);
     setObjInfo({ ...objInfo, startdate: new DateObject(object).format() });
   };
 
   //endDate 변환 함수
   const convertEnd = (date, format = endDate.format) => {
     let object = { date, format };
+
     setEndDate(new DateObject(object).format());
+
     setObjInfo({ ...objInfo, enddate: new DateObject(object).format() });
   };
 
