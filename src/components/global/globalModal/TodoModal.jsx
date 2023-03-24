@@ -150,7 +150,7 @@ const TodoModal = ({
   const { mutate: createTodo } = useMutation(CreateTodo, {
     onSuccess: response => {
       queryClient.invalidateQueries(['TODO']);
-      // console.log(response);
+      console.log(response);
     },
     onError: response => {},
   });
@@ -158,7 +158,7 @@ const TodoModal = ({
   const { data: getOkrData } = useQuery(['getOkr'], GetOKR, {
     onSuccess: response => {
       // console.log('df');
-      // console.log(response);
+      console.log(response);
     },
     onError: response => {},
   });
@@ -191,6 +191,7 @@ const TodoModal = ({
       let Oid = oid;
       let Kid = kid;
       let Info = todoInfo;
+      console.log(Oid, Kid, Info);
       createTodo({ Oid, Kid, Info });
       onCloseTodoModal();
     }

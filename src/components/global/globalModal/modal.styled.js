@@ -56,6 +56,7 @@ export const ModalBox = styled.div`
     display: flex;
     flex-direction: row;
     margin-top: 2.3rem;
+    margin-bottom: 2.3rem;
     button {
       width: 8.7rem;
       height: 3.6rem;
@@ -77,6 +78,20 @@ export const ModalBox = styled.div`
       border: none;
       margin-left: 30px;
       box-shadow: 0px 2px 4px rgba(255, 131, 54, 0.7);
+    }
+    .deleteTodo {
+      display: flex;
+      margin-left: 123px;
+      width: 106px;
+      height: 36px;
+      background: #f8f8f8;
+      box-shadow: 0px 2px 4px rgba(124, 124, 124, 0.25);
+      border: none;
+      border-radius: 7px;
+      cursor: pointer;
+      /* position: absolute; */
+      /* bottom: 23px; */
+      right: 25px;
     }
   }
   .rangeInfo {

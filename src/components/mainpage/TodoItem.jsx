@@ -11,13 +11,14 @@ import { patchTodoInfo } from '../../store/store';
 import { useSetRecoilState } from 'recoil';
 import Potal from '../global/globalModal/Potal';
 import TodoPathModal from '../global/globalModal/TodoPathModal';
+import Todo from './../todo/Todo';
 
 const TodoItem = () => {
   const queryClient = useQueryClient();
 
   const { data: getTodo } = useQuery(['TODO'], GetTodo, {
     onSuccess: response => {
-      console.log(response);
+      // console.log('getTodo :', response);
     },
     onError: response => {},
   });
@@ -87,9 +88,10 @@ const TodoItem = () => {
     endDateTime,
     priority
   ) => {
+    console.log(todo);
     setPatchTodoInfo({
       id,
-      todo,
+      toDo: todo,
       memo,
       startDate,
       startDateTime,

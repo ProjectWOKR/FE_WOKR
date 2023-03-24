@@ -101,7 +101,7 @@ const OkrObject = () => {
   const [KRArray, setKRArray] = useState([]);
   const { data: getOKRData } = useQuery(['OKR'], GetOKR, {
     onSuccess: response => {
-      console.log(response);
+      // console.log(response);
       // setSlicedArray(response?.slice(0, 2));
       const newArray = response.map(data => {
         const newKRArray = [...data.keyresult];
@@ -112,7 +112,7 @@ const OkrObject = () => {
         };
       });
       setKRArray(newArray);
-      console.log(KRArray);
+      // console.log(KRArray);
     },
     onError: response => {},
     enabled: true,
@@ -121,9 +121,9 @@ const OkrObject = () => {
   useEffect(() => {});
   /** +버튼 누르면 KR 생성하는 모달 띄움 */
   const patchKR = (id, KR, state, index) => {
-    console.log('kr', id, KR, state, index);
-    console.log(patchKRInfo);
-    console.log('okr', getOKRData[index]);
+    // console.log('kr', id, KR, state, index);
+    // console.log(patchKRInfo);
+    // console.log('okr', getOKRData[index]);
     //test
     if (state === 'patch')
       setPatchkrInfo({
@@ -137,7 +137,7 @@ const OkrObject = () => {
       let index3 = false;
       for (let i = 0; i < getOKRData[index]?.keyresult.length; i++) {
         const forNum = Number(getOKRData[index]?.keyresult[i].krNumber);
-        console.log('fn', forNum);
+        // console.log('fn', forNum);
         if (forNum === 1) {
           index1 = true;
         }
@@ -148,7 +148,7 @@ const OkrObject = () => {
           index3 = true;
         }
       }
-      console.log('index', index1, index2, index3);
+      // console.log('index', index1, index2, index3);
       if (index1 === false) {
         setPatchkrInfo({
           id: id,

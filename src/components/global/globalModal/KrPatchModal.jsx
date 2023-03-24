@@ -14,7 +14,7 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const queryClient = useQueryClient();
 
   const krInfo = useRecoilValue(patchKRInfo);
-  console.log(krInfo);
+  // console.log(krInfo);
 
   // 모달 스크롤 방지
   useEffect(() => {
@@ -72,6 +72,7 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
       alert('팀장 및 본인이 작성한 OKR만 수정가능합니다.');
     },
   });
+  // console.log(krInfo);
 
   const createKr = () => {
     if (krInfo.state === 'patch') {

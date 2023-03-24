@@ -39,7 +39,7 @@ export const DropdownContainer = styled.div`
     position: relative;
     z-index: 9;
 
-    height: 300px;
+    max-height: 300px;
     overflow-y: auto;
     ::-webkit-scrollbar {
       width: 12px;
