@@ -13,15 +13,15 @@ import Potal from '../global/globalModal/Potal';
 import TodoPathModal from '../global/globalModal/TodoPathModal';
 import Todo from './../todo/Todo';
 
-const TodoItem = () => {
+const TodoItem = ({ getTodo }) => {
   const queryClient = useQueryClient();
 
-  const { data: getTodo } = useQuery(['TODO'], GetTodo, {
-    onSuccess: response => {
-      // console.log('getTodo :', response);
-    },
-    onError: response => {},
-  });
+  // const { data: getTodo } = useQuery(['TODO'], GetTodo, {
+  //   onSuccess: response => {
+  //     // console.log('getTodo :', response);
+  //   },
+  //   onError: response => {},
+  // });
 
   // filter 함수 사용
   const now = new Date();
@@ -101,13 +101,13 @@ const TodoItem = () => {
     });
     setTodoModalOn(!todoModalOn);
   };
-  // console.log(filterArray);
+  console.log(filterArray);
   return (
     <>
       {filterArray?.map((el, index) => (
         <div className='todo' key={index}>
           <div className='title' style={{ color: el.color }}>
-            {el.keyResultId === null ? 'none' : 'KR'}
+            {el.keyResultId === null ? 'none' : `KR${el.krNumber}`}
           </div>
           <div className='detail'>
             <div

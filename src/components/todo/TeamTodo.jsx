@@ -7,7 +7,7 @@ import { GetUser } from '../../apis/apiGET';
 const TeamTodo = () => {
   const { data: getMember } = useQuery(['MEMBER'], GetUser, {
     onSuccess: response => {
-      console.log('user :', response);
+      // console.log('user :', response);
     },
     onError: response => {
       // console.log(response);

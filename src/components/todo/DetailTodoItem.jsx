@@ -84,22 +84,38 @@ const DetailTodoItem = ({ el, today, tomorrow }) => {
     }
   };
 
-  const KrColor = ({ pt }) => {
-    // console.log(pt);
-    // console.log(el);
+  // const KrColor = ({ pt }) => {
+  //   // console.log(pt);
+  //   // console.log(el);
+  //   if (pt.color === null) {
+  //     return (
+  //       <div className='kr' style={{ color: 'rgb(155, 155, 155)' }}>
+  //         none
+  //       </div>
+  //     );
+  //   } else {
+  //     return (
+  //       <div className='kr' style={{ color: pt.color }}>
+  //         KR
+  //       </div>
+  //     );
+  //   }
+  // };
+
+  const Title = ({ pt }) => {
+    console.log(pt);
     if (pt.color === null) {
       return (
-        <div className='kr' style={{ color: 'rgb(155, 155, 155)' }}>
-          none
-        </div>
-      );
-    } else {
-      return (
-        <div className='kr' style={{ color: pt.color }}>
-          KR
+        <div className='colorNull' style={{ color: '#9b9b9b' }}>
+          {pt.keyResultId === null ? 'none' : `KR${pt.krNumber}`}
         </div>
       );
     }
+    return (
+      <div className='kr' style={{ color: pt.color }}>
+        {pt.keyResultId === null ? 'none' : `KR${pt.krNumber}`}
+      </div>
+    );
   };
 
   //해당 날짜에 todo가 없을 때
@@ -119,7 +135,7 @@ const DetailTodoItem = ({ el, today, tomorrow }) => {
             <div className='item'>
               <div className='flexLeft'>
                 {/* <div className='kr'>KR1</div> */}
-                <KrColor pt={pt} />
+                <Title pt={pt} />
                 <div className='krBox'>
                   <div className='krTitle'>{pt.toDo}</div>
                   <div className='krManager'>
