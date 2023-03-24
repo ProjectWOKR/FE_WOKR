@@ -2,6 +2,8 @@ import { useState, useRef } from 'react';
 import { useDropDown, color } from './dropdown';
 import { ColorSelect, DropIcon } from './dropDown.styled';
 import Arrow from '../../../assets/dropdownArrow.png';
+import { useQuery } from '@tanstack/react-query';
+import { GetOKR } from '../../../apis/apiGET';
 
 const ColorDropDown = ({ setObjInfo, objInfo }) => {
   // 드롭다운 상태
@@ -9,6 +11,9 @@ const ColorDropDown = ({ setObjInfo, objInfo }) => {
   const [isOpen, setIsOpen] = useDropDown(dropDownRef, false);
   const [finalValue, setFinalValue] = useState('');
 
+  console.log('col', color);
+
+  const { data: getOKRData } = useQuery(['OKR'], GetOKR, {});
   const DropDownItem = ({
     value,
     setFinalValue,
@@ -44,7 +49,7 @@ const ColorDropDown = ({ setObjInfo, objInfo }) => {
             <DropDownItem
               key={el.index}
               number={el.index}
-              name={el.name}
+              name='123'
               value={el.color}
               setIsOpen={setIsOpen}
               isOpen={isOpen}

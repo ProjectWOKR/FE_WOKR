@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { useDropDown } from './dropdown';
 import {
   DropIcon,
+  KRTodoBox,
   OkrDropBox,
   OkrDropContainer,
   OkrItem,
@@ -13,46 +14,46 @@ import { GetOKR } from '../../../apis/apiGET';
 const OkrDropDown = ({ setTodoInfo, todoInfo, setKid, setOid }) => {
   const dropDownRef = useRef(null);
   const [isOpen, setIsOpen] = useDropDown(dropDownRef, false);
-  const [finalValue, setFinalValue] = useState('');
-
+  const [finalValueKR, setFinalValueKR] = useState('');
+  const [finalValueText, setFinalValueText] = useState('');
+  const [finalValueKRColor, setFinalValueKRColor] = useState('');
   // const [okrData, setOkrData] = useState();
 
   const { data: getOkrData } = useQuery(['getOkr'], GetOKR, {
-    onSuccess: response => {
-      // console.log(response);
-    },
+    onSuccess: response => {},
     onError: response => {},
   });
 
-  const ValueClick = e => {
+  const ValueClick = (e, index) => {
     setIsOpen(!isOpen);
-    setFinalValue(e.target.outerText);
-
-    if (e.target.id === '') {
-      // console.log('none일때');
-      setKid(0);
-      setOid(0);
+    console.log(index);
+    console.log('aaa', e.target.outerText);
+    setFinalValueKR(e.target.childNodes[0].textContent);
+    setFinalValueText(e.target.childNodes[1].textContent);
+    if (index === 'none') {
+      setFinalValueKRColor('#BEBEBE');
     } else {
-      // console.log('id가 있을때');
-      setOid(Number(e.target.attributes.name.value));
-      setKid(Number(e.target.id));
+      setFinalValueKRColor(getOkrData[index].color);
+      console.log(finalValueKRColor);
     }
   };
 
   return (
     <OkrDropBox ref={dropDownRef}>
-      <input
-        type='text'
-        value={finalValue}
-        readOnly={true}
-        onClick={() => setIsOpen(!isOpen)}
-        placeholder='none 핵심결과 선택하지 않고 To Do 작성'
-      />
+      <KRTodoBox className='input-container' onClick={() => setIsOpen(!isOpen)}>
+        <div
+          style={{
+            color: finalValueKR ? finalValueKRColor : 'black',
+          }}>
+          {finalValueKR}
+        </div>
+        <div className='black'>{finalValueText}</div>
+      </KRTodoBox>
       <DropIcon src={Arrow} />
       {isOpen && (
         <OkrDropContainer>
           <h2>KR 핵심 결과 선택</h2>
-          {getOkrData.map(data => (
+          {getOkrData.map((data, dataIndex) => (
             <OkrItem key={data.objectiveId} style={{ color: `${data.color}` }}>
               <div className='title'>
                 <span>O</span> {data.objective}
@@ -64,8 +65,13 @@ const OkrDropDown = ({ setTodoInfo, todoInfo, setKid, setOid }) => {
                   id={el.keyResultId}
                   name={data.objectiveId}
                   value={data.objectiveId}
-                  onClick={ValueClick}>
-                  <span style={{ color: `${data.color}` }}>KR{index + 1}</span>
+                  onClick={event => {
+                    ValueClick(event, dataIndex);
+                  }}>
+                  <span style={{ color: data.color }}>
+                    KR{index + 1}
+                    {'\u00A0'}
+                  </span>
                   {el.keyResult}
                 </div>
               ))}
@@ -73,9 +79,11 @@ const OkrDropDown = ({ setTodoInfo, todoInfo, setKid, setOid }) => {
           ))}
           <div
             className='none'
-            onClick={ValueClick}
+            onClick={event => {
+              ValueClick(event, 'none');
+            }}
             name='none 핵심결과 선택하지 않고 To Do 작성'>
-            <span>none</span> 핵심결과 선택하지 않고 To Do 작성
+            <span>none{'\u00A0'}</span> 핵심결과 선택하지 않고 To Do 작성
           </div>
         </OkrDropContainer>
       )}

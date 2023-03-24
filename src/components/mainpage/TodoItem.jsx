@@ -16,7 +16,9 @@ const TodoItem = () => {
   const queryClient = useQueryClient();
 
   const { data: getTodo } = useQuery(['TODO'], GetTodo, {
-    onSuccess: response => {},
+    onSuccess: response => {
+      console.log(response);
+    },
     onError: response => {},
   });
 
