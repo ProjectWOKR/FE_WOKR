@@ -161,6 +161,7 @@ export const TodoDetailItem = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #fff;
+  /* background-color: pink; */
   /* box-shadow: 0px 1px 4px rgba(210, 210, 210, 0.7); */
 
   .item {
@@ -198,8 +199,9 @@ export const TodoDetailItem = styled.div`
       margin-right: 15px;
     }
     .colorNull {
+      width: 50px;
       font-size: 2rem;
-      margin-right: 31px;
+      margin-right: 15px;
     }
     .krBox {
       display: flex;
@@ -268,6 +270,13 @@ export const TodoDetailItem = styled.div`
       background-color: #e8e8e8;
       margin-left: 21px;
       background: url(${checkicon}) no-repeat center / 100%;
+    }
+    .another {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: #7c7c7c;
+      margin-left: 21px;
     }
   }
 `;
