@@ -25,16 +25,84 @@ const FinishTodo = ({ el }) => {
     }
   };
 
-  const KrColor = ({ ct }) => {
-    // console.log(ct);
+  // const KrColor = ({ ct }) => {
+  //   // console.log(ct);
+  //   if (ct.color === null) {
+  //     <div className='kr' style={{ color: 'rgb(155, 155, 155)' }}>
+  //       none
+  //     </div>;
+  //   } else {
+  //     return (
+  //       <div className='kr' style={{ color: ct.color }}>
+  //         KR
+  //       </div>
+  //     );
+  //   }
+  // };
+
+  const Title = ({ ct }) => {
+    console.log(ct);
     if (ct.color === null) {
-      <div className='kr' style={{ color: 'rgb(155, 155, 155)' }}>
-        none
-      </div>;
+      return (
+        <div className='colorNull' style={{ color: '#9b9b9b' }}>
+          {ct.keyResultId === null ? 'none' : `KR${ct.krNumber}`}
+        </div>
+      );
+    }
+    return (
+      <div className='kr' style={{ color: ct.color }}>
+        {ct.keyResultId === null ? 'none' : `KR${ct.krNumber}`}
+      </div>
+    );
+  };
+
+  const FilterMyTodo = ({ ct }) => {
+    if (ct.myTodo === true) {
+      return (
+        <div className='item'>
+          <div className='flexLeft'>
+            <Title ct={ct} />
+            <div className='krBox'>
+              <div className='fKrTitle'>{ct.toDo}</div>
+              <div className='krManager'>
+                <div className='fDate'>
+                  {ct.fstartDate}
+                  {ct.startDateTime === '00:00' ? null : ct.startDateTime}~
+                  {ct.fendDate}
+                  {ct.endDateTime === '00:00' ? null : ct.endDateTime}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='flexRight'>
+            <Priority ct={ct} />
+            <div className='checkbg'></div>
+          </div>
+        </div>
+      );
     } else {
       return (
-        <div className='kr' style={{ color: ct.color }}>
-          KR
+        <div className='item'>
+          <div className='flexLeft'>
+            <Title ct={ct} />
+            <div className='krBox'>
+              <div className='fKrTitle'>{ct.toDo}</div>
+              <div className='krManager'>
+                <div className='fDate'>
+                  {ct.fstartDate}
+                  {ct.startDateTime === '00:00' ? null : ct.startDateTime}~{' '}
+                  {ct.fendDate}
+                  {ct.endDateTime === '00:00' ? null : ct.endDateTime}
+                </div>
+                <div className='kmName'>{ct.createUser}</div>
+                <img src={badgeS} alt='' />
+              </div>
+            </div>
+          </div>
+          <div className='flexRight'>
+            <Priority ct={ct} />
+            <div className='another'></div>
+          </div>
         </div>
       );
     }
@@ -57,8 +125,7 @@ const FinishTodo = ({ el }) => {
               style={show ? { display: 'flex' } : { display: 'none' }}>
               <div className='item'>
                 <div className='flexLeft'>
-                  {/* <div className='kr'>KR1</div> */}
-                  <KrColor ct={ct} />
+                  <Title ct={ct} />
                   <div className='krBox'>
                     <div className='fKrTitle'>{ct.toDo}</div>
                     <div className='krManager'>

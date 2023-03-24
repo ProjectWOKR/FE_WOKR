@@ -7,6 +7,7 @@ import red from '../../assets/todoRed.png';
 import yellow from '../../assets/todoYellow.png';
 import blue from '../../assets/todoBlue.png';
 import { PatchCheck } from '../../apis/apiPATCH';
+import { toast } from 'react-toastify';
 
 const DetailTodoItem = ({ el, today, tomorrow }) => {
   // console.log('el:', el);
@@ -47,6 +48,7 @@ const DetailTodoItem = ({ el, today, tomorrow }) => {
     const onClickCheck = () => {
       const id = pt.toDoId;
       patchCheckmutate({ id });
+      toast('To Do를 완료했습니다.');
     };
 
     return <div className='check' onClick={onClickCheck} />;
@@ -84,19 +86,58 @@ const DetailTodoItem = ({ el, today, tomorrow }) => {
     }
   };
 
-  const KrColor = ({ pt }) => {
-    // console.log(pt);
-    // console.log(el);
+  const Title = ({ pt }) => {
+    console.log(pt);
     if (pt.color === null) {
       return (
-        <div className='kr' style={{ color: 'rgb(155, 155, 155)' }}>
-          none
+        <div className='colorNull' style={{ color: '#9b9b9b' }}>
+          {pt.keyResultId === null ? 'none' : `KR${pt.krNumber}`}
         </div>
       );
+    }
+    return (
+      <div className='kr' style={{ color: pt.color }}>
+        {pt.keyResultId === null ? 'none' : `KR${pt.krNumber}`}
+      </div>
+    );
+  };
+
+  const FilterMyTodo = ({ pt }) => {
+    if (pt.myToDo === true) {
+      <div className='item'>
+        <div className='flexLeft'>
+          <Title pt={pt} />
+          <div className='krBox'>
+            <div className='krTitle'>{pt.toDo}</div>
+            <div className='krManager'>
+              <DateColor el={el} today={today} tomorrow={tomorrow} pt={pt} />
+            </div>
+          </div>
+        </div>
+        <div className='flexRight'>
+          <Priority pt={pt} />
+          <Check pt={pt} />
+        </div>
+      </div>;
     } else {
       return (
-        <div className='kr' style={{ color: pt.color }}>
-          KR
+        <div className='item'>
+          <div className='flexLeft'>
+            <Title pt={pt} />
+            <div className='krBox'>
+              <div className='krTitle'>{pt.toDo}</div>
+              <div className='krManager'>
+                <DateColor el={el} today={today} tomorrow={tomorrow} pt={pt} />
+
+                <div className='kmName'>{pt.createUser}</div>
+                <img src={badgeS} alt='' />
+              </div>
+            </div>
+          </div>
+          <div className='flexRight'>
+            <Priority pt={pt} />
+            <div className='another' />
+          </div>
         </div>
       );
     }
@@ -108,43 +149,22 @@ const DetailTodoItem = ({ el, today, tomorrow }) => {
     if (el.progressTodo.length === 0) {
       return (
         <TodoDetailItem>
-          <div className='notHave'>이 날은 To Do가 없습니다.</div>
+          <div className='notHave'>이 날은 진행중인 To Do가 없습니다.</div>
         </TodoDetailItem>
       );
+    } else {
+      return (
+        <>
+          {el.progressTodo.map(pt => (
+            <TodoDetailItem key={pt.toDoId}>
+              <FilterMyTodo pt={pt} />
+            </TodoDetailItem>
+          ))}
+        </>
+      );
     }
-    return (
-      <>
-        {el.progressTodo.map(pt => (
-          <TodoDetailItem key={pt.toDoId}>
-            <div className='item'>
-              <div className='flexLeft'>
-                {/* <div className='kr'>KR1</div> */}
-                <KrColor pt={pt} />
-                <div className='krBox'>
-                  <div className='krTitle'>{pt.toDo}</div>
-                  <div className='krManager'>
-                    <DateColor
-                      el={el}
-                      today={today}
-                      tomorrow={tomorrow}
-                      pt={pt}
-                    />
-
-                    {/* <div className='kmName'>정혜민</div>
-                    <img src={badgeS} alt='' /> */}
-                  </div>
-                </div>
-              </div>
-              <div className='flexRight'>
-                <Priority pt={pt} />
-                <Check pt={pt} />
-              </div>
-            </div>
-          </TodoDetailItem>
-        ))}
-      </>
-    );
   };
+
   return (
     <DDay>
       <TodoDetailHeader>
@@ -154,35 +174,6 @@ const DetailTodoItem = ({ el, today, tomorrow }) => {
           </div>
         </div>
       </TodoDetailHeader>
-
-      {/* {el.progressTodo.map(pt => (
-        <TodoDetailItem key={pt.toDoId}>
-          <div className='item'>
-            <div className='flexLeft'>
-              <div className='kr'>KR1</div>
-              <div className='krBox'>
-                <div className='krTitle'>{pt.toDo}</div>
-                <div className='krManager'>
-                  <DateColor
-                    el={el}
-                    today={today}
-                    tomorrow={tomorrow}
-                    pt={pt}
-                  />
-
-                  <div className='kmName'>정혜민</div>
-                    <img src={badgeS} alt='' />
-                </div>
-              </div>
-            </div>
-            <div className='flexRight'>
-              <Priority pt={pt} />
-              <Check pt={pt} />
-            </div>
-          </div>
-        </TodoDetailItem>
-      ))} */}
-
       <HavePt />
     </DDay>
   );

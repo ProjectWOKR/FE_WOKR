@@ -34,14 +34,14 @@ export default function Todo() {
     tomorrow = `${now.getMonth() + 1}월 ${now.getDate() + 1}일`;
   }
 
-  const { data: getMember } = useQuery(['MEMBER'], GetUser, {
-    onSuccess: response => {
-      // console.log('user :', response);
-    },
-    onError: response => {
-      // console.log(response);
-    },
-  });
+  // const { data: getMember } = useQuery(['MEMBER'], GetUser, {
+  //   onSuccess: response => {
+  //     // console.log('user :', response);
+  //   },
+  //   onError: response => {
+  //     // console.log(response);
+  //   },
+  // });
 
   // -------------------------- 여기서 부터 이제 무한스크롤
 
