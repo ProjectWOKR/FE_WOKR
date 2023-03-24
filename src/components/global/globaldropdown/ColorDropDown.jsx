@@ -10,10 +10,29 @@ const ColorDropDown = ({ setObjInfo, objInfo }) => {
   const dropDownRef = useRef(null);
   const [isOpen, setIsOpen] = useDropDown(dropDownRef, false);
   const [finalValue, setFinalValue] = useState('');
-
+  const [filterColor, setFilterColor] = useState();
   console.log('col', color);
 
-  const { data: getOKRData } = useQuery(['OKR'], GetOKR, {});
+  const { data: getOKRData } = useQuery(['OKR'], GetOKR, {
+    onSuccess: response => {
+      console.log('abaaa', response);
+      const filterColorData = response.map(data => {
+        return data.color;
+      });
+      const result = color.list
+        .filter(item => !filterColorData.includes(item.color))
+        .map(item => {
+          return {
+            index: item.index,
+            color: item.color,
+            name: item.name,
+          };
+        });
+      setFilterColor(result);
+      console.log('res', result);
+    },
+  });
+
   const DropDownItem = ({
     value,
     setFinalValue,
@@ -45,11 +64,11 @@ const ColorDropDown = ({ setObjInfo, objInfo }) => {
       <DropIcon src={Arrow} />
       {isOpen && (
         <ul>
-          {color.list.map(el => (
+          {filterColor.map(el => (
             <DropDownItem
               key={el.index}
               number={el.index}
-              name='123'
+              name={el.name}
               value={el.color}
               setIsOpen={setIsOpen}
               isOpen={isOpen}

@@ -9,6 +9,7 @@ import {
 } from '../../../apis/apiPATCH';
 import { useRecoilValue } from 'recoil';
 import { patchProgressInfo } from '../../../store/store';
+import { PatchPersentBox, PesentContainer } from '../../mainpage/OKR.styled';
 
 const ProgressPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const queryClient = useQueryClient();
@@ -75,16 +76,23 @@ const ProgressPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
     <>
       <ModalBackground ref={modalRef} onClick={modalOutSideClick} />
       <ModalBox>
-        <input
-          className='Range'
-          type='range'
-          value={rangeInfo.progress}
-          min='0'
-          max='100'
-          step='1'
-          onChange={onChangeProgress}
-        />
-        <div className='rangeInfo'>{rangeInfo.progress}</div>
+        <div className='patchheader'>진척도 수정</div>
+        <PesentContainer>
+          <PatchPersentBox ObColor={progressInfo.color} state='Patch'>
+            <input
+              type='range'
+              value={rangeInfo.progress}
+              min='0'
+              max='100'
+              step='1'
+              onChange={onChangeProgress}
+            />
+            <div
+              className='bg'
+              style={{ width: `${rangeInfo.progress}%` }}></div>
+            <div className='rangeInfo'>{rangeInfo.progress}</div>
+          </PatchPersentBox>
+        </PesentContainer>
         <div className='btnBox'>
           <br />
           <button onClick={onCloseModal} className='cancel'>

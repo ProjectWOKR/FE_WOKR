@@ -1,5 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { OKRBox, Objective, OKRSpace, KRBox, EmptyKR } from './OKR.styled';
+import {
+  OKRBox,
+  Objective,
+  OKRSpace,
+  KRBox,
+  EmptyKR,
+  PersentBox,
+} from './OKR.styled';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Portal from '../global/globalModal/Potal';
 import OkrPatchModal from '../global/globalModal/OkrPatchModal';
@@ -25,6 +32,7 @@ const OkrObject = () => {
   const setPatchOkrInfo = useSetRecoilState(patchOKRInfo);
   const setPatchkrInfo = useSetRecoilState(patchKRInfo);
   const setPatchProgressInfo = useSetRecoilState(patchProgressInfo);
+  const [openDropdownId, setOpenDropdownId] = useState(null);
 
   /**O 모달 닫는 함수 */
   const onObjectiveCloseModal = () => {
@@ -54,8 +62,8 @@ const OkrObject = () => {
   };
 
   /** +버튼 누르면 OKR 생성하는 모달 띄움 */
-  const patchProgress = (id, value, state) => {
-    setPatchProgressInfo({ id: id, value: value, state: state });
+  const patchProgress = (id, value, state, color) => {
+    setPatchProgressInfo({ id: id, value: value, state: state, color: color });
     setprogressModalOn(!progressModalOn);
   };
 
@@ -169,11 +177,11 @@ const OkrObject = () => {
 
   return (
     <div>
-      {KRArray?.map((data, index) => {
+      {KRArray?.map((Obdata, index) => {
         return (
           <OKRBox key={index}>
             <>
-              <Objective key={data.objectiveId} color={data.color}>
+              <Objective key={Obdata.objectiveId} color={Obdata.color}>
                 <div className='Box'>
                   <div className='Logo'>O</div>
                 </div>
@@ -182,38 +190,49 @@ const OkrObject = () => {
                     className='Name'
                     onClick={() => {
                       patchOKR(
-                        data.objectiveId,
-                        data.objective,
-                        data.startdate,
-                        data.enddate,
-                        data.color
+                        Obdata.objectiveId,
+                        Obdata.objective,
+                        Obdata.startdate,
+                        Obdata.enddate,
+                        Obdata.color
                       );
                     }}>
-                    {data.objective}
+                    {Obdata.objective}
                   </div>
                   <div className='Cal'>
-                    {data.startdate} - {data.enddate}
+                    {Obdata.startdate} - {Obdata.enddate}
                   </div>
                 </div>
 
-                <input
-                  className='Range'
-                  type='range'
-                  min='0'
-                  max='100'
-                  step='1'
-                  value={data.progress}
+                <PersentBox
+                  ObColor={Obdata.color}
+                  state='Objective'
                   onClick={() => {
-                    patchProgress(data.objectiveId, data.progress, 'Objective');
-                  }}
-                />
+                    patchProgress(
+                      Obdata.objectiveId,
+                      Obdata.progress,
+                      'Objective',
+                      Obdata.color
+                    );
+                  }}>
+                  <input
+                    type='range'
+                    min={0}
+                    max={100}
+                    step={1}
+                    value={Obdata.progress}
+                  />
+                  <div
+                    className='bg'
+                    style={{ width: `${Obdata.progress}%` }}></div>
+                </PersentBox>
                 <div className='background' />
-                <div className='percent'>{data.progress}%</div>
+                <div className='percent'>{Obdata.progress}%</div>
               </Objective>
             </>
-            {data.keyresult.map(data => {
+            {Obdata.keyresult.map(data => {
               return (
-                <KRBox key={data.keyResultId} color={data.color}>
+                <KRBox key={data.keyResultId} color={Obdata.color}>
                   <div className='Logo'>KR{data.krNumber}</div>
                   <div
                     className='Name'
@@ -222,17 +241,29 @@ const OkrObject = () => {
                     }}>
                     {data.keyResult}
                   </div>
-                  <input
-                    className='Range'
-                    type='range'
-                    min='0'
-                    max='100'
-                    step='1'
-                    value={data.progress}
+                  <PersentBox
                     onClick={() => {
-                      patchProgress(data.keyResultId, data.progress, 'KR');
+                      patchProgress(
+                        data.keyResultId,
+                        data.progress,
+                        'KR',
+                        Obdata.color
+                      );
                     }}
-                  />
+                    ObColor={Obdata.color}
+                    state='KR'>
+                    <input
+                      type='range'
+                      min={0}
+                      max={100}
+                      step={1}
+                      value={data.progress}
+                    />
+                    <div
+                      className='bg'
+                      style={{ width: `${data.progress}%` }}></div>
+                  </PersentBox>
+
                   <OKRSpace />
                   <div className='percent'>{data.progress}%</div>
                   <div className='right'>
@@ -241,6 +272,8 @@ const OkrObject = () => {
                         <Emotion
                           keyResultId={data.keyResultId}
                           emotionState={data.emotion}
+                          openDropdownId={openDropdownId}
+                          setOpenDropdownId={setOpenDropdownId}
                         />
                       )}
                     </div>
@@ -248,11 +281,11 @@ const OkrObject = () => {
                 </KRBox>
               );
             })}
-            {data.keyresult.length < 3 ? (
+            {Obdata.keyresult.length < 3 ? (
               <EmptyKR
                 key={`empty-kr-${index}`}
                 onClick={() => {
-                  patchKR(data.objectiveId, '', 'post', index);
+                  patchKR(Obdata.objectiveId, '', 'post', index);
                 }}>
                 KR을 추가하기
                 <img className='img' src={kRAdd} alt='' />
@@ -262,31 +295,6 @@ const OkrObject = () => {
         );
       })}
       <Portal>
-        {/* {okrModalOn(
-          <OkrPatchModal
-            onCloseModal={onObjectiveCloseModal}
-            modalRef={okrModalRef}
-            modalOutSideClick={okrModalOutSideClick}
-          />
-        )}
-      </Portal>
-      <Portal>
-        {krModalOn && (
-          <KrPatchModal
-            onCloseModal={onKRCloseModal}
-            modalRef={krModalRef}
-            modalOutSideClick={krModalOutSideClick}
-          />
-        )}
-      </Portal>
-      <Portal>
-        {progressModalOn && (
-          <ProgressPatchModal
-            onCloseModal={onProgressCloseModal}
-            modalRef={progressModalRef}
-            modalOutSideClick={progressModalOutSideClick}
-          />
-        )} */}
         {okrModalOn ? (
           <OkrPatchModal
             onCloseModal={onObjectiveCloseModal}

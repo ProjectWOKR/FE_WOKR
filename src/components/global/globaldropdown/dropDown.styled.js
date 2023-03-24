@@ -296,10 +296,11 @@ export const KRTodoBox = styled.div`
   cursor: pointer;
 
   .black {
-    color: black;
   }
 `;
-
+export const KRTodoDefault = styled.div`
+  color: ${({ valueState }) => `${valueState === false ? '#bdbdbd' : 'black'}`};
+`;
 export const OkrItem = styled.div`
   margin-bottom: 1.5rem;
   .title {

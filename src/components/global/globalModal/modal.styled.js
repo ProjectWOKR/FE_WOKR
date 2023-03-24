@@ -43,6 +43,15 @@ export const ModalBox = styled.div`
       cursor: pointer;
     }
   }
+  .patchheader {
+    margin-left: 23px;
+    font-size: 20px;
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 26px;
+
+    color: #4b4b4b;
+  }
   .btnBox {
     display: flex;
     flex-direction: row;

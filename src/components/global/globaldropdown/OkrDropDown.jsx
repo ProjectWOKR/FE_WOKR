@@ -3,6 +3,7 @@ import { useDropDown } from './dropdown';
 import {
   DropIcon,
   KRTodoBox,
+  KRTodoDefault,
   OkrDropBox,
   OkrDropContainer,
   OkrItem,
@@ -15,9 +16,12 @@ const OkrDropDown = ({ setTodoInfo, todoInfo, setKid, setOid }) => {
   const dropDownRef = useRef(null);
   const [isOpen, setIsOpen] = useDropDown(dropDownRef, false);
   const [finalValueKR, setFinalValueKR] = useState('');
-  const [finalValueText, setFinalValueText] = useState('');
+  const [finalValueText, setFinalValueText] = useState(
+    `none 핵심결과 선택하지 않고 To Do 작성`
+  );
   const [finalValueKRColor, setFinalValueKRColor] = useState('');
   // const [okrData, setOkrData] = useState();
+  const [valueState, setValueState] = useState(false);
 
   const { data: getOkrData } = useQuery(['getOkr'], GetOKR, {
     onSuccess: response => {},
@@ -36,6 +40,8 @@ const OkrDropDown = ({ setTodoInfo, todoInfo, setKid, setOid }) => {
       setFinalValueKRColor(getOkrData[index].color);
       console.log(finalValueKRColor);
     }
+
+    setValueState(true);
   };
 
   return (
@@ -47,7 +53,7 @@ const OkrDropDown = ({ setTodoInfo, todoInfo, setKid, setOid }) => {
           }}>
           {finalValueKR}
         </div>
-        <div className='black'>{finalValueText}</div>
+        <KRTodoDefault valueState={valueState}>{finalValueText}</KRTodoDefault>
       </KRTodoBox>
       <DropIcon src={Arrow} />
       {isOpen && (

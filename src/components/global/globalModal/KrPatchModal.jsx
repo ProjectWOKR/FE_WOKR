@@ -88,7 +88,14 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   };
 
   const deleteKr = () => {
-    deleteKR(krInfo.id);
+    const result =
+      window.confirm(`|KR - 핵심결과]와 연동된 To-Do가 있다면 연동 해제됩니다.
+    \u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0정말 삭제하시겠습니까?`);
+    if (result) {
+      deleteKR(krInfo.id);
+    } else {
+      // 취소 버튼을 클릭한 경우, 여기에 로직을 작성합니다.
+    }
   };
 
   return (
