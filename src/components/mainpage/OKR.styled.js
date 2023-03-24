@@ -199,7 +199,8 @@ export const KRBox = styled.div`
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      margin-left: 10px;
+      /* margin-left: 10px; */
+      margin-right: 5px;
     }
   }
 
@@ -236,4 +237,118 @@ export const EmptyKR = styled.button`
 export const OKRSpace = styled.div`
   margin-top: 110px;
   background-color: black;
+`;
+
+export const PersentBox = styled.div`
+  height: 11px;
+  border-radius: 3px;
+  position: relative;
+  //기존 디자인 없애기
+  background-color: black;
+
+  margin-top: ${({ state }) => `${state === 'Objective' ? '34px' : '15px'}`};
+  margin-left: ${({ state }) =>
+    `${state === 'Objective' ? '130px' : '12.5px'}`};
+  cursor: pointer;
+  input[type='range'] {
+    width: 205px;
+    -webkit-appearance: none;
+    width: 100%;
+    background: transparent;
+    background: #e8e8e8;
+    padding: 0;
+    border-radius: 3px;
+    border: 5px black;
+  }
+  // 포인터 역할
+  input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: #564b9a;
+    cursor: pointer;
+
+    margin-top: -10px;
+    border-radius: 50%;
+    position: relative;
+    z-index: 3;
+  }
+  //포인터가 움직이는 track
+  input[type='range']::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 11px;
+    cursor: pointer;
+    border-radius: 1.3px;
+    border: 0.2px solid #f2f4f6;
+  }
+  input[type='range']:focus::-webkit-slider-runnable-track {
+  }
+  .bg {
+    box-shadow: 0px 2px 4px ${({ ObColor }) => ObColor};
+    border-radius: 3px;
+    height: 11px;
+    background-color: ${({ ObColor }) => ObColor};
+    position: absolute;
+    top: 0px;
+  }
+`;
+
+export const PesentContainer = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 40px;
+  margin-bottom: 50px;
+  margin-left: 13px;
+`;
+
+export const PatchPersentBox = styled.div`
+  width: 245px;
+  height: 11px;
+  border-radius: 3px;
+  position: relative;
+  //기존 디자인 없애기
+
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  input[type='range'] {
+    width: 205px;
+    -webkit-appearance: none;
+    width: 100%;
+    background: transparent;
+    background: #e8e8e8;
+    padding: 0;
+    border-radius: 3px;
+    border: 5px black;
+  }
+  // 포인터 역할
+  input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: #564b9a;
+    cursor: pointer;
+    height: 18px;
+    width: 18px;
+    margin-top: -4px;
+    border-radius: 50%;
+    position: relative;
+    z-index: 3;
+  }
+  //포인터가 움직이는 track
+  input[type='range']::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 11px;
+    cursor: pointer;
+    border-radius: 1.3px;
+    border: 0.2px solid #f2f4f6;
+  }
+  input[type='range']:focus::-webkit-slider-runnable-track {
+  }
+  .bg {
+    box-shadow: 0px 2px 4px ${({ ObColor }) => ObColor};
+    border-radius: 3px;
+    height: 11px;
+    background-color: ${({ ObColor }) => ObColor};
+    position: absolute;
+    top: 0px;
+  }
 `;

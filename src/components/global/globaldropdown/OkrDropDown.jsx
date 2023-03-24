@@ -3,6 +3,7 @@ import { useDropDown } from './dropdown';
 import {
   DropIcon,
   KRTodoBox,
+  KRTodoDefault,
   OkrDropBox,
   OkrDropContainer,
   OkrItem,
@@ -14,11 +15,14 @@ import { GetOKR } from '../../../apis/apiGET';
 const OkrDropDown = ({ setKid, setOid, title }) => {
   const dropDownRef = useRef(null);
   const [isOpen, setIsOpen] = useDropDown(dropDownRef, false);
+
   const [finalValueKR, setFinalValueKR] =
     useState('선택하지 않으면 기존꺼와 동일');
   const [finalValueText, setFinalValueText] = useState('');
+
   const [finalValueKRColor, setFinalValueKRColor] = useState('');
   // const [okrData, setOkrData] = useState();
+  const [valueState, setValueState] = useState(false);
 
   const [finalValue, setFinalValue] = useState('');
 
@@ -42,6 +46,8 @@ const OkrDropDown = ({ setKid, setOid, title }) => {
       setOid(Number(e.target.attributes.name.value));
       setKid(Number(e.target.id));
     }
+
+    setValueState(true);
   };
 
   return (
@@ -65,8 +71,10 @@ const OkrDropDown = ({ setKid, setOid, title }) => {
           }}>
           {finalValueKR}
         </div>
+
         <div className='black'>{finalValueText}</div>
       </KRTodoBox> */}
+
       <DropIcon src={Arrow} />
       {isOpen && (
         <OkrDropContainer>
