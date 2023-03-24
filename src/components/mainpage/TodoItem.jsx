@@ -67,7 +67,7 @@ const TodoItem = () => {
   };
 
   const [todoModalOn, setTodoModalOn] = useState(false);
-  console.log(todoModalOn);
+  // console.log(todoModalOn);
 
   const onTodoCloseModal = () => {
     setTodoModalOn(!todoModalOn);
@@ -97,30 +97,29 @@ const TodoItem = () => {
     });
     setTodoModalOn(!todoModalOn);
   };
-  console.log(filterArray);
+  // console.log(filterArray);
   return (
     <>
       {filterArray?.map((el, index) => (
-        <div
-          className='todo'
-          key={index}
-          onClick={() => {
-            patchTodo(
-              el.toDoId,
-              el.toDo,
-              el.memo,
-              el.startDate,
-              el.startDateTime,
-              el.endDate,
-              el.endDateTime,
-              el.priority
-            );
-          }}>
+        <div className='todo' key={index}>
           <div className='title' style={{ color: el.color }}>
             {el.keyResultId === null ? 'none' : 'KR'}
           </div>
           <div className='detail'>
-            <div className='name_date'>
+            <div
+              className='name_date'
+              onClick={() => {
+                patchTodo(
+                  el.toDoId,
+                  el.toDo,
+                  el.memo,
+                  el.startDate,
+                  el.startDateTime,
+                  el.endDate,
+                  el.endDateTime,
+                  el.priority
+                );
+              }}>
               <div>{el.toDo}</div>
               <p>
                 {el.fstartDate}~{el.fendDate} 까지
