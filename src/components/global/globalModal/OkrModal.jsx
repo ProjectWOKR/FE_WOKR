@@ -7,7 +7,6 @@ import opacity from 'react-element-popper/animations/opacity';
 
 import close from '../../../assets/close.png';
 import object from '../../../assets/object.png';
-import kr from '../../../assets/kr.png';
 import calender from '../../../assets/calender.png';
 
 import ColorDropDown from '../globaldropdown/ColorDropDown';
@@ -17,7 +16,6 @@ import { CreateObjective, CreateKR } from '../../../apis/apiPOST';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Toast from '../Toast';
 import { toast } from 'react-toastify';
-// import { reactDom } from 'react-dom';
 
 const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const queryClient = useQueryClient();
@@ -77,10 +75,6 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
     setObjInfo({ ...objInfo, enddate: new DateObject(object).format() });
   };
 
-  // Object가 있는지 여부----- 추후 수정
-  const [haveObj, setHaveObj] = useState(false);
-  // console.log(objInfo);
-
   const createO = () => {
     const startd = new Date(objInfo.startdate);
     const endd = new Date(objInfo.enddate);
@@ -100,7 +94,6 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
     } else {
       console.log('성공');
       createObjectiveMutate(objInfo);
-      setHaveObj(true);
     }
   };
   const [objectId, setObjectId] = useState();
@@ -109,203 +102,99 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
     onSuccess: response => {
       queryClient.invalidateQueries(['OKR']);
       setObjectId(response.objectiveId);
+      onCloseModal();
       console.log('rr', response);
     },
     onError: response => {},
   });
 
-  const { mutate: createKrMutate } = useMutation(CreateKR, {
-    onSuccess: response => {
-      queryClient.invalidateQueries(['OKR']);
-      onCloseModal();
-    },
-    onError: response => {},
-  });
-
-  const [title, setTitle] = useState({ keyResultDate: [] });
-  console.log(title);
-  const onChangeKR = (e, index) => {
-    if (index === 0) {
-      const tempTitle = { ...title };
-      tempTitle.keyResultDate[index] = e.target.value;
-      setTitle(tempTitle);
-    }
-    if (index === 1) {
-      const tempTitle = { ...title };
-      tempTitle.keyResultDate[index] = e.target.value;
-      setTitle(tempTitle);
-    }
-    if (index === 2) {
-      const tempTitle = { ...title };
-      tempTitle.keyResultDate[index] = e.target.value;
-      setTitle(tempTitle);
-    }
-  };
-
-  // console.log('title :', title.keyResultDate);
-  const createKr = () => {
-    const value = title;
-    const id = objectId;
-    console.log('id', id);
-
-    if (title.keyResultDate.length === 0) {
-      return toast('KR핵심 결과를 한 개 이상 작성해주세요.');
-    } else {
-      createKrMutate({ value, id });
-      setTitle({ keyResultDate: [] });
-    }
-  };
-
-  // console.log(startDate.date);
-
   return (
     <>
       <ModalBackground ref={modalRef} onClick={modalOutSideClick} />
       <ModalBox>
-        {haveObj ? (
-          <>
-            <div className='header'>
-              <h2>OKR 추가 - 핵심 결과</h2>
-              <img src={close} alt='' onClick={onCloseModal} />
+        <>
+          <div className='header'>
+            <h2>OKR 추가 - 목표, 기간, 색상</h2>
+            <img src={close} alt='' onClick={onCloseModal} />
+          </div>
+          <OKRBox>
+            <div className='object itemBox'>
+              <img src={object} alt='' />
+              <input
+                type='text'
+                placeholder='목표'
+                className='input'
+                name='objective'
+                onChange={event => {
+                  OnChange(event, objInfo, setObjInfo);
+                }}
+              />
             </div>
 
-            <OKRBox>
-              <div className='kr itemBox'>
-                <img src={kr} alt='' />
-                <input
-                  type='text'
-                  placeholder='핵심결과를 작성하세요.'
-                  name='first'
-                  value={title.keyResultDate[0]}
-                  onChange={event => {
-                    onChangeKR(event, 0);
-                  }}
+            <div className='date'>
+              <img src={calender} alt='' />
+              <div className='dateBox'>
+                <DatePicker
+                  inputClass='start-input'
+                  containerClassName='start-container'
+                  months={months}
+                  weekDays={weekDays}
+                  format={format}
+                  placeholder='시작일'
+                  // readOnly
+                  value={startDate.date || ''}
+                  onChange={convertStart}
+                  animations={[
+                    opacity(),
+                    transition({
+                      from: 40,
+                      transition:
+                        'all 400ms cubic-bezier(0.335, 0.010, 0.030, 1.360)',
+                    }),
+                  ]}
                 />
-              </div>
 
-              <div className='kr itemBox'>
-                <img src={kr} alt='' />
-                <input
-                  type='text'
-                  placeholder='핵심결과를 작성하세요.'
-                  // className='input'
-                  name='second'
-                  value={title.keyResultDate[1]}
-                  onChange={event => {
-                    onChangeKR(event, 1);
-                  }}
+                <DatePicker
+                  inputClass='end-input'
+                  containerClassName='end-container'
+                  months={months}
+                  weekDays={weekDays}
+                  format={format}
+                  placeholder='종료일'
+                  // readOnly
+                  value={endDate.date || ''}
+                  onChange={convertEnd}
+                  animations={[
+                    opacity(),
+                    transition({
+                      from: 40,
+                      transition:
+                        'all 400ms cubic-bezier(0.335, 0.010, 0.030, 1.360)',
+                    }),
+                  ]}
                 />
               </div>
-
-              <div className='kr itemBox'>
-                <img src={kr} alt='' />
-                <input
-                  type='text'
-                  placeholder='핵심결과를 작성하세요.'
-                  className='input'
-                  name='third'
-                  value={title.keyResultDate[2]}
-                  onChange={event => {
-                    onChangeKR(event, 2);
+              <div className='colorBox'>
+                <div
+                  className='color'
+                  style={{
+                    backgroundColor: `${objInfo.color}`,
                   }}
                 />
+                <ColorDropDown objInfo={objInfo} setObjInfo={setObjInfo} />
               </div>
-            </OKRBox>
-            <div className='btnBox'>
-              <button onClick={onCloseModal} className='cancel'>
-                취소
-              </button>
-              <button onClick={createKr} className='next'>
-                저장
-              </button>
             </div>
-            <Toast />
-          </>
-        ) : (
-          <>
-            <div className='header'>
-              <h2>OKR 추가 - 목표, 기간, 색상</h2>
-              <img src={close} alt='' onClick={onCloseModal} />
-            </div>
-            <OKRBox>
-              <div className='object itemBox'>
-                <img src={object} alt='' />
-                <input
-                  type='text'
-                  placeholder='목표'
-                  className='input'
-                  name='objective'
-                  onChange={event => {
-                    OnChange(event, objInfo, setObjInfo);
-                  }}
-                />
-              </div>
-
-              <div className='date'>
-                <img src={calender} alt='' />
-                <div className='dateBox'>
-                  <DatePicker
-                    inputClass='start-input'
-                    containerClassName='start-container'
-                    months={months}
-                    weekDays={weekDays}
-                    format={format}
-                    placeholder='시작일'
-                    // readOnly
-                    value={startDate.date || ''}
-                    onChange={convertStart}
-                    animations={[
-                      opacity(),
-                      transition({
-                        from: 40,
-                        transition:
-                          'all 400ms cubic-bezier(0.335, 0.010, 0.030, 1.360)',
-                      }),
-                    ]}
-                  />
-
-                  <DatePicker
-                    inputClass='end-input'
-                    containerClassName='end-container'
-                    months={months}
-                    weekDays={weekDays}
-                    format={format}
-                    placeholder='종료일'
-                    // readOnly
-                    value={endDate.date || ''}
-                    onChange={convertEnd}
-                    animations={[
-                      opacity(),
-                      transition({
-                        from: 40,
-                        transition:
-                          'all 400ms cubic-bezier(0.335, 0.010, 0.030, 1.360)',
-                      }),
-                    ]}
-                  />
-                </div>
-                <div className='colorBox'>
-                  <div
-                    className='color'
-                    style={{
-                      backgroundColor: `${objInfo.color}`,
-                    }}
-                  />
-                  <ColorDropDown objInfo={objInfo} setObjInfo={setObjInfo} />
-                </div>
-              </div>
-            </OKRBox>
-            <div className='btnBox'>
-              <button onClick={onCloseModal} className='cancel'>
-                취소
-              </button>
-              <button onClick={createO} className='next'>
-                다음
-              </button>
-            </div>
-            <Toast />
-          </>
-        )}
+          </OKRBox>
+          <div className='btnBox'>
+            <button onClick={onCloseModal} className='cancel'>
+              취소
+            </button>
+            <button onClick={createO} className='next'>
+              확인
+            </button>
+          </div>
+          <Toast />
+        </>
       </ModalBox>
     </>
   );
