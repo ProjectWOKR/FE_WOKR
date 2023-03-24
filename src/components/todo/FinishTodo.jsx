@@ -25,23 +25,8 @@ const FinishTodo = ({ el }) => {
     }
   };
 
-  // const KrColor = ({ ct }) => {
-  //   // console.log(ct);
-  //   if (ct.color === null) {
-  //     <div className='kr' style={{ color: 'rgb(155, 155, 155)' }}>
-  //       none
-  //     </div>;
-  //   } else {
-  //     return (
-  //       <div className='kr' style={{ color: ct.color }}>
-  //         KR
-  //       </div>
-  //     );
-  //   }
-  // };
-
   const Title = ({ ct }) => {
-    console.log(ct);
+    // console.log(ct);
     if (ct.color === null) {
       return (
         <div className='colorNull' style={{ color: '#9b9b9b' }}>
@@ -101,7 +86,7 @@ const FinishTodo = ({ el }) => {
           </div>
           <div className='flexRight'>
             <Priority ct={ct} />
-            <div className='another'></div>
+            <div className='checkbg'></div>
           </div>
         </div>
       );
@@ -135,8 +120,6 @@ const FinishTodo = ({ el }) => {
                         ~ {ct.fendDate}
                         {ct.endDateTime === '00:00' ? null : ct.endDateTime}
                       </div>
-                      {/* <div className='kmName'>정혜민</div>
-                      <img src={badgeS} alt='' /> */}
                     </div>
                   </div>
                 </div>
@@ -145,6 +128,7 @@ const FinishTodo = ({ el }) => {
                   <div className='checkbg'></div>
                 </div>
               </div>
+              {/* <FilterMyTodo /> */}
             </TodoDetailItem>
           ))}
     </Finsh>

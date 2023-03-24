@@ -14,7 +14,7 @@ import { PatchCheck } from '../../apis/apiPATCH';
 import { styled } from 'styled-components';
 
 const PastTodo = () => {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
 
   const { data: getPastTodo } = useQuery(['PASTTODO'], GetPastTodo, {
     onSuccess: response => {
