@@ -133,7 +133,7 @@ export const KRBox = styled.div`
     width: 36px;
     height: 27px;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 27px;
     text-align: center;
     letter-spacing: -0.02em;
@@ -161,6 +161,7 @@ export const KRBox = styled.div`
     cursor: pointer;
   }
   .percent {
+    width: 47px;
     font-weight: 300;
     font-size: 18px;
     line-height: 25px;

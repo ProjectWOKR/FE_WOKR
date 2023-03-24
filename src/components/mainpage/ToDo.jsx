@@ -52,9 +52,6 @@ export default function ToDo() {
           <div onClick={createTodo}>
             <img src={plus} alt='' />
           </div>
-          <div>
-            <img src={more} alt='' />
-          </div>
         </div>
       </HeaderBox>
 
