@@ -39,6 +39,8 @@ const TodoItem = ({ getTodo }) => {
     return false;
   });
 
+  console.log(filterArray);
+
   // 체크 수정
   const { mutate: patchCheckmutate } = useMutation(PatchCheck, {
     onSuccess: response => {
@@ -139,7 +141,7 @@ const TodoItem = ({ getTodo }) => {
       <Potal>
         {todoModalOn ? <TodoPathModal onCloseModal={onTodoCloseModal} /> : null}
       </Potal>
-      <Toast />
+      {/* <Toast /> */}
     </>
   );
 };

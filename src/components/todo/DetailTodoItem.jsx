@@ -10,6 +10,13 @@ import { PatchCheck } from '../../apis/apiPATCH';
 import { toast } from 'react-toastify';
 
 const DetailTodoItem = ({ el, today, tomorrow }) => {
+  // console.log(new Date('2023-03-14') < new Date('2023-03-15'));
+  // console.log(new Date(el.progressTodo.startDate));
+  // console.log(date > new Date(el.progressTodo.startDate));
+  // console.log('---------------');
+  // console.log(new Date(`2023-03-29`)); // 됨.
+
+  // console.log(Number(date.substr(0, 2) - 1));
   // console.log('el:', el);
   // const { data: getAllTodo } = useQuery(['ALLTODO'], GetAllTodo, {
   //   onSuccess: response => {
@@ -87,7 +94,7 @@ const DetailTodoItem = ({ el, today, tomorrow }) => {
   };
 
   const Title = ({ pt }) => {
-    console.log(pt);
+    // console.log(pt);
     if (pt.color === null) {
       return (
         <div className='colorNull' style={{ color: '#9b9b9b' }}>
@@ -103,6 +110,11 @@ const DetailTodoItem = ({ el, today, tomorrow }) => {
   };
 
   const FilterMyTodo = ({ pt }) => {
+    // console.log(pt.startDate);
+    let date = new Date(
+      `2023-${el.targetDate.substr(0, 2)}-${el.targetDate.substr(4, 2)}`
+    );
+    // console.log(date, ' :::', new Date(pt.startDate));
     if (pt.myToDo === true) {
       <div className='item'>
         <div className='flexLeft'>
@@ -119,7 +131,13 @@ const DetailTodoItem = ({ el, today, tomorrow }) => {
           <Check pt={pt} />
         </div>
       </div>;
-    } else {
+    }
+    // else if (date <= new Date(pt.startDate) === true) {
+    //   return (
+    //     <div className='notHave'>To Do가 해당 날짜 보다 미래에 있습니다.</div>
+    //   );
+    // }
+    else {
       return (
         <div className='item'>
           <div className='flexLeft'>
@@ -145,7 +163,9 @@ const DetailTodoItem = ({ el, today, tomorrow }) => {
 
   //해당 날짜에 todo가 없을 때
   const HavePt = () => {
-    // console.log(el);
+    let date = new Date(
+      `2023-${el.targetDate.substr(0, 2)}-${el.targetDate.substr(4, 2)}`
+    );
     if (el.progressTodo.length === 0) {
       return (
         <TodoDetailItem>

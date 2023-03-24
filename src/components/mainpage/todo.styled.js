@@ -3,7 +3,9 @@ import styled from 'styled-components';
 export const Container = styled.div`
   width: 100%;
   max-width: 68.2rem;
-  height: 56rem;
+  max-height: 56rem;
+  height: 100%;
+  /* overflow-y: auto; */
   border: 1px solid rgba(232, 232, 232, 1);
   margin-left: 3.9rem;
   box-shadow: 0 3px 15px rgba(124, 124, 124, 0.25);
@@ -39,12 +41,16 @@ export const TodoContainer = styled.div`
   max-width: 68.2rem;
   /* min-width: 45.2rem; */
   width: 100%;
+  max-height: 485px;
+  height: 100%;
+  overflow-y: auto;
   padding: 0 1.2rem;
   /* height: 48.3rem; */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* justify-content: space-between; */
   box-sizing: border-box;
+  /* background-color: pink; */
 `;
 
 export const StTodoItem = styled.div`
