@@ -152,7 +152,6 @@ const Test = () => {
         로그인 하기
       </LoginBtn>
       <HelpBox>
-        <span>비밀번호 찾기</span>
         <span onClick={() => navigate('/signup')}>회원가입</span>
       </HelpBox>
     </SignWrap>
