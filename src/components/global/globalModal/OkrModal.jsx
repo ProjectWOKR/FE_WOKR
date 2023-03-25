@@ -96,7 +96,7 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
     } else if (objInfo.color === '') {
       toast('색상을 선택해 주세요.');
     } else {
-      console.log('성공');
+      // console.log('성공');
       createObjectiveMutate(objInfo);
     }
   };
@@ -107,7 +107,7 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
       queryClient.invalidateQueries(['OKR']);
       setObjectId(response.objectiveId);
       onCloseModal();
-      console.log('rr', response);
+      // console.log('rr', response);
     },
     onError: response => {},
   });

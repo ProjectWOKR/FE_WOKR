@@ -108,7 +108,7 @@ const FinishTodo = ({ el }) => {
             <TodoDetailItem
               key={ct.toDoId}
               style={show ? { display: 'flex' } : { display: 'none' }}>
-              <div className='item'>
+              {/* <div className='item'>
                 <div className='flexLeft'>
                   <Title ct={ct} />
                   <div className='krBox'>
@@ -127,8 +127,8 @@ const FinishTodo = ({ el }) => {
                   <Priority ct={ct} />
                   <div className='checkbg'></div>
                 </div>
-              </div>
-              {/* <FilterMyTodo /> */}
+              </div> */}
+              <FilterMyTodo ct={ct} />
             </TodoDetailItem>
           ))}
     </Finsh>

@@ -19,7 +19,7 @@ export default function OKR() {
 
   const { data: getOKRData } = useQuery(['OKR'], GetOKR, {
     onSuccess: response => {
-      console.log(response);
+      // console.log(response);
     },
     onError: response => {},
   });

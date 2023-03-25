@@ -22,7 +22,7 @@ const TeamDropDown = ({ setUserInfo, userInfo }) => {
       setIsOpen(!isOpen);
 
       // console.log(isOpen);
-      console.log(value);
+      // console.log(value);
       // console.log('valueClick - finalValue :', finalValue);
 
       // setUserInfo({ ...userInfo, teamposition: value });
