@@ -160,6 +160,8 @@ const Test = () => {
       teamPosiValidation
     ) {
       setBtnState(true);
+    } else {
+      setBtnState(false);
     }
   }, [
     emailValidation,
