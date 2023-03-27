@@ -113,7 +113,6 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
       });
       setObjectId(response.objectiveId);
       onCloseModal();
-
     },
     onError: response => {
       trackEvent('click', {

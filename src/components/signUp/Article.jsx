@@ -185,12 +185,11 @@ const Test = () => {
       navigate('/');
     },
 
-    onError: () => {
+    onError: response => {
       trackEvent('click', {
         event_category: '버튼',
         event_label: '회원가입 실패',
       });
-
       setSignValidation('이미 존재하는 이메일입니다.');
       alert(response.response.data);
     },
