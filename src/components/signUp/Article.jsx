@@ -178,17 +178,17 @@ const Test = () => {
   const [signValidation, setSignValidation] = useState('');
   const { mutate: signUpMutate } = useMutation(SignUp, {
     onSuccess: response => {
-      trackEvent('click', {
-        event_category: '버튼',
-        event_label: '회원가입',
+      ReactGA.event({
+        category: '버튼',
+        action: '회원가입',
       });
       navigate('/');
     },
 
     onError: response => {
-      trackEvent('click', {
-        event_category: '버튼',
-        event_label: '회원가입 실패',
+      ReactGA.event({
+        category: '버튼',
+        action: '회원가입 실패',
       });
       setSignValidation('이미 존재하는 이메일입니다.');
       alert(response.response.data);

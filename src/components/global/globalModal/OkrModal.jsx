@@ -17,7 +17,6 @@ import { CreateObjective, CreateKR } from '../../../apis/apiPOST';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Toast from '../Toast';
 import { toast } from 'react-toastify';
-import { trackEvent } from '../../../router/RouteChangeTracker';
 
 const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const queryClient = useQueryClient();
@@ -107,17 +106,17 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const { mutate: createObjectiveMutate } = useMutation(CreateObjective, {
     onSuccess: response => {
       queryClient.invalidateQueries(['OKR']);
-      trackEvent('click', {
-        event_category: '버튼',
-        event_label: 'Objective 생성',
+      ReactGA.event({
+        category: '버튼',
+        action: 'Objective 생성',
       });
       setObjectId(response.objectiveId);
       onCloseModal();
     },
     onError: response => {
-      trackEvent('click', {
-        event_category: '버튼',
-        event_label: 'Objective 생성 실패',
+      ReactGA.event({
+        category: '버튼',
+        action: 'Objective 생성 실패',
       });
     },
   });

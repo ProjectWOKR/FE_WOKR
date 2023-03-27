@@ -18,7 +18,6 @@ import { patchOKRInfo } from '../../../store/store';
 import { useRecoilValue } from 'recoil';
 import { DeleteObjective } from '../../../apis/apiDELETE';
 import ReactGA from 'react-ga4';
-import { trackEvent } from '../../../router/RouteChangeTracker';
 
 const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const queryClient = useQueryClient();
@@ -116,18 +115,18 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
 
   const { mutate: patchObjectivemutate } = useMutation(PatchObjective, {
     onSuccess: response => {
-      trackEvent('click', {
-        event_category: '버튼',
-        event_label: 'Objective 수정',
+      ReactGA.event({
+        category: '버튼',
+        action: 'Objective 수정',
       });
       queryClient.invalidateQueries(['OKR']);
 
       onCloseModal();
     },
     onError: response => {
-      trackEvent('click', {
-        event_category: '버튼',
-        event_label: 'Objective 수정 실패',
+      ReactGA.event({
+        category: '버튼',
+        action: 'Objective 수정 실패',
       });
       alert('팀장 및 본인이 작성한 OKR만 수정가능합니다.');
     },
@@ -135,10 +134,11 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
 
   const { mutate: deleteObjective } = useMutation(DeleteObjective, {
     onSuccess: response => {
-      trackEvent('click', {
-        event_category: '버튼',
-        event_label: 'Objective 삭제',
+      ReactGA.event({
+        category: '버튼',
+        action: 'Objective 삭제',
       });
+
       queryClient.invalidateQueries(['OKR']);
 
       onCloseModal();

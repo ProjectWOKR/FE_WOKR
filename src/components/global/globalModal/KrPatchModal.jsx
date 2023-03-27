@@ -10,7 +10,6 @@ import { patchKRInfo } from '../../../store/store';
 import { DeleteKR } from '../../../apis/apiDELETE';
 import { CreateKR } from '../../../apis/apiPOST';
 import ReactGA from 'react-ga4';
-import { trackEvent } from '../../../router/RouteChangeTracker';
 
 const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const queryClient = useQueryClient();
@@ -37,9 +36,9 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
 
   const { mutate: patchKRMutate } = useMutation(PatchKR, {
     onSuccess: response => {
-      trackEvent('click', {
-        event_category: '버튼',
-        event_label: 'KR 수정',
+      ReactGA.event({
+        category: '버튼',
+        action: 'KR 수정',
       });
       queryClient.invalidateQueries(['OKR']);
       onCloseModal();
@@ -61,9 +60,9 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
 
   const { mutate: deleteKR } = useMutation(DeleteKR, {
     onSuccess: response => {
-      trackEvent('click', {
-        event_category: '버튼',
-        event_label: 'KR 삭제',
+      ReactGA.event({
+        category: '버튼',
+        action: 'KR 삭제',
       });
       queryClient.invalidateQueries(['OKR']);
       onCloseModal();
@@ -75,9 +74,9 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
 
   const { mutate: postKR } = useMutation(CreateKR, {
     onSuccess: response => {
-      trackEvent('click', {
-        event_category: '버튼',
-        event_label: 'KR 생성',
+      ReactGA.event({
+        category: '버튼',
+        action: 'KR 생성',
       });
       queryClient.invalidateQueries(['OKR']);
       onCloseModal();

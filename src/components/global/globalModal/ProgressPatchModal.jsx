@@ -39,10 +39,11 @@ const ProgressPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
 
   const { mutate: PatchObjectMutate } = useMutation(PatchObjectiveProgress, {
     onSuccess: response => {
-      trackEvent('click', {
-        event_category: '버튼',
-        event_label: 'Objective 진척도 수정',
+      ReactGA.event({
+        category: '버튼',
+        action: 'Objective 진척도 수정',
       });
+
       queryClient.invalidateQueries(['OKR']);
     },
     onError: response => {
@@ -52,9 +53,9 @@ const ProgressPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
 
   const { mutate: PatchKRMutate } = useMutation(PatchKRProgress, {
     onSuccess: response => {
-      trackEvent('click', {
-        event_category: '버튼',
-        event_label: 'KR 진척도 수정',
+      ReactGA.event({
+        category: '버튼',
+        action: 'KR 진척도 수정',
       });
       queryClient.invalidateQueries(['OKR']);
     },

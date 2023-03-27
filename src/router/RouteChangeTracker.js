@@ -15,9 +15,3 @@ export const RouteChangeTracker = () => {
 
   return null;
 };
-
-export const trackEvent = (eventName, eventData) => {
-  if (process.env.NODE_ENV !== 'development') {
-    ReactGA4.send(eventName, eventData);
-  }
-};
