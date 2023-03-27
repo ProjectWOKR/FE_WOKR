@@ -16,7 +16,7 @@ const ProgressPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const queryClient = useQueryClient();
 
   const progressInfo = useRecoilValue(patchProgressInfo);
-  console.log(progressInfo);
+  // console.log(progressInfo);
 
   const [rangeInfo, setRangeInfo] = useState({ progress: progressInfo.value });
 
@@ -77,7 +77,7 @@ const ProgressPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   };
 
   const onChangeProgress = e => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setRangeInfo({ progress: e.target.value });
   };
 

@@ -8,6 +8,7 @@ import PastTodo from './PastTodo';
 import TeamTodo from './TeamTodo';
 import { DetailTodoWrap, StTeam } from './tododetail.styled';
 import TodoNavi from './TodoNavi';
+import Toast from './../global/Toast';
 
 export default function Todo() {
   //todo 전부 가져오기
@@ -47,28 +48,37 @@ export default function Todo() {
 
   return (
     <StSticky>
-      {/* <h2>설정된 To Do가 없습니다.</h2> */}
-      <TodoDashboard>
-        <TodoNavi />
-        <PastTodo />
-        {getAllTodo?.map(el => (
-          <DetailTodoWrap key={el.targetDate}>
-            <DetailTodoItem el={el} today={today} tomorrow={tomorrow} />
-            <FinishTodo el={el} />
-          </DetailTodoWrap>
-        ))}
-      </TodoDashboard>
-      <TeamTodo />
+      {getAllTodo?.length === 0 ? (
+        <h2 className='notHave'>설정된 To Do가 없습니다.</h2>
+      ) : (
+        <>
+          <TodoDashboard>
+            <TodoNavi todayFormat={today} />
+            <PastTodo />
+            {getAllTodo?.map(el => (
+              <DetailTodoWrap key={el.targetDate}>
+                <DetailTodoItem el={el} today={today} tomorrow={tomorrow} />
+                <FinishTodo el={el} />
+              </DetailTodoWrap>
+            ))}
+          </TodoDashboard>
+          <TeamTodo />
+          <Toast />
+        </>
+      )}
     </StSticky>
   );
 }
 
 const StSticky = styled.div`
   display: flex;
-  h2 {
+  position: relative;
+  .notHave {
+    width: 100%;
     font-size: 2.4rem;
     font-weight: 700;
     color: var(--main-color);
+    /* background-color: pink; */
   }
 `;
 

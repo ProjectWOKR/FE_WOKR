@@ -191,7 +191,7 @@ const TodoModal = ({
       let Oid = oid;
       let Kid = kid;
       let Info = todoInfo;
-      console.log(Oid, Kid, Info);
+      // console.log(Oid, Kid, Info);
       createTodo({ Oid, Kid, Info });
       onCloseTodoModal();
     }

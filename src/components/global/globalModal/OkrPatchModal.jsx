@@ -39,7 +39,6 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
 
   const objectiveInfo = useRecoilValue(patchOKRInfo);
 
-  console.log(objectiveInfo);
   const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
   const format = 'YYYY-MM-DD';
 
@@ -74,10 +73,10 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const convertStart = (date, format = startDate.format) => {
     let object = { date, format };
     setStartDate(new DateObject(object).format());
-    console.log(startDate);
-    console.log(typeof startDate);
-    console.log(objectiveInfo.startData);
-    console.log(typeof objectiveInfo.startData);
+    // console.log(startDate);
+    // console.log(typeof startDate);
+    // console.log(objectiveInfo.startData);
+    // console.log(typeof objectiveInfo.startData);
     setObjInfo({ ...objInfo, startdate: new DateObject(object).format() });
   };
 
@@ -110,7 +109,7 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
       setObjInfo({ ...objInfo, color: '#9B9B9B' });
       toast('색상을 선택하지 않으면 회색이 기본입니다.');
     } else {
-      console.log('성공');
+      // console.log('성공');
       patchObjectivemutate({ value, id });
     }
   };
@@ -122,6 +121,7 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
         event_label: 'Objective 수정',
       });
       queryClient.invalidateQueries(['OKR']);
+
       onCloseModal();
     },
     onError: response => {
@@ -140,6 +140,7 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
         event_label: 'Objective 삭제',
       });
       queryClient.invalidateQueries(['OKR']);
+
       onCloseModal();
     },
     onError: response => {

@@ -40,7 +40,7 @@ export default function ToDo() {
   // 임시
   const { data: getTodo } = useQuery(['TODO'], GetTodo, {
     onSuccess: response => {
-      console.log('대시보드 todo :', response);
+      // console.log('대시보드 todo :', response);
     },
     onError: response => {},
   });

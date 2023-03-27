@@ -42,9 +42,15 @@ const TeamTodo = () => {
         <div>나의 팀 To - Do 현황</div>
       </div>
       <div className='today'>{today}</div>
+      {/* <div className='table'>
+        <div className='cansee'>보이는 사람</div>
+        <div className='userName'>이름</div>
+        <div className='haveTodo'>작성한 Todo 개수</div>
+      </div> */}
       {getMember?.map(el => (
         <div className='member' key={el.userId}>
-          <div className={el.myInfo === true ? 'have' : 'none'}></div>
+          {/* <div className={el.myInfo === true ? 'have' : 'none'}></div> */}
+          <div className='have'></div>
           <div className='name'>{el.name}</div>
           <div className='number'>{el.createToDoCount}</div>
         </div>

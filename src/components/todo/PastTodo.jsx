@@ -12,6 +12,7 @@ import yellow from '../../assets/todoYellow.png';
 import blue from '../../assets/todoBlue.png';
 import { PatchCheck } from '../../apis/apiPATCH';
 import { styled } from 'styled-components';
+import { toast } from 'react-toastify';
 
 const PastTodo = () => {
   const [show, setShow] = useState(true);
@@ -67,13 +68,17 @@ const PastTodo = () => {
     onSuccess: response => {
       queryClient.invalidateQueries(['TODO']);
       queryClient.invalidateQueries(['PASTTODO']);
+      console.log(response);
     },
-    onError: response => {},
+    onError: response => {
+      toast(`${response.response.data}`);
+    },
   });
 
   const Check = ({ el }) => {
     const onClickCheck = () => {
       const id = el.toDoId;
+      console.log(id);
       patchCheckmutate({ id });
       // toast('할 일을 완료했습니다.');
     };
@@ -82,7 +87,7 @@ const PastTodo = () => {
   };
 
   const FilterMyTodo = ({ el }) => {
-    // console.log(el);
+    // console.log(el.myToDo);
     if (el.myToDo === true) {
       return (
         <div className='item'>
@@ -92,7 +97,7 @@ const PastTodo = () => {
               <div className='krTitle'>{el.toDo}</div>
               <div className='krManager'>
                 <div className='date'>
-                  {el.fstartDate} {el.fendDate}
+                  {el.fstartDate} ~ {el.fendDate}
                 </div>
               </div>
             </div>

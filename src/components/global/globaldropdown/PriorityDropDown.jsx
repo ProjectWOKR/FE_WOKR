@@ -26,7 +26,7 @@ const PriorityDropDown = ({ todoInfo, setTodoInfo }) => {
 
       setTodoInfo({ ...todoInfo, priority: Number(value) });
     };
-    console.log(todoInfo);
+    // console.log(todoInfo);
 
     return (
       <>
