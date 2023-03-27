@@ -19,7 +19,6 @@ import Toast from '../Toast';
 import { toast } from 'react-toastify';
 
 const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
-  ReactGA.initialize(`${process.env.REACT_APP_GOOGLE_ANALYTICS_ID}`);
   const queryClient = useQueryClient();
   const months = [
     '1월',

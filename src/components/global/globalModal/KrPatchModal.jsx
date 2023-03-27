@@ -9,6 +9,7 @@ import { useRecoilValue } from 'recoil';
 import { patchKRInfo } from '../../../store/store';
 import { DeleteKR } from '../../../apis/apiDELETE';
 import { CreateKR } from '../../../apis/apiPOST';
+import ReactGA from 'react-ga4';
 
 const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const queryClient = useQueryClient();
@@ -35,6 +36,11 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
 
   const { mutate: patchKRMutate } = useMutation(PatchKR, {
     onSuccess: response => {
+      ReactGA.event({
+        category: '버튼',
+        action: '수정',
+        label: 'KR',
+      });
       queryClient.invalidateQueries(['OKR']);
       onCloseModal();
     },
@@ -55,6 +61,11 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
 
   const { mutate: deleteKR } = useMutation(DeleteKR, {
     onSuccess: response => {
+      ReactGA.event({
+        category: '버튼',
+        action: '삭제',
+        label: 'KR',
+      });
       queryClient.invalidateQueries(['OKR']);
       onCloseModal();
     },
@@ -65,6 +76,11 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
 
   const { mutate: postKR } = useMutation(CreateKR, {
     onSuccess: response => {
+      ReactGA.event({
+        category: '버튼',
+        action: '생성',
+        label: 'KR',
+      });
       queryClient.invalidateQueries(['OKR']);
       onCloseModal();
     },
