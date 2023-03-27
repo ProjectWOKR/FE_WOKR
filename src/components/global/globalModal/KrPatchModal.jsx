@@ -38,8 +38,7 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
     onSuccess: response => {
       ReactGA.event({
         category: '버튼',
-        action: '수정',
-        label: 'KR',
+        action: 'KR 수정',
       });
       queryClient.invalidateQueries(['OKR']);
       onCloseModal();
@@ -63,8 +62,7 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
     onSuccess: response => {
       ReactGA.event({
         category: '버튼',
-        action: '삭제',
-        label: 'KR',
+        action: 'KR 삭제',
       });
       queryClient.invalidateQueries(['OKR']);
       onCloseModal();
@@ -78,8 +76,7 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
     onSuccess: response => {
       ReactGA.event({
         category: '버튼',
-        action: '생성',
-        label: 'KR',
+        action: 'KR 생성',
       });
       queryClient.invalidateQueries(['OKR']);
       onCloseModal();

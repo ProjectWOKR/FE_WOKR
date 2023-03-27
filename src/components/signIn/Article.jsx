@@ -5,6 +5,7 @@ import { OnChange } from '../global/onChange';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { SignIn } from '../../apis/apiPOST';
+import ReactGA from 'react-ga4';
 import {
   MainHeader,
   ArticleHeader,
@@ -82,6 +83,10 @@ const Test = () => {
   const { mutate: signInMutate } = useMutation(SignIn, {
     onSuccess: response => {
       // console.log(response);
+      ReactGA.event({
+        category: '버튼',
+        action: '로그인',
+      });
       localStorage.setItem('accesstoken', response.accessToken);
       navigate('/mainpage');
     },

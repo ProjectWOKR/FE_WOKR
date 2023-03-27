@@ -10,6 +10,7 @@ import {
 import { useRecoilValue } from 'recoil';
 import { patchProgressInfo } from '../../../store/store';
 import { PatchPersentBox, PesentContainer } from '../../mainpage/OKR.styled';
+import ReactGA from 'react-ga4';
 
 const ProgressPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const queryClient = useQueryClient();
@@ -38,6 +39,10 @@ const ProgressPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
 
   const { mutate: PatchObjectMutate } = useMutation(PatchObjectiveProgress, {
     onSuccess: response => {
+      ReactGA.event({
+        category: '버튼',
+        action: 'Objective 진척도 수정',
+      });
       queryClient.invalidateQueries(['OKR']);
     },
     onError: response => {
@@ -47,6 +52,10 @@ const ProgressPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
 
   const { mutate: PatchKRMutate } = useMutation(PatchKRProgress, {
     onSuccess: response => {
+      ReactGA.event({
+        category: '버튼',
+        action: 'KR 진척도 수정',
+      });
       queryClient.invalidateQueries(['OKR']);
     },
     onError: response => {

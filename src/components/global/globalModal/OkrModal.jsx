@@ -108,13 +108,17 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
       queryClient.invalidateQueries(['OKR']);
       ReactGA.event({
         category: '버튼',
-        action: '생성',
-        label: 'Objective',
+        action: 'Objective 생성',
       });
       setObjectId(response.objectiveId);
       onCloseModal();
     },
-    onError: response => {},
+    onError: response => {
+      ReactGA.event({
+        category: '버튼',
+        action: 'Objective 생성 실패',
+      });
+    },
   });
 
   return (

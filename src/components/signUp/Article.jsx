@@ -9,6 +9,7 @@ import {
   SignUpBtnMargin,
   SignWrap,
 } from '../../styles/sign.styled';
+import ReactGA from 'react-ga4';
 import Eye from '../../assets/eye.png';
 import CloseEye from '../../assets/closedEye.png';
 import { OnChange } from '../global/onChange';
@@ -176,10 +177,17 @@ const Test = () => {
   const [signValidation, setSignValidation] = useState('');
   const { mutate: signUpMutate } = useMutation(SignUp, {
     onSuccess: response => {
-      // navigate('/signUp');
+      ReactGA.event({
+        category: '버튼',
+        action: '회원가입',
+      });
       navigate('/');
     },
     onError: () => {
+      ReactGA.event({
+        category: '버튼',
+        action: '회원가입 실패',
+      });
       setSignValidation('이미 존재하는 이메일입니다.');
       alert(`${signValidation}`);
     },
