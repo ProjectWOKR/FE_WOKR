@@ -11,6 +11,7 @@ import ReactGA from 'react-ga4';
 
 const queryClient = new QueryClient();
 ReactGA.initialize(`${process.env.REACT_APP_GOOGLE_ANALYTICS_ID}`);
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <QueryClientProvider client={queryClient}>

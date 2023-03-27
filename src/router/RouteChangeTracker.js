@@ -2,17 +2,13 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import ReactGA from 'react-ga4';
 
-/**
- * uri 변경 추적 컴포넌트
- * uri가 변경될 때마다 pageview 이벤트 전송
- */
 const RouteChangeTracker = () => {
   const location = useLocation();
   const [initialized, setInitialized] = useState(false);
 
-  // localhost는 기록하지 않음
+  // 프로덕션 환경에서만 Google Analytics 이벤트 추적
   useEffect(() => {
-    if (!window.location.href.includes('localhost')) {
+    if (process.env.NODE_ENV === 'production') {
       ReactGA.initialize(`${process.env.REACT_APP_GOOGLE_ANALYTICS_ID}`);
       setInitialized(true);
     }
@@ -26,12 +22,7 @@ const RouteChangeTracker = () => {
     }
   }, [initialized, location]);
 
-  // 개발용
-  useEffect(() => {
-    ReactGA.initialize(`${process.env.REACT_APP_GOOGLE_ANALYTICS_ID}`);
-    ReactGA.set({ page: location.pathname });
-    ReactGA.send('pageview');
-  }, [location]);
+  return null;
 };
 
 export default RouteChangeTracker;

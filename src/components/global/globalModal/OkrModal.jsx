@@ -106,13 +106,13 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const { mutate: createObjectiveMutate } = useMutation(CreateObjective, {
     onSuccess: response => {
       queryClient.invalidateQueries(['OKR']);
-      setObjectId(response.objectiveId);
-      onCloseModal();
       ReactGA.event({
         category: '버튼',
         action: '생성',
         label: 'Objective',
       });
+      setObjectId(response.objectiveId);
+      onCloseModal();
     },
     onError: response => {},
   });
