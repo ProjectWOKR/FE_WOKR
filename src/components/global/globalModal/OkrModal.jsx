@@ -11,6 +11,7 @@ import calender from '../../../assets/calender.png';
 
 import ColorDropDown from '../globaldropdown/ColorDropDown';
 import { OnChange } from '../onChange';
+import ReactGA from 'react-ga4';
 
 import { CreateObjective, CreateKR } from '../../../apis/apiPOST';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -107,7 +108,11 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
       queryClient.invalidateQueries(['OKR']);
       setObjectId(response.objectiveId);
       onCloseModal();
-      console.log('rr', response);
+      ReactGA.event({
+        category: '버튼',
+        action: '생성',
+        label: 'Objective',
+      });
     },
     onError: response => {},
   });
