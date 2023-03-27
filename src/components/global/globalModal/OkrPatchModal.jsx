@@ -41,7 +41,7 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   // console.log(modalOutSideClick);
   // console.log(onCloseModal);
   // console.log(modalRef);
-  console.log(objectiveInfo);
+  // console.log(objectiveInfo);
   const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
   const format = 'YYYY-MM-DD';
 
@@ -76,10 +76,10 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const convertStart = (date, format = startDate.format) => {
     let object = { date, format };
     setStartDate(new DateObject(object).format());
-    console.log(startDate);
-    console.log(typeof startDate);
-    console.log(objectiveInfo.startData);
-    console.log(typeof objectiveInfo.startData);
+    // console.log(startDate);
+    // console.log(typeof startDate);
+    // console.log(objectiveInfo.startData);
+    // console.log(typeof objectiveInfo.startData);
     setObjInfo({ ...objInfo, startdate: new DateObject(object).format() });
   };
 
@@ -112,7 +112,7 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
       setObjInfo({ ...objInfo, color: '#9B9B9B' });
       toast('색상을 선택하지 않으면 회색이 기본입니다.');
     } else {
-      console.log('성공');
+      // console.log('성공');
       patchObjectivemutate({ value, id });
     }
   };
@@ -120,7 +120,7 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const { mutate: patchObjectivemutate } = useMutation(PatchObjective, {
     onSuccess: response => {
       queryClient.invalidateQueries(['OKR']);
-      console.log('rr', response);
+      // console.log('rr', response);
       onCloseModal();
     },
     onError: response => {
@@ -131,7 +131,7 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const { mutate: deleteObjective } = useMutation(DeleteObjective, {
     onSuccess: response => {
       queryClient.invalidateQueries(['OKR']);
-      console.log(response);
+      // console.log(response);
       onCloseModal();
     },
     onError: response => {

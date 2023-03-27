@@ -190,8 +190,8 @@ const TodoPathModal = ({ onCloseModal }) => {
       onCloseModal();
     }
   };
-  console.log('title :', title);
-  console.log('todoInfo :', todoInfo);
+  // console.log('title :', title);
+  // console.log('todoInfo :', todoInfo);
 
   const { mutate: deleteTodo } = useMutation(DeleteTodo, {
     onSuccess: response => {

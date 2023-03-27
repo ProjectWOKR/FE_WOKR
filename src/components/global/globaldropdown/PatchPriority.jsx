@@ -33,7 +33,7 @@ const PatchPriority = ({ title, setTitle }) => {
 
       setTitle({ ...title, priority: Number(value) });
     };
-    console.log(title);
+    // console.log(title);
 
     return (
       <>
