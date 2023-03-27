@@ -5,13 +5,13 @@ import SignUp from '../pages/SignUp';
 import Mainpage from '../pages/Mainpage';
 import GlobalLayout from '../components/global/GlobalLayout';
 import Header from '../components/global/header/Header';
-import RouteChangeTracker from './RouteChangeTracker';
+// import RouteChangeTracker from './RouteChangeTracker';
 
 export default function Router() {
   return (
     <GlobalLayout>
       <Header />
-      <RouteChangeTracker />
+      {/* <RouteChangeTracker /> */}
       <Routes>
         <Route path='/' element={<Signin />} />
         <Route path='/signUp' element={<SignUp />} />
