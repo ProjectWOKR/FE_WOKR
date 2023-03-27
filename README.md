@@ -1,8 +1,47 @@
-1. input range ui
-2. okr 생성 시 obj에 입력한 내용이 kr 첫번째 입력란에 표시
-3. kr, input 모달 밖에 누르면 안닫힘
-4. 캘린더 style
-5.
+## 🔥프로젝트 소개
 
-map 에러 https://kangdanne.tistory.com/147 <br>
-Unknown event handler property it will be ignored https://cocoon1787.tistory.com/854
+### 프로젝트 소개에 관련한 글 ~~~~
+
+-
+
+### 프로젝트 기간
+
+- 📌 2023.03.02 - 2023.04.08
+
+### WOKR 사이트
+
+---
+
+## 기술 정보
+
+---
+
+## 주요기능
+
+---
+
+## 아키텍처
+
+---
+
+## 기술적 의사결정
+
+---
+
+## 기능
+
+---
+
+## 트러블 슈팅
+
+---
+
+## 기본 설정
+
+---
+
+## 페이지별 기능구현
+
+---
+
+## 맴버
