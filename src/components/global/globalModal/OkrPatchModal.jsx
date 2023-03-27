@@ -8,7 +8,6 @@ import trash from '../../../assets/trash.png';
 import close from '../../../assets/close.png';
 import object from '../../../assets/object.png';
 import calender from '../../../assets/calender.png';
-
 import ColorDropDown from '../globaldropdown/ColorDropDown';
 import { OnChange } from '../onChange';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -19,6 +18,7 @@ import { patchOKRInfo } from '../../../store/store';
 import { useRecoilValue } from 'recoil';
 import { DeleteObjective } from '../../../apis/apiDELETE';
 import ReactGA from 'react-ga4';
+import { trackEvent } from '../../../router/RouteChangeTracker';
 
 const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const queryClient = useQueryClient();
@@ -38,10 +38,7 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   ];
 
   const objectiveInfo = useRecoilValue(patchOKRInfo);
-  // console.log(objectiveInfo);
-  // console.log(modalOutSideClick);
-  // console.log(onCloseModal);
-  // console.log(modalRef);
+
   console.log(objectiveInfo);
   const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
   const format = 'YYYY-MM-DD';
@@ -120,17 +117,17 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
 
   const { mutate: patchObjectivemutate } = useMutation(PatchObjective, {
     onSuccess: response => {
-      ReactGA.event({
-        category: '버튼',
-        action: 'Objective 수정',
+      trackEvent('click', {
+        event_category: '버튼',
+        event_label: 'Objective 수정',
       });
       queryClient.invalidateQueries(['OKR']);
       onCloseModal();
     },
     onError: response => {
-      ReactGA.event({
-        category: '버튼',
-        action: 'Objective 수정 실패',
+      trackEvent('click', {
+        event_category: '버튼',
+        event_label: 'Objective 수정 실패',
       });
       alert('팀장 및 본인이 작성한 OKR만 수정가능합니다.');
     },
@@ -138,9 +135,9 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
 
   const { mutate: deleteObjective } = useMutation(DeleteObjective, {
     onSuccess: response => {
-      ReactGA.event({
-        category: '버튼',
-        action: 'Objective 삭제',
+      trackEvent('click', {
+        event_category: '버튼',
+        event_label: 'Objective 삭제',
       });
       queryClient.invalidateQueries(['OKR']);
       onCloseModal();

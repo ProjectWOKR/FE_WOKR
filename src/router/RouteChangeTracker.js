@@ -6,12 +6,20 @@ const RouteChangeTracker = () => {
   const location = useLocation();
 
   useEffect(() => {
-    ReactGA4.send('page_view', {
-      page_path: location.pathname + location.search,
-    });
+    if (process.env.NODE_ENV !== 'development') {
+      ReactGA4.send('page_view', {
+        page_path: location.pathname + location.search,
+      });
+    }
   }, [location]);
 
   return null;
+};
+
+export const trackEvent = (eventName, eventData) => {
+  if (process.env.NODE_ENV !== 'development') {
+    ReactGA4.send(eventName, eventData);
+  }
 };
 
 export default RouteChangeTracker;
