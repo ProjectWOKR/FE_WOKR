@@ -9,6 +9,7 @@ import {
   SignUpBtnMargin,
   SignWrap,
 } from '../../styles/sign.styled';
+import ReactGA from 'react-ga4';
 import Eye from '../../assets/eye.png';
 import CloseEye from '../../assets/closedEye.png';
 import { OnChange } from '../global/onChange';
@@ -17,6 +18,7 @@ import { useMutation } from '@tanstack/react-query';
 import { SignUp } from '../../apis/apiPOST';
 import TeamDropDown from '../../components/global/globaldropdown/TeamDropDown.jsx';
 import TeamPosiDropDown from '../global/globaldropdown/TeamPosiDropDown';
+import { trackEvent } from '../../router/RouteChangeTracker';
 
 const Test = () => {
   const navigate = useNavigate();
@@ -176,10 +178,19 @@ const Test = () => {
   const [signValidation, setSignValidation] = useState('');
   const { mutate: signUpMutate } = useMutation(SignUp, {
     onSuccess: response => {
-      // navigate('/signUp');
+      trackEvent('click', {
+        event_category: '버튼',
+        event_label: '회원가입',
+      });
       navigate('/');
     },
-    onError: response => {
+
+    onError: () => {
+      trackEvent('click', {
+        event_category: '버튼',
+        event_label: '회원가입 실패',
+      });
+
       setSignValidation('이미 존재하는 이메일입니다.');
       alert(response.response.data);
     },

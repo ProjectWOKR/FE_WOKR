@@ -5,6 +5,7 @@ import { OnChange } from '../global/onChange';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { SignIn } from '../../apis/apiPOST';
+import ReactGA from 'react-ga4';
 import {
   MainHeader,
   ArticleHeader,
@@ -15,6 +16,7 @@ import {
   HelpBox,
   SignWrap,
 } from '../../styles/sign.styled';
+import { trackEvent } from '../../router/RouteChangeTracker';
 
 const Test = () => {
   const navigate = useNavigate();
@@ -82,10 +84,18 @@ const Test = () => {
   const { mutate: signInMutate } = useMutation(SignIn, {
     onSuccess: response => {
       // console.log(response);
+      trackEvent('click', {
+        event_category: '버튼',
+        event_label: '로그인',
+      });
       localStorage.setItem('accesstoken', response.accessToken);
       navigate('/mainpage');
     },
     onError: () => {
+      trackEvent('click', {
+        event_category: '버튼',
+        event_label: '로그인 실패',
+      });
       setSignValidation('아이디 또는 비밀번호가 올바르지 않습니다.');
       alert(`${signValidation}`);
     },

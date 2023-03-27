@@ -5,6 +5,7 @@ import logoutON from '../../../assets/logoutoff.png';
 import { useNavigate } from 'react-router-dom';
 import alarm from '../../../assets/alarm.png';
 import user from '../../../assets/user.png';
+import ReactGA from 'react-ga4';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -33,6 +34,10 @@ export default function Header() {
     <Layout>
       <LogoImg
         onClick={() => {
+          ReactGA.event({
+            category: '버튼',
+            action: '로그아웃',
+          });
           navigate('/');
         }}
       />

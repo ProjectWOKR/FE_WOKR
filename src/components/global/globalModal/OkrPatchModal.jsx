@@ -8,7 +8,6 @@ import trash from '../../../assets/trash.png';
 import close from '../../../assets/close.png';
 import object from '../../../assets/object.png';
 import calender from '../../../assets/calender.png';
-
 import ColorDropDown from '../globaldropdown/ColorDropDown';
 import { OnChange } from '../onChange';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -18,6 +17,8 @@ import { PatchObjective } from '../../../apis/apiPATCH';
 import { patchOKRInfo } from '../../../store/store';
 import { useRecoilValue } from 'recoil';
 import { DeleteObjective } from '../../../apis/apiDELETE';
+import ReactGA from 'react-ga4';
+import { trackEvent } from '../../../router/RouteChangeTracker';
 
 const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const queryClient = useQueryClient();
@@ -37,11 +38,7 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   ];
 
   const objectiveInfo = useRecoilValue(patchOKRInfo);
-  // console.log(objectiveInfo);
-  // console.log(modalOutSideClick);
-  // console.log(onCloseModal);
-  // console.log(modalRef);
-  // console.log(objectiveInfo);
+
   const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
   const format = 'YYYY-MM-DD';
 
@@ -119,19 +116,31 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
 
   const { mutate: patchObjectivemutate } = useMutation(PatchObjective, {
     onSuccess: response => {
+      trackEvent('click', {
+        event_category: '버튼',
+        event_label: 'Objective 수정',
+      });
       queryClient.invalidateQueries(['OKR']);
-      // console.log('rr', response);
+
       onCloseModal();
     },
     onError: response => {
+      trackEvent('click', {
+        event_category: '버튼',
+        event_label: 'Objective 수정 실패',
+      });
       alert('팀장 및 본인이 작성한 OKR만 수정가능합니다.');
     },
   });
 
   const { mutate: deleteObjective } = useMutation(DeleteObjective, {
     onSuccess: response => {
+      trackEvent('click', {
+        event_category: '버튼',
+        event_label: 'Objective 삭제',
+      });
       queryClient.invalidateQueries(['OKR']);
-      // console.log(response);
+
       onCloseModal();
     },
     onError: response => {
