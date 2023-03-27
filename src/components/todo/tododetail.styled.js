@@ -68,6 +68,7 @@ export const TodoHeader = styled.div`
       color: #4b4b4b;
       font-size: 15px;
       margin-left: 35px;
+      cursor: pointer;
     }
     .more {
       width: 25px;
@@ -299,6 +300,9 @@ export const StTeam = styled.div`
   margin-left: 28px;
   position: sticky;
   top: 0px;
+  /* position: fixed;
+  top: 0;
+  right: 0; */
   padding: 24px 15px 15px 15px;
   box-sizing: border-box;
   background-color: #fff;
@@ -337,6 +341,18 @@ export const StTeam = styled.div`
     border-radius: 8px;
     margin-bottom: 10px;
     font-size: 2rem;
+  }
+  .table {
+    width: 100%;
+    height: 37px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f8f8f8;
+    box-shadow: 0px 1px 4px rgba(210, 210, 210, 0.7);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-size: 1.4rem;
   }
   .member {
     width: 100%;

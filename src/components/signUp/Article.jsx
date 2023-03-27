@@ -126,7 +126,7 @@ const Test = () => {
   // 팀 확인
   useEffect(() => {
     if (userInfo.team === '') {
-      setTeamMessage('팀을 선택해주세요.');
+      setTeamMessage('팀을 입력해주세요.');
       setTeamValidation(false);
     } else {
       setTeamMessage('팀이 선택되었습니다.');
@@ -179,9 +179,9 @@ const Test = () => {
       // navigate('/signUp');
       navigate('/');
     },
-    onError: () => {
+    onError: response => {
       setSignValidation('이미 존재하는 이메일입니다.');
-      alert(`${signValidation}`);
+      alert(response.response.data);
     },
   });
 
@@ -270,7 +270,16 @@ const Test = () => {
         )}
       </ArticleHeader>
       <ArticleHeader>팀</ArticleHeader>
-      <TeamDropDown setUserInfo={setUserInfo} userInfo={userInfo} />
+      {/* <TeamDropDown setUserInfo={setUserInfo} userInfo={userInfo} /> */}
+      <InputBox>
+        <EmailInput
+          name='team'
+          onChange={event => {
+            OnChange(event, userInfo, setUserInfo);
+          }}
+          placeholder='팀이름를 입력하세요'
+        />
+      </InputBox>
       <ArticleHeader>
         {teamValidation ? null : (
           <p className='p1' style={{ color: 'red' }}>

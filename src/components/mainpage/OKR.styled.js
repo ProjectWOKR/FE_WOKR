@@ -37,6 +37,8 @@ export const Header = styled.p`
 
 export const OkrContainer = styled.div`
   margin: 0 auto;
+  max-height: 485px;
+  height: 100%;
   width: 100%;
   padding: 0 1.2rem;
   display: flex;

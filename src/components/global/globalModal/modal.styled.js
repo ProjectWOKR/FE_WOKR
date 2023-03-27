@@ -386,6 +386,7 @@ export const NotHave = styled.div`
   color: var(--main-color);
   font-size: 2rem;
   font-weight: 500;
+  /* background-color: pink; */
   .btnFlex {
     ${props => props.theme.row_center}
     gap: 1rem;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { DDay, TodoDetailHeader, TodoDetailItem } from './tododetail.styled';
 import badgeS from '../../assets/badgeS.png';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -8,6 +8,7 @@ import yellow from '../../assets/todoYellow.png';
 import blue from '../../assets/todoBlue.png';
 import { PatchCheck } from '../../apis/apiPATCH';
 import { toast } from 'react-toastify';
+import Toast from '../global/Toast';
 
 const DetailTodoItem = ({ el, today, tomorrow }) => {
   // console.log(new Date('2023-03-14') < new Date('2023-03-15'));
@@ -110,34 +111,31 @@ const DetailTodoItem = ({ el, today, tomorrow }) => {
   };
 
   const FilterMyTodo = ({ pt }) => {
+    // console.log(pt);
     // console.log(pt.startDate);
-    let date = new Date(
-      `2023-${el.targetDate.substr(0, 2)}-${el.targetDate.substr(4, 2)}`
-    );
+    // let date = new Date(
+    //   `2023-${el.targetDate.substr(0, 2)}-${el.targetDate.substr(4, 2)}`
+    // );
     // console.log(date, ' :::', new Date(pt.startDate));
     if (pt.myToDo === true) {
-      <div className='item'>
-        <div className='flexLeft'>
-          <Title pt={pt} />
-          <div className='krBox'>
-            <div className='krTitle'>{pt.toDo}</div>
-            <div className='krManager'>
-              <DateColor el={el} today={today} tomorrow={tomorrow} pt={pt} />
+      return (
+        <div className='item'>
+          <div className='flexLeft'>
+            <Title pt={pt} />
+            <div className='krBox'>
+              <div className='krTitle'>{pt.toDo}</div>
+              <div className='krManager'>
+                <DateColor el={el} today={today} tomorrow={tomorrow} pt={pt} />
+              </div>
             </div>
           </div>
+          <div className='flexRight'>
+            <Priority pt={pt} />
+            <Check pt={pt} />
+          </div>
         </div>
-        <div className='flexRight'>
-          <Priority pt={pt} />
-          <Check pt={pt} />
-        </div>
-      </div>;
-    }
-    // else if (date <= new Date(pt.startDate) === true) {
-    //   return (
-    //     <div className='notHave'>To Do가 해당 날짜 보다 미래에 있습니다.</div>
-    //   );
-    // }
-    else {
+      );
+    } else {
       return (
         <div className='item'>
           <div className='flexLeft'>
@@ -163,9 +161,9 @@ const DetailTodoItem = ({ el, today, tomorrow }) => {
 
   //해당 날짜에 todo가 없을 때
   const HavePt = () => {
-    let date = new Date(
-      `2023-${el.targetDate.substr(0, 2)}-${el.targetDate.substr(4, 2)}`
-    );
+    // let date = new Date(
+    //   `2023-${el.targetDate.substr(0, 2)}-${el.targetDate.substr(4, 2)}`
+    // );
     if (el.progressTodo.length === 0) {
       return (
         <TodoDetailItem>
@@ -184,6 +182,14 @@ const DetailTodoItem = ({ el, today, tomorrow }) => {
       );
     }
   };
+
+  // useEffect(() => {
+  //   return (
+  //     <div className='title' id={el.targetDate}>
+  //       {el.targetDate}
+  //     </div>
+  //   );
+  // }, []);
 
   return (
     <DDay>

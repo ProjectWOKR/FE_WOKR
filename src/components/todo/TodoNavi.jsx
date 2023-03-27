@@ -3,13 +3,15 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-scroll';
 import { DateNavi, StNavi, TodoHeader } from './tododetail.styled';
 
-const TodoNavi = () => {
+const TodoNavi = ({ todayFormat }) => {
+  console.log(todayFormat);
   // console.log(dateId);
   // console.log(func);
   const today = new Date();
   const yearMonth = `${today.getFullYear()}년 ${today.getMonth() + 1}월`;
 
   let date = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  // console.log(date);
 
   let makeWeekAll = date => {
     let day = date.getDay();
@@ -84,8 +86,6 @@ const TodoNavi = () => {
   const dateM = date.getMonth() + 1;
   const dateD = date.getDate();
 
-  // console.log(state);
-
   return (
     <StNavi>
       <TodoHeader>
@@ -96,8 +96,16 @@ const TodoNavi = () => {
         <div className='right'>
           <div className='prev' onClick={onPressArrowLeft} />
           <div className='next' onClick={onPressArrowRight} />
-          <div className='today'>오늘</div>
-          <div className='more' />
+          {/* <div className='today'>오늘</div> */}
+          <Link
+            className='today'
+            to={todayFormat}
+            spy={true}
+            smooth={true}
+            offset={-500}>
+            오늘
+          </Link>
+          {/* <div className='more' /> */}
         </div>
       </TodoHeader>
       <DateNavi>

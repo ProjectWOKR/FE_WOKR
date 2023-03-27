@@ -141,7 +141,7 @@ const TodoItem = ({ getTodo }) => {
       <Potal>
         {todoModalOn ? <TodoPathModal onCloseModal={onTodoCloseModal} /> : null}
       </Potal>
-      {/* <Toast /> */}
+      <Toast />
     </>
   );
 };

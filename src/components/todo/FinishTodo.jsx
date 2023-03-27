@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Finsh, TodoDetailHeader, TodoDetailItem } from './tododetail.styled';
 import badgeS from '../../assets/badgeS.png';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { GetPostTodo } from '../../apis/apiGET';
 import red from '../../assets/todoRed.png';
 import yellow from '../../assets/todoYellow.png';
 import blue from '../../assets/todoBlue.png';
+import { PatchCheck } from '../../apis/apiPATCH';
+import { toast } from 'react-toastify';
 
 const FinishTodo = ({ el }) => {
   const [show, setShow] = useState(true);
@@ -25,6 +27,31 @@ const FinishTodo = ({ el }) => {
     }
   };
 
+  const queryClient = useQueryClient();
+
+  const { mutate: patchCheckmutate } = useMutation(PatchCheck, {
+    onSuccess: response => {
+      queryClient.invalidateQueries(['ALLTODO']);
+      queryClient.invalidateQueries(['PASTTODO']);
+    },
+    onError: response => {},
+  });
+
+  const Check = ({ ct }) => {
+    const onClickCheck = () => {
+      const id = ct.toDoId;
+      patchCheckmutate({ id });
+      toast('To Do를 수정했습니다.');
+    };
+
+    return (
+      <div
+        className={ct.completion === true ? 'checkbg' : 'check'}
+        onClick={onClickCheck}
+      />
+    );
+  };
+
   const Title = ({ ct }) => {
     // console.log(ct);
     if (ct.color === null) {
@@ -42,7 +69,9 @@ const FinishTodo = ({ el }) => {
   };
 
   const FilterMyTodo = ({ ct }) => {
-    if (ct.myTodo === true) {
+    // console.log('ct :', ct);
+    // console.log(ct.myTodo === true);
+    if (ct.myToDo === true) {
       return (
         <div className='item'>
           <div className='flexLeft'>
@@ -61,7 +90,7 @@ const FinishTodo = ({ el }) => {
           </div>
           <div className='flexRight'>
             <Priority ct={ct} />
-            <div className='checkbg'></div>
+            <Check ct={ct} />
           </div>
         </div>
       );
@@ -86,7 +115,7 @@ const FinishTodo = ({ el }) => {
           </div>
           <div className='flexRight'>
             <Priority ct={ct} />
-            <div className='checkbg'></div>
+            <div className='another'></div>
           </div>
         </div>
       );
@@ -102,35 +131,17 @@ const FinishTodo = ({ el }) => {
         </div>
       </TodoDetailHeader>
 
-      {el.completionTodo.length === 0
-        ? null
-        : el.completionTodo?.map(ct => (
-            <TodoDetailItem
-              key={ct.toDoId}
-              style={show ? { display: 'flex' } : { display: 'none' }}>
-              {/* <div className='item'>
-                <div className='flexLeft'>
-                  <Title ct={ct} />
-                  <div className='krBox'>
-                    <div className='fKrTitle'>{ct.toDo}</div>
-                    <div className='krManager'>
-                      <div className='fDate'>
-                        {ct.fstartDate}
-                        {ct.startDateTime === '00:00' ? null : ct.startDateTime}
-                        ~ {ct.fendDate}
-                        {ct.endDateTime === '00:00' ? null : ct.endDateTime}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className='flexRight'>
-                  <Priority ct={ct} />
-                  <div className='checkbg'></div>
-                </div>
-              </div> */}
-              <FilterMyTodo ct={ct} />
-            </TodoDetailItem>
-          ))}
+      {el.completionTodo.length === 0 ? (
+        <div>완료한 리스트가 없습니다.</div>
+      ) : (
+        el.completionTodo?.map(ct => (
+          <TodoDetailItem
+            key={ct.toDoId}
+            style={show ? { display: 'flex' } : { display: 'none' }}>
+            <FilterMyTodo ct={ct} />
+          </TodoDetailItem>
+        ))
+      )}
     </Finsh>
   );
 };
