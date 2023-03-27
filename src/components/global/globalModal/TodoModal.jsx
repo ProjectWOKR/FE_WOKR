@@ -26,6 +26,7 @@ import { CreateTodo } from '../../../apis/apiPOST';
 import { toast } from 'react-toastify';
 import Toast from '../Toast';
 import { GetOKR } from '../../../apis/apiGET';
+import ReactGA from 'react-ga4';
 
 const TodoModal = ({
   onCloseTodoModal,
@@ -149,10 +150,23 @@ const TodoModal = ({
 
   const { mutate: createTodo } = useMutation(CreateTodo, {
     onSuccess: response => {
+      if (process.env.NODE_ENV !== 'development') {
+        ReactGA.event({
+          category: '버튼',
+          action: 'TODO 생성',
+        });
+      }
       queryClient.invalidateQueries(['TODO']);
       console.log(response);
     },
-    onError: response => {},
+    onError: response => {
+      if (process.env.NODE_ENV !== 'development') {
+        ReactGA.event({
+          category: '버튼',
+          action: 'TODO 생성 실패',
+        });
+      }
+    },
   });
 
   const { data: getOkrData } = useQuery(['getOkr'], GetOKR, {

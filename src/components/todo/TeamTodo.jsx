@@ -6,12 +6,8 @@ import { GetUser } from '../../apis/apiGET';
 
 const TeamTodo = () => {
   const { data: getMember } = useQuery(['MEMBER'], GetUser, {
-    onSuccess: response => {
-      // console.log('user :', response);
-    },
-    onError: response => {
-      // console.log(response);
-    },
+    onSuccess: response => {},
+    onError: response => {},
   });
 
   const defaultDay = new Date().getDay();
@@ -42,11 +38,7 @@ const TeamTodo = () => {
         <div>나의 팀 To - Do 현황</div>
       </div>
       <div className='today'>{today}</div>
-      {/* <div className='table'>
-        <div className='cansee'>보이는 사람</div>
-        <div className='userName'>이름</div>
-        <div className='haveTodo'>작성한 Todo 개수</div>
-      </div> */}
+
       {getMember?.map(el => (
         <div className='member' key={el.userId}>
           {/* <div className={el.myInfo === true ? 'have' : 'none'}></div> */}

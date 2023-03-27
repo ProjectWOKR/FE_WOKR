@@ -9,6 +9,7 @@ import blue from '../../assets/todoBlue.png';
 import { PatchCheck } from '../../apis/apiPATCH';
 import { toast } from 'react-toastify';
 import Toast from '../global/Toast';
+import ReactGA from 'react-ga4';
 
 const DetailTodoItem = ({ el, today, tomorrow }) => {
   // console.log(new Date('2023-03-14') < new Date('2023-03-15'));
@@ -45,6 +46,12 @@ const DetailTodoItem = ({ el, today, tomorrow }) => {
 
   const { mutate: patchCheckmutate } = useMutation(PatchCheck, {
     onSuccess: response => {
+      if (process.env.NODE_ENV !== 'development') {
+        ReactGA.event({
+          category: '버튼',
+          action: 'TODO 완료',
+        });
+      }
       queryClient.invalidateQueries(['ALLTODO']);
       queryClient.invalidateQueries(['PASTTODO']);
     },

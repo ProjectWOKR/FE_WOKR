@@ -3,7 +3,7 @@ import { emotion, useEmotionDropDown } from './dropdown';
 import { EmotionSelect } from './dropDown.styled';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { PatchEmotion } from '../../../apis/apiPATCH';
-
+import ReactGA from 'react-ga4';
 import normal from '../../../assets/normal2.png';
 import good from '../../../assets/good.png';
 import bad from '../../../assets/bad2.png';
@@ -20,6 +20,12 @@ const Emotion = ({
   const { mutate: patchEmotionmutate } = useMutation(PatchEmotion, {
     onSuccess: response => {
       queryClient.invalidateQueries(['OKR']);
+      if (process.env.NODE_ENV !== 'development') {
+        ReactGA.event({
+          category: '버튼',
+          action: '자신감 수정',
+        });
+      }
     },
     onError: response => {
       alert('팀장 및 자신이 작성한 OKR만 수정 가능합니다.');

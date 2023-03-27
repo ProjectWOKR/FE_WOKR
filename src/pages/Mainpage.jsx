@@ -56,6 +56,7 @@ export default function Mainpage() {
         {menuList.map((text, i) => {
           return (
             <MenuItem
+              text={text}
               key={i}
               onClick={clickNowPage}
               name={text}

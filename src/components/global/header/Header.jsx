@@ -34,10 +34,12 @@ export default function Header() {
     <Layout>
       <LogoImg
         onClick={() => {
-          ReactGA.event({
-            category: '버튼',
-            action: '로그아웃',
-          });
+          if (process.env.NODE_ENV !== 'development') {
+            ReactGA.event({
+              category: '버튼',
+              action: '로그아웃',
+            });
+          }
           navigate('/');
         }}
       />

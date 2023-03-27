@@ -12,6 +12,7 @@ import { useSetRecoilState } from 'recoil';
 import Potal from '../global/globalModal/Potal';
 import TodoPathModal from '../global/globalModal/TodoPathModal';
 import Todo from './../todo/Todo';
+import ReactGA from 'react-ga4';
 
 const TodoItem = ({ getTodo }) => {
   const queryClient = useQueryClient();
@@ -44,6 +45,12 @@ const TodoItem = ({ getTodo }) => {
   // 체크 수정
   const { mutate: patchCheckmutate } = useMutation(PatchCheck, {
     onSuccess: response => {
+      if (process.env.NODE_ENV !== 'development') {
+        ReactGA.event({
+          category: '버튼',
+          action: 'TODO 완료',
+        });
+      }
       queryClient.invalidateQueries(['TODO']);
     },
     onError: response => {},

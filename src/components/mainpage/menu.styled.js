@@ -27,9 +27,20 @@ export const MenuItem = styled.button`
   border-radius: 0 7px 7px 0;
   padding: 0 2rem 0 0;
   line-height: 4.5rem;
-  color: #4b4b4b;
+  color: ${({ text }) =>
+    `${
+      text === 'All OKR'
+        ? '#DEDEDE'
+        : text === 'TEAM OKR'
+        ? '#DEDEDE'
+        : text === 'Calendar'
+        ? '#DEDEDE'
+        : '#4b4b4b'
+    }`};
   &.active {
     color: #fff;
     background-color: var(--main-color);
   }
 `;
+// #DEDEDE
+// #4b4b4b;

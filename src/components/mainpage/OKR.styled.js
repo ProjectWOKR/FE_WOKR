@@ -40,6 +40,7 @@ export const OkrContainer = styled.div`
   max-height: 485px;
   height: 100%;
   width: 100%;
+  overflow: auto;
   padding: 0 1.2rem;
   display: flex;
   flex-direction: column;

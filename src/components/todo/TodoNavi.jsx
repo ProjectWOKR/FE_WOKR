@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { Link } from 'react-scroll';
 import { DateNavi, StNavi, TodoHeader } from './tododetail.styled';
 
 const TodoNavi = ({ todayFormat }) => {
-  console.log(todayFormat);
-  // console.log(dateId);
-  // console.log(func);
   const today = new Date();
   const yearMonth = `${today.getFullYear()}년 ${today.getMonth() + 1}월`;
 
   let date = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-  // console.log(date);
 
   let makeWeekAll = date => {
     let day = date.getDay();

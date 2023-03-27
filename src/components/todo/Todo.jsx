@@ -13,12 +13,8 @@ import Toast from './../global/Toast';
 export default function Todo() {
   //todo 전부 가져오기
   const { data: getAllTodo } = useQuery(['ALLTODO'], GetAllTodo, {
-    onSuccess: response => {
-      console.log('todo :', response);
-    },
-    onError: response => {
-      // console.log(response.response.data);
-    },
+    onSuccess: response => {},
+    onError: response => {},
   });
 
   const now = new Date();

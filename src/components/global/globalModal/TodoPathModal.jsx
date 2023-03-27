@@ -24,12 +24,10 @@ import DatePicker, { DateObject } from 'react-multi-date-picker';
 import TimePicker from 'react-multi-date-picker/plugins/time_picker';
 import transition from 'react-element-popper/animations/transition';
 import opacity from 'react-element-popper/animations/opacity';
-import { OnChange } from '../onChange';
-import PriorityDropDown from '../globaldropdown/PriorityDropDown';
-import Toast from '../Toast';
 import { toast } from 'react-toastify';
 import PatchPriority from './../globaldropdown/PatchPriority';
 import { DeleteTodo } from '../../../apis/apiDELETE';
+import ReactGA from 'react-ga4';
 
 const TodoPathModal = ({ onCloseModal }) => {
   useEffect(() => {
@@ -151,14 +149,24 @@ const TodoPathModal = ({ onCloseModal }) => {
 
   const { mutate: patchTodo } = useMutation(PatchTodo, {
     onSuccess: response => {
+      if (process.env.NODE_ENV !== 'development') {
+        ReactGA.event({
+          category: '버튼',
+          action: 'TODO 수정',
+        });
+      }
       queryClient.invalidateQueries(['TODO']);
       console.log('response :', response);
     },
-    onError: response => {},
+    onError: response => {
+      if (process.env.NODE_ENV !== 'development') {
+        ReactGA.event({
+          category: '버튼',
+          action: 'TODO 수정 실패',
+        });
+      }
+    },
   });
-
-  // const [oid, setOid] = useState(0);
-  // const [kid, setKid] = useState(0);
 
   const patchT = () => {
     const startd = new Date(title.startDate);
@@ -195,11 +203,23 @@ const TodoPathModal = ({ onCloseModal }) => {
 
   const { mutate: deleteTodo } = useMutation(DeleteTodo, {
     onSuccess: response => {
+      if (process.env.NODE_ENV !== 'development') {
+        ReactGA.event({
+          category: '버튼',
+          action: 'TODO 삭제',
+        });
+      }
       queryClient.invalidateQueries(['TODO']);
       onCloseModal();
       toast('해당 To Do가 삭제가 완료되었습니다.');
     },
     onError: response => {
+      if (process.env.NODE_ENV !== 'development') {
+        ReactGA.event({
+          category: '버튼',
+          action: 'TODO 삭제 실패',
+        });
+      }
       alert('팀장 및 본인이 작성한 OKR만 수정가능합니다.');
     },
   });

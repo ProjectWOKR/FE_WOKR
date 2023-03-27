@@ -13,6 +13,7 @@ import blue from '../../assets/todoBlue.png';
 import { PatchCheck } from '../../apis/apiPATCH';
 import { styled } from 'styled-components';
 import { toast } from 'react-toastify';
+import ReactGA from 'react-ga4';
 
 const PastTodo = () => {
   const [show, setShow] = useState(true);
@@ -66,6 +67,12 @@ const PastTodo = () => {
 
   const { mutate: patchCheckmutate } = useMutation(PatchCheck, {
     onSuccess: response => {
+      if (process.env.NODE_ENV !== 'development') {
+        ReactGA.event({
+          category: '버튼',
+          action: 'TODO 완료',
+        });
+      }
       queryClient.invalidateQueries(['TODO']);
       queryClient.invalidateQueries(['PASTTODO']);
       console.log(response);
@@ -80,7 +87,6 @@ const PastTodo = () => {
       const id = el.toDoId;
       console.log(id);
       patchCheckmutate({ id });
-      // toast('할 일을 완료했습니다.');
     };
 
     return <div className='check' onClick={onClickCheck} />;
