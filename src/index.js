@@ -8,7 +8,7 @@ import { ThemeProvider } from 'styled-components';
 import theme from './components/global/theme';
 import ReactGA4 from 'react-ga4';
 import Router from './router/Router';
-import RouteChangeTracker from './router/RouteChangeTracker';
+import { RouteChangeTracker } from './router/RouteChangeTracker';
 
 const queryClient = new QueryClient();
 

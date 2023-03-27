@@ -31,7 +31,7 @@ export default function OKR() {
 
   /** +버튼 누르면 OKR 생성하는 모달 띄움 */
   const createOKR = () => {
-    if (getOKRData.length < 2) {
+    if (getOKRData.length < 6) {
       setOkrModalOn(!okrModalOn);
     } else {
       setAlertModalOn(!alertModalOn);

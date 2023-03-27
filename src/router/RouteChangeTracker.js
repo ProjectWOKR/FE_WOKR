@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import ReactGA4 from 'react-ga4';
 
-const RouteChangeTracker = () => {
+export const RouteChangeTracker = () => {
   const location = useLocation();
 
   useEffect(() => {
@@ -21,5 +21,3 @@ export const trackEvent = (eventName, eventData) => {
     ReactGA4.send(eventName, eventData);
   }
 };
-
-export default RouteChangeTracker;
