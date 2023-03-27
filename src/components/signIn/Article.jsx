@@ -82,19 +82,23 @@ const Test = () => {
   const [signValidation, setSignValidation] = useState('');
   const { mutate: signInMutate } = useMutation(SignIn, {
     onSuccess: response => {
-      // console.log(response);
-      ReactGA.event({
-        category: '버튼',
-        action: '로그인',
-      });
+      if (process.env.NODE_ENV !== 'development') {
+        ReactGA.event({
+          category: '버튼',
+          action: '로그인',
+        });
+      }
       localStorage.setItem('accesstoken', response.accessToken);
       navigate('/mainpage');
     },
     onError: () => {
-      ReactGA.event({
-        category: '버튼',
-        action: '로그인 실패',
-      });
+      if (process.env.NODE_ENV !== 'development') {
+        ReactGA.event({
+          category: '버튼',
+          action: '로그인 실패',
+        });
+      }
+
       setSignValidation('아이디 또는 비밀번호가 올바르지 않습니다.');
       alert(`${signValidation}`);
     },

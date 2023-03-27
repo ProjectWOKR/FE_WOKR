@@ -106,18 +106,22 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const { mutate: createObjectiveMutate } = useMutation(CreateObjective, {
     onSuccess: response => {
       queryClient.invalidateQueries(['OKR']);
-      ReactGA.event({
-        category: '버튼',
-        action: 'Objective 생성',
-      });
+      if (process.env.NODE_ENV !== 'development') {
+        ReactGA.event({
+          category: '버튼',
+          action: 'Objective 생성',
+        });
+      }
       setObjectId(response.objectiveId);
       onCloseModal();
     },
     onError: response => {
-      ReactGA.event({
-        category: '버튼',
-        action: 'Objective 생성 실패',
-      });
+      if (process.env.NODE_ENV !== 'development') {
+        ReactGA.event({
+          category: '버튼',
+          action: 'Objective 생성 실패',
+        });
+      }
     },
   });
 

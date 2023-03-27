@@ -36,10 +36,12 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
 
   const { mutate: patchKRMutate } = useMutation(PatchKR, {
     onSuccess: response => {
-      ReactGA.event({
-        category: '버튼',
-        action: 'KR 수정',
-      });
+      if (process.env.NODE_ENV !== 'development') {
+        ReactGA.event({
+          category: '버튼',
+          action: 'KR 수정',
+        });
+      }
       queryClient.invalidateQueries(['OKR']);
       onCloseModal();
     },
@@ -60,10 +62,12 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
 
   const { mutate: deleteKR } = useMutation(DeleteKR, {
     onSuccess: response => {
-      ReactGA.event({
-        category: '버튼',
-        action: 'KR 삭제',
-      });
+      if (process.env.NODE_ENV !== 'development') {
+        ReactGA.event({
+          category: '버튼',
+          action: 'KR 삭제',
+        });
+      }
       queryClient.invalidateQueries(['OKR']);
       onCloseModal();
     },
@@ -74,10 +78,12 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
 
   const { mutate: postKR } = useMutation(CreateKR, {
     onSuccess: response => {
-      ReactGA.event({
-        category: '버튼',
-        action: 'KR 생성',
-      });
+      if (process.env.NODE_ENV !== 'development') {
+        ReactGA.event({
+          category: '버튼',
+          action: 'KR 생성',
+        });
+      }
       queryClient.invalidateQueries(['OKR']);
       onCloseModal();
     },
