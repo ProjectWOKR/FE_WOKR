@@ -1,24 +1,32 @@
 import styled from 'styled-components';
+import logo from '../../../assets/logo.png';
 
 export const Layout = styled.div`
-  width: 1920px;
-  height: 125px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  width: 100%;
+  height: 9.7rem;
+  ${props => props.theme.flex_row_between}
+  padding: 0 5rem;
+  /* position: sticky;
+  top: 0; */
+  /* margin-bottom: 97px; */
+  div {
+    display: flex;
+    align-items: center;
+    gap: 3.4rem;
+  }
+  img {
+    cursor: pointer;
+  }
 `;
 
-export const LogoImg = styled.img`
-  width: 119px;
-  height: 51px;
-  margin-left: 95px;
-  margin-top: 38.62px;
+export const LogoImg = styled.div`
+  width: 10.5rem;
+  height: 4.5rem;
   cursor: pointer;
+  background: url(${logo}) no-repeat center / 100%;
 `;
 
 export const Logout = styled.button`
-  width: 80px;
-  height: 50px;
-  margin-top: 35px;
-  margin-right: 50px;
+  width: 8rem;
+  height: 5rem;
 `;

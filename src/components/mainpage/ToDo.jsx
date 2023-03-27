@@ -4,14 +4,18 @@ import Potal from '../global/globalModal/Potal';
 import TodoModal from '../global/globalModal/TodoModal';
 import {
   Container,
-  Container2,
-  CreateBtn,
   Header,
   HeaderBox,
   TodoContainer,
   StTodoItem,
 } from './todo.styled';
 import TodoItem from './TodoItem';
+
+import plus from '../../assets/plus.png';
+import more from '../../assets/more.png';
+import { useQuery } from '@tanstack/react-query';
+import { GetTodo } from '../../apis/apiGET';
+
 export default function ToDo() {
   //모달 상태관리
   const [todoModalOn, setTodoModalOn] = useState(false);
@@ -32,35 +36,41 @@ export default function ToDo() {
       setTodoModalOn(!todoModalOn);
     }
   };
+
+  // 임시
+  const { data: getTodo } = useQuery(['TODO'], GetTodo, {
+    onSuccess: response => {
+      console.log('대시보드 todo :', response);
+    },
+    onError: response => {},
+  });
   return (
     <Container>
       <HeaderBox>
         <Header>To-do</Header>
-        <CreateBtn onClick={createTodo}>+</CreateBtn>
+        <div className='btnBox'>
+          <div onClick={createTodo}>
+            <img src={plus} alt='' />
+          </div>
+        </div>
       </HeaderBox>
-      <Container2>
-        <TodoContainer>
+
+      <TodoContainer>
+        {getTodo?.length !== 0 ? (
           <StTodoItem>
-            <TodoItem />
+            <TodoItem getTodo={getTodo} />
           </StTodoItem>
-          <StTodoItem>
-            <TodoItem />
-          </StTodoItem>
-          <StTodoItem>
-            <TodoItem />
-          </StTodoItem>
-          {/* {!TodoItem ? (
-            <StTodoItem>
-              <TodoItem />
-            </StTodoItem>
-          ) : (
-            <NotHave>
-              <h2>설정된 To-Do가 없습니다.</h2>
-              <button onClick={createTodo}>추가하기</button>
-            </NotHave>
-          )} */}
-        </TodoContainer>
-      </Container2>
+        ) : (
+          <NotHave>
+            <h2>설정된 To Do 없습니다.</h2>
+            <div className='btnFlex' onClick={createTodo}>
+              <img src={plus} alt='' />
+              <div>To Do추가</div>
+            </div>
+          </NotHave>
+        )}
+      </TodoContainer>
+
       <Potal>
         {todoModalOn && (
           <TodoModal

@@ -1,10 +1,10 @@
 import Router from './router/Router';
+import RouteChangeTracker from './router/RouteChangeTracker';
+// import ReactGA from 'react-ga';
+
 function App() {
-  return (
-    <div>
-      <Router />
-    </div>
-  );
+  RouteChangeTracker();
+  return <Router />;
 }
 
 export default App;

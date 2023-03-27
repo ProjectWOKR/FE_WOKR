@@ -1,0 +1,49 @@
+import React from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
+import styled from 'styled-components';
+
+const Toast = () => {
+  // const contextClassName = {
+  //   success : ,
+  //   error : ,
+  //   info : ,
+  //   warning : ,
+  // }
+  return (
+    <>
+      <StToastContainer
+        position='top-center'
+        limit={1}
+        closeButton={false}
+        autoClose={700}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnFocusLoss
+        draggable={true}
+        theme='colored'
+      />
+    </>
+  );
+};
+
+export default Toast;
+
+const StToastContainer = styled(ToastContainer)`
+  .Toastify__toast-container {
+    padding: 0;
+  }
+  .Toastify__toast {
+    padding: 0;
+    background-color: #ffd6bd;
+    text-align: center;
+  }
+  .Toastify__toast-body {
+    color: #ec5a00;
+    font-size: 1.7rem;
+    padding: 0;
+  }
+  .Toastify__progress-bar {
+  }
+`;

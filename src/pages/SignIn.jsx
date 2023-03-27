@@ -12,10 +12,5 @@ export default function SignIn() {
     }
   }, []);
 
-  return (
-    <>
-      <Header />
-      <Article />
-    </>
-  );
+  return <Article />;
 }
