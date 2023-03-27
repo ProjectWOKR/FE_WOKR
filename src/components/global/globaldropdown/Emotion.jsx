@@ -8,7 +8,12 @@ import normal from '../../../assets/normal2.png';
 import good from '../../../assets/good.png';
 import bad from '../../../assets/bad2.png';
 
-const Emotion = ({ keyResultId, emotionState }) => {
+const Emotion = ({
+  keyResultId,
+  emotionState,
+  openDropdownId,
+  setOpenDropdownId,
+}) => {
   const queryClient = useQueryClient();
 
   // 자신감 수정
@@ -16,18 +21,18 @@ const Emotion = ({ keyResultId, emotionState }) => {
     onSuccess: response => {
       queryClient.invalidateQueries(['OKR']);
     },
-    onError: response => {},
+    onError: response => {
+      alert('팀장 및 자신이 작성한 OKR만 수정 가능합니다.');
+    },
   });
 
-  // 드롭다운 상태
-
-  const [isOpen, setIsOpen] = useState(false);
+  const isOpen = openDropdownId === keyResultId;
 
   const DropDownItem = ({ setIsOpen, isOpen, el, name, keyResultId }) => {
     const ValueClick = () => {
       let id = keyResultId;
       let value = { emoticon: Number(name) };
-      setIsOpen(!isOpen);
+      setIsOpen(false);
       patchEmotionmutate({ id, value });
     };
 
@@ -40,7 +45,11 @@ const Emotion = ({ keyResultId, emotionState }) => {
   };
 
   const onClick = () => {
-    setIsOpen(!isOpen);
+    if (isOpen) {
+      setOpenDropdownId(null);
+    } else {
+      setOpenDropdownId(keyResultId);
+    }
   };
 
   const ImgBox = () => {
@@ -57,7 +66,7 @@ const Emotion = ({ keyResultId, emotionState }) => {
       return (
         <div
           className='emotion'
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={onClick}
           style={{
             background: `url(${good}) no-repeat center / 100%`,
           }}></div>
@@ -66,7 +75,7 @@ const Emotion = ({ keyResultId, emotionState }) => {
       return (
         <div
           className='emotion'
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={onClick}
           style={{
             background: `url(${bad}) no-repeat center / 100%`,
           }}></div>
@@ -83,7 +92,7 @@ const Emotion = ({ keyResultId, emotionState }) => {
             <DropDownItem
               key={index}
               name={el.name}
-              setIsOpen={setIsOpen}
+              setIsOpen={setOpenDropdownId}
               isOpen={isOpen}
               el={el}
               keyResultId={keyResultId}

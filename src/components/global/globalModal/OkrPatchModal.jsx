@@ -140,7 +140,13 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   });
 
   const onDeleteObjective = () => {
-    deleteObjective(objectiveInfo.id);
+    const result =
+      window.confirm(`|KR - 핵심결과]와 연동된 To-Do가 있다면 연동 해제됩니다.
+      \u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0정말 삭제하시겠습니까?`);
+    if (result) {
+      deleteObjective(objectiveInfo.id);
+    } else {
+    }
   };
   return (
     <>
