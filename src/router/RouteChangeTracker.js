@@ -13,9 +13,7 @@ const RouteChangeTracker = () => {
   // localhost는 기록하지 않음
   useEffect(() => {
     if (!window.location.href.includes('localhost')) {
-      ReactGA.initialize(
-        `${process.env.REACT_APP_GOOGLE_ANALYTICS_TRAKING_ID}`
-      );
+      ReactGA.initialize(`${process.env.REACT_APP_GOOGLE_ANALYTICS_ID}`);
       setInitialized(true);
     }
   }, []);
@@ -30,7 +28,7 @@ const RouteChangeTracker = () => {
 
   // 개발용
   useEffect(() => {
-    ReactGA.initialize(`${process.env.REACT_APP_GOOGLE_ANALYTICS_TRAKING_ID}`);
+    ReactGA.initialize(`${process.env.REACT_APP_GOOGLE_ANALYTICS_ID}`);
     ReactGA.set({ page: location.pathname });
     ReactGA.send('pageview');
   }, [location]);
