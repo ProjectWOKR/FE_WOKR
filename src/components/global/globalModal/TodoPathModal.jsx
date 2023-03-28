@@ -156,6 +156,8 @@ const TodoPathModal = ({ onCloseModal }) => {
         });
       }
       queryClient.invalidateQueries(['TODO']);
+      queryClient.invalidateQueries(['ALLTODO']);
+      queryClient.invalidateQueries(['PASTTODO']);
       console.log('response :', response);
     },
     onError: response => {
@@ -210,6 +212,7 @@ const TodoPathModal = ({ onCloseModal }) => {
         });
       }
       queryClient.invalidateQueries(['TODO']);
+      queryClient.invalidateQueries(['ALLTODO']);
       onCloseModal();
       toast('해당 To Do가 삭제가 완료되었습니다.');
     },

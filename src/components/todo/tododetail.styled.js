@@ -197,6 +197,7 @@ export const TodoDetailItem = styled.div`
   .flexLeft {
     display: flex;
     align-items: center;
+    cursor: pointer;
     .kr {
       width: 50px;
       font-size: 2rem;

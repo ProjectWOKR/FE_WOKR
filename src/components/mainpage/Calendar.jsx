@@ -36,9 +36,6 @@ export default function Calendar() {
         initialView='dayGridMonth'
         dayMaxEvents={true}
         locale='ko'
-        // navLinks={true}
-        // showNonCurrentDates={false}
-        // allDaySlot={true}
         views={{
           listDay: { buttonText: 'list day' },
           listWeek: { buttonText: 'list week' },
@@ -48,26 +45,7 @@ export default function Calendar() {
           left: 'prev',
           center: 'title',
           right: 'next',
-          // ,'timeGridWeek','timeGridDay'
-          // end: 'listMonth,listWeek, listDay,listYear',
         }}
-        // headerToolbar={{
-        //   start: 'dayGridMonth,timeGridWeek,timeGridDay custom1',
-        //   center: 'title',
-        //   end: 'custom2 prevYear,prev,next,nextYear',
-        // }}
-        // buttonText={{
-        //   today: 'today',
-        //   month: 'month',
-        //   week: 'week',
-        //   day: 'day',
-        //   list: 'list',
-        // }}
-        // views={{
-        //   listDay: { buttonText: 'Day' },
-        //   listWeek: { buttonText: 'Week' },
-        //   listMonth: { buttonText: 'Month' },
-        // }}
         events={calendarData}
       />
     </Container>

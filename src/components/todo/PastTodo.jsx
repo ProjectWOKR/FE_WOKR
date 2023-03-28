@@ -14,6 +14,10 @@ import { PatchCheck } from '../../apis/apiPATCH';
 import { styled } from 'styled-components';
 import { toast } from 'react-toastify';
 import ReactGA from 'react-ga4';
+import Potal from '../global/globalModal/Potal';
+import { useSetRecoilState } from 'recoil';
+import TodoPathModal from '../global/globalModal/TodoPathModal';
+import { patchTodoInfo } from '../../store/store';
 
 const PastTodo = () => {
   const [show, setShow] = useState(true);
@@ -73,7 +77,8 @@ const PastTodo = () => {
           action: 'TODO 완료',
         });
       }
-      queryClient.invalidateQueries(['TODO']);
+
+      queryClient.invalidateQueries(['ALLTODO']);
       queryClient.invalidateQueries(['PASTTODO']);
       toast('TODO를 완료했습니다');
     },
@@ -92,12 +97,57 @@ const PastTodo = () => {
     return <div className='check' onClick={onClickCheck} />;
   };
 
+  const [todoModalOn, setTodoModalOn] = useState(false);
+
+  const onTodoCloseModal = () => {
+    setTodoModalOn(!todoModalOn);
+  };
+
+  const setPatchTodoInfo = useSetRecoilState(patchTodoInfo);
+
+  const patchTodo = (
+    id,
+    todo,
+    memo,
+    startDate,
+    startDateTime,
+    endDate,
+    endDateTime,
+    priority
+  ) => {
+    console.log(todo);
+    setPatchTodoInfo({
+      id,
+      toDo: todo,
+      memo,
+      startDate,
+      startDateTime,
+      endDate,
+      endDateTime,
+      priority,
+    });
+    setTodoModalOn(!todoModalOn);
+  };
+
   const FilterMyTodo = ({ el }) => {
     // console.log(el.myToDo);
     if (el.myToDo === true) {
       return (
         <div className='item'>
-          <div className='flexLeft'>
+          <div
+            className='flexLeft'
+            onClick={() => {
+              patchTodo(
+                el.toDoId,
+                el.toDo,
+                el.memo,
+                el.startDate,
+                el.startDateTime,
+                el.endDate,
+                el.endDateTime,
+                el.priority
+              );
+            }}>
             <Title el={el} />
             <div className='krBox' title={el.memo}>
               <div className='krTitle'>{el.toDo}</div>
@@ -159,6 +209,9 @@ const PastTodo = () => {
           <FilterMyTodo el={el} />
         </TodoDetailItem>
       ))}
+      <Potal>
+        {todoModalOn ? <TodoPathModal onCloseModal={onTodoCloseModal} /> : null}
+      </Potal>
     </StPastTodo>
   );
 };

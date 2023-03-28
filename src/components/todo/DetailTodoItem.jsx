@@ -1,33 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { DDay, TodoDetailHeader, TodoDetailItem } from './tododetail.styled';
 import badgeS from '../../assets/badgeS.png';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { GetAllTodo } from '../../apis/apiGET';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import red from '../../assets/todoRed.png';
 import yellow from '../../assets/todoYellow.png';
 import blue from '../../assets/todoBlue.png';
 import { PatchCheck } from '../../apis/apiPATCH';
 import { toast } from 'react-toastify';
-import Toast from '../global/Toast';
 import ReactGA from 'react-ga4';
+import Potal from '../global/globalModal/Potal';
+import { useSetRecoilState } from 'recoil';
+import TodoPathModal from '../global/globalModal/TodoPathModal';
+import { patchTodoInfo } from '../../store/store';
 
 const DetailTodoItem = ({ el, today, tomorrow }) => {
-  // console.log(new Date('2023-03-14') < new Date('2023-03-15'));
-  // console.log(new Date(el.progressTodo.startDate));
-  // console.log(date > new Date(el.progressTodo.startDate));
-  // console.log('---------------');
-  // console.log(new Date(`2023-03-29`)); // 됨.
-
-  // console.log(Number(date.substr(0, 2) - 1));
-  // console.log('el:', el);
-  // const { data: getAllTodo } = useQuery(['ALLTODO'], GetAllTodo, {
-  //   onSuccess: response => {
-  //     console.log('todo :', response);
-  //   },
-  //   onError: response => {
-  //     // console.log(response.response.data);
-  //   },
-  // });
   const queryClient = useQueryClient();
 
   // 우선순위
@@ -117,17 +103,56 @@ const DetailTodoItem = ({ el, today, tomorrow }) => {
     );
   };
 
+  const [todoModalOn, setTodoModalOn] = useState(false);
+
+  const onTodoCloseModal = () => {
+    setTodoModalOn(!todoModalOn);
+  };
+
+  const setPatchTodoInfo = useSetRecoilState(patchTodoInfo);
+
+  const patchTodo = (
+    id,
+    todo,
+    memo,
+    startDate,
+    startDateTime,
+    endDate,
+    endDateTime,
+    priority
+  ) => {
+    console.log(todo);
+    setPatchTodoInfo({
+      id,
+      toDo: todo,
+      memo,
+      startDate,
+      startDateTime,
+      endDate,
+      endDateTime,
+      priority,
+    });
+    setTodoModalOn(!todoModalOn);
+  };
+
   const FilterMyTodo = ({ pt }) => {
-    // console.log(pt);
-    // console.log(pt.startDate);
-    // let date = new Date(
-    //   `2023-${el.targetDate.substr(0, 2)}-${el.targetDate.substr(4, 2)}`
-    // );
-    // console.log(date, ' :::', new Date(pt.startDate));
     if (pt.myToDo === true) {
       return (
         <div className='item'>
-          <div className='flexLeft'>
+          <div
+            className='flexLeft'
+            onClick={() => {
+              patchTodo(
+                pt.toDoId,
+                pt.toDo,
+                pt.memo,
+                pt.startDate,
+                pt.startDateTime,
+                pt.endDate,
+                pt.endDateTime,
+                pt.priority
+              );
+            }}>
             <Title pt={pt} />
             <div className='krBox' title={pt.memo}>
               <div className='krTitle'>{pt.toDo}</div>
@@ -145,7 +170,11 @@ const DetailTodoItem = ({ el, today, tomorrow }) => {
     } else {
       return (
         <div className='item'>
-          <div className='flexLeft'>
+          <div
+            className='flexLeft'
+            onClick={() => {
+              alert('본인이 작성한 TODO만 수정 가능합니다.');
+            }}>
             <Title pt={pt} />
             <div className='krBox' title={pt.memo}>
               <div className='krTitle'>{pt.toDo}</div>
@@ -168,9 +197,6 @@ const DetailTodoItem = ({ el, today, tomorrow }) => {
 
   //해당 날짜에 todo가 없을 때
   const HavePt = () => {
-    // let date = new Date(
-    //   `2023-${el.targetDate.substr(0, 2)}-${el.targetDate.substr(4, 2)}`
-    // );
     if (el.progressTodo.length === 0) {
       return (
         <TodoDetailItem>
@@ -190,25 +216,23 @@ const DetailTodoItem = ({ el, today, tomorrow }) => {
     }
   };
 
-  // useEffect(() => {
-  //   return (
-  //     <div className='title' id={el.targetDate}>
-  //       {el.targetDate}
-  //     </div>
-  //   );
-  // }, []);
-
   return (
-    <DDay>
-      <TodoDetailHeader>
-        <div className='header'>
-          <div className='title' id={el.targetDate}>
-            {el.targetDate}
+    <>
+      <DDay>
+        <TodoDetailHeader>
+          <div className='header'>
+            <div className='title' id={el.targetDate}>
+              {el.targetDate}
+            </div>
           </div>
-        </div>
-      </TodoDetailHeader>
-      <HavePt />
-    </DDay>
+        </TodoDetailHeader>
+        <HavePt />
+      </DDay>
+      <Potal>
+        {todoModalOn ? <TodoPathModal onCloseModal={onTodoCloseModal} /> : null}
+      </Potal>
+      ;
+    </>
   );
 };
 
