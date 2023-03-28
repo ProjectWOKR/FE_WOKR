@@ -41,6 +41,10 @@ export const MenuItem = styled.button`
     color: #fff;
     background-color: var(--main-color);
   }
+  &:hover {
+    background-color: var(--main-color);
+    color: white;
+  }
 `;
 // #DEDEDE
 // #4b4b4b;

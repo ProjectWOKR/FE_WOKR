@@ -39,29 +39,18 @@ export const Header = styled.p`
 
 export const TodoContainer = styled.div`
   margin: 0 auto;
-  /* width: 73.4rem; */
   max-width: 68.2rem;
-  /* min-width: 45.2rem; */
   width: 100%;
   max-height: 485px;
   height: 100%;
   overflow-y: auto;
   padding: 0 1.2rem;
-  /* height: 48.3rem; */
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* justify-content: space-between; */
   box-sizing: border-box;
-  /* background-color: pink; */
 `;
 
 export const StTodoItem = styled.div`
   width: 100%;
   height: 5.3rem;
-
-  /* :nth-last-child(1) {
-    border-bottom: 1px solid #000;
-  } */
   .todo {
     width: 100%;
     height: 100%;
@@ -77,8 +66,6 @@ export const StTodoItem = styled.div`
     }
     .title {
       width: 43px;
-      /* height: 19px; */
-      /* background-color: skyblue; */
       text-align: center;
       color: #9b9b9b;
       font-size: 14px;
@@ -87,15 +74,12 @@ export const StTodoItem = styled.div`
       cursor: default;
     }
     .detail {
-      /* width: calc(100% - 80px); */
       width: 100%;
       height: 100%;
       display: flex;
       justify-content: space-between;
       box-sizing: border-box;
       padding: 3px 0 5px 0;
-      /* background-color: pink; */
-      /* background-color: #fff; */
       .nameDate {
         display: flex;
         flex-direction: column;
