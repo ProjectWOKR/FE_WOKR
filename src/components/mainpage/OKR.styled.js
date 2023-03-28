@@ -93,6 +93,7 @@ export const Objective = styled.div`
       font-size: 12.5px;
       margin-left: 15px;
       color: #4b4b4b;
+      cursor: default;
     }
   }
   .Range {
