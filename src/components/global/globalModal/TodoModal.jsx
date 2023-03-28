@@ -157,7 +157,8 @@ const TodoModal = ({
         });
       }
       queryClient.invalidateQueries(['TODO']);
-      console.log(response);
+      toast('TODO가 생성되었습니다.');
+      // console.log(response);
     },
     onError: response => {
       if (process.env.NODE_ENV !== 'development') {
@@ -205,7 +206,6 @@ const TodoModal = ({
       let Oid = oid;
       let Kid = kid;
       let Info = todoInfo;
-      // console.log(Oid, Kid, Info);
       createTodo({ Oid, Kid, Info });
       onCloseTodoModal();
     }
@@ -247,7 +247,7 @@ const TodoModal = ({
             <img src={memo} alt='' />
             <input
               type='text'
-              placeholder='Momo 내용을 작성하세요'
+              placeholder='Memo 내용을 작성하세요'
               className='input'
               name='memo'
               onChange={event => {
@@ -423,7 +423,7 @@ const TodoModal = ({
             저장
           </button>
         </div>
-        <Toast />
+        {/* <Toast /> */}
       </ModalBox>
     </div>
   );

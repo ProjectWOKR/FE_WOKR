@@ -129,7 +129,7 @@ const DetailTodoItem = ({ el, today, tomorrow }) => {
         <div className='item'>
           <div className='flexLeft'>
             <Title pt={pt} />
-            <div className='krBox'>
+            <div className='krBox' title={pt.memo}>
               <div className='krTitle'>{pt.toDo}</div>
               <div className='krManager'>
                 <DateColor el={el} today={today} tomorrow={tomorrow} pt={pt} />
@@ -147,7 +147,7 @@ const DetailTodoItem = ({ el, today, tomorrow }) => {
         <div className='item'>
           <div className='flexLeft'>
             <Title pt={pt} />
-            <div className='krBox'>
+            <div className='krBox' title={pt.memo}>
               <div className='krTitle'>{pt.toDo}</div>
               <div className='krManager'>
                 <DateColor el={el} today={today} tomorrow={tomorrow} pt={pt} />

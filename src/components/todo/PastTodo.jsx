@@ -75,7 +75,7 @@ const PastTodo = () => {
       }
       queryClient.invalidateQueries(['TODO']);
       queryClient.invalidateQueries(['PASTTODO']);
-      console.log(response);
+      toast('TODO를 완료했습니다');
     },
     onError: response => {
       toast(`${response.response.data}`);
@@ -99,7 +99,7 @@ const PastTodo = () => {
         <div className='item'>
           <div className='flexLeft'>
             <Title el={el} />
-            <div className='krBox'>
+            <div className='krBox' title={el.memo}>
               <div className='krTitle'>{el.toDo}</div>
               <div className='krManager'>
                 <div className='date'>
@@ -119,7 +119,7 @@ const PastTodo = () => {
         <div className='item'>
           <div className='flexLeft'>
             <Title el={el} />
-            <div className='krBox'>
+            <div className='krBox' title={el.memo}>
               <div className='krTitle'>{el.toDo}</div>
               <div className='krManager'>
                 <div className='date'>

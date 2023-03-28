@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import React, { useEffect, useRef, useState } from 'react';
-import { GetOKR, GetTodo } from '../../apis/apiGET';
+import { GetCompletionTodo, GetOKR, GetTodo } from '../../apis/apiGET';
 import red from '../../assets/todoRed.png';
 import yellow from '../../assets/todoYellow.png';
 import blue from '../../assets/todoBlue.png';
@@ -52,6 +52,7 @@ const TodoItem = ({ getTodo }) => {
         });
       }
       queryClient.invalidateQueries(['TODO']);
+      queryClient.invalidateQueries(['completionTodo']);
     },
     onError: response => {},
   });
@@ -110,17 +111,28 @@ const TodoItem = ({ getTodo }) => {
     });
     setTodoModalOn(!todoModalOn);
   };
+
   console.log(filterArray);
+  const { data: getCompletionTodo } = useQuery(
+    ['completionTodo'],
+    GetCompletionTodo,
+    {
+      onSuccess: response => {
+        console.log('getCompletionTodo :', response);
+      },
+      onError: response => {},
+    }
+  );
   return (
     <>
-      {filterArray?.map((el, index) => (
-        <div className='todo' key={index}>
+      {filterArray?.map(el => (
+        <div className='todo' key={el.toDoId}>
           <div className='title' style={{ color: el.color }}>
             {el.keyResultId === null ? 'none' : `KR${el.krNumber}`}
           </div>
           <div className='detail'>
             <div
-              className='name_date'
+              className='nameDate'
               onClick={() => {
                 patchTodo(
                   el.toDoId,
@@ -133,7 +145,7 @@ const TodoItem = ({ getTodo }) => {
                   el.priority
                 );
               }}>
-              <div>{el.toDo}</div>
+              <div title={el.memo}>{el.toDo}</div>
               <p>
                 {el.fstartDate}~{el.fendDate} 까지
               </p>
@@ -141,6 +153,26 @@ const TodoItem = ({ getTodo }) => {
             <div className='priorityBox'>
               <Priority el={el} />
               <Check el={el} />
+            </div>
+          </div>
+        </div>
+      ))}
+      {getCompletionTodo?.map(el => (
+        <div className='todo' key={el.toDoId}>
+          <div className='title' style={{ color: el.color }}>
+            {el.keyResultId === null ? 'none' : `KR${el.krNumber}`}
+          </div>
+          <div className='detail'>
+            <div className='nameDateComplitc'>
+              <div title={el.memo}>{el.toDo}</div>
+              <p style={{ color: 'red' }}>
+                {/* {el.fstartDate}~{el.fendDate} 까지 */}
+                {el.fendDate} 완료
+              </p>
+            </div>
+            <div className='priorityBox'>
+              <Priority el={el} />
+              <div className='completion'></div>
             </div>
           </div>
         </div>

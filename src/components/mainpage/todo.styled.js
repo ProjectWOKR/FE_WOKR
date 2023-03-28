@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import checkicon from '../../assets/checkFull.png';
 
 export const Container = styled.div`
   width: 100%;
@@ -33,6 +34,7 @@ export const Header = styled.p`
   font-weight: 500;
   color: #4b4b4b;
   margin: 0;
+  cursor: default;
 `;
 
 export const TodoContainer = styled.div`
@@ -69,6 +71,7 @@ export const StTodoItem = styled.div`
       font-size: 14px;
       font-weight: 700;
       margin-right: 31px;
+      cursor: default;
     }
     .detail {
       width: 100%;
@@ -77,7 +80,7 @@ export const StTodoItem = styled.div`
       justify-content: space-between;
       box-sizing: border-box;
       padding: 3px 0 5px 0;
-      .name_date {
+      .nameDate {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -85,6 +88,24 @@ export const StTodoItem = styled.div`
         font-weight: bold;
         color: #4b4b4b;
         font-weight: 500;
+        cursor: pointer;
+        div {
+          font-size: 19px;
+        }
+        p {
+          margin: 0;
+          font-size: 12.5px;
+        }
+      }
+      .nameDateComplitc {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        font-size: 15px;
+        font-weight: bold;
+        color: #4b4b4b;
+        font-weight: 500;
+        cursor: default;
         div {
           font-size: 19px;
         }
@@ -110,12 +131,20 @@ export const StTodoItem = styled.div`
           border-radius: 50%;
           background-color: #ccc;
           position: relative;
+          cursor: pointer;
           img {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
           }
+        }
+        .completion {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          background-color: #e8e8e8;
+          background: url(${checkicon}) no-repeat center / 100%;
         }
       }
     }
