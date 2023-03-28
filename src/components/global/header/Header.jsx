@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, LogoImg } from './header.styled';
+import { Guide, Layout, LogoImg } from './header.styled';
 import logoutOFF from '../../../assets/logouton.png';
 import logoutON from '../../../assets/logoutoff.png';
 import { useNavigate } from 'react-router-dom';
@@ -46,9 +46,17 @@ export default function Header() {
           logout();
         }}
       />
-      {userState !== null || undefined ? (
-        <>
-          <div>
+      <div>
+        <Guide
+          onClick={() => {
+            window.open(
+              'https://wokrguide.notion.site/WOKR-efb64b5da5e842a3a10d7844023e60de'
+            );
+          }}>
+          사용 가이드
+        </Guide>
+        {userState !== null || undefined ? (
+          <>
             <img
               src={logoutImg}
               alt=''
@@ -57,9 +65,9 @@ export default function Header() {
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             />
-          </div>
-        </>
-      ) : null}
+          </>
+        ) : null}
+      </div>
     </Layout>
   );
 }

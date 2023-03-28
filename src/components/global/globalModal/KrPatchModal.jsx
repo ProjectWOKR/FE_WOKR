@@ -15,7 +15,6 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const queryClient = useQueryClient();
 
   const krInfo = useRecoilValue(patchKRInfo);
-  // console.log(krInfo);
 
   // 모달 스크롤 방지
   useEffect(() => {
@@ -46,7 +45,11 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
       onCloseModal();
     },
     onError: response => {
-      alert('팀장 및 본인이 작성한 OKR만 수정가능합니다.');
+      if (response.response.data === '입력된 핵심결과 없습니다.') {
+        alert('입력된 KR 내용이 없습니다.');
+      } else {
+        alert('팀장 및 본인이 작성한 OKR만 수정가능합니다.');
+      }
     },
   });
 
@@ -91,7 +94,6 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
       alert('팀장 및 본인이 작성한 OKR만 수정가능합니다.');
     },
   });
-  // console.log(krInfo);
 
   const createKr = () => {
     if (krInfo.state === 'patch') {
@@ -110,11 +112,10 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const deleteKr = () => {
     const result =
       window.confirm(`|KR - 핵심결과]와 연동된 To-Do가 있다면 연동 해제됩니다.
-    \u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0정말 삭제하시겠습니까?`);
+    정말 삭제하시겠습니까?`);
     if (result) {
       deleteKR(krInfo.id);
     } else {
-      // 취소 버튼을 클릭한 경우, 여기에 로직을 작성합니다.
     }
   };
 

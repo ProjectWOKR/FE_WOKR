@@ -19,6 +19,21 @@ export const Layout = styled.div`
   }
 `;
 
+export const Guide = styled.div`
+  width: 130px;
+  height: 45px;
+  background-color: #fe8140;
+  align-items: center;
+  border-radius: 30px;
+  justify-content: center;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  :hover {
+    background-color: #fe6444;
+  }
+`;
+
 export const LogoImg = styled.div`
   width: 10.5rem;
   height: 4.5rem;
