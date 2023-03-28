@@ -41,7 +41,7 @@ const FinishTodo = ({ el }) => {
     const onClickCheck = () => {
       const id = ct.toDoId;
       patchCheckmutate({ id });
-      toast('To Do를 수정했습니다.');
+      toast('To Do의 완료를 수정했습니다.');
     };
 
     return (
@@ -76,7 +76,7 @@ const FinishTodo = ({ el }) => {
         <div className='item'>
           <div className='flexLeft'>
             <Title ct={ct} />
-            <div className='krBox'>
+            <div className='krBox' title={ct.memo}>
               <div className='fKrTitle'>{ct.toDo}</div>
               <div className='krManager'>
                 <div className='fDate'>
@@ -99,7 +99,7 @@ const FinishTodo = ({ el }) => {
         <div className='item'>
           <div className='flexLeft'>
             <Title ct={ct} />
-            <div className='krBox'>
+            <div className='krBox' title={ct.memo}>
               <div className='fKrTitle'>{ct.toDo}</div>
               <div className='krManager'>
                 <div className='fDate'>

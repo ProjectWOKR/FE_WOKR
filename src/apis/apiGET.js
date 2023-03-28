@@ -52,3 +52,8 @@ export async function GetInfinityTodo(page) {
   const { data } = await api.get(`api/todo/progress?page=${page}`);
   return data;
 }
+
+export async function GetCompletionTodo() {
+  const { data } = await api.get(`api/todo/completion`);
+  return data;
+}

@@ -135,6 +135,7 @@ export const TodoDetailHeader = styled.div`
     /* margin-bottom: 10.5px; */
     padding-bottom: 10.5px;
     box-sizing: content-box;
+    cursor: default;
     .down {
       width: 13px;
       height: 7px;
@@ -162,6 +163,7 @@ export const TodoDetailItem = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #fff;
+  cursor: default;
   /* background-color: pink; */
   /* box-shadow: 0px 1px 4px rgba(210, 210, 210, 0.7); */
 
@@ -179,14 +181,15 @@ export const TodoDetailItem = styled.div`
   .notHave {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
     margin-bottom: 10px;
-    background-color: #f8f8f8;
+    background-color: #e2e2e2;
     border-radius: 8px;
     padding: 0 19px 0 17px;
     margin-bottom: 10px;
     font-size: 2rem;
     height: 45px;
+    color: #9b9b9b !important;
   }
   .dayLine {
     /* border-bottom: 2px solid #e8e8e8; */
@@ -263,6 +266,7 @@ export const TodoDetailItem = styled.div`
       border-radius: 50%;
       background-color: #e8e8e8;
       margin-left: 21px;
+      cursor: pointer;
     }
     .checkbg {
       width: 30px;
@@ -271,6 +275,7 @@ export const TodoDetailItem = styled.div`
       background-color: #e8e8e8;
       margin-left: 21px;
       background: url(${checkicon}) no-repeat center / 100%;
+      cursor: pointer;
     }
     .another {
       width: 30px;
