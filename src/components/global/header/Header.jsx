@@ -30,17 +30,20 @@ export default function Header() {
     setLogoutImg(logoutON);
   };
 
+  const logout = () => {
+    if (process.env.NODE_ENV !== 'development') {
+      ReactGA.event({
+        category: '버튼',
+        action: '로그아웃',
+      });
+    }
+    navigate('/');
+  };
   return (
     <Layout>
       <LogoImg
         onClick={() => {
-          if (process.env.NODE_ENV !== 'development') {
-            ReactGA.event({
-              category: '버튼',
-              action: '로그아웃',
-            });
-          }
-          navigate('/');
+          logout();
         }}
       />
       {userState !== null || undefined ? (
