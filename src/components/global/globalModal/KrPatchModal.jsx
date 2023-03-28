@@ -135,6 +135,7 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
               type='text'
               placeholder='핵심결과를 작성하세요.'
               name='first'
+              maxLength='19'
               value={title.keyResult}
               onChange={event => {
                 onChangeKR(event);

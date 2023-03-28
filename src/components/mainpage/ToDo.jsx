@@ -10,9 +10,7 @@ import {
   StTodoItem,
 } from './todo.styled';
 import TodoItem from './TodoItem';
-
 import plus from '../../assets/plus.png';
-import more from '../../assets/more.png';
 import { useQuery } from '@tanstack/react-query';
 import { GetTodo } from '../../apis/apiGET';
 
@@ -47,7 +45,7 @@ export default function ToDo() {
   return (
     <Container>
       <HeaderBox>
-        <Header>To-do</Header>
+        <Header>오늘의 To-do</Header>
         <div className='btnBox'>
           <div onClick={createTodo}>
             <img src={plus} alt='' />

@@ -157,6 +157,8 @@ const TodoModal = ({
         });
       }
       queryClient.invalidateQueries(['TODO']);
+      queryClient.invalidateQueries(['ALLTODO']);
+      queryClient.invalidateQueries(['PASTTODO']);
       toast('TODO가 생성되었습니다.');
       // console.log(response);
     },
@@ -192,8 +194,8 @@ const TodoModal = ({
 
     if (todoInfo.toDo === '') {
       return toast('To Do는 필수 입니다.');
-    } else if (todoInfo.toDo.length > 30) {
-      return toast('To Do는 30글자 미만이어야합니다.');
+    } else if (todoInfo.toDo.length > 25) {
+      return toast('To Do는 25글자 미만이어야합니다.');
     } else if (todoInfo.memo.length > 30) {
       return toast('메모는 30글자 미만이어야합니다.');
     } else if (todoInfo.startDate === '') {
@@ -209,6 +211,11 @@ const TodoModal = ({
       createTodo({ Oid, Kid, Info });
       onCloseTodoModal();
     }
+  };
+
+  const onTodoOnchange = (event, state, setState) => {
+    const { name, value } = event.target;
+    setState({ ...state, [name]: value });
   };
 
   return (
@@ -237,8 +244,9 @@ const TodoModal = ({
               placeholder='To Do 내용을 작성하세요'
               className='input'
               name='toDo'
+              maxlength='25'
               onChange={event => {
-                OnChange(event, todoInfo, setTodoInfo);
+                onTodoOnchange(event, todoInfo, setTodoInfo);
               }}
             />
           </div>

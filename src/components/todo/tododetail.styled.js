@@ -405,3 +405,8 @@ export const StTeam = styled.div`
     }
   }
 `;
+
+export const NaviPlus = styled.div`
+  margin-left: 2.8rem;
+  cursor: pointer;
+`;

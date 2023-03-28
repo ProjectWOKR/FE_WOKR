@@ -75,12 +75,12 @@ export const Objective = styled.div`
     cursor: default;
   }
   .NameBox {
-    width: 300px;
+    width: 400px;
     .Name {
       margin-top: 16px;
       margin-left: 16px;
       font-weight: 500;
-      font-size: 24px;
+      font-size: 22px;
       line-height: 33px;
       letter-spacing: -0.01em;
       color: ${({ color }) => color};
@@ -251,8 +251,7 @@ export const PersentBox = styled.div`
   background-color: black;
 
   margin-top: ${({ state }) => `${state === 'Objective' ? '34px' : '15px'}`};
-  margin-left: ${({ state }) =>
-    `${state === 'Objective' ? '130px' : '12.5px'}`};
+  margin-left: ${({ state }) => `${state === 'Objective' ? '29px' : '12.5px'}`};
   cursor: pointer;
   input[type='range'] {
     width: 205px;

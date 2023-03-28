@@ -180,8 +180,8 @@ const TodoPathModal = ({ onCloseModal }) => {
 
     if (title.toDo === '') {
       return toast('To Do는 필수 입니다.');
-    } else if (title.toDo.length > 30) {
-      return toast('To Do는 30글자 미만이어야합니다.');
+    } else if (title.toDo.length > 25) {
+      return toast('To Do는 25글자 미만이어야합니다.');
     } else if (title.memo.length > 30) {
       return toast('메모는 30글자 미만이어야합니다.');
     } else if (title.startDate === '') {
@@ -248,6 +248,7 @@ const TodoPathModal = ({ onCloseModal }) => {
               placeholder='To Do 내용을 작성하세요'
               className='input'
               name='toDo'
+              maxLength='25'
               defaultValue={title.toDo}
               onChange={e => {
                 setTitle({ ...title, toDo: e.target.value });

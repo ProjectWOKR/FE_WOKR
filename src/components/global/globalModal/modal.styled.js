@@ -193,6 +193,7 @@ export const OKRBox = styled.div`
       justify-content: start;
       margin-right: 2.1rem;
       position: relative;
+
       .start-container {
         .start-input {
           width: 25rem;

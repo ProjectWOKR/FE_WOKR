@@ -142,6 +142,7 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
                 placeholder='목표'
                 className='input'
                 name='objective'
+                maxLength='17'
                 onChange={event => {
                   OnChange(event, objInfo, setObjInfo);
                 }}
@@ -152,6 +153,7 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
               <img src={calender} alt='' />
               <div className='dateBox'>
                 <DatePicker
+                  style={{ cursor: 'pointer' }}
                   inputClass='start-input'
                   containerClassName='start-container'
                   months={months}
@@ -172,6 +174,7 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
                 />
 
                 <DatePicker
+                  style={{ cursor: 'pointer' }}
                   inputClass='end-input'
                   containerClassName='end-container'
                   months={months}

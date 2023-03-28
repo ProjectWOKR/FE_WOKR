@@ -175,6 +175,7 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
                 placeholder='목표'
                 className='input'
                 name='objective'
+                maxLength='17'
                 value={objInfo.objective}
                 onChange={event => {
                   OnChange(event, objInfo, setObjInfo);
@@ -192,7 +193,7 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
                   weekDays={weekDays}
                   format={format}
                   placeholder='시작일'
-                  value={startDate.date}
+                  value={objInfo.startdate}
                   onChange={convertStart}
                   animations={[
                     opacity(),
@@ -211,7 +212,7 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
                   format={format}
                   weekDays={weekDays}
                   placeholder='종료일'
-                  value={endDate.date}
+                  value={objInfo.enddate}
                   onChange={convertEnd}
                   animations={[
                     opacity(),
