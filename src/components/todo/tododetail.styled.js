@@ -183,7 +183,8 @@ export const TodoDetailItem = styled.div`
     align-items: center;
     justify-content: start;
     margin-bottom: 10px;
-    background-color: #e2e2e2;
+    background-color: #fff;
+    box-shadow: 0px 1px 4px rgba(210, 210, 210, 0.7);
     border-radius: 8px;
     padding: 0 19px 0 17px;
     margin-bottom: 10px;
@@ -294,6 +295,20 @@ export const DDay = styled.div`
 
 export const Finsh = styled.div`
   margin-bottom: 50px;
+  .noCompl {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    margin-bottom: 10px;
+    background-color: #fff;
+    box-shadow: 0px 1px 4px rgba(210, 210, 210, 0.7);
+    border-radius: 8px;
+    padding: 0 19px 0 17px;
+    margin-bottom: 10px;
+    font-size: 2rem;
+    height: 45px;
+    color: #9b9b9b !important;
+  }
 `;
 
 export const StTeam = styled.div`

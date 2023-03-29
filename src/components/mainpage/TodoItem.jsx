@@ -40,7 +40,7 @@ const TodoItem = ({ getTodo }) => {
     return false;
   });
 
-  // console.log(filterArray);
+  console.log('filterArray :', filterArray);
 
   // 체크 수정
   const { mutate: patchCheckmutate } = useMutation(PatchCheck, {
@@ -98,7 +98,7 @@ const TodoItem = ({ getTodo }) => {
     endDateTime,
     priority
   ) => {
-    console.log(todo);
+    // console.log(todo);
     setPatchTodoInfo({
       id,
       toDo: todo,
@@ -112,14 +112,11 @@ const TodoItem = ({ getTodo }) => {
     setTodoModalOn(!todoModalOn);
   };
 
-  console.log(filterArray);
   const { data: getCompletionTodo } = useQuery(
     ['completionTodo'],
     GetCompletionTodo,
     {
-      onSuccess: response => {
-        console.log('getCompletionTodo :', response);
-      },
+      onSuccess: response => {},
       onError: response => {},
     }
   );
