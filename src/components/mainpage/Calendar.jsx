@@ -13,10 +13,14 @@ export default function Calendar() {
     onSuccess: response => {
       // console.log(response);
       response?.map(el => {
+        const endDate = new Date(el.endDate);
+        endDate.setDate(endDate.getDate() + 1);
+        const newEndDate = endDate.toISOString().split('T')[0];
+
         let obj = {
           title: el.toDo,
           start: `${el.startDate} ${el.startDateTime}`,
-          end: `${el.endDate} ${el.endDateTime}`,
+          end: `${newEndDate} ${el.endDateTime}`,
           backgroundColor: `${el.color === null ? '#9B9B9B' : el.color}`,
           borderColor: `${el.color === null ? '#9B9B9B' : el.color}`,
           textColr: '#fff',

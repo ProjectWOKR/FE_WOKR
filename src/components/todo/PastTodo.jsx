@@ -77,7 +77,6 @@ const PastTodo = () => {
           action: 'TODO 완료',
         });
       }
-
       queryClient.invalidateQueries(['ALLTODO']);
       queryClient.invalidateQueries(['PASTTODO']);
       toast('TODO를 완료했습니다');
