@@ -137,7 +137,7 @@ export const KRBox = styled.div`
     width: 36px;
     height: 27px;
     font-weight: 500;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 27px;
     text-align: center;
     letter-spacing: -0.02em;

@@ -66,7 +66,7 @@ const TodoPathModal = ({ onCloseModal }) => {
   const [defaultFormat, setDefaultFormat] = useState({ format: 'YYYY-MM-DD' });
 
   const todoInfo = useRecoilValue(patchTodoInfo);
-  console.log(todoInfo);
+  // console.log(todoInfo);
 
   const [title, setTitle] = useState({
     memo: todoInfo.memo,
@@ -77,7 +77,6 @@ const TodoPathModal = ({ onCloseModal }) => {
     startDateTime: todoInfo.startDateTime,
     toDo: todoInfo.toDo,
   });
-  // console.log(title);
 
   const [startWithTime, setStartWithTime] = useState(false);
   const [endWithTime, setEndWithTime] = useState(false);
@@ -192,8 +191,9 @@ const TodoPathModal = ({ onCloseModal }) => {
       return toast('종료일은 시작일보다 빠르게 설정할 수 없습니다.');
     } else {
       let id = todoInfo.id;
+      // console.log(id);
       let value = title;
-      console.log(id, value);
+      // console.log(id, value);
       patchTodo({ id, value });
       // createTodo({ Oid, Kid, Info });
       toast('해당 To Do가 수정되었습니다.');
@@ -227,6 +227,11 @@ const TodoPathModal = ({ onCloseModal }) => {
     },
   });
 
+  const [oid, setOid] = useState(0);
+  const [kid, setKid] = useState(0);
+
+  console.log(title);
+
   return (
     <>
       <ModalBackground />
@@ -236,10 +241,10 @@ const TodoPathModal = ({ onCloseModal }) => {
           <img src={close} alt='' onClick={onCloseModal} />
         </div>
         <OKRBox>
-          <div className='object itemBox'>
+          {/* <div className='object itemBox'>
             <img src={todoOkr} alt='' />
-            <OkrDropDown title={title} />
-          </div>
+            <OkrDropDown title={title} setKid={setKid} setOid={setOid} />
+          </div> */}
 
           <div className='object itemBox'>
             <img src={todo} alt='' />
@@ -260,7 +265,7 @@ const TodoPathModal = ({ onCloseModal }) => {
             <img src={memo} alt='' />
             <input
               type='text'
-              placeholder='Momo 내용을 작성하세요'
+              placeholder='Memo 내용을 작성하세요'
               className='input'
               name='memo'
               defaultValue={title.memo}
@@ -282,8 +287,7 @@ const TodoPathModal = ({ onCloseModal }) => {
                   weekDays={weekDays}
                   format='YYYY-MM-DD'
                   placeholder='시작일'
-                  defaultValue={title.startDate}
-                  // value={defaultFormat.date}
+                  value={title.startDate}
                   onChange={convertStart}
                   animations={[
                     opacity(),
@@ -357,7 +361,7 @@ const TodoPathModal = ({ onCloseModal }) => {
                   weekDays={weekDays}
                   format='YYYY-MM-DD'
                   placeholder='종료일'
-                  value={defaultFormat.date}
+                  value={title.endDate}
                   onChange={convertEnd}
                   animations={[
                     opacity(),

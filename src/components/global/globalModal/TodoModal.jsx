@@ -183,6 +183,11 @@ const TodoModal = ({
   const [oid, setOid] = useState(0);
   const [kid, setKid] = useState(0);
 
+  console.log('oid :', oid);
+  console.log(setOid);
+
+  console.log('dddddddd');
+
   // 저장 버튼 누르면 생성
   const createT = () => {
     const startd = new Date(todoInfo.startDate);
@@ -229,12 +234,7 @@ const TodoModal = ({
         <OKRBox>
           <div className='object itemBox'>
             <img src={todoOkr} alt='' />
-            <OkrDropDown
-              todoInfo={todoInfo}
-              setTodoInfo={setTodoInfo}
-              setKid={setKid}
-              setOid={setOid}
-            />
+            <OkrDropDown setKid={setKid} setOid={setOid} />
           </div>
 
           <div className='object itemBox'>
@@ -244,7 +244,7 @@ const TodoModal = ({
               placeholder='To Do 내용을 작성하세요'
               className='input'
               name='toDo'
-              maxlength='25'
+              maxLength='25'
               onChange={event => {
                 onTodoOnchange(event, todoInfo, setTodoInfo);
               }}

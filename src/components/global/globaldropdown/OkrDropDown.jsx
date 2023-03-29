@@ -13,6 +13,8 @@ import { useQuery } from '@tanstack/react-query';
 import { GetOKR } from '../../../apis/apiGET';
 
 const OkrDropDown = ({ setKid, setOid, title }) => {
+  // console.log(setOid);
+  // console.log(title);
   const dropDownRef = useRef(null);
   const [isOpen, setIsOpen] = useDropDown(dropDownRef, false);
 
@@ -42,7 +44,7 @@ const OkrDropDown = ({ setKid, setOid, title }) => {
       setKid(0);
       setOid(0);
     } else {
-      // console.log('id가 있을때');
+      console.log(e.target.attributes.name.value);
       setOid(Number(e.target.attributes.name.value));
       setKid(Number(e.target.id));
     }

@@ -24,16 +24,16 @@ const PastTodo = () => {
 
   const { data: getPastTodo } = useQuery(['PASTTODO'], GetPastTodo, {
     onSuccess: response => {
-      console.log('기한만료 :', response);
+      // console.log('기한만료 :', response);
     },
     onError: response => {
-      console.log(response);
+      // console.log(response);
     },
   });
 
   const { data: getMember } = useQuery(['MEMBER'], GetUser, {
     onSuccess: response => {
-      console.log('user :', response);
+      // console.log('user :', response);
     },
     onError: response => {
       // console.log(response);

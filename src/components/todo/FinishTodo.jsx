@@ -132,7 +132,7 @@ const FinishTodo = ({ el }) => {
       </TodoDetailHeader>
 
       {el.completionTodo.length === 0 ? (
-        <div>완료한 리스트가 없습니다.</div>
+        <div className='noCompl'>완료한 리스트가 없습니다.</div>
       ) : (
         el.completionTodo?.map(ct => (
           <TodoDetailItem
