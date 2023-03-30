@@ -71,6 +71,7 @@ export default function Mainpage() {
           return (
             <MenuItem
               text={text}
+              teamName={teamName}
               key={i}
               onClick={clickNowPage}
               name={text}

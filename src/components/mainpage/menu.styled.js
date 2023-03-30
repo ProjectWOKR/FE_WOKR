@@ -27,11 +27,11 @@ export const MenuItem = styled.button`
   border-radius: 0 7px 7px 0;
   padding: 0 2rem 0 0;
   line-height: 4.5rem;
-  color: ${({ text }) =>
+  color: ${({ text, teamName }) =>
     `${
       text === 'All OKR'
         ? '#DEDEDE'
-        : text === 'TEAM OKR'
+        : text === teamName + ' OKR'
         ? '#DEDEDE'
         : text === 'Calendar'
         ? '#DEDEDE'
