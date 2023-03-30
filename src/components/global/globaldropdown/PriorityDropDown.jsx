@@ -1,14 +1,12 @@
-import { useState, useRef } from 'react';
-import { useDropDown, priority } from './dropdown';
-import { PrioritySelect, DropIcon } from './dropDown.styled';
 import Arrow from '../../../assets/dropdownArrow.png';
+import { PrioritySelect, DropIcon } from './dropDown.styled';
+import { useDropDown, priority } from './dropdown';
+import { useState, useRef } from 'react';
 
 const PriorityDropDown = ({ todoInfo, setTodoInfo }) => {
-  // console.log(todoInfo, setTodoInfo);
   const dropDownRef = useRef(null);
   const [isOpen, setIsOpen] = useDropDown(dropDownRef, false);
   const [finalValue, setFinalValue] = useState('');
-  // console.log(todoInfo);
   const DropDownItem = ({
     value,
     setFinalValue,
@@ -19,14 +17,12 @@ const PriorityDropDown = ({ todoInfo, setTodoInfo }) => {
     name,
     el,
   }) => {
-    // console.log(el);
     const ValueClick = () => {
       setFinalValue(name);
       setIsOpen(!isOpen);
 
       setTodoInfo({ ...todoInfo, priority: Number(value) });
     };
-    // console.log(todoInfo);
 
     return (
       <>

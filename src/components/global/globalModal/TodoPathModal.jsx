@@ -1,33 +1,31 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import React, { useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { DeleteTodo } from '../../../apis/apiDELETE';
 import { PatchTodo } from '../../../apis/apiPATCH';
+import calender from '../../../assets/calender.png';
+import close from '../../../assets/close.png';
+import memo from '../../../assets/memo.png';
+import todo from '../../../assets/todoTODO.png';
 import trash from '../../../assets/trash.png';
 import {
   patchTodoInfo,
   ToggleEndState,
   ToggleStartState,
 } from '../../../store/store';
+import PatchPriority from './../globaldropdown/PatchPriority';
 import {
   ModalBackground,
   ModalBox,
   OKRBox,
   ToggleContainer,
 } from './modal.styled';
-import close from '../../../assets/close.png';
-import todoOkr from '../../../assets/todoOKR.png';
-import todo from '../../../assets/todoTODO.png';
-import memo from '../../../assets/memo.png';
-import calender from '../../../assets/calender.png';
-import OkrDropDown from './../globaldropdown/OkrDropDown';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import React, { useEffect, useState } from 'react';
+import opacity from 'react-element-popper/animations/opacity';
+import transition from 'react-element-popper/animations/transition';
+import ReactGA from 'react-ga4';
 import DatePicker, { DateObject } from 'react-multi-date-picker';
 import TimePicker from 'react-multi-date-picker/plugins/time_picker';
-import transition from 'react-element-popper/animations/transition';
-import opacity from 'react-element-popper/animations/opacity';
 import { toast } from 'react-toastify';
-import PatchPriority from './../globaldropdown/PatchPriority';
-import { DeleteTodo } from '../../../apis/apiDELETE';
-import ReactGA from 'react-ga4';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 const TodoPathModal = ({ onCloseModal }) => {
   useEffect(() => {
@@ -66,7 +64,6 @@ const TodoPathModal = ({ onCloseModal }) => {
   const [defaultFormat, setDefaultFormat] = useState({ format: 'YYYY-MM-DD' });
 
   const todoInfo = useRecoilValue(patchTodoInfo);
-  // console.log(todoInfo);
 
   const [title, setTitle] = useState({
     memo: todoInfo.memo,
@@ -107,10 +104,7 @@ const TodoPathModal = ({ onCloseModal }) => {
   // startDateWithTime 변환 함수 년, 월 시:분
   const convertStartWithTime = (date, format = timeFormat.format) => {
     let object = { date, format };
-    // console.log(new DateObject(object).format());
     setTimeFormat(new DateObject(object).format());
-    // console.log('start :', new DateObject(object).format());
-
     setTitle({
       ...title,
       startDate: new DateObject(object).format().split(' ')[0],
@@ -121,9 +115,7 @@ const TodoPathModal = ({ onCloseModal }) => {
   // endDateWithTime 변환 함수 년, 월 시:분
   const convertEndWithTime = (date, format = timeFormat.format) => {
     let object = { date, format };
-    // console.log(object);
     setTimeFormat(new DateObject(object).format());
-    // console.log(new DateObject(object).format());
     setTitle({
       ...title,
       endDate: new DateObject(object).format().split(' ')[0],
@@ -157,7 +149,6 @@ const TodoPathModal = ({ onCloseModal }) => {
       queryClient.invalidateQueries(['TODO']);
       queryClient.invalidateQueries(['ALLTODO']);
       queryClient.invalidateQueries(['PASTTODO']);
-      console.log('response :', response);
     },
     onError: response => {
       if (process.env.NODE_ENV !== 'development') {
@@ -191,17 +182,12 @@ const TodoPathModal = ({ onCloseModal }) => {
       return toast('종료일은 시작일보다 빠르게 설정할 수 없습니다.');
     } else {
       let id = todoInfo.id;
-      // console.log(id);
       let value = title;
-      // console.log(id, value);
       patchTodo({ id, value });
-      // createTodo({ Oid, Kid, Info });
       toast('해당 To Do가 수정되었습니다.');
       onCloseModal();
     }
   };
-  // console.log('title :', title);
-  // console.log('todoInfo :', todoInfo);
 
   const { mutate: deleteTodo } = useMutation(DeleteTodo, {
     onSuccess: response => {
@@ -229,8 +215,6 @@ const TodoPathModal = ({ onCloseModal }) => {
 
   const [oid, setOid] = useState(0);
   const [kid, setKid] = useState(0);
-
-  console.log(title);
 
   return (
     <>

@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react';
+import { SignUp } from '../../apis/apiPOST';
+import CloseEye from '../../assets/closedEye.png';
+import Eye from '../../assets/eye.png';
 import {
   MainHeader,
   ArticleHeader,
@@ -9,16 +11,12 @@ import {
   SignUpBtnMargin,
   SignWrap,
 } from '../../styles/sign.styled';
-import ReactGA from 'react-ga4';
-import Eye from '../../assets/eye.png';
-import CloseEye from '../../assets/closedEye.png';
-import { OnChange } from '../global/onChange';
-import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
-import { SignUp } from '../../apis/apiPOST';
-import TeamDropDown from '../../components/global/globaldropdown/TeamDropDown.jsx';
 import TeamPosiDropDown from '../global/globaldropdown/TeamPosiDropDown';
-import { trackEvent } from '../../router/RouteChangeTracker';
+import { OnChange } from '../global/onChange';
+import { useMutation } from '@tanstack/react-query';
+import { useState, useEffect } from 'react';
+import ReactGA from 'react-ga4';
+import { useNavigate } from 'react-router-dom';
 
 const Test = () => {
   const navigate = useNavigate();
@@ -61,14 +59,6 @@ const Test = () => {
   const [nameMessage, setNameMessage] = useState('');
   const [teamMessage, setTeamMessage] = useState('');
   const [teamPosiMessage, setTeamPosiMessage] = useState('');
-
-  /**드롭박스 값 추출해오는 함수 */
-  const OnChangeOptionValue = e => {
-    console.log('dd');
-    const { name, value } = e.target;
-    setUserInfo({ ...userInfo, [name]: value });
-  };
-  // console.log(userInfo);
 
   // 이메일
   useEffect(() => {
@@ -175,7 +165,6 @@ const Test = () => {
   ]);
 
   // 버튼을 눌렀을 때 이메일 중복 검사
-  const [signValidation, setSignValidation] = useState('');
   const { mutate: signUpMutate } = useMutation(SignUp, {
     onSuccess: response => {
       if (process.env.NODE_ENV !== 'development') {
@@ -194,7 +183,6 @@ const Test = () => {
           action: '회원가입 실패',
         });
       }
-      setSignValidation('이미 존재하는 이메일입니다.');
       alert(response.response.data);
     },
   });

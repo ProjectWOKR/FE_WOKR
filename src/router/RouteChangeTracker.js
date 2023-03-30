@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import ReactGA4 from 'react-ga4';
+import { useLocation } from 'react-router-dom';
 
 export const RouteChangeTracker = () => {
   const location = useLocation();

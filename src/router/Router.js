@@ -1,10 +1,10 @@
-import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import Signin from '../pages/SignIn';
-import SignUp from '../pages/SignUp';
-import Mainpage from '../pages/Mainpage';
 import GlobalLayout from '../components/global/GlobalLayout';
 import Header from '../components/global/header/Header';
+import Mainpage from '../pages/Mainpage';
+import Signin from '../pages/SignIn';
+import SignUp from '../pages/SignUp';
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 
 export default function Router() {
   return (

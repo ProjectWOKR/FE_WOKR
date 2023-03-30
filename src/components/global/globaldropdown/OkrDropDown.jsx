@@ -1,37 +1,25 @@
-import { useState, useRef } from 'react';
-import { useDropDown } from './dropdown';
+import { GetOKR } from '../../../apis/apiGET';
+import Arrow from '../../../assets/dropdownArrow.png';
 import {
   DropIcon,
-  KRTodoBox,
-  KRTodoDefault,
   OkrDropBox,
   OkrDropContainer,
   OkrItem,
 } from './dropDown.styled';
-import Arrow from '../../../assets/dropdownArrow.png';
+import { useDropDown } from './dropdown';
 import { useQuery } from '@tanstack/react-query';
-import { GetOKR } from '../../../apis/apiGET';
+import { useState, useRef } from 'react';
 
 const OkrDropDown = ({ setKid, setOid, title }) => {
-  // console.log(setOid);
-  // console.log(title);
   const dropDownRef = useRef(null);
   const [isOpen, setIsOpen] = useDropDown(dropDownRef, false);
 
-  const [finalValueKR, setFinalValueKR] =
-    useState('선택하지 않으면 기존꺼와 동일');
-  const [finalValueText, setFinalValueText] = useState('');
-
-  const [finalValueKRColor, setFinalValueKRColor] = useState('');
-  // const [okrData, setOkrData] = useState();
   const [valueState, setValueState] = useState(false);
 
   const [finalValue, setFinalValue] = useState('');
 
   const { data: getOkrData } = useQuery(['getOkr'], GetOKR, {
-    onSuccess: response => {
-      // console.log(getOkrData);
-    },
+    onSuccess: response => {},
     onError: response => {},
   });
 
@@ -40,11 +28,9 @@ const OkrDropDown = ({ setKid, setOid, title }) => {
     setFinalValue(e.target.outerText);
 
     if (e.target.id === '') {
-      // console.log('none일때');
       setKid(0);
       setOid(0);
     } else {
-      console.log(e.target.attributes.name.value);
       setOid(Number(e.target.attributes.name.value));
       setKid(Number(e.target.id));
     }
@@ -66,16 +52,6 @@ const OkrDropDown = ({ setKid, setOid, title }) => {
             : 'none 핵심결과 선택하지 않고 To Do 작성'
         }
       />
-      {/* <KRTodoBox className='input-container' onClick={() => setIsOpen(!isOpen)}>
-        <div
-          style={{
-            color: finalValueKR ? finalValueKRColor : 'black',
-          }}>
-          {finalValueKR}
-        </div>
-
-        <div className='black'>{finalValueText}</div>
-      </KRTodoBox> */}
 
       <DropIcon src={Arrow} />
       {isOpen && (

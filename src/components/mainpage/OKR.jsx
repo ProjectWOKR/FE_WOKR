@@ -1,27 +1,30 @@
-import React, { useEffect } from 'react';
-import Potal from '../global/globalModal/Potal.jsx';
-import { useState, useRef } from 'react';
-import Kr from './Kr';
-import OkrObject from './OkrItem';
-import { Container, Header, HeaderBox, OkrContainer } from './OKR.styled';
-import OkrModal from '../global/globalModal/OkrModal.jsx';
-import { NotHave } from '../global/globalModal/modal.styled';
-import { useQuery } from '@tanstack/react-query';
+import { GetOKR, GetTeamInfo } from '../../apis/apiGET.js';
 import plus from '../../assets/plus.png';
-import more from '../../assets/more.png';
-import { GetOKR } from '../../apis/apiGET.js';
 import AlertModal from '../global/globalModal/AlertModal.jsx';
+import OkrModal from '../global/globalModal/OkrModal.jsx';
+import Potal from '../global/globalModal/Potal.jsx';
+import { NotHave } from '../global/globalModal/modal.styled';
+import { Container, Header, HeaderBox, OkrContainer } from './OKR.styled';
+import OkrObject from './OkrItem';
+import { useQuery } from '@tanstack/react-query';
+import React from 'react';
+import { useState, useRef } from 'react';
 
 export default function OKR() {
   //모달 상태관리
   const [okrModalOn, setOkrModalOn] = useState(false);
   const [alertModalOn, setAlertModalOn] = useState(false);
+  const [teamName, setTeamName] = useState('');
 
   const { data: getOKRData } = useQuery(['OKR'], GetOKR, {
-    onSuccess: response => {
-      // console.log(response);
-    },
+    onSuccess: response => {},
     onError: response => {},
+  });
+
+  const { data: teaminfo } = useQuery(['team'], GetTeamInfo, {
+    onSuccess: response => {
+      setTeamName(response[0].team);
+    },
   });
 
   /**모달 닫는 함수 */
@@ -65,7 +68,7 @@ export default function OKR() {
   return (
     <Container>
       <HeaderBox>
-        <Header>Team OKR</Header>
+        <Header>{teamName} OKR</Header>
         <div className='btnBox'>
           <div onClick={createOKR}>
             <img src={plus} alt='' />

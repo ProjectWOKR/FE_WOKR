@@ -1,11 +1,11 @@
-import styled from 'styled-components';
-import prev from '../../assets/prev.png';
-import next from '../../assets/next.png';
-import more from '../../assets/more.png';
+import checkicon from '../../assets/checkFull.png';
 import down from '../../assets/down.png';
+import more from '../../assets/more.png';
+import next from '../../assets/next.png';
+import prev from '../../assets/prev.png';
 import check from '../../assets/todoCheck.png';
 import up from '../../assets/up.png';
-import checkicon from '../../assets/checkFull.png';
+import styled from 'styled-components';
 
 export const StNavi = styled.div`
   position: sticky;

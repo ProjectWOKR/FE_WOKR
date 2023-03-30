@@ -1,32 +1,23 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import React, { useEffect, useRef, useState } from 'react';
-import { GetCompletionTodo, GetOKR, GetTodo } from '../../apis/apiGET';
+import { GetCompletionTodo } from '../../apis/apiGET';
+import { PatchCheck } from '../../apis/apiPATCH';
+import blue from '../../assets/todoBlue.png';
 import red from '../../assets/todoRed.png';
 import yellow from '../../assets/todoYellow.png';
-import blue from '../../assets/todoBlue.png';
-import { PatchCheck } from '../../apis/apiPATCH';
-import { toast } from 'react-toastify';
-import Toast from '../global/Toast';
 import { patchTodoInfo } from '../../store/store';
-import { useSetRecoilState } from 'recoil';
+import Toast from '../global/Toast';
 import Potal from '../global/globalModal/Potal';
 import TodoPathModal from '../global/globalModal/TodoPathModal';
-import Todo from './../todo/Todo';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import React, { useState } from 'react';
 import ReactGA from 'react-ga4';
+import { toast } from 'react-toastify';
+import { useSetRecoilState } from 'recoil';
 
 const TodoItem = ({ getTodo }) => {
   const queryClient = useQueryClient();
 
-  // const { data: getTodo } = useQuery(['TODO'], GetTodo, {
-  //   onSuccess: response => {
-  //     // console.log('getTodo :', response);
-  //   },
-  //   onError: response => {},
-  // });
-
   // filter 함수 사용
   const now = new Date();
-  const today = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
   const plusToday = `${now.getFullYear()}-${now.getMonth() + 1}-${
     now.getDate() + 1
   }`;
@@ -39,8 +30,6 @@ const TodoItem = ({ getTodo }) => {
     }
     return false;
   });
-
-  console.log('filterArray :', filterArray);
 
   // 체크 수정
   const { mutate: patchCheckmutate } = useMutation(PatchCheck, {

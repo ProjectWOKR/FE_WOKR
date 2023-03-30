@@ -1,11 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import Eye from '../../assets/eye.png';
-import CloseEye from '../../assets/closedEye.png';
-import { OnChange } from '../global/onChange';
-import { useNavigate } from 'react-router-dom';
-import { useMutation, useQuery } from '@tanstack/react-query';
 import { SignIn } from '../../apis/apiPOST';
-import ReactGA from 'react-ga4';
+import CloseEye from '../../assets/closedEye.png';
+import Eye from '../../assets/eye.png';
 import {
   MainHeader,
   ArticleHeader,
@@ -16,7 +11,11 @@ import {
   HelpBox,
   SignWrap,
 } from '../../styles/sign.styled';
-import { GetTeamInfo } from '../../apis/apiGET';
+import { OnChange } from '../global/onChange';
+import { useMutation } from '@tanstack/react-query';
+import React, { useEffect, useState } from 'react';
+import ReactGA from 'react-ga4';
+import { useNavigate } from 'react-router-dom';
 
 const Test = () => {
   const navigate = useNavigate();
@@ -83,7 +82,6 @@ const Test = () => {
   const [signValidation, setSignValidation] = useState('');
   const { mutate: signInMutate } = useMutation(SignIn, {
     onSuccess: response => {
-      console.log('login', response);
       if (process.env.NODE_ENV !== 'development') {
         ReactGA.event({
           category: '버튼',

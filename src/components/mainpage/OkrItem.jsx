@@ -1,4 +1,15 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { GetOKR } from '../../apis/apiGET.js';
+import kRAdd from '../../assets/KRAdd.png';
+import {
+  patchOKRInfo,
+  patchKRInfo,
+  patchProgressInfo,
+} from '../../store/store';
+import KrPatchModal from '../global/globalModal/KrPatchModal';
+import OkrPatchModal from '../global/globalModal/OkrPatchModal';
+import Portal from '../global/globalModal/Potal';
+import ProgressPatchModal from '../global/globalModal/ProgressPatchModal';
+import Emotion from '../global/globaldropdown/Emotion';
 import {
   OKRBox,
   Objective,
@@ -7,25 +18,11 @@ import {
   EmptyKR,
   PersentBox,
 } from './OKR.styled';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import Portal from '../global/globalModal/Potal';
-import OkrPatchModal from '../global/globalModal/OkrPatchModal';
-import KrPatchModal from '../global/globalModal/KrPatchModal';
-import ProgressPatchModal from '../global/globalModal/ProgressPatchModal';
-import { GetKR, GetOKR } from '../../apis/apiGET.js';
-import { PatchObjectiveProgress } from '../../apis/apiPATCH';
-import {
-  patchOKRInfo,
-  patchKRInfo,
-  patchProgressInfo,
-  IsOpen,
-} from '../../store/store';
-import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil';
-import kRAdd from '../../assets/KRAdd.png';
-import Emotion from '../global/globaldropdown/Emotion';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import React, { useState, useRef, useEffect } from 'react';
+import { useSetRecoilState } from 'recoil';
 
 const OkrObject = () => {
-  const queryClient = useQueryClient();
   const [okrModalOn, setOkrModalOn] = useState(false);
   const [krModalOn, setkrModalOn] = useState(false);
   const [progressModalOn, setprogressModalOn] = useState(false);
@@ -97,12 +94,9 @@ const OkrObject = () => {
     }
   };
 
-  // const [slicedArray, setSlicedArray] = useState([]);
   const [KRArray, setKRArray] = useState([]);
   const { data: getOKRData } = useQuery(['OKR'], GetOKR, {
     onSuccess: response => {
-      // console.log(response);
-      // setSlicedArray(response?.slice(0, 2));
       const newArray = response.map(data => {
         const newKRArray = [...data.keyresult];
         newKRArray.sort((a, b) => a.krNumber - b.krNumber);
@@ -112,19 +106,13 @@ const OkrObject = () => {
         };
       });
       setKRArray(newArray);
-      // console.log(KRArray);
     },
     onError: response => {},
     enabled: true,
   });
 
   useEffect(() => {});
-  /** +버튼 누르면 KR 생성하는 모달 띄움 */
   const patchKR = (id, KR, state, index) => {
-    // console.log('kr', id, KR, state, index);
-    // console.log(patchKRInfo);
-    // console.log('okr', getOKRData[index]);
-    //test
     if (state === 'patch')
       setPatchkrInfo({
         id: id,
@@ -137,7 +125,6 @@ const OkrObject = () => {
       let index3 = false;
       for (let i = 0; i < getOKRData[index]?.keyresult.length; i++) {
         const forNum = Number(getOKRData[index]?.keyresult[i].krNumber);
-        // console.log('fn', forNum);
         if (forNum === 1) {
           index1 = true;
         }
@@ -148,7 +135,6 @@ const OkrObject = () => {
           index3 = true;
         }
       }
-      // console.log('index', index1, index2, index3);
       if (index1 === false) {
         setPatchkrInfo({
           id: id,

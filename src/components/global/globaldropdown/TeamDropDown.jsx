@@ -1,7 +1,7 @@
-import { useState, useRef } from 'react';
-import { useDropDown, team } from './dropdown';
-import { DropdownContainer, DropIcon } from './dropDown.styled';
 import Arrow from '../../../assets/dropdownArrow.png';
+import { DropdownContainer, DropIcon } from './dropDown.styled';
+import { useDropDown, team } from './dropdown';
+import { useState, useRef } from 'react';
 
 const TeamDropDown = ({ setUserInfo, userInfo }) => {
   // 드롭다운 상태
@@ -20,12 +20,6 @@ const TeamDropDown = ({ setUserInfo, userInfo }) => {
     const ValueClick = () => {
       setFinalValue(value);
       setIsOpen(!isOpen);
-
-      // console.log(isOpen);
-      // console.log(value);
-      // console.log('valueClick - finalValue :', finalValue);
-
-      // setUserInfo({ ...userInfo, teamposition: value });
       setUserInfo({ ...userInfo, team: value });
     };
 

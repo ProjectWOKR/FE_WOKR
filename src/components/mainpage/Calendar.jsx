@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import FullCalendar from '@fullcalendar/react';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import { Container } from './Calendar.styled';
-import { useQuery } from '@tanstack/react-query';
 import { GetTodo } from '../../apis/apiGET';
+import { Container } from './Calendar.styled';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import FullCalendar from '@fullcalendar/react';
+import { useQuery } from '@tanstack/react-query';
+import React, { useState } from 'react';
 
 export default function Calendar() {
   const array = [];
@@ -11,7 +11,6 @@ export default function Calendar() {
 
   const { data: getTodo } = useQuery(['TODO'], GetTodo, {
     onSuccess: response => {
-      // console.log(response);
       response?.map(el => {
         const endDate = new Date(el.endDate);
         endDate.setDate(endDate.getDate() + 1);

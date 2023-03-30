@@ -1,17 +1,15 @@
-import { useState, useEffect } from 'react';
-
-import redF from '../../../assets/red.png';
-import yellowF from '../../../assets/yellow.png';
-import blueF from '../../../assets/blue.png';
-import grayF from '../../../assets/gray.png';
-import one from '../../../assets/one.png';
-import two from '../../../assets/two.png';
-import three from '../../../assets/three.png';
-import four from '../../../assets/four.png';
-
-import good from '../../../assets/good.png';
-import normal from '../../../assets/normal2.png';
 import bad from '../../../assets/bad2.png';
+import blueF from '../../../assets/blue.png';
+import four from '../../../assets/four.png';
+import good from '../../../assets/good.png';
+import grayF from '../../../assets/gray.png';
+import normal from '../../../assets/normal2.png';
+import one from '../../../assets/one.png';
+import redF from '../../../assets/red.png';
+import three from '../../../assets/three.png';
+import two from '../../../assets/two.png';
+import yellowF from '../../../assets/yellow.png';
+import { useState, useEffect } from 'react';
 
 export const useDropDown = (ref, initialState) => {
   const [isOpen, setIsOpen] = useState(initialState);
@@ -19,10 +17,6 @@ export const useDropDown = (ref, initialState) => {
   // 밖에 누르면 닫히기
   useEffect(() => {
     const clickOutside = e => {
-      // console.log(ref.current);
-      // console.log(e.target);
-      // console.log(ref.current.contains(e.target)); //true
-      // console.log(ref.current && !ref.current.contains(e.target)); // false
       if (ref.current && !ref.current.contains(e.target)) {
         setIsOpen(!isOpen);
       }
@@ -42,7 +36,6 @@ export const useDropDown = (ref, initialState) => {
 };
 
 export const team = {
-  // list: ['기획팀', '개발팀', '인사팀', '채운팀'],
   list: [
     'P01',
     'P02',
@@ -58,7 +51,6 @@ export const team = {
     'P012',
     'P013',
   ],
-  // list: ['팀슬램덩크1', '팀슬램덩크2', '팀슬램덩크3'],
   defaultValue: '부서를 선택해주세요',
 };
 

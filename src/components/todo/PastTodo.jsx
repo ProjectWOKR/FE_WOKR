@@ -1,23 +1,23 @@
-import React, { useState } from 'react';
+import { GetPastTodo, GetUser } from '../../apis/apiGET';
+import { PatchCheck } from '../../apis/apiPATCH';
+import badgeS from '../../assets/badgeS.png';
+import blue from '../../assets/todoBlue.png';
+import red from '../../assets/todoRed.png';
+import yellow from '../../assets/todoYellow.png';
+import { patchTodoInfo } from '../../store/store';
+import Potal from '../global/globalModal/Potal';
+import TodoPathModal from '../global/globalModal/TodoPathModal';
 import {
   StPastTodo,
   TodoDetailHeader,
   TodoDetailItem,
 } from './tododetail.styled';
-import badgeS from '../../assets/badgeS.png';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { GetPastTodo, GetUser } from '../../apis/apiGET';
-import red from '../../assets/todoRed.png';
-import yellow from '../../assets/todoYellow.png';
-import blue from '../../assets/todoBlue.png';
-import { PatchCheck } from '../../apis/apiPATCH';
-import { styled } from 'styled-components';
-import { toast } from 'react-toastify';
+import React, { useState } from 'react';
 import ReactGA from 'react-ga4';
-import Potal from '../global/globalModal/Potal';
+import { toast } from 'react-toastify';
 import { useSetRecoilState } from 'recoil';
-import TodoPathModal from '../global/globalModal/TodoPathModal';
-import { patchTodoInfo } from '../../store/store';
+import { styled } from 'styled-components';
 
 const PastTodo = () => {
   const [show, setShow] = useState(true);

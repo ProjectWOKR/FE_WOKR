@@ -1,8 +1,8 @@
-import React from 'react';
-import { StTeam } from './tododetail.styled';
-import badgeB from '../../assets/badgeB.png';
-import { useQuery } from '@tanstack/react-query';
 import { GetUser } from '../../apis/apiGET';
+import badgeB from '../../assets/badgeB.png';
+import { StTeam } from './tododetail.styled';
+import { useQuery } from '@tanstack/react-query';
+import React from 'react';
 
 const TeamTodo = () => {
   const { data: getMember } = useQuery(['MEMBER'], GetUser, {

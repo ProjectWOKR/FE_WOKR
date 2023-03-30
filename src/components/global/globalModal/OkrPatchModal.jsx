@@ -1,23 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { ModalBackground, ModalBox, OKRBox } from './modal.styled';
-
-import DatePicker, { DateObject } from 'react-multi-date-picker';
-import transition from 'react-element-popper/animations/transition';
-import opacity from 'react-element-popper/animations/opacity';
-import trash from '../../../assets/trash.png';
+import { DeleteObjective } from '../../../apis/apiDELETE';
+import { PatchObjective } from '../../../apis/apiPATCH';
+import calender from '../../../assets/calender.png';
 import close from '../../../assets/close.png';
 import object from '../../../assets/object.png';
-import calender from '../../../assets/calender.png';
+import trash from '../../../assets/trash.png';
+import { patchOKRInfo } from '../../../store/store';
+import Toast from '../Toast';
 import ColorDropDown from '../globaldropdown/ColorDropDown';
 import { OnChange } from '../onChange';
+import { ModalBackground, ModalBox, OKRBox } from './modal.styled';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import Toast from '../Toast';
-import { toast } from 'react-toastify';
-import { PatchObjective } from '../../../apis/apiPATCH';
-import { patchOKRInfo } from '../../../store/store';
-import { useRecoilValue } from 'recoil';
-import { DeleteObjective } from '../../../apis/apiDELETE';
+import React, { useEffect, useState } from 'react';
+import opacity from 'react-element-popper/animations/opacity';
+import transition from 'react-element-popper/animations/transition';
 import ReactGA from 'react-ga4';
+import DatePicker, { DateObject } from 'react-multi-date-picker';
+import { toast } from 'react-toastify';
+import { useRecoilValue } from 'recoil';
 
 const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const queryClient = useQueryClient();
@@ -81,8 +80,6 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
     setEndDate(new DateObject(object).format());
     setObjInfo({ ...objInfo, enddate: new DateObject(object).format() });
   };
-
-  // Object가 있는지 여부----- 추후 수정
 
   const createO = () => {
     const startd = new Date(objInfo.startdate);

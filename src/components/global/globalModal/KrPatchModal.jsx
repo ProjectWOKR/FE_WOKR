@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { ModalBackground, ModalBox, OKRBox } from './modal.styled';
+import { DeleteKR } from '../../../apis/apiDELETE';
+import { PatchKR } from '../../../apis/apiPATCH';
+import { CreateKR } from '../../../apis/apiPOST';
 import close from '../../../assets/close.png';
 import kr from '../../../assets/kr.png';
 import trash from '../../../assets/trash.png';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { PatchKR } from '../../../apis/apiPATCH';
-import { useRecoilValue } from 'recoil';
 import { patchKRInfo } from '../../../store/store';
-import { DeleteKR } from '../../../apis/apiDELETE';
-import { CreateKR } from '../../../apis/apiPOST';
+import { ModalBackground, ModalBox, OKRBox } from './modal.styled';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import React, { useEffect, useState } from 'react';
 import ReactGA from 'react-ga4';
+import { useRecoilValue } from 'recoil';
 
 const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const queryClient = useQueryClient();

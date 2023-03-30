@@ -1,14 +1,14 @@
+import GlobalStyle from './components/global/GlobalStyle';
+import theme from './components/global/theme';
+import { RouteChangeTracker } from './router/RouteChangeTracker';
+import Router from './router/Router';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import GlobalStyle from './components/global/GlobalStyle';
-import { RecoilRoot } from 'recoil';
-import { BrowserRouter } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ThemeProvider } from 'styled-components';
-import theme from './components/global/theme';
 import ReactGA4 from 'react-ga4';
-import Router from './router/Router';
-import { RouteChangeTracker } from './router/RouteChangeTracker';
+import { BrowserRouter } from 'react-router-dom';
+import { RecoilRoot } from 'recoil';
+import { ThemeProvider } from 'styled-components';
 
 const queryClient = new QueryClient();
 

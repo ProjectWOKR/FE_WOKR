@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import { DDay, TodoDetailHeader, TodoDetailItem } from './tododetail.styled';
+import { PatchCheck } from '../../apis/apiPATCH';
 import badgeS from '../../assets/badgeS.png';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import blue from '../../assets/todoBlue.png';
 import red from '../../assets/todoRed.png';
 import yellow from '../../assets/todoYellow.png';
-import blue from '../../assets/todoBlue.png';
-import { PatchCheck } from '../../apis/apiPATCH';
-import { toast } from 'react-toastify';
-import ReactGA from 'react-ga4';
-import Potal from '../global/globalModal/Potal';
-import { useSetRecoilState } from 'recoil';
-import TodoPathModal from '../global/globalModal/TodoPathModal';
 import { patchTodoInfo } from '../../store/store';
+import Potal from '../global/globalModal/Potal';
+import TodoPathModal from '../global/globalModal/TodoPathModal';
+import { DDay, TodoDetailHeader, TodoDetailItem } from './tododetail.styled';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import React, { useState } from 'react';
+import ReactGA from 'react-ga4';
+import { toast } from 'react-toastify';
+import { useSetRecoilState } from 'recoil';
 
 const DetailTodoItem = ({ el, today, tomorrow }) => {
   const queryClient = useQueryClient();

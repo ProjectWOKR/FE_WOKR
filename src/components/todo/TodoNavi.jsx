@@ -1,9 +1,9 @@
-import React, { useState, useRef } from 'react';
-import { Link } from 'react-scroll';
-import { DateNavi, NaviPlus, StNavi, TodoHeader } from './tododetail.styled';
+import plus from '../../assets/plus.png';
 import Potal from '../global/globalModal/Potal';
 import TodoModal from '../global/globalModal/TodoModal';
-import plus from '../../assets/plus.png';
+import { DateNavi, NaviPlus, StNavi, TodoHeader } from './tododetail.styled';
+import React, { useState, useRef } from 'react';
+import { Link } from 'react-scroll';
 
 const TodoNavi = ({ todayFormat }) => {
   const today = new Date();
