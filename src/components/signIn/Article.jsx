@@ -15,8 +15,9 @@ import {
   LoginBtn,
   HelpBox,
   SignWrap,
+  Label,
 } from '../../styles/sign.styled';
-import { GetTeamInfo } from '../../apis/apiGET';
+import { toast } from 'react-toastify';
 
 const Test = () => {
   const navigate = useNavigate();
@@ -28,59 +29,46 @@ const Test = () => {
 
   const [userInfo, setUserInfo] = useState({ email: '', password: '' });
 
-  // 유효성 검사
-  const [emailValidation, setemailValidation] = useState(false);
-  const [passwordValildation, setPasswordValidation] = useState(false);
+  // useEffect(() => {
+  //   const savedFormData = JSON.parse(localStorage.getItem('userInfo'));
+  //   if (savedFormData) {
+  //     setUserInfo(savedFormData);
+  //   }
+  // }, []);
 
-  // 정규식
-  const email = userInfo.email;
-  const regemail =
-    /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-  const pw = userInfo.password;
-  let regpw =
-    /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,12}$/;
+  const [errors, setErrors] = useState({});
 
-  // 에러메시지
-  const [emailMessage, setEmailMessage] = useState('');
-  const [pwMessage, setPwMessage] = useState('');
+  const validate = () => {
+    let errors = {};
+    const regemail =
+      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    let regpw =
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,12}$/;
 
-  useEffect(() => {
-    if (email === '') {
-      setEmailMessage('이메일을 입력해주세요.');
-      setemailValidation(false);
-    } else if (regemail.test(email) === false) {
-      setEmailMessage('이메일 양식으로 입력해주세요.');
-      setemailValidation(false);
+    if (!userInfo.email.trim()) {
+      errors.email = '이메일을 입력해주세요.';
+    } else if (!regemail.test(userInfo.email)) {
+      errors.email = '이메일 형식이 올바르지 않습니다.';
+    }
+    if (!userInfo.password.trim()) {
+      errors.password = '비밀번호를 입력해주세요.';
+    } else if (!regpw.test(userInfo.password)) {
+      errors.password =
+        '비밀번호를 8자리 이상 12자리 이하, 숫자/대문자 또는 소문자/특수문자를 포함하여 입력해주세요.';
+    }
+    return errors;
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    const errors = validate();
+    if (Object.keys(errors).length === 0) {
+      signInMutate(userInfo);
     } else {
-      setEmailMessage('올바른 이메일 형식이에요');
-      setemailValidation(true);
+      setErrors(errors);
     }
-  }, [email]);
+  };
 
-  useEffect(() => {
-    if (pw === '') {
-      setPwMessage('비밀번호를 입력해주세요.');
-      setPasswordValidation(false);
-    } else if (regpw.test(pw) === false) {
-      setPwMessage(
-        '비밀번호를 8자리 이상 12자리 이하, 숫자/대소문자/특수문자를 포함하여 입력해주세요.'
-      );
-      setPasswordValidation(false);
-    } else {
-      setPwMessage('올바른 비밀번호 형식이에요');
-      setPasswordValidation(true);
-    }
-  }, [pw]);
-
-  //버튼 상태
-  const [btnState, setBtnState] = useState(false);
-  useEffect(() => {
-    if (emailValidation && passwordValildation) {
-      setBtnState(true);
-    }
-  }, [emailValidation, passwordValildation]);
-
-  const [signValidation, setSignValidation] = useState('');
   const { mutate: signInMutate } = useMutation(SignIn, {
     onSuccess: response => {
       console.log('login', response);
@@ -90,30 +78,25 @@ const Test = () => {
           action: '로그인',
         });
       }
-      localStorage.setItem('Id', email);
+      localStorage.setItem('Id', userInfo.email);
       localStorage.setItem('accesstoken', response.accessToken);
       navigate('/mainpage');
     },
-    onError: () => {
+    onError: response => {
       if (process.env.NODE_ENV !== 'development') {
         ReactGA.event({
           category: '버튼',
           action: '로그인 실패',
         });
       }
-
-      setSignValidation('아이디 또는 비밀번호가 올바르지 않습니다.');
-      alert(`${signValidation}`);
+      alert(response.response.data);
     },
   });
 
   return (
-    <SignWrap>
+    <SignWrap onSubmit={handleSubmit}>
       <MainHeader>로그인</MainHeader>
-      <ArticleHeader>
-        <div className='div1' />
-        이메일
-      </ArticleHeader>
+      <Label>이메일</Label>
       <InputBox>
         <EmailInput
           type='text'
@@ -124,17 +107,9 @@ const Test = () => {
           }}
         />
       </InputBox>
-      <ArticleHeader>
-        {emailValidation ? null : (
-          <p className='p1' style={{ color: 'red' }}>
-            {emailMessage}
-          </p>
-        )}
-      </ArticleHeader>
-      <ArticleHeader>
-        <div className='div2' />
-        비밀번호
-      </ArticleHeader>
+      {errors.email && <div className='valid'>{errors.email}</div>}
+
+      <Label>비밀번호</Label>
 
       <InputBox>
         <EmailInput
@@ -151,22 +126,9 @@ const Test = () => {
           <PwEye src={CloseEye} onClick={eyeState} />
         )}
       </InputBox>
-      <ArticleHeader>
-        {passwordValildation ? null : (
-          <p className='p1' style={{ color: 'red' }}>
-            {pwMessage}
-          </p>
-        )}
-      </ArticleHeader>
+      {errors.password && <div className='valid'>{errors.password}</div>}
 
-      <LoginBtn
-        btnState={btnState}
-        disabled={!btnState}
-        onClick={() => {
-          signInMutate(userInfo);
-        }}>
-        로그인 하기
-      </LoginBtn>
+      <LoginBtn type='submit'>로그인 하기</LoginBtn>
       <HelpBox>
         <span onClick={() => navigate('/signup')}>회원가입</span>
       </HelpBox>

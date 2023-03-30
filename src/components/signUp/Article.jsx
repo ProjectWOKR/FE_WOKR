@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import {
   MainHeader,
-  ArticleHeader,
   InputBox,
   EmailInput,
   PwEye,
   LoginBtn,
-  SignUpBtnMargin,
   SignWrap,
+  Label,
+  HelpBox,
 } from '../../styles/sign.styled';
 import ReactGA from 'react-ga4';
 import Eye from '../../assets/eye.png';
@@ -16,11 +16,11 @@ import { OnChange } from '../global/onChange';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { SignUp } from '../../apis/apiPOST';
-import TeamDropDown from '../../components/global/globaldropdown/TeamDropDown.jsx';
 import TeamPosiDropDown from '../global/globaldropdown/TeamPosiDropDown';
-import { trackEvent } from '../../router/RouteChangeTracker';
+import { toast } from 'react-toastify';
+import Toast from './../global/Toast';
 
-const Test = () => {
+const Article = () => {
   const navigate = useNavigate();
   // 눈 아이콘
   const [pwEyeOpen, setPwEyeOpen] = useState(false);
@@ -37,194 +37,118 @@ const Test = () => {
     teamposition: '',
   });
 
-  // 정규식
-  const email = userInfo.email;
-  const regemail =
-    /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-  const pw = userInfo.password;
-  let regpw =
-    /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,12}$/;
-  const regname = userInfo.name.length >= 2 && userInfo.name.length < 6;
+  useEffect(() => {
+    const savedFormData = JSON.parse(localStorage.getItem('userInfo'));
+    if (savedFormData) {
+      setUserInfo(savedFormData);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('userInfo', JSON.stringify(userInfo));
+  }, [userInfo]);
+
+  const [errors, setErrors] = useState({});
 
   // 유효성 검사
-  const [emailValidation, setemailValidation] = useState(false);
-  const [passwordValildation, setPasswordValidation] = useState(false);
-  const [pwCheckValidation, setPwCheckValidation] = useState(false);
-  const [nameValidation, setNameValidation] = useState(false);
-  const [teamValidation, setTeamValidation] = useState(false);
-  const [teamPosiValidation, setTeamPosiValidation] = useState(false);
-
-  // 에러메시지
-  const [emailMessage, setEmailMessage] = useState('');
-  const [pwMessage, setPwMessage] = useState('');
-  const [pwCheckMessage, setPwCheckMessage] = useState('');
-  const [nameMessage, setNameMessage] = useState('');
-  const [teamMessage, setTeamMessage] = useState('');
-  const [teamPosiMessage, setTeamPosiMessage] = useState('');
-
-  /**드롭박스 값 추출해오는 함수 */
-  const OnChangeOptionValue = e => {
-    console.log('dd');
-    const { name, value } = e.target;
-    setUserInfo({ ...userInfo, [name]: value });
+  const validate = () => {
+    let errors = {};
+    const regemail =
+      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    let regpw =
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,12}$/;
+    const regname = userInfo.name.length >= 2 && userInfo.name.length < 6;
+    if (!userInfo.email.trim()) {
+      errors.email = '이메일을 입력해주세요.';
+    } else if (!regemail.test(userInfo.email)) {
+      errors.email = '이메일 형식이 올바르지 않습니다.';
+    }
+    if (!userInfo.password.trim()) {
+      errors.password = '비밀번호를 입력해주세요.';
+    } else if (!regpw.test(userInfo.password)) {
+      errors.password =
+        '비밀번호를 8자리 이상 12자리 이하, 숫자/대문자 또는 소문자/특수문자를 포함하여 입력해주세요.';
+    }
+    if (userInfo.password !== userInfo.confirmpassword) {
+      errors.confirmpassword = '비밀번호가 일치하지 않습니다.';
+    }
+    if (!userInfo.name.trim()) {
+      errors.name = '이름을 입력해주세요.';
+    } else if (!regname) {
+      errors.name = '이름은 2글자 이상, 6글자 미만으로 입력해주세요. ';
+    }
+    if (!userInfo.team.trim()) {
+      errors.team = '팀명을 입력해주세요.';
+    }
+    if (!userInfo.teamposition.trim()) {
+      errors.teamposition = '직급을 선택해주세요.';
+    }
+    return errors;
   };
-  // console.log(userInfo);
 
-  // 이메일
-  useEffect(() => {
-    if (email === '') {
-      setEmailMessage('이메일을 입력해주세요.');
-      setemailValidation(false);
-    } else if (regemail.test(email) === false) {
-      setEmailMessage('이메일 양식으로 입력해주세요.');
-      setemailValidation(false);
-    } else {
-      setEmailMessage('올바른 이메일 형식이에요');
-      setemailValidation(true);
-    }
-  }, [email]);
-
-  // 비밀번호
-  useEffect(() => {
-    if (pw === '') {
-      setPwMessage('비밀번호를 입력해주세요.');
-      setPasswordValidation(false);
-    } else if (regpw.test(pw) === false) {
-      setPwMessage(
-        '비밀번호를 8자리 이상 12자리 이하, 숫자/대소문자/특수문자를 포함하여 입력해주세요.'
-      );
-      setPasswordValidation(false);
-    } else {
-      setPwMessage('올바른 비밀번호 형식이에요');
-      setPasswordValidation(true);
-    }
-  }, [pw]);
-
-  // 비밀번호 확인
-  useEffect(() => {
-    if (pw !== userInfo.confirmpassword) {
-      setPwCheckMessage('비밀번호가 일치하지 않습니다.');
-      setPwCheckValidation(false);
-    } else {
-      setPwCheckMessage('비밀번호가 일치합니다.');
-      setPwCheckValidation(true);
-    }
-  }, [pw, userInfo.confirmpassword]);
-
-  // 이름 확인
-  useEffect(() => {
-    if (userInfo.name === '') {
-      setNameMessage('이름을 입력해주세요.');
-      setNameValidation(false);
-    } else if (regname === false) {
-      setNameMessage('이름은 2글자 이상, 6글자 미만으로 입력해주세요.');
-      setNameValidation(false);
-    } else {
-      setNameMessage('이름이 작성되었습니다.');
-      setNameValidation(true);
-    }
-  }, [userInfo.name]);
-
-  // 팀 확인
-  useEffect(() => {
-    if (userInfo.team === '') {
-      setTeamMessage('팀을 입력해주세요.');
-      setTeamValidation(false);
-    } else {
-      setTeamMessage('팀이 선택되었습니다.');
-      setTeamValidation(true);
-    }
-  }, [userInfo.team]);
-
-  // console.log(userInfo.team);
-
-  // 직급 확인
-  useEffect(() => {
-    if (userInfo.teamposition === '') {
-      setTeamPosiMessage('직급을 선택해주세요.');
-      setTeamPosiValidation(false);
-    } else {
-      setTeamPosiMessage('직급이 선택되었습니다.');
-      setTeamPosiValidation(true);
-    }
-  }, [userInfo.teamposition]);
-
-  //버튼 상태
-  //userInfo의 값으로 확인해야함 버그 찾음
-  const [btnState, setBtnState] = useState(false);
-  useEffect(() => {
-    if (
-      emailValidation &&
-      passwordValildation &&
-      pwCheckValidation &&
-      nameValidation &&
-      teamValidation &&
-      teamPosiValidation
-    ) {
-      setBtnState(true);
-    } else {
-      setBtnState(false);
-    }
-  }, [
-    emailValidation,
-    passwordValildation,
-    pwCheckValidation,
-    nameValidation,
-    teamValidation,
-    teamPosiValidation,
-  ]);
-
-  // 버튼을 눌렀을 때 이메일 중복 검사
-  const [signValidation, setSignValidation] = useState('');
   const { mutate: signUpMutate } = useMutation(SignUp, {
     onSuccess: response => {
+      toast('회원가입 성공!');
       if (process.env.NODE_ENV !== 'development') {
         ReactGA.event({
           category: '버튼',
           action: '회원가입',
         });
       }
-      navigate('/');
+
+      setTimeout(() => {
+        navigate('/');
+      }, 1000);
     },
 
     onError: response => {
+      console.log(response);
       if (process.env.NODE_ENV !== 'development') {
         ReactGA.event({
           category: '버튼',
           action: '회원가입 실패',
         });
       }
-      setSignValidation('이미 존재하는 이메일입니다.');
-      alert(response.response.data);
+      toast(response?.response.data);
     },
   });
 
+  const handleSubmit = e => {
+    e.preventDefault();
+    const errors = validate();
+    if (Object.keys(errors).length === 0) {
+      signUpMutate(userInfo);
+    } else {
+      setErrors(errors);
+    }
+  };
+
   return (
-    <SignWrap>
+    <SignWrap onSubmit={handleSubmit}>
       <MainHeader>회원가입</MainHeader>
-      <ArticleHeader>이메일</ArticleHeader>
+
+      <Label htmlFor='email'>이메일</Label>
       <InputBox>
         <EmailInput
+          id='email'
           type='text'
           name='email'
+          value={userInfo.email}
           placeholder='이메일을 입력하세요'
           onChange={event => {
             OnChange(event, userInfo, setUserInfo);
           }}
         />
       </InputBox>
-      <ArticleHeader>
-        {emailValidation ? null : (
-          <p className='p1' style={{ color: 'red' }}>
-            {emailMessage}
-          </p>
-        )}
-      </ArticleHeader>
-      <ArticleHeader>비밀번호</ArticleHeader>
+      {errors.email && <div className='valid'>{errors.email}</div>}
+
+      <Label htmlFor='password'>비밀번호</Label>
       <InputBox>
         <EmailInput
+          id='password'
           type={pwEyeOpen ? 'text' : 'password'}
           name='password'
+          value={userInfo.password}
           placeholder='비밀번호를 입력하세요'
           onChange={event => {
             OnChange(event, userInfo, setUserInfo);
@@ -236,18 +160,15 @@ const Test = () => {
           <PwEye src={CloseEye} onClick={eyeState} />
         )}
       </InputBox>
-      <ArticleHeader>
-        {passwordValildation ? null : (
-          <p className='p1' style={{ color: 'red' }}>
-            {pwMessage}
-          </p>
-        )}
-      </ArticleHeader>
-      <ArticleHeader>비밀번호 확인</ArticleHeader>
+      {errors.password && <div className='valid'>{errors.password}</div>}
+
+      <Label htmlFor='confirmpassword'>비밀번호 확인</Label>
       <InputBox>
         <EmailInput
+          id='confirmpassword'
           type={pwEyeOpen ? 'text' : 'password'}
           name='confirmpassword'
+          value={userInfo.confirmpassword}
           placeholder='비밀번호를 입력하세요'
           onChange={event => {
             OnChange(event, userInfo, setUserInfo);
@@ -259,67 +180,53 @@ const Test = () => {
           <PwEye src={CloseEye} onClick={eyeState} />
         )}
       </InputBox>
-      <ArticleHeader>
-        {pwCheckValidation ? null : (
-          <p className='p1' style={{ color: 'red' }}>
-            {pwCheckMessage}
-          </p>
-        )}
-      </ArticleHeader>
-      <ArticleHeader>이름</ArticleHeader>
+      {errors.confirmpassword && (
+        <div className='valid'>{errors.confirmpassword}</div>
+      )}
+
+      <Label htmlFor='name'>이름</Label>
       <InputBox>
         <EmailInput
+          id='name'
           name='name'
+          value={userInfo.name}
           onChange={event => {
             OnChange(event, userInfo, setUserInfo);
           }}
           placeholder='이름를 입력하세요'
         />
       </InputBox>
-      <ArticleHeader>
-        {nameValidation ? null : (
-          <p className='p1' style={{ color: 'red' }}>
-            {nameMessage}
-          </p>
-        )}
-      </ArticleHeader>
-      <ArticleHeader>팀</ArticleHeader>
+      {errors.name && <div className='valid'>{errors.name}</div>}
+
+      <Label htmlFor='team'>팀</Label>
       <InputBox>
         <EmailInput
+          id='team'
           name='team'
+          value={userInfo.team}
           onChange={event => {
             OnChange(event, userInfo, setUserInfo);
           }}
           placeholder='팀이름를 입력하세요'
         />
       </InputBox>
-      <ArticleHeader>
-        {teamValidation ? null : (
-          <p className='p1' style={{ color: 'red' }}>
-            {teamMessage}
-          </p>
-        )}
-      </ArticleHeader>
-      <ArticleHeader>직급</ArticleHeader>
-      <TeamPosiDropDown setUserInfo={setUserInfo} userInfo={userInfo} />
-      <ArticleHeader>
-        {teamPosiValidation ? null : (
-          <p className='p1' style={{ color: 'red' }}>
-            {teamPosiMessage}
-          </p>
-        )}
-      </ArticleHeader>
-      <LoginBtn
-        btnState={btnState}
-        disabled={!btnState}
-        onClick={() => {
-          signUpMutate(userInfo);
-        }}>
-        회원가입
-      </LoginBtn>
-      <SignUpBtnMargin />
+      {errors.team && <div className='valid'>{errors.team}</div>}
+
+      <Label htmlFor='teamPosition'>직급</Label>
+      <InputBox>
+        <TeamPosiDropDown setUserInfo={setUserInfo} userInfo={userInfo} />
+      </InputBox>
+      {errors.teamposition && (
+        <div className='valid'>{errors.teamposition}</div>
+      )}
+
+      <LoginBtn type='submit'>회원가입</LoginBtn>
+      <HelpBox style={{ marginBottom: '100px' }}>
+        <span onClick={() => navigate('/')}>로그인 하러가기</span>
+      </HelpBox>
+      <Toast />
     </SignWrap>
   );
 };
 
-export default Test;
+export default Article;
