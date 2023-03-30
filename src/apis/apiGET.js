@@ -57,3 +57,11 @@ export async function GetCompletionTodo() {
   const { data } = await api.get(`api/todo/completion`);
   return data;
 }
+
+export async function GetUserInfo() {
+  const id = localStorage.getItem('Id');
+
+  console.log('id', id);
+  const { data } = await api.get(`api/user/${id}`);
+  return data;
+}

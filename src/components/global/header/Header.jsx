@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import alarm from '../../../assets/alarm.png';
 import user from '../../../assets/user.png';
 import ReactGA from 'react-ga4';
+import { useQuery } from '@tanstack/react-query';
+import { GetUserInfo } from '../../../apis/apiGET';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -29,6 +31,12 @@ export default function Header() {
   const handleMouseLeave = () => {
     setLogoutImg(logoutON);
   };
+
+  const { data } = useQuery(['userinfo'], GetUserInfo, {
+    onSuccess: response => {
+      console.log(response);
+    },
+  });
 
   const logout = () => {
     if (process.env.NODE_ENV !== 'development') {

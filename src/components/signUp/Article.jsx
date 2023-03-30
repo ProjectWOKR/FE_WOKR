@@ -284,7 +284,6 @@ const Test = () => {
         )}
       </ArticleHeader>
       <ArticleHeader>팀</ArticleHeader>
-      {/* <TeamDropDown setUserInfo={setUserInfo} userInfo={userInfo} /> */}
       <InputBox>
         <EmailInput
           name='team'
@@ -302,11 +301,7 @@ const Test = () => {
         )}
       </ArticleHeader>
       <ArticleHeader>직급</ArticleHeader>
-      <TeamPosiDropDown
-        // OnChangeOptionValue={OnChangeOptionValue}
-        setUserInfo={setUserInfo}
-        userInfo={userInfo}
-      />
+      <TeamPosiDropDown setUserInfo={setUserInfo} userInfo={userInfo} />
       <ArticleHeader>
         {teamPosiValidation ? null : (
           <p className='p1' style={{ color: 'red' }}>

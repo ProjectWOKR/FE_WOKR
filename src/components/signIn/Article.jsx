@@ -88,6 +88,7 @@ const Test = () => {
           action: '로그인',
         });
       }
+      localStorage.setItem('Id', email);
       localStorage.setItem('accesstoken', response.accessToken);
       navigate('/mainpage');
     },
