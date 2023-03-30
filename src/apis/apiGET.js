@@ -65,3 +65,8 @@ export async function GetUserInfo() {
   const { data } = await api.get(`api/user/${id}`);
   return data;
 }
+
+export async function GetTeamInfo() {
+  const { data } = await api.get(`api/user/team/member`);
+  return data;
+}

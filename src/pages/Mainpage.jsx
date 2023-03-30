@@ -14,17 +14,31 @@ import CompanyOKR from '../components/companyOKR/companyOKR';
 // import { useNavigate } from 'react-router-dom';
 import { MenuContainer, MenuItem } from './../components/mainpage/menu.styled';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { GetTeamInfo } from '../apis/apiGET';
 
 export default function Mainpage() {
   const navigate = useNavigate();
-
+  const [teamName, setTeamName] = useState('');
   useEffect(() => {
     if (localStorage.accesstoken === undefined) {
       navigate('/');
     }
   }, []);
 
-  const menuList = ['Dashboard', 'All OKR', 'TEAM OKR', 'TO - DO', 'Calendar'];
+  const { data: teaminfo } = useQuery(['team'], GetTeamInfo, {
+    onSuccess: response => {
+      setTeamName(response[0].team);
+    },
+  });
+
+  const menuList = [
+    'Dashboard',
+    'All OKR',
+    teamName + ' OKR',
+    'TO - DO',
+    'Calendar',
+  ];
 
   const selectComponent = {
     Dashboard: (

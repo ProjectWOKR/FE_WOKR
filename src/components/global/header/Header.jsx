@@ -7,7 +7,7 @@ import alarm from '../../../assets/alarm.png';
 import user from '../../../assets/user.png';
 import ReactGA from 'react-ga4';
 import { useQuery } from '@tanstack/react-query';
-import { GetUserInfo } from '../../../apis/apiGET';
+import { GetTeamInfo, GetUserInfo } from '../../../apis/apiGET';
 
 export default function Header() {
   const navigate = useNavigate();
