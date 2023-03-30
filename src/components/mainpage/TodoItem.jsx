@@ -31,6 +31,10 @@ const TodoItem = ({ getTodo }) => {
     return false;
   });
 
+
+  // console.log('filterArray :', filterArray);
+
+
   // 체크 수정
   const { mutate: patchCheckmutate } = useMutation(PatchCheck, {
     onSuccess: response => {

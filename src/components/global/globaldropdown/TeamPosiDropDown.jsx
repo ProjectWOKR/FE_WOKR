@@ -31,8 +31,9 @@ const TeamPosiDropDown = ({ setUserInfo, userInfo }) => {
   return (
     <DropdownContainer ref={dropDownRef} className='container'>
       <input
+        id='teamPosition'
         type='text'
-        value={finalValue}
+        value={userInfo.teamposition}
         readOnly={true}
         onClick={() => setIsOpen(!isOpen)}
         placeholder='직급을 선택하세요'

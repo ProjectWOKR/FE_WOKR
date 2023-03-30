@@ -1,9 +1,15 @@
 import styled from 'styled-components';
 
-export const SignWrap = styled.div`
+export const SignWrap = styled.form`
   width: 70rem;
   margin: 0 auto;
   /* background-color: yellowgreen; */
+  .valid {
+    color: red;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    margin: 0.3rem 0 1rem 0;
+  }
 `;
 
 export const MainHeader = styled.div`
@@ -14,21 +20,13 @@ export const MainHeader = styled.div`
   font-size: 4.2rem;
 `;
 
-export const ArticleHeader = styled.div`
+export const Label = styled.label`
   height: 3.3rem;
+  display: block;
   font-weight: 500;
   font-size: 2.4rem;
-  margin: 5px 0;
-  .p1 {
-    font-size: 14px;
-  }
-  .p2 {
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: red;
-  }
+  margin: 10px 0;
+  cursor: pointer;
 `;
 
 export const InputBox = styled.div`
@@ -36,6 +34,7 @@ export const InputBox = styled.div`
   height: 6.7rem;
   ${props => props.theme.row_center}
   position: relative;
+  /* background-color: pink; */
 `;
 
 export const EmailInput = styled.input`
@@ -81,26 +80,18 @@ export const LoginBtn = styled.button`
   color: var(--bg-color);
   border: none;
   cursor: pointer;
-  margin-bottom: 10rem;
-`;
-
-export const SignUpBtnMargin = styled.div`
-  /* margin-bottom: 195px; */
+  margin-top: 10rem;
 `;
 
 export const HelpBox = styled.div`
-  /* display: flex;
-  align-items: center;
-  justify-content: center; */
   ${props => props.theme.row_center}
   gap: 50px;
   font-weight: 400;
   font-size: 2.1rem;
   height: 3rem;
-  /* line-height: 29px; */
   width: 100%;
   color: #7c7c7c;
-  /* background-color: pink; */
+  margin-top: 40px;
   span {
     cursor: pointer;
   }
