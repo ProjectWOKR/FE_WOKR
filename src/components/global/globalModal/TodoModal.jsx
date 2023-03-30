@@ -1,32 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import { GetOKR } from '../../../apis/apiGET';
+import { CreateTodo } from '../../../apis/apiPOST';
+import calender from '../../../assets/calender.png';
+import close from '../../../assets/close.png';
+import memo from '../../../assets/memo.png';
+import todoOkr from '../../../assets/todoOKR.png';
+import todo from '../../../assets/todoTODO.png';
+import { ToggleEndState, ToggleStartState } from '../../../store/store';
+import OkrDropDown from '../globaldropdown/OkrDropDown';
+import PriorityDropDown from '../globaldropdown/PriorityDropDown';
+import { OnChange } from '../onChange';
 import {
   ModalBackground,
   ModalBox,
   OKRBox,
   ToggleContainer,
 } from './modal.styled';
-
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import React, { useEffect, useState } from 'react';
+import opacity from 'react-element-popper/animations/opacity';
+import transition from 'react-element-popper/animations/transition';
+import ReactGA from 'react-ga4';
 import DatePicker, { DateObject } from 'react-multi-date-picker';
 import TimePicker from 'react-multi-date-picker/plugins/time_picker';
-import transition from 'react-element-popper/animations/transition';
-import opacity from 'react-element-popper/animations/opacity';
-
-import close from '../../../assets/close.png';
-import todoOkr from '../../../assets/todoOKR.png';
-import todo from '../../../assets/todoTODO.png';
-import memo from '../../../assets/memo.png';
-import calender from '../../../assets/calender.png';
-import { OnChange } from '../onChange';
-import OkrDropDown from '../globaldropdown/OkrDropDown';
-import PriorityDropDown from '../globaldropdown/PriorityDropDown';
-import { useRecoilState } from 'recoil';
-import { ToggleEndState, ToggleStartState } from '../../../store/store';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { CreateTodo } from '../../../apis/apiPOST';
 import { toast } from 'react-toastify';
-import Toast from '../Toast';
-import { GetOKR } from '../../../apis/apiGET';
-import ReactGA from 'react-ga4';
+import { useRecoilState } from 'recoil';
 
 const TodoModal = ({
   onCloseTodoModal,
@@ -111,9 +108,7 @@ const TodoModal = ({
   // startDateWithTime 변환 함수 년, 월 시:분
   const convertStartWithTime = (date, format = timeFormat.format) => {
     let object = { date, format };
-    console.log(new DateObject(object).format());
     setTimeFormat(new DateObject(object).format());
-    console.log('start :', new DateObject(object).format());
 
     setTodoInfo({
       ...todoInfo,
@@ -125,9 +120,7 @@ const TodoModal = ({
   // endDateWithTime 변환 함수 년, 월 시:분
   const convertEndWithTime = (date, format = timeFormat.format) => {
     let object = { date, format };
-    // console.log(object);
     setTimeFormat(new DateObject(object).format());
-    console.log(new DateObject(object).format());
     setTodoInfo({
       ...todoInfo,
       endDate: new DateObject(object).format().split(' ')[0],
@@ -160,7 +153,6 @@ const TodoModal = ({
       queryClient.invalidateQueries(['ALLTODO']);
       queryClient.invalidateQueries(['PASTTODO']);
       toast('TODO가 생성되었습니다.');
-      // console.log(response);
     },
     onError: response => {
       if (process.env.NODE_ENV !== 'development') {
@@ -173,20 +165,12 @@ const TodoModal = ({
   });
 
   const { data: getOkrData } = useQuery(['getOkr'], GetOKR, {
-    onSuccess: response => {
-      // console.log('df');
-      console.log(response);
-    },
+    onSuccess: response => {},
     onError: response => {},
   });
 
   const [oid, setOid] = useState(0);
   const [kid, setKid] = useState(0);
-
-  console.log('oid :', oid);
-  console.log(setOid);
-
-  console.log('dddddddd');
 
   // 저장 버튼 누르면 생성
   const createT = () => {

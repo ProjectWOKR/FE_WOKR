@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { ModalBackground, ModalBox, OKRBox } from './modal.styled';
-import kr from '../../../assets/kr.png';
+import { ModalBackground, ModalBox } from './modal.styled';
+import React, { useEffect } from 'react';
 
 const AlertModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   // 모달 스크롤 방지

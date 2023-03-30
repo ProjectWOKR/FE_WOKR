@@ -1,8 +1,7 @@
-import React from 'react';
-import Header from '../components/global/header/Header';
 import Article from '../components/signUp/Article';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function SignUp() {
   const navigate = useNavigate();

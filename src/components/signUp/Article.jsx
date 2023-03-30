@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react';
+import { SignUp } from '../../apis/apiPOST';
+import CloseEye from '../../assets/closedEye.png';
+import Eye from '../../assets/eye.png';
 import {
   MainHeader,
   InputBox,
@@ -9,16 +11,19 @@ import {
   Label,
   HelpBox,
 } from '../../styles/sign.styled';
-import ReactGA from 'react-ga4';
-import Eye from '../../assets/eye.png';
-import CloseEye from '../../assets/closedEye.png';
+import TeamPosiDropDown from '../global/globaldropdown/TeamPosiDropDown';
 import { OnChange } from '../global/onChange';
-import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
+
 import { SignUp } from '../../apis/apiPOST';
 import TeamPosiDropDown from '../global/globaldropdown/TeamPosiDropDown';
 import { toast } from 'react-toastify';
 import Toast from './../global/Toast';
+
+import { useState, useEffect } from 'react';
+import ReactGA from 'react-ga4';
+import { useNavigate } from 'react-router-dom';
+
 
 const Article = () => {
   const navigate = useNavigate();
@@ -110,6 +115,7 @@ const Article = () => {
         });
       }
       toast(response?.response.data);
+
     },
   });
 

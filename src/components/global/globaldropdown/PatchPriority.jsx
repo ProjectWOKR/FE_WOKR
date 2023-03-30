@@ -1,12 +1,11 @@
-import { useState, useRef } from 'react';
-import { useDropDown, priority } from './dropdown';
-import { PrioritySelect, DropIcon } from './dropDown.styled';
-import Arrow from '../../../assets/dropdownArrow.png';
-import { useQuery } from '@tanstack/react-query';
 import { GetTodo } from '../../../apis/apiGET';
+import Arrow from '../../../assets/dropdownArrow.png';
+import { PrioritySelect, DropIcon } from './dropDown.styled';
+import { useDropDown, priority } from './dropdown';
+import { useQuery } from '@tanstack/react-query';
+import { useState, useRef } from 'react';
 
 const PatchPriority = ({ title, setTitle }) => {
-  // console.log(todoInfo, setTodoInfo);
   const dropDownRef = useRef(null);
   const [isOpen, setIsOpen] = useDropDown(dropDownRef, false);
   const [finalValue, setFinalValue] = useState(`${title.priority}순위`);
@@ -15,7 +14,6 @@ const PatchPriority = ({ title, setTitle }) => {
     onSuccess: response => {},
     onError: response => {},
   });
-  // console.log(todoInfo);
   const DropDownItem = ({
     value,
     setFinalValue,
@@ -26,14 +24,12 @@ const PatchPriority = ({ title, setTitle }) => {
     name,
     el,
   }) => {
-    // console.log(el);
     const ValueClick = () => {
       setFinalValue(name);
       setIsOpen(!isOpen);
 
       setTitle({ ...title, priority: Number(value) });
     };
-    // console.log(title);
 
     return (
       <>

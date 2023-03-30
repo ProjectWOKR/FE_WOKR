@@ -1,21 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { ModalBackground, ModalBox, OKRBox } from './modal.styled';
-
-import DatePicker, { DateObject } from 'react-multi-date-picker';
-import transition from 'react-element-popper/animations/transition';
-import opacity from 'react-element-popper/animations/opacity';
-
+import { CreateObjective } from '../../../apis/apiPOST';
+import calender from '../../../assets/calender.png';
 import close from '../../../assets/close.png';
 import object from '../../../assets/object.png';
-import calender from '../../../assets/calender.png';
-
+import Toast from '../Toast';
 import ColorDropDown from '../globaldropdown/ColorDropDown';
 import { OnChange } from '../onChange';
-import ReactGA from 'react-ga4';
-
-import { CreateObjective, CreateKR } from '../../../apis/apiPOST';
+import { ModalBackground, ModalBox, OKRBox } from './modal.styled';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import Toast from '../Toast';
+import React, { useEffect, useState } from 'react';
+import opacity from 'react-element-popper/animations/opacity';
+import transition from 'react-element-popper/animations/transition';
+import ReactGA from 'react-ga4';
+import DatePicker, { DateObject } from 'react-multi-date-picker';
 import { toast } from 'react-toastify';
 
 const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {

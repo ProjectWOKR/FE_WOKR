@@ -1,12 +1,11 @@
-import { useState } from 'react';
-import { emotion, useEmotionDropDown } from './dropdown';
-import { EmotionSelect } from './dropDown.styled';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { PatchEmotion } from '../../../apis/apiPATCH';
-import ReactGA from 'react-ga4';
-import normal from '../../../assets/normal2.png';
-import good from '../../../assets/good.png';
 import bad from '../../../assets/bad2.png';
+import good from '../../../assets/good.png';
+import normal from '../../../assets/normal2.png';
+import { EmotionSelect } from './dropDown.styled';
+import { emotion } from './dropdown';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import ReactGA from 'react-ga4';
 
 const Emotion = ({
   keyResultId,

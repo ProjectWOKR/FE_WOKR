@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { Finsh, TodoDetailHeader, TodoDetailItem } from './tododetail.styled';
-import badgeS from '../../assets/badgeS.png';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { GetPostTodo } from '../../apis/apiGET';
+import { PatchCheck } from '../../apis/apiPATCH';
+import badgeS from '../../assets/badgeS.png';
+import blue from '../../assets/todoBlue.png';
 import red from '../../assets/todoRed.png';
 import yellow from '../../assets/todoYellow.png';
-import blue from '../../assets/todoBlue.png';
-import { PatchCheck } from '../../apis/apiPATCH';
+import { Finsh, TodoDetailHeader, TodoDetailItem } from './tododetail.styled';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
 const FinishTodo = ({ el }) => {

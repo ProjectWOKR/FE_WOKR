@@ -1,8 +1,7 @@
-import React from 'react';
 import { ModalBackground, ModalBox } from './modal.styled';
+import React from 'react';
 
 const Modal = children => {
-  console.log(children);
   return (
     <>
       <ModalBackground />

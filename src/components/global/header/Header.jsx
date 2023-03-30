@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Guide, Layout, LogoImg } from './header.styled';
-import logoutOFF from '../../../assets/logouton.png';
 import logoutON from '../../../assets/logoutoff.png';
-import { useNavigate } from 'react-router-dom';
-import alarm from '../../../assets/alarm.png';
-import user from '../../../assets/user.png';
+import logoutOFF from '../../../assets/logouton.png';
+import { Guide, Layout, LogoImg } from './header.styled';
+import React, { useState, useEffect } from 'react';
 import ReactGA from 'react-ga4';
-import { useQuery } from '@tanstack/react-query';
-import { GetTeamInfo, GetUserInfo } from '../../../apis/apiGET';
+import { useNavigate } from 'react-router-dom';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -31,6 +27,7 @@ export default function Header() {
   const handleMouseLeave = () => {
     setLogoutImg(logoutON);
   };
+
 
   // const { data } = useQuery(['userinfo'], GetUserInfo, {
   //   onSuccess: response => {

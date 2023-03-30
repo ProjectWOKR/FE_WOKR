@@ -58,6 +58,7 @@ export async function GetCompletionTodo() {
   return data;
 }
 
+
 // export async function GetUserInfo() {
 //   const id = localStorage.getItem('Id');
 
@@ -65,6 +66,7 @@ export async function GetCompletionTodo() {
 //   const { data } = await api.get(`api/user/${id}`);
 //   return data;
 // }
+
 
 export async function GetTeamInfo() {
   const { data } = await api.get(`api/user/team/member`);

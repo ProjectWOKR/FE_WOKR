@@ -1,7 +1,9 @@
-import React, { useState, useRef } from 'react';
-import { NotHave } from '../global/globalModal/modal.styled';
+import { GetTodo } from '../../apis/apiGET';
+import plus from '../../assets/plus.png';
 import Potal from '../global/globalModal/Potal';
 import TodoModal from '../global/globalModal/TodoModal';
+import { NotHave } from '../global/globalModal/modal.styled';
+import TodoItem from './TodoItem';
 import {
   Container,
   Header,
@@ -9,10 +11,8 @@ import {
   TodoContainer,
   StTodoItem,
 } from './todo.styled';
-import TodoItem from './TodoItem';
-import plus from '../../assets/plus.png';
 import { useQuery } from '@tanstack/react-query';
-import { GetTodo } from '../../apis/apiGET';
+import React, { useState, useRef } from 'react';
 
 export default function ToDo() {
   //모달 상태관리
@@ -37,9 +37,7 @@ export default function ToDo() {
 
   // 임시
   const { data: getTodo } = useQuery(['TODO'], GetTodo, {
-    onSuccess: response => {
-      // console.log('대시보드 todo :', response);
-    },
+    onSuccess: response => {},
     onError: response => {},
   });
   return (

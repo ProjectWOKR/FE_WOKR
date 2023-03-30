@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import logo from '../../../assets/logo.png';
+import styled from 'styled-components';
 
 export const Layout = styled.div`
   width: 100%;

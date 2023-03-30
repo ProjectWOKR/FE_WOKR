@@ -1,7 +1,7 @@
-import { useState, useRef } from 'react';
-import { useDropDown, teamPosi } from './dropdown';
-import { DropdownContainer, DropIcon } from './dropDown.styled';
 import Arrow from '../../../assets/dropdownArrow.png';
+import { DropdownContainer, DropIcon } from './dropDown.styled';
+import { useDropDown, teamPosi } from './dropdown';
+import { useState, useRef } from 'react';
 
 const TeamPosiDropDown = ({ setUserInfo, userInfo }) => {
   // 드롭다운 상태

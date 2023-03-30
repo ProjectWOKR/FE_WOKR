@@ -1,9 +1,9 @@
-import { useState, useRef } from 'react';
-import { useDropDown, color } from './dropdown';
-import { ColorSelect, DropIcon } from './dropDown.styled';
-import Arrow from '../../../assets/dropdownArrow.png';
-import { useQuery } from '@tanstack/react-query';
 import { GetOKR } from '../../../apis/apiGET';
+import Arrow from '../../../assets/dropdownArrow.png';
+import { ColorSelect, DropIcon } from './dropDown.styled';
+import { useDropDown, color } from './dropdown';
+import { useQuery } from '@tanstack/react-query';
+import { useState, useRef } from 'react';
 
 const ColorDropDown = ({ setObjInfo, objInfo }) => {
   // 드롭다운 상태

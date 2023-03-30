@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { ModalBackground, ModalBox, OKRBox } from './modal.styled';
-import close from '../../../assets/close.png';
-import kr from '../../../assets/kr.png';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   PatchKRProgress,
   PatchObjectiveProgress,
 } from '../../../apis/apiPATCH';
-import { useRecoilValue } from 'recoil';
+import close from '../../../assets/close.png';
+import kr from '../../../assets/kr.png';
+import { trackEvent } from '../../../router/RouteChangeTracker';
 import { patchProgressInfo } from '../../../store/store';
 import { PatchPersentBox, PesentContainer } from '../../mainpage/OKR.styled';
+import { ModalBackground, ModalBox, OKRBox } from './modal.styled';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import React, { useEffect, useState } from 'react';
 import ReactGA from 'react-ga4';
-import { trackEvent } from '../../../router/RouteChangeTracker';
+import { useRecoilValue } from 'recoil';
+
 const ProgressPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   const queryClient = useQueryClient();
 
