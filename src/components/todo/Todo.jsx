@@ -49,7 +49,7 @@ export default function Todo() {
       ) : (
         <>
           <TodoDashboard>
-            <TodoNavi todayFormat={today} />
+            <TodoNavi todayFormat={today} getAllTodo={getAllTodo} />
             <PastTodo />
             {getAllTodo?.map(el => (
               <DetailTodoWrap key={el.targetDate}>

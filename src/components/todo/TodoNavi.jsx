@@ -5,7 +5,8 @@ import { DateNavi, NaviPlus, StNavi, TodoHeader } from './tododetail.styled';
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-scroll';
 
-const TodoNavi = ({ todayFormat }) => {
+const TodoNavi = ({ todayFormat, getAllTodo }) => {
+  // console.log(getAllTodo);
   const today = new Date();
   const yearMonth = `${today.getFullYear()}년 ${today.getMonth() + 1}월`;
 
@@ -14,6 +15,7 @@ const TodoNavi = ({ todayFormat }) => {
   let makeWeekAll = date => {
     let day = date.getDay();
     let week = [];
+    const haveDay = [];
 
     for (let i = 0; i < 7; i++) {
       let newDate = new Date(date.valueOf() + 86400000 * (i - day));
@@ -34,7 +36,9 @@ const TodoNavi = ({ todayFormat }) => {
       } else if (i === 6) {
         dateValue = '토';
       }
-      // console.log(newDate);
+
+      // if()
+      // console.log(allTodo[i]?.targetDate);
       // console.log(newDate.getDate());
       let format = '';
       if (newDate.getMonth() + 1 < 10) {
@@ -103,6 +107,8 @@ const TodoNavi = ({ todayFormat }) => {
     }
   };
 
+  console.log(state.week);
+
   return (
     <StNavi>
       <TodoHeader>
@@ -125,7 +131,6 @@ const TodoNavi = ({ todayFormat }) => {
           <NaviPlus onClick={createTodo}>
             <img src={plus} alt='' />
           </NaviPlus>
-          {/* <div className='more' /> */}
         </div>
       </TodoHeader>
       <DateNavi>

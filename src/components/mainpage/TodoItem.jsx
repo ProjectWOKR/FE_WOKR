@@ -18,22 +18,33 @@ const TodoItem = ({ getTodo }) => {
 
   // filter 함수 사용
   const now = new Date();
-  const plusToday = `${now.getFullYear()}-${now.getMonth() + 1}-${
-    now.getDate() + 1
-  }`;
+  console.log(new Date(now.setDate(now.getDate() + 1)));
+  console.log(
+    new Date('2023-03-31').getMonth() === now.getMonth() &&
+      new Date('2023-03-31').getDate() === now.getDate()
+  );
+  // console.log(new Date('2023-03-31') === new Date(now));
 
   const filterArray = getTodo?.filter(el => {
     if (el.completion === false) {
-      if (new Date(plusToday) > new Date(el.startDate)) {
-        return true;
+      // return el;
+      if (new Date(now.setDate(now.getDate() + 1)) > new Date(el.startDate)) {
+        return el;
       }
+      // } else if (
+      //   new Date(el.startDate).getMonth() === now.getMonth() &&
+      //   new Date(el.startDate).getDate() === now.getDate()
+      // ) {
+      //   return null;
+      // } else {
+      //   return el;
+      // }
+    } else {
+      return null;
     }
-    return false;
   });
 
-
-  // console.log('filterArray :', filterArray);
-
+  console.log('filterArray :', filterArray);
 
   // 체크 수정
   const { mutate: patchCheckmutate } = useMutation(PatchCheck, {
@@ -113,6 +124,7 @@ const TodoItem = ({ getTodo }) => {
       onError: response => {},
     }
   );
+  console.log(filterArray);
   return (
     <>
       {filterArray?.map(el => (
