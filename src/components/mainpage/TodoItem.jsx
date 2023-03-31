@@ -18,27 +18,26 @@ const TodoItem = ({ getTodo }) => {
 
   // filter 함수 사용
   const now = new Date();
-  console.log(new Date(now.setDate(now.getDate() + 1)));
-  console.log(
-    new Date('2023-03-31').getMonth() === now.getMonth() &&
-      new Date('2023-03-31').getDate() === now.getDate()
-  );
+  console.log(new Date(now.setDate(now.getDate())));
+  // console.log(
+  //   new Date('2023-03-31').getMonth() === now.getMonth() &&
+  //     new Date('2023-03-31').getDate() === now.getDate()
+  // );
   // console.log(new Date('2023-03-31') === new Date(now));
 
   const filterArray = getTodo?.filter(el => {
     if (el.completion === false) {
       // return el;
-      if (new Date(now.setDate(now.getDate() + 1)) > new Date(el.startDate)) {
+      if (new Date(now.setDate(now.getDate())) < new Date(el.startDate)) {
+        return null;
+      } else if (
+        new Date(el.startDate).getMonth() === now.getMonth() &&
+        new Date(el.startDate).getDate() === now.getDate()
+      ) {
+        return el;
+      } else {
         return el;
       }
-      // } else if (
-      //   new Date(el.startDate).getMonth() === now.getMonth() &&
-      //   new Date(el.startDate).getDate() === now.getDate()
-      // ) {
-      //   return null;
-      // } else {
-      //   return el;
-      // }
     } else {
       return null;
     }
