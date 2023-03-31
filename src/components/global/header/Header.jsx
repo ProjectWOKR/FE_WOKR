@@ -28,7 +28,6 @@ export default function Header() {
     setLogoutImg(logoutON);
   };
 
-
   // const { data } = useQuery(['userinfo'], GetUserInfo, {
   //   onSuccess: response => {
   //     console.log(response);

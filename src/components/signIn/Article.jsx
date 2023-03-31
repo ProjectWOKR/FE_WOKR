@@ -20,7 +20,6 @@ import React, { useEffect, useState } from 'react';
 import ReactGA from 'react-ga4';
 import { useNavigate } from 'react-router-dom';
 
-
 const Test = () => {
   const navigate = useNavigate();
   // 눈 아이콘
@@ -129,7 +128,7 @@ const Test = () => {
       </InputBox>
       {errors.password && <div className='valid'>{errors.password}</div>}
 
-      <LoginBtn type='submit'>로그인 하기</LoginBtn>
+      <LoginBtn type='submit'>로그인</LoginBtn>
       <HelpBox>
         <span onClick={() => navigate('/signup')}>회원가입</span>
       </HelpBox>

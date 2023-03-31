@@ -327,8 +327,8 @@ export const StTeam = styled.div`
   padding: 24px 15px 15px 15px;
   box-sizing: border-box;
   background-color: #fff;
-  box-shadow: 0px 3px 15px rgba(124, 124, 124, 0.25);
-  border-radius: 8px;
+  /* box-shadow: 0px 3px 15px rgba(124, 124, 124, 0.25);
+  border-radius: 8px; */
 
   .title {
     width: 100%;
