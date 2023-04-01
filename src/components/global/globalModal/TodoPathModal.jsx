@@ -29,6 +29,20 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 
 const TodoPathModal = ({ onCloseModal }) => {
   useEffect(() => {
+    const handleBeforeUnload = e => {
+      e.preventDefault();
+      e.returnValue =
+        '현재 입력중인 항목이 있습니다. 정말 새로고침 하시겠습니까?';
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
+
+  useEffect(() => {
     // 현재 위치에 고정시킴
     document.body.style.cssText = `
       position: fixed;

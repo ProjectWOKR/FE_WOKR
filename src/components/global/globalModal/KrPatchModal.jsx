@@ -16,6 +16,20 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
 
   const krInfo = useRecoilValue(patchKRInfo);
 
+  useEffect(() => {
+    const handleBeforeUnload = e => {
+      e.preventDefault();
+      e.returnValue =
+        '현재 입력중인 항목이 있습니다. 정말 새로고침 하시겠습니까?';
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
+
   // 모달 스크롤 방지
   useEffect(() => {
     // 현재 위치에 고정시킴
@@ -96,7 +110,9 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
   });
 
   const createKr = () => {
-    if (krInfo.state === 'patch') {
+    if (title.keyResult === '') {
+      alert('KR이 입력되지 않았습니다.');
+    } else if (krInfo.state === 'patch') {
       const id = krInfo.id;
       const value = title;
       patchKRMutate({ value, id });

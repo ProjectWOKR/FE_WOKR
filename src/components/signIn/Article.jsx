@@ -12,15 +12,28 @@ import {
   SignWrap,
   Label,
 } from '../../styles/sign.styled';
-
-import { toast } from 'react-toastify';
 import { OnChange } from '../global/onChange';
 import { useMutation } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
 import ReactGA from 'react-ga4';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-const Test = () => {
+const Article = () => {
+  useEffect(() => {
+    const handleBeforeUnload = e => {
+      e.preventDefault();
+      e.returnValue =
+        '현재 입력중인 항목이 있습니다. 정말 새로고침 하시겠습니까?';
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
+
   const navigate = useNavigate();
   // 눈 아이콘
   const [pwEyeOpen, setPwEyeOpen] = useState(false);
@@ -136,4 +149,4 @@ const Test = () => {
   );
 };
 
-export default Test;
+export default Article;
