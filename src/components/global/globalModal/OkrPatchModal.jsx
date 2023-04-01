@@ -138,7 +138,7 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
           action: 'Objective 수정 실패',
         });
       }
-      alert('팀장 및 본인이 작성한 OKR만 수정가능합니다.');
+      alert('팀장만 OKR 수정가능합니다.');
     },
   });
 

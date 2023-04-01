@@ -1,4 +1,4 @@
-import { GetOKR, GetTeamInfo } from '../../apis/apiGET.js';
+import { GetOKR, GetTeamInfo, GetUserInfo } from '../../apis/apiGET.js';
 import plus from '../../assets/plus.png';
 import AlertModal from '../global/globalModal/AlertModal.jsx';
 import OkrModal from '../global/globalModal/OkrModal.jsx';
@@ -7,6 +7,8 @@ import { NotHave } from '../global/globalModal/modal.styled';
 import { Container, Header, HeaderBox, OkrContainer } from './OKR.styled';
 import OkrObject from './OkrItem';
 import { useQuery } from '@tanstack/react-query';
+import jwt_decode from 'jsonwebtoken/decode';
+import { useEffect } from 'react';
 import React from 'react';
 import { useState, useRef } from 'react';
 
@@ -15,16 +17,29 @@ export default function OKR() {
   const [okrModalOn, setOkrModalOn] = useState(false);
   const [alertModalOn, setAlertModalOn] = useState(false);
   const [teamName, setTeamName] = useState('');
+  const [accessToken, setAccessToken] = useState(
+    localStorage.getItem('accesstoken')
+  );
+  const [uid, setUid] = useState(null);
+  const [position, setPosition] = useState('');
+
+  useEffect(() => {
+    const decodeToken = jwt_decode(accessToken);
+    const extractedUid = decodeToken.userId;
+    setUid(extractedUid);
+  }, [accessToken]);
+
+  const { data: userInfo } = useQuery(['userInfo'], () => GetUserInfo(uid), {
+    enabled: !!uid,
+    onSuccess: response => {
+      setTeamName(response.team);
+      setPosition(response.teamposition);
+    },
+  });
 
   const { data: getOKRData } = useQuery(['OKR'], GetOKR, {
     onSuccess: response => {},
     onError: response => {},
-  });
-
-  const { data: teaminfo } = useQuery(['team'], GetTeamInfo, {
-    onSuccess: response => {
-      setTeamName(response[0].team);
-    },
   });
 
   /**모달 닫는 함수 */
@@ -34,10 +49,14 @@ export default function OKR() {
 
   /** +버튼 누르면 OKR 생성하는 모달 띄움 */
   const createOKR = () => {
-    if (getOKRData.length < 4) {
-      setOkrModalOn(!okrModalOn);
+    if (position === '팀장') {
+      if (getOKRData.length < 4) {
+        setOkrModalOn(!okrModalOn);
+      } else {
+        setAlertModalOn(!alertModalOn);
+      }
     } else {
-      setAlertModalOn(!alertModalOn);
+      alert('팀장만 OKR 생성 가능합니다.');
     }
   };
 

@@ -35,6 +35,10 @@ const Article = () => {
     };
   }, []);
 
+  useEffect(() => {
+    localStorage.removeItem('userInfo');
+  }, []);
+
   const navigate = useNavigate();
   // 눈 아이콘
   const [pwEyeOpen, setPwEyeOpen] = useState(false);
@@ -109,7 +113,6 @@ const Article = () => {
           action: '회원가입',
         });
       }
-
       setTimeout(() => {
         navigate('/');
       }, 1000);
