@@ -18,13 +18,6 @@ const TodoItem = ({ getTodo }) => {
 
   // filter 함수 사용
   const now = new Date();
-  console.log(new Date(now.setDate(now.getDate())));
-  // console.log(
-  //   new Date('2023-03-31').getMonth() === now.getMonth() &&
-  //     new Date('2023-03-31').getDate() === now.getDate()
-  // );
-  // console.log(new Date('2023-03-31') === new Date(now));
-
   const filterArray = getTodo?.filter(el => {
     if (el.completion === false) {
       // return el;
@@ -42,8 +35,6 @@ const TodoItem = ({ getTodo }) => {
       return null;
     }
   });
-
-  console.log('filterArray :', filterArray);
 
   // 체크 수정
   const { mutate: patchCheckmutate } = useMutation(PatchCheck, {
@@ -123,7 +114,6 @@ const TodoItem = ({ getTodo }) => {
       onError: response => {},
     }
   );
-  console.log(filterArray);
   return (
     <>
       {filterArray?.map(el => (

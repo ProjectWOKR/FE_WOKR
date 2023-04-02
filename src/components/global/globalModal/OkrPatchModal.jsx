@@ -19,6 +19,20 @@ import { toast } from 'react-toastify';
 import { useRecoilValue } from 'recoil';
 
 const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
+  useEffect(() => {
+    const handleBeforeUnload = e => {
+      e.preventDefault();
+      e.returnValue =
+        '현재 입력중인 항목이 있습니다. 정말 새로고침 하시겠습니까?';
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
+
   const queryClient = useQueryClient();
   const months = [
     '1월',
@@ -124,7 +138,7 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
           action: 'Objective 수정 실패',
         });
       }
-      alert('팀장 및 본인이 작성한 OKR만 수정가능합니다.');
+      alert('팀장만 OKR 수정가능합니다.');
     },
   });
 

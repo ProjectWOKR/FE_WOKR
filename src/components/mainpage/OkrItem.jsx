@@ -1,4 +1,4 @@
-import { GetOKR } from '../../apis/apiGET.js';
+import { GetOKR, GetUserInfo } from '../../apis/apiGET.js';
 import kRAdd from '../../assets/KRAdd.png';
 import {
   patchOKRInfo,
@@ -19,6 +19,7 @@ import {
   PersentBox,
 } from './OKR.styled';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import jwt_decode from 'jsonwebtoken/decode';
 import React, { useState, useRef, useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 
@@ -30,6 +31,24 @@ const OkrObject = () => {
   const setPatchkrInfo = useSetRecoilState(patchKRInfo);
   const setPatchProgressInfo = useSetRecoilState(patchProgressInfo);
   const [openDropdownId, setOpenDropdownId] = useState(null);
+  const [accessToken, setAccessToken] = useState(
+    localStorage.getItem('accesstoken')
+  );
+  const [uid, setUid] = useState(null);
+  const [position, setPosition] = useState('');
+
+  useEffect(() => {
+    const decodeToken = jwt_decode(accessToken);
+    const extractedUid = decodeToken.userId;
+    setUid(extractedUid);
+  }, [accessToken]);
+
+  const { data: userInfo } = useQuery(['userInfo'], () => GetUserInfo(uid), {
+    enabled: !!uid,
+    onSuccess: response => {
+      setPosition(response.teamposition);
+    },
+  });
 
   /**O 모달 닫는 함수 */
   const onObjectiveCloseModal = () => {
@@ -43,14 +62,18 @@ const OkrObject = () => {
 
   /** +버튼 누르면 OKR 생성하는 모달 띄움 */
   const patchOKR = (id, objective, start, end, color) => {
-    setPatchOkrInfo({
-      id: id,
-      objective: objective,
-      startData: start,
-      endData: end,
-      color: color,
-    });
-    setOkrModalOn(!okrModalOn);
+    if (position === '팀장') {
+      setPatchOkrInfo({
+        id: id,
+        objective: objective,
+        startData: start,
+        endData: end,
+        color: color,
+      });
+      setOkrModalOn(!okrModalOn);
+    } else {
+      alert('팀장만 OKR 수정이 가능합니다.');
+    }
   };
 
   /**KR 모달 닫는 함수 */
@@ -60,8 +83,17 @@ const OkrObject = () => {
 
   /** +버튼 누르면 OKR 생성하는 모달 띄움 */
   const patchProgress = (id, value, state, color) => {
-    setPatchProgressInfo({ id: id, value: value, state: state, color: color });
-    setprogressModalOn(!progressModalOn);
+    if (position === '팀장') {
+      setPatchProgressInfo({
+        id: id,
+        value: value,
+        state: state,
+        color: color,
+      });
+      setprogressModalOn(!progressModalOn);
+    } else {
+      alert('팀장만 OKR 수정이 가능합니다.');
+    }
   };
 
   // 모달 외 클릭시 닫기위해 ref생성
@@ -111,54 +143,57 @@ const OkrObject = () => {
     enabled: true,
   });
 
-  useEffect(() => {});
   const patchKR = (id, KR, state, index) => {
-    if (state === 'patch')
-      setPatchkrInfo({
-        id: id,
-        kr: KR,
-        state: state,
-      });
-    else if (state === 'post') {
-      let index1 = false;
-      let index2 = false;
-      let index3 = false;
-      for (let i = 0; i < getOKRData[index]?.keyresult.length; i++) {
-        const forNum = Number(getOKRData[index]?.keyresult[i].krNumber);
-        if (forNum === 1) {
-          index1 = true;
+    if (position === '팀장') {
+      if (state === 'patch')
+        setPatchkrInfo({
+          id: id,
+          kr: KR,
+          state: state,
+        });
+      else if (state === 'post') {
+        let index1 = false;
+        let index2 = false;
+        let index3 = false;
+        for (let i = 0; i < getOKRData[index]?.keyresult.length; i++) {
+          const forNum = Number(getOKRData[index]?.keyresult[i].krNumber);
+          if (forNum === 1) {
+            index1 = true;
+          }
+          if (forNum === 2) {
+            index2 = true;
+          }
+          if (forNum === 3) {
+            index3 = true;
+          }
         }
-        if (forNum === 2) {
-          index2 = true;
-        }
-        if (forNum === 3) {
-          index3 = true;
+        if (index1 === false) {
+          setPatchkrInfo({
+            id: id,
+            kr: KR,
+            state: state,
+            num: 1,
+          });
+        } else if (index1 === true && index2 === false) {
+          setPatchkrInfo({
+            id: id,
+            kr: KR,
+            state: state,
+            num: 2,
+          });
+        } else if (index1 === true && index2 === true && index3 === false) {
+          setPatchkrInfo({
+            id: id,
+            kr: KR,
+            state: state,
+            num: 3,
+          });
         }
       }
-      if (index1 === false) {
-        setPatchkrInfo({
-          id: id,
-          kr: KR,
-          state: state,
-          num: 1,
-        });
-      } else if (index1 === true && index2 === false) {
-        setPatchkrInfo({
-          id: id,
-          kr: KR,
-          state: state,
-          num: 2,
-        });
-      } else if (index1 === true && index2 === true && index3 === false) {
-        setPatchkrInfo({
-          id: id,
-          kr: KR,
-          state: state,
-          num: 3,
-        });
-      }
+      setkrModalOn(!krModalOn);
+    } else {
+      alert('팀장만 OKR 수정이 가능합니다.');
     }
-    setkrModalOn(!krModalOn);
   };
 
   return (

@@ -12,15 +12,13 @@ import {
   SignWrap,
   Label,
 } from '../../styles/sign.styled';
-
-import { toast } from 'react-toastify';
 import { OnChange } from '../global/onChange';
 import { useMutation } from '@tanstack/react-query';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ReactGA from 'react-ga4';
 import { useNavigate } from 'react-router-dom';
 
-const Test = () => {
+const Article = () => {
   const navigate = useNavigate();
   // 눈 아이콘
   const [pwEyeOpen, setPwEyeOpen] = useState(false);
@@ -136,4 +134,4 @@ const Test = () => {
   );
 };
 
-export default Test;
+export default Article;

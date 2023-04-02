@@ -58,7 +58,7 @@ export async function GetCompletionTodo() {
   return data;
 }
 
-export async function GetTeamInfo() {
-  const { data } = await api.get(`api/user/team/member`);
+export async function GetUserInfo(uid) {
+  const { data } = await api.get(`api/user/${uid}`);
   return data;
 }

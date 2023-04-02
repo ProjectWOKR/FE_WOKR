@@ -15,6 +15,20 @@ import DatePicker, { DateObject } from 'react-multi-date-picker';
 import { toast } from 'react-toastify';
 
 const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
+  useEffect(() => {
+    const handleBeforeUnload = e => {
+      e.preventDefault();
+      e.returnValue =
+        '현재 입력중인 항목이 있습니다. 정말 새로고침 하시겠습니까?';
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
+
   const queryClient = useQueryClient();
   const months = [
     '1월',
