@@ -168,7 +168,7 @@ const TodoItem = ({ getTodo }) => {
               <div title={el.memo}>{el.toDo}</div>
               <p style={{ color: 'red' }}>
                 {/* {el.fstartDate}~{el.fendDate} 까지 */}
-                {el.fendDate} 완료
+                {el.fendDate}까지 완료
               </p>
             </div>
             <div className='priorityBox'>
