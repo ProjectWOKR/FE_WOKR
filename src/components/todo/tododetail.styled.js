@@ -95,6 +95,30 @@ export const DateNavi = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    cursor: default;
+    .label {
+      color: #4b4b4b;
+      font-size: 1.5rem;
+      margin-bottom: 1px;
+    }
+    .date {
+      font-size: 25px;
+      line-height: 34px;
+    }
+  }
+  .include {
+    width: calc(100% / 7);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s;
+    :hover {
+      background-color: rgb(248, 248, 248);
+    }
     .label {
       color: #4b4b4b;
       font-size: 1.5rem;
@@ -104,6 +128,14 @@ export const DateNavi = styled.div`
       font-size: 25px;
       /* background-color: pink; */
       line-height: 34px;
+    }
+    .includeCh {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #000;
+      position: absolute;
+      bottom: 6px;
     }
   }
 `;
