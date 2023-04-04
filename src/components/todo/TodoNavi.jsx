@@ -2,21 +2,26 @@ import plus from '../../assets/plus.png';
 import Potal from '../global/globalModal/Potal';
 import TodoModal from '../global/globalModal/TodoModal';
 import { DateNavi, NaviPlus, StNavi, TodoHeader } from './tododetail.styled';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-scroll';
 
 const TodoNavi = ({ todayFormat, getAllTodo }) => {
   // console.log(getAllTodo);
+  // console.log(todayFormat);
   const today = new Date();
   const yearMonth = `${today.getFullYear()}년 ${today.getMonth() + 1}월`;
 
   let date = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 
+  const [month, setMonth] = useState(today.getMonth() + 1);
+
   let makeWeekAll = date => {
     let day = date.getDay();
     let week = [];
-    const haveDay = [];
-
+    const haveDay = getAllTodo?.map(todo => {
+      return todo.targetDate;
+    });
+    // console.log(haveDay);
     for (let i = 0; i < 7; i++) {
       let newDate = new Date(date.valueOf() + 86400000 * (i - day));
       // let id = Math.random();
@@ -37,28 +42,33 @@ const TodoNavi = ({ todayFormat, getAllTodo }) => {
         dateValue = '토';
       }
 
-      // if()
-      // console.log(allTodo[i]?.targetDate);
-      // console.log(newDate.getDate());
       let format = '';
-      if (newDate.getMonth() + 1 < 10) {
+      if (newDate.getMonth() + 1 < 10 && newDate.getDate() < 10) {
+        format = `0${newDate.getMonth() + 1}월 0${newDate.getDate()}일`;
+      } else if (newDate.getMonth() + 1 < 10) {
         format = `0${newDate.getMonth() + 1}월 ${newDate.getDate()}일`;
       } else if (newDate.getDate() < 10) {
         format = `${newDate.getMonth() + 1}월 0${newDate.getDate()}일`;
       } else {
         format = `${newDate.getMonth() + 1}월 ${newDate.getDate()}일`;
       }
+
       week.push([
         dateValue,
         `${newDate.getMonth() + 1}`,
         `${newDate.getDate()}`,
         { format: format },
+        { includes: haveDay?.includes(format) },
       ]);
+
+      // console.log(week);
     }
     return week;
   };
 
   let week = makeWeekAll(date);
+
+  // console.log()
 
   const [state, setState] = useState({
     date,
@@ -73,6 +83,15 @@ const TodoNavi = ({ todayFormat, getAllTodo }) => {
       date: newDate,
       week: newWeek,
     });
+
+    newWeek.map(el => {
+      if (el[1] === month) {
+        setMonth(month);
+      } else {
+        setMonth(el[1]);
+      }
+      return el;
+    });
   };
 
   const onPressArrowRight = () => {
@@ -82,6 +101,14 @@ const TodoNavi = ({ todayFormat, getAllTodo }) => {
       ...state,
       date: newDate,
       week: newWeek,
+    });
+    newWeek.map(el => {
+      if (el[1] === month) {
+        setMonth(month);
+      } else {
+        setMonth(el[1]);
+      }
+      return el;
     });
   };
 
@@ -106,20 +133,19 @@ const TodoNavi = ({ todayFormat, getAllTodo }) => {
       setTodoModalOn(!todoModalOn);
     }
   };
-
-  console.log(state.week);
+  // console.log(state.week);
 
   return (
     <StNavi>
       <TodoHeader>
         <div className='left'>
-          <div className='dDay'>{yearMonth}</div>
-          <div className='down' />
+          <div className='dDay'>
+            {today.getFullYear()}년 {month}월
+          </div>
         </div>
         <div className='right'>
           <div className='prev' onClick={onPressArrowLeft} />
           <div className='next' onClick={onPressArrowRight} />
-          {/* <div className='today'>오늘</div> */}
           <Link
             className='today'
             to={todayFormat}
@@ -142,22 +168,28 @@ const TodoNavi = ({ todayFormat, getAllTodo }) => {
                 spy={true}
                 smooth={true}
                 offset={-500}
-                className='day'
-                style={{ border: '2px solid rgba(255, 131, 54,1)' }}>
+                className={el[4].includes === false ? 'day' : 'include'}
+                style={{ backgroundColor: ' rgba(255, 131, 54, 0.3)' }}>
                 <span className='label'>{el[0]}</span>
                 <span className='date' style={{ color: '#ff8336' }}>
                   {el[2]}
                 </span>
+                {el[4].includes === false ? null : (
+                  <div className='includeCh'></div>
+                )}
               </Link>
             ) : (
               <Link
-                className='day'
+                className={el[4].includes === false ? 'day' : 'include'}
                 to={el[3].format}
                 spy={true}
                 offset={-500}
                 smooth={true}>
                 <span className='label'>{el[0]}</span>
                 <span className='date'>{el[2]}</span>
+                {el[4].includes === false ? null : (
+                  <div className='includeCh'></div>
+                )}
               </Link>
             )}
           </React.Fragment>

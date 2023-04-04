@@ -14,7 +14,7 @@ const FinishTodo = ({ el }) => {
 
   // console.log('el :', el);
 
-  const Priority = ({ ct }) => {
+  const Priority = () => {
     // console.log(el.priority);
     if (el.priority === 1) {
       return <img src={red} alt='' />;

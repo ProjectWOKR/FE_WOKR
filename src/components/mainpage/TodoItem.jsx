@@ -110,7 +110,9 @@ const TodoItem = ({ getTodo }) => {
     ['completionTodo'],
     GetCompletionTodo,
     {
-      onSuccess: response => {},
+      onSuccess: response => {
+        console.log('completionTodo', response);
+      },
       onError: response => {},
     }
   );
@@ -155,10 +157,13 @@ const TodoItem = ({ getTodo }) => {
           </div>
           <div className='detail'>
             <div className='nameDateComplitc'>
-              <div title={el.memo}>{el.toDo}</div>
-              <p style={{ color: 'red' }}>
-                {/* {el.fstartDate}~{el.fendDate} 까지 */}
-                {el.fendDate}까지 완료
+              <div
+                title={el.memo}
+                style={{ textDecoration: 'line-through', color: '#a9a9a9' }}>
+                {el.toDo}
+              </div>
+              <p style={{ textDecoration: 'line-through', color: '#a9a9a9' }}>
+                {el.fstartDate}~{el.fendDate}
               </p>
             </div>
             <div className='priorityBox'>

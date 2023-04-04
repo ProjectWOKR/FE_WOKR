@@ -13,19 +13,24 @@ import styled from 'styled-components';
 export default function Todo() {
   //todo 전부 가져오기
   const { data: getAllTodo } = useQuery(['ALLTODO'], GetAllTodo, {
-    onSuccess: response => {},
+    onSuccess: response => {
+      // console.log('getTodo', response);
+    },
     onError: response => {},
   });
 
   const now = new Date();
   let today = '';
   let tomorrow;
-  if (now.getMonth() + 1 < 10) {
-    today = `0${now.getMonth() + 1}월 ${now.getDate()}일`;
-    tomorrow = `0${now.getMonth() + 1}월 ${now.getDate() + 1}일`;
+  if (now.getMonth() + 1 < 10 && now.getDate() < 10) {
+    today = `0${now.getMonth() + 1}월 0${now.getDate()}일`;
+    tomorrow = `0${now.getMonth() + 1}월 0${now.getDate() + 1}일`;
   } else if (now.getDate() < 10) {
     today = `${now.getMonth() + 1}월 0${now.getDate()}일`;
     tomorrow = `${now.getMonth() + 1}월 0${now.getDate() + 1}일`;
+  } else if (now.getMonth() + 1 < 10) {
+    today = `0${now.getMonth() + 1}월 ${now.getDate()}일`;
+    tomorrow = `0${now.getMonth() + 1}월 ${now.getDate() + 1}일`;
   } else {
     today = `${now.getMonth() + 1}월 ${now.getDate()}일`;
     tomorrow = `${now.getMonth() + 1}월 ${now.getDate() + 1}일`;
