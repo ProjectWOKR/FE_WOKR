@@ -22,16 +22,21 @@ export default function OKR() {
   );
   const [uid, setUid] = useState(null);
   const [position, setPosition] = useState('');
+  // console.log('uid :', uid);
 
   useEffect(() => {
     const decodeToken = jwt_decode(accessToken);
     const extractedUid = decodeToken.userId;
     setUid(extractedUid);
+    // console.log('useEffect');
   }, [accessToken]);
 
   const { data: userInfo } = useQuery(['userInfo'], () => GetUserInfo(uid), {
     enabled: !!uid,
+    // console.log(enabled)
     onSuccess: response => {
+      // console.log(response);
+      // console.log('통신');
       setTeamName(response.team);
       setPosition(response.teamposition);
     },

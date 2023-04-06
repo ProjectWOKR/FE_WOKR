@@ -34,3 +34,8 @@ export async function PatchTodo({ id, value }) {
   const { data } = await api.patch(`api/todo/${id}`, value);
   return data;
 }
+
+export async function PatchTutorial() {
+  const { data } = await api.patch(`api/user/tutorial`);
+  return data;
+}

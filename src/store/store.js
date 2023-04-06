@@ -46,3 +46,17 @@ export const patchTodoInfo = atom({
     priority: 0,
   },
 });
+
+// export const accessTokenInfo = atom({
+//   key: 'defaultAccessTokenInfo',
+//   default:{
+//     localStorage.getItem('accesstoken')
+//   }
+// });
+
+// export const userId = atom({
+//   key : 'userInfo',
+//   default : {
+//     id :
+//   }
+// })

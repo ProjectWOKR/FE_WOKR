@@ -70,6 +70,7 @@ const Article = () => {
 
   const { mutate: signInMutate } = useMutation(SignIn, {
     onSuccess: response => {
+      // console.log(response);
       if (process.env.NODE_ENV !== 'development') {
         ReactGA.event({
           category: '버튼',
