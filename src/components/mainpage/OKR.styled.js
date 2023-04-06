@@ -1,3 +1,5 @@
+import milestone from '../../assets/milestone 1.png';
+import mount from '../../assets/mount.png';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -8,7 +10,6 @@ export const Container = styled.div`
   box-shadow: 0 3px 15px rgba(124, 124, 124, 0.25);
   border-radius: 12px;
   box-sizing: border-box;
-  /* background-color: skyblue; */
 `;
 
 export const HeaderBox = styled.div`
@@ -66,60 +67,64 @@ export const OKRBox = styled.div`
 export const Objective = styled.div`
   display: flex;
   flex-direction: row;
-  .Logo {
-    font-weight: 700;
-    font-size: 54.2282px;
-    line-height: 74px;
-    margin-left: 17px;
-    color: ${({ color }) => color};
-    cursor: default;
-  }
-  .NameBox {
-    width: 400px;
-    .Name {
-      margin-top: 16px;
-      margin-left: 16px;
-      font-weight: 500;
-      font-size: 22px;
-      line-height: 33px;
-      letter-spacing: -0.01em;
+  align-items: center;
+  /* justify-content: space-between; */
+  padding: 17px 21px;
+  position: relative;
+  .left {
+    width: calc(100% - 172px - 42px);
+    display: flex;
+    align-items: center;
+    .title {
+      font-weight: 700;
+      font-size: 54.2282px;
+      line-height: 74px;
       color: ${({ color }) => color};
-      cursor: pointer;
-    }
-    .Cal {
-      height: 18px;
-      font-style: normal;
-      font-weight: 500;
-      font-size: 12.5px;
-      margin-left: 15px;
-      color: #4b4b4b;
       cursor: default;
+      background: url(${mount}) no-repeat center / 100%;
+      min-width: 40px;
+      height: 40px;
+      margin-right: 16px;
+    }
+    .nameBox {
+      width: 100%;
+      .name {
+        width: calc(100% - 56px);
+        height: 38px;
+        font-weight: 500;
+        font-size: 22px;
+        line-height: 33px;
+        letter-spacing: -0.01em;
+        color: ${({ color }) => color};
+        cursor: pointer;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .date {
+        height: 18px;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 12.5px;
+        color: #4b4b4b;
+        cursor: default;
+      }
     }
   }
-  .Range {
-    width: 123px;
-    height: 11px;
-    margin-top: 34px;
-    margin-left: 130px;
-    cursor: pointer;
-  }
-  .percent {
-    font-weight: 300;
-    font-size: 18px;
-    line-height: 25px;
-    letter-spacing: -0.01em;
-    margin-top: 26px;
-    margin-left: 14px;
-    color: ${({ color }) => color};
-    cursor: default;
-  }
-  .patchbtn {
-    width: 50px;
-    height: 30px;
-    position: absolute;
-    top: 50%;
-    right: -50px;
-    transform: translateY(-50%);
+  .right {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    .percent {
+      width: 35px;
+      height: 25px;
+      font-weight: 300;
+      font-size: 18px;
+      /* line-height: 25px; */
+      color: ${({ color }) => color};
+      cursor: default;
+      margin-left: 14px;
+    }
   }
 `;
 
@@ -130,92 +135,56 @@ export const KRBox = styled.div`
   border-radius: 7px;
   margin-bottom: 8px;
   display: flex;
-  flex-direction: row;
-  .Logo {
-    margin-left: 20px;
-    margin-top: 6px;
-    width: 36px;
-    height: 27px;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 27px;
-    text-align: center;
-    letter-spacing: -0.02em;
-    color: ${({ color }) => color};
-    cursor: default;
-  }
-  .Name {
-    margin-top: 6px;
-    margin-left: 20px;
-    width: 400px;
-    height: 27px;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 27px;
-    letter-spacing: -0.01em;
-    color: #4b4b4b;
-    cursor: pointer;
-  }
-  .Range {
-    width: 123px;
-    height: 11px;
-    margin-top: 15px;
-    margin-left: 13px;
-    cursor: pointer;
-  }
-  .percent {
-    width: 47px;
-    font-weight: 300;
-    font-size: 18px;
-    line-height: 25px;
-    letter-spacing: -0.01em;
-    margin-top: 8px;
-    margin-left: 14px;
-    color: ${({ color }) => color};
-    cursor: default;
-  }
-  .right {
+  align-items: center;
+  padding: 0 14px;
+
+  .left {
+    width: calc(100% - 172px - 28px);
     display: flex;
     align-items: center;
-    cursor: pointer;
-    .range {
-      width: 123px;
-      height: 11px;
-      cursor: pointer;
+    .mount {
+      width: 34px;
+      height: 34px;
+      background: url(${milestone}) no-repeat center / cover;
     }
-    .percent {
-      margin-left: 14px;
-      font-weight: 300;
-      font-size: 18px;
-      line-height: 25px;
-      letter-spacing: -0.01em;
+    .logo {
+      width: 50px;
+      height: 27px;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 27px;
+      text-align: center;
+      letter-spacing: -0.02em;
       color: ${({ color }) => color};
       cursor: default;
+      margin: 0 10px 0 14px;
     }
-    .emotionBox {
-      width: 33px;
-      height: 31px;
-      background: #f8f8f8;
-      border-radius: 7px;
-      display: flex;
-      text-align: center;
-      align-items: center;
-      justify-content: center;
+    .name {
+      width: calc(100% - 220px);
+      height: 27px;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 27px;
+      letter-spacing: -0.01em;
+      color: #4b4b4b;
       cursor: pointer;
-      /* margin-left: 10px; */
-      margin-right: 5px;
     }
   }
-
-  .patchbtn {
-    position: absolute;
-    top: 0;
-    right: -50px;
-    /* margin-top: 7px; */
-    width: 50px;
-    height: 30px;
-    /* display: none; */
+  .right {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    .percent {
+      width: 35px;
+      height: 25px;
+      font-weight: 300;
+      font-size: 18px;
+      color: ${({ color }) => color};
+      cursor: default;
+      margin-left: 14px;
+      margin-right: 11px;
+    }
   }
 `;
 
@@ -238,25 +207,24 @@ export const EmptyKR = styled.button`
   margin-bottom: 8px;
 `;
 
-export const OKRSpace = styled.div`
-  margin-top: 110px;
-  background-color: black;
-`;
-
 export const PersentBox = styled.div`
-  height: 11px;
+  width: 123px;
   border-radius: 3px;
   position: relative;
-  //기존 디자인 없애기
-  background-color: black;
+  max-width: 180px;
 
-  margin-top: ${({ state }) => `${state === 'Objective' ? '34px' : '15px'}`};
-  margin-left: ${({ state }) => `${state === 'Objective' ? '29px' : '12.5px'}`};
+  display: flex;
+  background-color: pink;
+  //기존 디자인 없애기
+
+  /* margin-top: ${({ state }) => `${state === 'Objective' ? '34px' : '15px'}`};
+  margin-left: ${({ state }) =>
+    `${state === 'Objective' ? '29px' : '12.5px'}`}; */
   cursor: pointer;
   input[type='range'] {
-    width: 205px;
-    -webkit-appearance: none;
     width: 100%;
+    height: 11px;
+    -webkit-appearance: none;
     background: transparent;
     background: #e8e8e8;
     padding: 0;

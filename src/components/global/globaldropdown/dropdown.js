@@ -1,9 +1,9 @@
-import bad from '../../../assets/bad2.png';
 import blueF from '../../../assets/blue.png';
+import good from '../../../assets/emoji1.png';
+import bad from '../../../assets/emoji2.png';
+import normal from '../../../assets/emoji3.png';
 import four from '../../../assets/four.png';
-import good from '../../../assets/good.png';
 import grayF from '../../../assets/gray.png';
-import normal from '../../../assets/normal2.png';
 import one from '../../../assets/one.png';
 import redF from '../../../assets/red.png';
 import three from '../../../assets/three.png';
@@ -35,24 +35,24 @@ export const useDropDown = (ref, initialState) => {
   return [isOpen, setIsOpen];
 };
 
-export const team = {
-  list: [
-    'P01',
-    'P02',
-    'P03',
-    'P04',
-    'P05',
-    'P06',
-    'P07',
-    'P08',
-    'P09',
-    'P010',
-    'P011',
-    'P012',
-    'P013',
-  ],
-  defaultValue: '부서를 선택해주세요',
-};
+// export const team = {
+//   list: [
+//     'P01',
+//     'P02',
+//     'P03',
+//     'P04',
+//     'P05',
+//     'P06',
+//     'P07',
+//     'P08',
+//     'P09',
+//     'P010',
+//     'P011',
+//     'P012',
+//     'P013',
+//   ],
+//   defaultValue: '부서를 선택해주세요',
+// };
 
 export const teamPosi = {
   list: ['팀장', '팀원'],
