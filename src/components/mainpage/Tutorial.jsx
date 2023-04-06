@@ -15,10 +15,6 @@ const Tutorial = () => {
   const { mutate: patchTutorial } = useMutation(PatchTutorial, {
     onSuccess: response => {
       queryClient.invalidateQueries(['userInfo']);
-      console.log('눌림');
-    },
-    onError: error => {
-      console.log('에러요');
     },
   });
   return (

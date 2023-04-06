@@ -23,16 +23,12 @@ export default function Mainpage() {
   const [accessToken, setAccessToken] = useState(
     localStorage.getItem('accesstoken')
   );
-  // console.log(accessToken);
 
   useEffect(() => {
     const decodeToken = jwt_decode(accessToken);
-    // console.log(decodeToken);
     const extractedUid = decodeToken.userId;
-    // console.log(extractedUid);
     setUid(() => extractedUid);
   }, [accessToken]);
-  // console.log(uid);
 
   useEffect(() => {
     if (localStorage.accesstoken === undefined) {
@@ -42,10 +38,6 @@ export default function Mainpage() {
 
   const { data: userInfo } = useQuery(['userInfo'], () => GetUserInfo(uid), {
     enabled: !!uid,
-    // console.log(enabled)
-    onSuccess: response => {
-      console.log(response);
-    },
   });
 
   const menuList = ['Dashboard', 'All OKR', 'Team OKR', 'TO - DO', 'Calendar'];
