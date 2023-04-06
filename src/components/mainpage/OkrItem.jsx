@@ -203,101 +203,104 @@ const OkrObject = () => {
           <OKRBox key={index}>
             <>
               <Objective key={Obdata.objectiveId} color={Obdata.color}>
-                <div className='Box'>
-                  <div className='Logo'>O</div>
-                </div>
-                <div className='NameBox'>
-                  <div
-                    className='Name'
-                    onClick={() => {
-                      patchOKR(
-                        Obdata.objectiveId,
-                        Obdata.objective,
-                        Obdata.startdate,
-                        Obdata.enddate,
-                        Obdata.color
-                      );
-                    }}>
-                    {Obdata.objective}
-                  </div>
-                  <div className='Cal'>
-                    {Obdata.startdate} - {Obdata.enddate}
+                <div className='left'>
+                  <div className='title'></div>
+                  <div className='nameBox'>
+                    <div
+                      className='name'
+                      onClick={() => {
+                        patchOKR(
+                          Obdata.objectiveId,
+                          Obdata.objective,
+                          Obdata.startdate,
+                          Obdata.enddate,
+                          Obdata.color
+                        );
+                      }}>
+                      {Obdata.objective}
+                    </div>
+                    <div className='date'>
+                      {Obdata.startdate} - {Obdata.enddate}
+                    </div>
                   </div>
                 </div>
 
-                <PersentBox
-                  ObColor={Obdata.color}
-                  state='Objective'
-                  onClick={() => {
-                    patchProgress(
-                      Obdata.objectiveId,
-                      Obdata.progress,
-                      'Objective',
-                      Obdata.color
-                    );
-                  }}>
-                  <input
-                    type='range'
-                    min={0}
-                    max={100}
-                    step={1}
-                    value={Obdata.progress}
-                  />
-                  <div
-                    className='bg'
-                    style={{ width: `${Obdata.progress}%` }}></div>
-                </PersentBox>
-                <div className='background' />
-                <div className='percent'>{Obdata.progress}%</div>
-              </Objective>
-            </>
-            {Obdata.keyresult.map(data => {
-              return (
-                <KRBox key={data.keyResultId} color={Obdata.color}>
-                  <div className='Logo'>KR{data.krNumber}</div>
-                  <div
-                    className='Name'
-                    onClick={() => {
-                      patchKR(data.keyResultId, data.keyResult, 'patch');
-                    }}>
-                    {data.keyResult}
-                  </div>
+                <div className='right'>
                   <PersentBox
+                    ObColor={Obdata.color}
+                    state='Objective'
                     onClick={() => {
                       patchProgress(
-                        data.keyResultId,
-                        data.progress,
-                        'KR',
+                        Obdata.objectiveId,
+                        Obdata.progress,
+                        'Objective',
                         Obdata.color
                       );
-                    }}
-                    ObColor={Obdata.color}
-                    state='KR'>
+                    }}>
                     <input
                       type='range'
                       min={0}
                       max={100}
                       step={1}
-                      value={data.progress}
+                      value={Obdata.progress}
                     />
                     <div
                       className='bg'
-                      style={{ width: `${data.progress}%` }}></div>
+                      style={{ width: `${Obdata.progress}%` }}></div>
                   </PersentBox>
-
-                  <OKRSpace />
-                  <div className='percent'>{data.progress}%</div>
-                  <div className='right'>
-                    <div className='emotionBox'>
-                      {KRArray && (
-                        <Emotion
-                          keyResultId={data.keyResultId}
-                          emotionState={data.emotion}
-                          openDropdownId={openDropdownId}
-                          setOpenDropdownId={setOpenDropdownId}
-                        />
-                      )}
+                  <div className='percent'>{Obdata.progress}%</div>
+                </div>
+              </Objective>
+            </>
+            {Obdata.keyresult.map(data => {
+              return (
+                <KRBox key={data.keyResultId} color={Obdata.color}>
+                  <div className='left'>
+                    <div className='mount'></div>
+                    <div className='logo'>목표{data.krNumber}</div>
+                    <div
+                      className='name'
+                      onClick={() => {
+                        patchKR(data.keyResultId, data.keyResult, 'patch');
+                      }}>
+                      {data.keyResult}
                     </div>
+                  </div>
+
+                  <div className='right'>
+                    <PersentBox
+                      onClick={() => {
+                        patchProgress(
+                          data.keyResultId,
+                          data.progress,
+                          'KR',
+                          Obdata.color
+                        );
+                      }}
+                      ObColor={Obdata.color}
+                      state='KR'>
+                      <input
+                        type='range'
+                        min={0}
+                        max={100}
+                        step={1}
+                        value={data.progress}
+                      />
+                      <div
+                        className='bg'
+                        style={{ width: `${data.progress}%` }}></div>
+                    </PersentBox>
+                    <div className='percent'>{data.progress}%</div>
+                    <div className='emotionBox'></div>
+
+                    {KRArray && (
+                      <Emotion
+                        keyResultId={data.keyResultId}
+                        emotionState={data.emotion}
+                        openDropdownId={openDropdownId}
+                        setOpenDropdownId={setOpenDropdownId}
+                      />
+                    )}
                   </div>
                 </KRBox>
               );

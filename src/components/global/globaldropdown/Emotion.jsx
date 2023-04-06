@@ -1,7 +1,7 @@
 import { PatchEmotion } from '../../../apis/apiPATCH';
-import bad from '../../../assets/bad2.png';
-import good from '../../../assets/good.png';
-import normal from '../../../assets/normal2.png';
+import good from '../../../assets/emoji1.png';
+import bad from '../../../assets/emoji2.png';
+import normal from '../../../assets/emoji3.png';
 import { EmotionSelect } from './dropDown.styled';
 import { emotion } from './dropdown';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
