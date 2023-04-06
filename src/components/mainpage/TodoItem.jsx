@@ -111,7 +111,7 @@ const TodoItem = ({ getTodo }) => {
     GetCompletionTodo,
     {
       onSuccess: response => {
-        console.log('completionTodo', response);
+        // console.log('completionTodo', response);
       },
       onError: response => {},
     }
