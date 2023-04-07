@@ -40,7 +40,9 @@ export default function Mainpage() {
     enabled: !!uid,
   });
 
-  const menuList = ['Dashboard', 'All OKR', 'Team OKR', 'TO - DO', 'Calendar'];
+  // const menuList = ['Dashboard', 'All OKR', 'Team OKR', 'TO - DO', 'Calendar'];
+
+  const menuList = ['Dashboard', 'TO - DO'];
 
   const selectComponent = {
     Dashboard: (
@@ -52,10 +54,10 @@ export default function Mainpage() {
         <DashBoardCalendar />
       </>
     ),
-    'All OKR': <CompanyOKR />,
-    'TEAM OKR': <TeamOKR />,
+    // 'All OKR': <CompanyOKR />,
+    // 'TEAM OKR': <TeamOKR />,
     'TO - DO': <Todo />,
-    Calendar: <Calendar />,
+    // Calendar: <Calendar />,
   };
 
   const [now, setNow] = useState('Dashboard');
