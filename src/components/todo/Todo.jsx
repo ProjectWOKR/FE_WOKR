@@ -6,7 +6,7 @@ import PastTodo from './PastTodo';
 import TeamTodo from './TeamTodo';
 import TodoNavi from './TodoNavi';
 import { DetailTodoWrap, StTeam } from './tododetail.styled';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
@@ -14,6 +14,7 @@ export default function Todo() {
   //todo 전부 가져오기
   const { data: getAllTodo } = useQuery(['ALLTODO'], GetAllTodo, {
     onSuccess: response => {
+      // queryClient.invalidateQueries(['ALLTODO']);
       // console.log('getTodo', response);
     },
     onError: response => {},

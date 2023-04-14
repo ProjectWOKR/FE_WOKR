@@ -231,7 +231,6 @@ const DetailTodoItem = ({ el, today, tomorrow }) => {
       <Potal>
         {todoModalOn ? <TodoPathModal onCloseModal={onTodoCloseModal} /> : null}
       </Potal>
-      ;
     </>
   );
 };

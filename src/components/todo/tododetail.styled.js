@@ -174,6 +174,8 @@ export const TodoDetailHeader = styled.div`
       background: url(${down}) no-repeat center / 100%;
       margin-right: 10px;
       cursor: pointer;
+      padding: 10px;
+      box-sizing: border-box;
     }
     .up {
       width: 13px;
@@ -181,6 +183,8 @@ export const TodoDetailHeader = styled.div`
       background: url(${up}) no-repeat center / 100%;
       margin-right: 10px;
       cursor: pointer;
+      padding: 10px;
+      box-sizing: border-box;
     }
     .title {
       width: 100%;
@@ -200,32 +204,30 @@ export const TodoDetailItem = styled.div`
   /* box-shadow: 0px 1px 4px rgba(210, 210, 210, 0.7); */
 
   .item {
+    width: 99%;
+    margin: 0 auto 10px auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
     background-color: #f8f8f8;
     border-radius: 8px;
-    padding: 0 19px 0 17px;
-    margin-bottom: 10px;
-    /* background-color: pink; */
+    padding: 0 19px 2px 17px;
   }
   .notHave {
+    width: 99% !important;
+    margin: 0 auto 10px auto;
     display: flex;
     align-items: center;
     justify-content: start;
-    margin-bottom: 10px;
     background-color: #fff;
     box-shadow: 0px 1px 4px rgba(210, 210, 210, 0.7);
     border-radius: 8px;
     padding: 0 19px 0 17px;
-    margin-bottom: 10px;
-    font-size: 2rem;
+    font-size: 1.6rem !important;
+    font-weight: 500 !important;
     height: 45px;
     color: #9b9b9b !important;
-  }
-  .dayLine {
-    /* border-bottom: 2px solid #e8e8e8; */
   }
   .flexLeft {
     display: flex;
@@ -326,7 +328,7 @@ export const DDay = styled.div`
 `;
 
 export const Finsh = styled.div`
-  margin-bottom: 50px;
+  margin-bottom: 20px;
   .noCompl {
     display: flex;
     align-items: center;
