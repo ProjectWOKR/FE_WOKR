@@ -74,7 +74,13 @@ const FinishTodo = ({ el }) => {
     if (ct.myToDo === true) {
       return (
         <div className='item'>
-          <div className='flexLeft'>
+          <div
+            className='flexLeft'
+            style={
+              ct.completion === true
+                ? { cursor: 'default' }
+                : { cursor: 'pointer' }
+            }>
             <Title ct={ct} />
             <div className='krBox' title={ct.memo}>
               <div className='fKrTitle'>{ct.toDo}</div>
@@ -97,7 +103,13 @@ const FinishTodo = ({ el }) => {
     } else {
       return (
         <div className='item'>
-          <div className='flexLeft'>
+          <div
+            className='flexLeft'
+            style={
+              ct.completion === true
+                ? { cursor: 'default' }
+                : { cursor: 'pointer' }
+            }>
             <Title ct={ct} />
             <div className='krBox' title={ct.memo}>
               <div className='fKrTitle'>{ct.toDo}</div>
@@ -132,7 +144,9 @@ const FinishTodo = ({ el }) => {
       </TodoDetailHeader>
 
       {el.completionTodo.length === 0 ? (
-        <div className='noCompl'>완료한 리스트가 없습니다.</div>
+        <div className='noCompl' style={{ cursor: 'default' }}>
+          완료한 리스트가 없습니다.
+        </div>
       ) : (
         el.completionTodo?.map(ct => (
           <TodoDetailItem

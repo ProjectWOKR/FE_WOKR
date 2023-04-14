@@ -135,6 +135,7 @@ const PastTodo = () => {
         <div className='item'>
           <div
             className='flexLeft'
+            style={{ cursor: 'pointer' }}
             onClick={() => {
               patchTodo(
                 el.toDoId,
@@ -166,7 +167,7 @@ const PastTodo = () => {
     } else {
       return (
         <div className='item'>
-          <div className='flexLeft'>
+          <div className='flexLeft' style={{ cursor: 'pointer' }}>
             <Title el={el} />
             <div className='krBox' title={el.memo}>
               <div className='krTitle'>{el.toDo}</div>

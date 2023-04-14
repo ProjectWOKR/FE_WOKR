@@ -126,7 +126,6 @@ export const DateNavi = styled.div`
     }
     .date {
       font-size: 25px;
-      /* background-color: pink; */
       line-height: 34px;
     }
     .includeCh {
@@ -213,6 +212,7 @@ export const TodoDetailItem = styled.div`
     background-color: #f8f8f8;
     border-radius: 8px;
     padding: 0 19px 2px 17px;
+    cursor: default;
   }
   .notHave {
     width: 99% !important;
@@ -232,7 +232,7 @@ export const TodoDetailItem = styled.div`
   .flexLeft {
     display: flex;
     align-items: center;
-    cursor: pointer;
+    /* cursor: pointer; */
     .kr {
       width: 50px;
       font-size: 2rem;

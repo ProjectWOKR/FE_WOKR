@@ -141,6 +141,11 @@ const DetailTodoItem = ({ el, today, tomorrow }) => {
         <div className='item'>
           <div
             className='flexLeft'
+            style={
+              pt.completion === true
+                ? { cursor: 'default' }
+                : { cursor: 'pointer' }
+            }
             onClick={() => {
               patchTodo(
                 pt.toDoId,
@@ -172,6 +177,11 @@ const DetailTodoItem = ({ el, today, tomorrow }) => {
         <div className='item'>
           <div
             className='flexLeft'
+            style={
+              pt.completion === true
+                ? { cursor: 'default' }
+                : { cursor: 'pointer' }
+            }
             onClick={() => {
               alert('본인이 작성한 TODO만 수정 가능합니다.');
             }}>
