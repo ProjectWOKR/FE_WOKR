@@ -1,4 +1,5 @@
 import { GetAllTodo, GetPostTodo, GetUser } from '../../apis/apiGET';
+import Loading from '../global/Loading';
 import Toast from './../global/Toast';
 import DetailTodoItem from './DetailTodoItem';
 import FinishTodo from './FinishTodo';
@@ -12,13 +13,26 @@ import styled from 'styled-components';
 
 export default function Todo() {
   //todo 전부 가져오기
-  const { data: getAllTodo } = useQuery(['ALLTODO'], GetAllTodo, {
-    onSuccess: response => {
-      // queryClient.invalidateQueries(['ALLTODO']);
-      // console.log('getTodo', response);
-    },
+  const { data: getAllTodo, isLoading } = useQuery(['ALLTODO'], GetAllTodo, {
+    onSuccess: response => {},
     onError: response => {},
   });
+
+  const [showLoading, setShowLoading] = useState(true);
+
+  useEffect(() => {
+    let timeout;
+
+    if (!isLoading) {
+      timeout = setTimeout(() => {
+        setShowLoading(false);
+      }, 700);
+    }
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [isLoading]);
 
   const now = new Date();
   let today = '';
@@ -54,17 +68,22 @@ export default function Todo() {
         <h2 className='notHave'>설정된 To Do가 없습니다.</h2>
       ) : (
         <>
-          <TodoDashboard>
-            <TodoNavi todayFormat={today} getAllTodo={getAllTodo} />
-            <PastTodo />
-            {getAllTodo?.map(el => (
-              <DetailTodoWrap key={el.targetDate}>
-                <DetailTodoItem el={el} today={today} tomorrow={tomorrow} />
-                <FinishTodo el={el} />
-              </DetailTodoWrap>
-            ))}
-          </TodoDashboard>
-          <TeamTodo />
+          {showLoading && <Loading />}
+          {!showLoading && (
+            <>
+              <TodoDashboard>
+                <TodoNavi todayFormat={today} getAllTodo={getAllTodo} />
+                <PastTodo />
+                {getAllTodo?.map(el => (
+                  <DetailTodoWrap key={el.targetDate}>
+                    <DetailTodoItem el={el} today={today} tomorrow={tomorrow} />
+                    <FinishTodo el={el} />
+                  </DetailTodoWrap>
+                ))}
+              </TodoDashboard>
+              <TeamTodo />
+            </>
+          )}
           <Toast />
         </>
       )}
