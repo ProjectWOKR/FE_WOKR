@@ -26,7 +26,7 @@ export default function Todo() {
     if (!isLoading) {
       timeout = setTimeout(() => {
         setShowLoading(false);
-      }, 1000);
+      }, 700);
     }
 
     return () => {

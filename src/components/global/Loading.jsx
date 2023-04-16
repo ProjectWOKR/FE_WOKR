@@ -1,11 +1,12 @@
 import React from 'react';
-import { FaSpinner } from 'react-icons/fa';
+// import { FaSpinner } from 'react-icons/fa';
+import FadeLoader from 'react-spinners/FadeLoader';
 import styled from 'styled-components';
 
 const Loading = () => {
   return (
     <StLoadingBox>
-      <FaSpinner />
+      <FadeLoader color='skyblue' height={15} width={5} radius={2} margin={2} />
     </StLoadingBox>
   );
 };
@@ -17,23 +18,6 @@ const StLoadingBox = styled.div`
   align-items: center;
   justify-content: center;
   width: 50%;
-  height: 80px;
-  margin: 10px auto;
-  svg {
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
-
-    path {
-      color: skyblue;
-    }
-  }
-  @keyframes spin {
-    from {
-      transform: rotate(0);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
+  height: 100vh;
+  margin: 0 auto;
 `;
