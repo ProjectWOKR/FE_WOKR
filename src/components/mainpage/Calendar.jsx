@@ -16,15 +16,12 @@ export default function Calendar() {
   const [createModalOn, setCreateModalOn] = useState(false);
   const array = [];
   const [calendarData, setCalendarData] = useState();
-  // console.log(calendarData);
 
-  const [formCalendar, setFormCalendar] = useState(true);
+  const [fromCalendar, setFromCalendar] = useState(true);
   const [dateInfo, setDateInfo] = useState({
     start: '',
     startDateTime: '',
   });
-
-  // console.log(dateInfo);
 
   const setPatchTodoInfo = useSetRecoilState(patchTodoInfo);
 
@@ -61,10 +58,11 @@ export default function Calendar() {
 
   const { data: getTodo } = useQuery(['TODO'], GetTodo, {
     onSuccess: response => {
-      // console.log(response);
       response?.map(el => {
         const endDate = new Date(el.endDate);
         endDate.setDate(endDate.getDate() + 1);
+        console.log(endDate.toISOString());
+        console.log('----');
         const newEndDate = endDate.toISOString().split('T')[0];
 
         let obj = {
@@ -93,7 +91,6 @@ export default function Calendar() {
   });
 
   const handleDateClick = clickDateInfo => {
-    // console.log(clickDateInfo);
     setDateInfo({
       ...dateInfo,
       start: clickDateInfo.startStr,
@@ -125,8 +122,6 @@ export default function Calendar() {
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView='dayGridMonth'
         locale='ko'
-        // dateClick={handleDateClick}
-        // eventContent={renderEventContent}
         selectable={true}
         select={handleDateClick}
         eventClick={handleEventClick}
@@ -144,7 +139,7 @@ export default function Calendar() {
         {createModalOn && (
           <TodoModal
             onCloseTodoModal={closeCrModal}
-            formCalendar={formCalendar}
+            fromCalendar={fromCalendar}
             dateInfo={dateInfo}
           />
         )}
