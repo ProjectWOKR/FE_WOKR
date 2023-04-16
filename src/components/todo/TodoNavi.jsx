@@ -7,25 +7,23 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-scroll';
 
 const TodoNavi = ({ todayFormat, getAllTodo }) => {
-  // console.log(todayFormat);
-
+  //targetDate 년도도 받아야함
   const haveDay = getAllTodo?.map(todo => {
+    // console.log(todo);
     return todo.targetDate;
   });
+  // console.log(haveDay);
+
   const today = new Date();
-  const yearMonth = `${today.getFullYear()}년 ${today.getMonth() + 1}월`;
 
   let date = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 
-  const [month, setMonth] = useState(today.getMonth() + 1);
-
-  let makeWeekAll = date => {
+  let makeWeek = date => {
     let day = date.getDay();
     let week = [];
 
     for (let i = 0; i < 7; i++) {
       let newDate = new Date(date.valueOf() + 86400000 * (i - day));
-      // let id = Math.random();
       let dateValue;
       if (i === 0) {
         dateValue = '일';
@@ -54,23 +52,19 @@ const TodoNavi = ({ todayFormat, getAllTodo }) => {
         format = `${newDate.getMonth() + 1}월 ${newDate.getDate()}일`;
       }
 
-      console.log(haveDay?.includes(format));
-      // console.log(haveDay);
-
       week.push({
         dateValue,
         month: `${newDate.getMonth() + 1}`,
         date: `${newDate.getDate()}`,
+        year: `${newDate.getFullYear()}`,
         format: format,
         includes: haveDay?.includes(format),
       });
-
-      // console.log(week);
     }
     return week;
   };
 
-  let week = makeWeekAll(date);
+  let week = makeWeek(date);
 
   const [state, setState] = useState({
     date,
@@ -79,44 +73,29 @@ const TodoNavi = ({ todayFormat, getAllTodo }) => {
 
   const onPressArrowLeft = () => {
     let newDate = new Date(state.date.valueOf() - 86400000 * (7 * 1));
-    let newWeek = makeWeekAll(newDate);
+    let newWeek = makeWeek(newDate);
     setState({
       ...state,
       date: newDate,
       week: newWeek,
     });
-
-    newWeek.map(el => {
-      if (el[1] === month) {
-        setMonth(month);
-      } else {
-        setMonth(el[1]);
-      }
-      return el;
-    });
+    console.log('newWeek :', newWeek);
   };
 
   const onPressArrowRight = () => {
     let newDate = new Date(state.date.valueOf() + 86400000 * (7 * 1));
-    let newWeek = makeWeekAll(newDate);
+    let newWeek = makeWeek(newDate);
     setState({
       ...state,
       date: newDate,
       week: newWeek,
-    });
-    newWeek.map(el => {
-      if (el.month === month) {
-        setMonth(month);
-      } else {
-        setMonth(el.month);
-      }
-      return el;
     });
   };
 
   const dateM = date.getMonth() + 1;
   // 오늘 날짜 값 추출하기
   const dateD = date.getDate();
+  const dateY = date.getFullYear();
 
   const [todoModalOn, setTodoModalOn] = useState(false);
   /**모달 닫는 함수 */
@@ -136,17 +115,13 @@ const TodoNavi = ({ todayFormat, getAllTodo }) => {
       setTodoModalOn(!todoModalOn);
     }
   };
-  // console.log(dateD);
-  // console.log('haveDay :', haveDay);
-  console.log('navi :', state.week);
-  console.log('getAllTodo :', getAllTodo);
 
   return (
     <StNavi>
       <TodoHeader>
         <div className='left'>
           <div className='dDay'>
-            {today.getFullYear()}년 {month}월
+            {state.week[3].year}년 {state.week[3].month}월
           </div>
         </div>
         <div className='right'>
@@ -168,7 +143,9 @@ const TodoNavi = ({ todayFormat, getAllTodo }) => {
       <DateNavi>
         {state.week?.map((el, index) => (
           <React.Fragment key={index}>
-            {Number(el.date) === dateD && Number(el.month) === dateM ? (
+            {Number(el.date) === dateD &&
+            Number(el.month) === dateM &&
+            Number(el.year) === dateY ? (
               <Link
                 to={el.format}
                 spy={true}
@@ -178,7 +155,7 @@ const TodoNavi = ({ todayFormat, getAllTodo }) => {
                   el.includes === false || undefined ? 'day' : 'include'
                 }
                 style={{ backgroundColor: ' rgba(255, 131, 54, 0.3)' }}>
-                <span className='label'>{el[0]}</span>
+                <span className='label'>{el.dateValue}</span>
                 <span className='date' style={{ color: '#ff8336' }}>
                   {el.date}
                 </span>

@@ -17,6 +17,7 @@ import { useMutation } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import ReactGA from 'react-ga4';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Article = () => {
   const navigate = useNavigate();
@@ -79,16 +80,17 @@ const Article = () => {
       }
       localStorage.setItem('Id', userInfo.email);
       localStorage.setItem('accesstoken', response.accessToken);
+      toast('로그인이 성공적으로 되었습니다.');
       navigate('/mainpage');
     },
     onError: response => {
+      toast(response.response.data);
       if (process.env.NODE_ENV !== 'development') {
         ReactGA.event({
           category: '버튼',
           action: '로그인 실패',
         });
       }
-      alert(response.response.data);
     },
   });
 

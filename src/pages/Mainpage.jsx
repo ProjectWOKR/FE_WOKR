@@ -1,6 +1,7 @@
 import { GetUserInfo } from '../apis/apiGET';
 import Calendar from '../components/calendar/Calendar';
 import CompanyOKR from '../components/companyOKR/companyOKR';
+import Modal from '../components/global/globalModal/AlertModalTest';
 import Portal from '../components/global/globalModal/Potal';
 import DashBoardCalendar from '../components/mainpage/Calendar';
 import DashBoardOKR from '../components/mainpage/OKR';
@@ -92,6 +93,7 @@ export default function Mainpage() {
         </>
       )}
     </Wrap>
+    // <Modal />
   );
 }
 

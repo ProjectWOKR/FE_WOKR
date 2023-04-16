@@ -16,7 +16,6 @@ export const ModalBackground = styled.div`
 
 export const ModalBox = styled.div`
   position: fixed;
-  /* height: 470px; */
   width: 71.5rem;
   top: 50%;
   left: 50%;
@@ -24,7 +23,6 @@ export const ModalBox = styled.div`
   background-color: #fff;
   border-radius: 15px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  /* box-shadow: var(--box-shadow); */
   z-index: 21;
   text-align: center;
   padding: 20px 30px;

@@ -78,6 +78,7 @@ const TodoPathModal = ({ onCloseModal }) => {
   const [defaultFormat, setDefaultFormat] = useState({ format: 'YYYY-MM-DD' });
 
   const todoInfo = useRecoilValue(patchTodoInfo);
+  // console.log(todoInfo);
 
   const [title, setTitle] = useState({
     memo: todoInfo.memo,
@@ -88,6 +89,8 @@ const TodoPathModal = ({ onCloseModal }) => {
     startDateTime: todoInfo.startDateTime,
     toDo: todoInfo.toDo,
   });
+
+  console.log(title);
 
   const [startWithTime, setStartWithTime] = useState(false);
   const [endWithTime, setEndWithTime] = useState(false);
