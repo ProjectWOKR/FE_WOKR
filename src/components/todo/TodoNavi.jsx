@@ -7,12 +7,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-scroll';
 
 const TodoNavi = ({ todayFormat, getAllTodo }) => {
-  //targetDate 년도도 받아야함
   const haveDay = getAllTodo?.map(todo => {
-    // console.log(todo);
     return todo.targetDate;
   });
-  // console.log(haveDay);
 
   const today = new Date();
 
@@ -116,6 +113,8 @@ const TodoNavi = ({ todayFormat, getAllTodo }) => {
     }
   };
 
+  console.log(state.week);
+
   return (
     <StNavi>
       <TodoHeader>
@@ -151,30 +150,26 @@ const TodoNavi = ({ todayFormat, getAllTodo }) => {
                 spy={true}
                 smooth={true}
                 offset={-500}
-                className={
-                  el.includes === false || undefined ? 'day' : 'include'
-                }
+                className={el.includes === false ? 'day' : 'include'}
                 style={{ backgroundColor: ' rgba(255, 131, 54, 0.3)' }}>
                 <span className='label'>{el.dateValue}</span>
                 <span className='date' style={{ color: '#ff8336' }}>
                   {el.date}
                 </span>
-                {el?.includes === undefined ? null : (
+                {el?.includes === false ? null : (
                   <div className='includeCh'></div>
                 )}
               </Link>
             ) : (
               <Link
-                className={
-                  el.includes === false || undefined ? 'day' : 'include'
-                }
+                className={el.includes === false ? 'day' : 'include'}
                 to={el?.format}
                 spy={true}
                 offset={-500}
                 smooth={true}>
                 <span className='label'>{el?.dateValue}</span>
                 <span className='date'>{el?.date}</span>
-                {el.includes === undefined ? null : (
+                {el.includes === false ? null : (
                   <div className='includeCh'></div>
                 )}
               </Link>
