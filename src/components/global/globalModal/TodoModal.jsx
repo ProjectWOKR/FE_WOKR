@@ -29,7 +29,10 @@ const TodoModal = ({
   onCloseTodoModal,
   todoModalRef,
   todoModalOutSideClick,
+  formCalendar,
+  dateInfo,
 }) => {
+  // console.log(dateInfo);
   useEffect(() => {
     const handleBeforeUnload = e => {
       e.preventDefault();
@@ -80,8 +83,8 @@ const TodoModal = ({
   const [todoInfo, setTodoInfo] = useState({
     toDo: '',
     memo: '',
-    startDate: '',
-    startDateTime: '',
+    startDate: formCalendar !== undefined ? dateInfo.start : '',
+    startDateTime: formCalendar !== undefined ? dateInfo.startDateTime : '',
     endDate: '',
     endDateTime: '',
     priority: '',
@@ -106,6 +109,8 @@ const TodoModal = ({
       startDateTime: '00:00',
     });
   };
+
+  console.log(todoInfo);
 
   //endDate 변환 함수 년-월
   const convertEnd = (date, format = defaultFormat.format) => {
@@ -274,7 +279,12 @@ const TodoModal = ({
                   weekDays={weekDays}
                   format='YYYY-MM-DD'
                   placeholder='시작일'
-                  value={defaultFormat.date}
+                  // value={defaultFormat.date}
+                  value={
+                    formCalendar !== undefined
+                      ? dateInfo.start
+                      : defaultFormat.date
+                  }
                   onChange={convertStart}
                   animations={[
                     opacity(),
@@ -311,7 +321,12 @@ const TodoModal = ({
                   format='YYYY-MM-DD HH:mm'
                   plugins={[<TimePicker position='bottom' hideSeconds />]}
                   placeholder='시작일'
-                  value={timeFormat.date}
+                  // value={timeFormat.date}
+                  value={
+                    formCalendar !== undefined
+                      ? dateInfo.start
+                      : timeFormat.date
+                  }
                   onChange={convertStartWithTime}
                   animations={[
                     opacity(),
@@ -349,6 +364,11 @@ const TodoModal = ({
                   format='YYYY-MM-DD'
                   placeholder='종료일'
                   value={defaultFormat.date}
+                  // value={
+                  //   formCalendar !== undefined
+                  //     ? dateInfo.end
+                  //     : defaultFormat.date
+                  // }
                   onChange={convertEnd}
                   animations={[
                     opacity(),
@@ -387,6 +407,9 @@ const TodoModal = ({
                   plugins={[<TimePicker position='bottom' hideSeconds />]}
                   placeholder='종료일'
                   value={timeFormat.date}
+                  // value={
+                  //   formCalendar !== undefined ? dateInfo.end : timeFormat.date
+                  // }
                   onChange={convertEndWithTime}
                   animations={[
                     opacity(),

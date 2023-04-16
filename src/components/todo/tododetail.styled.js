@@ -27,6 +27,7 @@ export const TodoHeader = styled.div`
       font-size: 2.7rem;
       color: #4b4b4b;
       margin-right: 15px;
+      cursor: default;
     }
     .down {
       width: 13px;
@@ -88,6 +89,7 @@ export const DateNavi = styled.div`
   border-radius: 8px;
   margin-bottom: 70px;
   display: flex;
+  overflow: hidden;
   .day {
     width: calc(100% / 7);
     height: 100%;
@@ -154,6 +156,8 @@ export const StPastTodo = styled.div`
   top: 186px;
   background-color: #fff;
   margin-bottom: 20px;
+
+  /* overflow-y: scroll; */
   /* border: 1px solid; */
   /* background-color: pink; */
 `;

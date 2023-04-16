@@ -74,7 +74,6 @@ const TodoItem = ({ getTodo }) => {
   };
 
   const [todoModalOn, setTodoModalOn] = useState(false);
-  // console.log(todoModalOn);
 
   const onTodoCloseModal = () => {
     setTodoModalOn(!todoModalOn);
@@ -84,7 +83,7 @@ const TodoItem = ({ getTodo }) => {
 
   const patchTodo = (
     id,
-    todo,
+    toDo,
     memo,
     startDate,
     startDateTime,
@@ -95,7 +94,7 @@ const TodoItem = ({ getTodo }) => {
     // console.log(todo);
     setPatchTodoInfo({
       id,
-      toDo: todo,
+      toDo,
       memo,
       startDate,
       startDateTime,
