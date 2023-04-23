@@ -1,14 +1,11 @@
 import styled from 'styled-components';
 
 export const MenuContainer = styled.div`
-  width: 28rem;
-  /* height: 1650px; */
+  width: 28.3rem;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 1.8rem;
-  padding: 0 2rem 0 0;
 
   position: sticky;
   top: 20px;
@@ -20,7 +17,7 @@ export const MenuItem = styled.button`
   border: none;
   font-size: 20px;
   font-weight: 900;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2.4rem;
   text-align: right;
   cursor: pointer;
   background-color: #fff;

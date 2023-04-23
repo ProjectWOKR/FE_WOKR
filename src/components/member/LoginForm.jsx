@@ -19,7 +19,7 @@ import ReactGA from 'react-ga4';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-const Article = () => {
+const LoginForm = () => {
   const navigate = useNavigate();
   // 눈 아이콘
   const [pwEyeOpen, setPwEyeOpen] = useState(false);
@@ -81,7 +81,7 @@ const Article = () => {
       localStorage.setItem('Id', userInfo.email);
       localStorage.setItem('accesstoken', response.accessToken);
       toast('로그인이 성공적으로 되었습니다.');
-      navigate('/mainpage');
+      navigate('/');
     },
     onError: response => {
       toast(response.response.data);
@@ -137,4 +137,4 @@ const Article = () => {
   );
 };
 
-export default Article;
+export default LoginForm;

@@ -11,16 +11,16 @@ import {
   Label,
   HelpBox,
 } from '../../styles/sign.styled';
+import Toast from '../global/Toast';
 import TeamPosiDropDown from '../global/globaldropdown/TeamPosiDropDown';
 import { OnChange } from '../global/onChange';
-import Toast from './../global/Toast';
 import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import ReactGA from 'react-ga4';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-const Article = () => {
+const RegisterForm = () => {
   // 새로고침 막기
   const preventClose = e => {
     e.preventDefault();
@@ -83,6 +83,8 @@ const Article = () => {
     }
     if (!userInfo.team.trim()) {
       errors.team = '팀명을 입력해주세요.';
+    } else if (userInfo.team.length < 2) {
+      errors.team = '팀명은 최소 두글자 이상이에요.';
     }
     if (!userInfo.teamposition.trim()) {
       errors.teamposition = '직급을 선택해주세요.';
@@ -100,7 +102,7 @@ const Article = () => {
         });
       }
       alert('회원가입 성공');
-      navigate('/');
+      navigate('/signin');
     },
 
     onError: response => {
@@ -111,7 +113,8 @@ const Article = () => {
           action: '회원가입 실패',
         });
       }
-      alert(response?.response.data);
+      // alert(response?.response.data);
+      alert('실패');
     },
   });
 
@@ -125,13 +128,6 @@ const Article = () => {
     }
   };
 
-  const onKeyDown = e => {
-    console.log(e);
-    if (e.key === 'Enter') {
-      handleSubmit(e);
-    }
-  };
-
   return (
     <SignWrap onSubmit={handleSubmit}>
       <MainHeader>회원가입</MainHeader>
@@ -141,7 +137,6 @@ const Article = () => {
           id='email'
           type='text'
           name='email'
-          onKeyDown={onKeyDown}
           value={userInfo.email}
           placeholder='이메일을 입력하세요'
           onChange={event => {
@@ -240,4 +235,4 @@ const Article = () => {
   );
 };
 
-export default Article;
+export default RegisterForm;

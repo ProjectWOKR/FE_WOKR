@@ -1,7 +1,10 @@
 import { get } from 'react-scroll/modules/mixins/scroller';
 import { atom, selector } from 'recoil';
 
-export const NowState = atom({ key: 'now', default: '0' });
+// export const NowState = atom({
+//   key: 'menu',
+//   default: 'Dashboard',
+// });
 
 export const ToggleStartState = atom({ key: 'toggle', default: false });
 

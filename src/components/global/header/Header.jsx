@@ -17,7 +17,7 @@ export default function Header() {
   const onLogout = () => {
     localStorage.removeItem('accesstoken');
     setUserState(userState + 1);
-    navigate('/');
+    navigate('/signin');
   };
 
   const handleMouseEnter = () => {
@@ -41,7 +41,7 @@ export default function Header() {
         action: '로그아웃',
       });
     }
-    navigate('/');
+    navigate('/signin');
   };
   return (
     <Layout>
