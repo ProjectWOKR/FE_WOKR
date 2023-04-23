@@ -239,7 +239,6 @@ const TodoModal = ({
             <img src={todoOkr} alt='' />
             <OkrDropDown setKid={setKid} setOid={setOid} />
           </div>
-
           <div className='object itemBox'>
             <img src={todo} alt='' />
             <input
@@ -253,10 +252,9 @@ const TodoModal = ({
               }}
             />
           </div>
-
           <div className='object itemBox'>
             <img src={memo} alt='' />
-            <input
+            <textarea
               type='text'
               placeholder='Memo 내용을 작성하세요'
               className='input'
@@ -267,6 +265,7 @@ const TodoModal = ({
             />
           </div>
 
+          {/* <textarea name='' id='' cols='310' rows='310'></textarea> */}
           <div className='date'>
             <img src={calender} alt='' />
             <div className='dateBox'>
