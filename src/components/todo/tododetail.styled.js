@@ -8,8 +8,8 @@ import up from '../../assets/up.png';
 import styled from 'styled-components';
 
 export const StNavi = styled.div`
-  position: sticky;
-  top: 0;
+  /* position: sticky; */
+  /* top: 0; */
   padding-bottom: 3px;
   box-sizing: content-box;
   background-color: #fff;
@@ -87,7 +87,6 @@ export const DateNavi = styled.div`
   /* border: 0.8px solid rgba(124, 124, 124, 0.25); */
   box-shadow: 0px 3px 10px rgba(124, 124, 124, 0.25);
   border-radius: 8px;
-  margin-bottom: 70px;
   display: flex;
   overflow: hidden;
   .day {
@@ -117,9 +116,9 @@ export const DateNavi = styled.div`
     justify-content: center;
     position: relative;
     cursor: pointer;
-    transition: all 0.3s;
+    /* transition: all 0.3s; */
     :hover {
-      background-color: rgb(248, 248, 248);
+      background-color: #e8e8e8;
     }
     .label {
       color: #4b4b4b;
@@ -131,12 +130,12 @@ export const DateNavi = styled.div`
       line-height: 34px;
     }
     .includeCh {
-      width: 6px;
-      height: 6px;
+      width: 4px;
+      height: 4px;
       border-radius: 50%;
-      background-color: #000;
+      background-color: #9b9b9b;
       position: absolute;
-      bottom: 6px;
+      bottom: 15px;
     }
   }
 `;
@@ -166,11 +165,14 @@ export const TodoDetailHeader = styled.div`
   .header {
     width: 100%;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     /* margin-bottom: 10.5px; */
-    padding-bottom: 10.5px;
+    /* padding-bottom: 10.5px; */
     box-sizing: content-box;
     cursor: default;
+    /* background-color: yellow; */
+    margin-top: 33px;
     .down {
       width: 13px;
       height: 7px;
@@ -190,9 +192,9 @@ export const TodoDetailHeader = styled.div`
       box-sizing: border-box;
     }
     .title {
-      width: 100%;
+      /* width: 50%; */
+      /* background-color: pink; */
       font-size: 2.3rem;
-      color: #4b4b4b;
     }
   }
 `;
@@ -328,7 +330,9 @@ export const TodoDetailItem = styled.div`
 `;
 
 export const DDay = styled.div`
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
+  /* background-color: skyblue; */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 `;
 
 export const Finsh = styled.div`
@@ -462,4 +466,295 @@ export const StTeam = styled.div`
 export const NaviPlus = styled.div`
   margin-left: 2.8rem;
   cursor: pointer;
+`;
+
+export const StFilterContainer = styled.div`
+  /* width: 50%; */
+  height: 30px;
+  display: flex;
+  /* background-color: skyblue; */
+`;
+
+export const StKrFilter = styled.div`
+  width: 143px;
+  height: 30px;
+  border: 0.5px solid #000;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  .filterContainer {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    color: #4b4b4b;
+    padding: 0px 10px;
+    cursor: pointer;
+    img {
+      width: 16px;
+      height: 15px;
+      margin-right: 6.6px;
+    }
+  }
+  .krDrop {
+    width: 206px;
+    /* height: 127px; */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #ffffff;
+    border: 0.5px solid #000000;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .inputBox {
+      margin-top: 9px;
+      width: 182px;
+      white-space: normal;
+      /* height: 21px; */
+      background: #ffffff;
+      border: 0.5px solid #000000;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 3px 4px;
+      .hashFlex {
+        width: 152px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 4px;
+        .hash {
+          /* width: 36px; */
+          height: 15px;
+          background: #457eff;
+          border: 1px solid #457eff;
+          border-radius: 2.3px;
+          color: #fff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 2px;
+          span {
+          }
+          svg {
+            width: 7px;
+            height: 7px;
+            margin-left: 3px;
+            cursor: pointer;
+            path {
+              fill: rgba(217, 217, 217, 1);
+            }
+          }
+        }
+      }
+      .closeBtn {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+      }
+    }
+    ul {
+      padding: 0;
+      margin-top: 11px;
+      margin-bottom: 0;
+      /* background-color: skyblue; */
+      li {
+        width: 175px;
+        height: 15px;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        font-size: 15px;
+        font-weight: 500;
+        /* :nth-last-child(1) {
+          margin-bottom: 0;
+        } */
+        input {
+          width: 15px;
+          height: 15px;
+          margin-right: 8px;
+          cursor: pointer;
+        }
+        .kr {
+          margin-right: 2px;
+        }
+        .desc {
+          margin-left: 2px;
+        }
+      }
+    }
+  }
+`;
+
+export const StDoneFilter = styled.div`
+  width: 143px;
+  height: 30px;
+  border: 0.5px solid #000;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin: 0 12px;
+  /* background-color: pink; */
+  .filterContainer {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    color: #4b4b4b;
+    cursor: pointer;
+    padding: 0px 10px;
+    img {
+      width: 16px;
+      height: 15px;
+      margin-right: 6.6px;
+    }
+  }
+  .doneDrop {
+    width: 206px;
+    /* height: 127px; */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #ffffff;
+    border: 0.5px solid #000000;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* background-color: pink; */
+    .inputBox {
+      margin-top: 9px;
+      width: 182px;
+      white-space: normal;
+      /* height: 21px; */
+      background: #ffffff;
+      border: 0.5px solid #000000;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 3px 4px;
+      .hashFlex {
+        width: 152px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 4px;
+        .hash {
+          /* width: 36px; */
+          height: 15px;
+          background: #457eff;
+          border: 1px solid #457eff;
+          border-radius: 2.3px;
+          color: #fff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 2px;
+          span {
+          }
+          svg {
+            width: 7px;
+            height: 7px;
+            margin-left: 3px;
+            cursor: pointer;
+            path {
+              fill: rgba(217, 217, 217, 1);
+            }
+          }
+        }
+      }
+      .closeBtn {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+      }
+    }
+    ul {
+      padding: 0;
+      margin-top: 11px;
+      margin-bottom: 0;
+      /* background-color: skyblue; */
+      li {
+        width: 175px;
+        height: 15px;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        font-size: 15px;
+        font-weight: 500;
+        /* :nth-last-child(1) {
+          margin-bottom: 0;
+        } */
+        input {
+          width: 15px;
+          height: 15px;
+          margin-right: 8px;
+          cursor: pointer;
+        }
+        .done {
+          margin-right: 2px;
+        }
+      }
+    }
+  }
+`;
+
+export const StSortFilter = styled.div`
+  width: 86px;
+  height: 30px;
+  border: 0.5px solid #000000;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  .sortContainer {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    color: #4b4b4b;
+    padding: 0px 10px;
+    img {
+      width: 14px;
+      height: 14px;
+      margin-right: 7px;
+    }
+  }
+  .sortDrop {
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 100%;
+    width: 86px;
+    background: #ffffff;
+    border: 0.5px solid #000000;
+    border-radius: 8px;
+    text-align: center;
+    li {
+      width: 100%;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      color: #4b4b4b;
+      border-bottom: 0.3px solid #000;
+      transition: all 0.3s;
+      :nth-last-child(1) {
+        border: none;
+      }
+      :hover {
+        background: rgba(217, 217, 217, 0.45);
+      }
+    }
+  }
 `;

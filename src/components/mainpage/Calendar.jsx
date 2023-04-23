@@ -61,8 +61,8 @@ export default function Calendar() {
       response?.map(el => {
         const endDate = new Date(el.endDate);
         endDate.setDate(endDate.getDate() + 1);
-        console.log(endDate.toISOString());
-        console.log('----');
+        // console.log(endDate.toISOString());
+        // console.log('----');
         const newEndDate = endDate.toISOString().split('T')[0];
 
         let obj = {
@@ -96,13 +96,13 @@ export default function Calendar() {
       start: clickDateInfo.startStr,
       startDateTime: '00:00',
     });
-    console.log('생성');
+    // console.log('생성');
     setCreateModalOn(true);
   };
 
   const handleEventClick = clickDateInfo => {
-    console.log(clickDateInfo.event.id);
-    console.log('수정');
+    // console.log(clickDateInfo.event.id);
+    // console.log('수정');
     patchTodo(
       clickDateInfo.event.id,
       clickDateInfo.event.extendedProps.todo,

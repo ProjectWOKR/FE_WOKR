@@ -147,8 +147,7 @@ const TodoNavi = ({ todayFormat, getAllTodo }) => {
                 spy={true}
                 smooth={true}
                 offset={-500}
-                className={el.includes === false ? 'day' : 'include'}
-                style={{ backgroundColor: ' rgba(255, 131, 54, 0.3)' }}>
+                className={el.includes === false ? 'day' : 'include'}>
                 <span className='label'>{el.dateValue}</span>
                 <span className='date' style={{ color: '#ff8336' }}>
                   {el.date}
