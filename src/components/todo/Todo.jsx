@@ -2,6 +2,7 @@ import { GetAllTodo, GetPostTodo, GetUser } from '../../apis/apiGET';
 import Loading from '../global/Loading';
 import Toast from './../global/Toast';
 import DetailTodoItem from './DetailTodoItem';
+import Filter from './Filter';
 import FinishTodo from './FinishTodo';
 import PastTodo from './PastTodo';
 import TeamTodo from './TeamTodo';
@@ -73,15 +74,20 @@ export default function Todo() {
             <>
               <TodoDashboard>
                 <TodoNavi todayFormat={today} getAllTodo={getAllTodo} />
-                <PastTodo />
-                {getAllTodo?.map(el => (
+                {/* <Filter /> */}
+                {/* <PastTodo /> */}
+                {/* {getAllTodo?.map(el => (
                   <DetailTodoWrap key={el.targetDate}>
                     <DetailTodoItem el={el} today={today} tomorrow={tomorrow} />
                     <FinishTodo el={el} />
                   </DetailTodoWrap>
-                ))}
+                ))} */}
+
+                <DetailTodoWrap>
+                  <DetailTodoItem />
+                </DetailTodoWrap>
               </TodoDashboard>
-              <TeamTodo />
+              {/* <TeamTodo /> */}
             </>
           )}
           <Toast />
@@ -93,18 +99,20 @@ export default function Todo() {
 
 const StSticky = styled.div`
   display: flex;
-  position: relative;
+  /* position: relative; */
   .notHave {
     width: 100%;
     font-size: 2.4rem;
     font-weight: 700;
     color: var(--main-color);
-    /* background-color: pink; */
+    /* background-color: skyblue; */
   }
 `;
 
 const TodoDashboard = styled.div`
   max-width: 1195px;
   width: 100%;
-  padding: 0 27px;
+  /* padding: 0 27px; */
+  position: relative;
+  /* background-color: gray; */
 `;

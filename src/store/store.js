@@ -1,4 +1,5 @@
-import { atom } from 'recoil';
+import { get } from 'react-scroll/modules/mixins/scroller';
+import { atom, selector } from 'recoil';
 
 export const NowState = atom({ key: 'now', default: '0' });
 
@@ -47,16 +48,22 @@ export const patchTodoInfo = atom({
   },
 });
 
-// export const accessTokenInfo = atom({
-//   key: 'defaultAccessTokenInfo',
-//   default:{
-//     localStorage.getItem('accesstoken')
-//   }
-// });
+export const krDataAtom = atom({
+  key: 'krData',
+  default: null,
+});
 
-// export const userId = atom({
-//   key : 'userInfo',
-//   default : {
-//     id :
-//   }
-// })
+export const okrCheckSelector = selector({
+  key: 'okrCheck',
+  // get: ({ get }) => {
+  //   const datas = get(krDataAtom)?.map(el => {
+  //     console.log(el);
+  //     const data = { ...el };
+  //     data.checked = true;
+  //     return data;
+  //   });
+  //   return datas;
+  // },
+  get: ({ get }) => get(krDataAtom),
+  set: ({ set }, checkList) => set(krDataAtom, checkList),
+});

@@ -2,8 +2,7 @@ import plus from '../../assets/plus.png';
 import Potal from '../global/globalModal/Potal';
 import TodoModal from '../global/globalModal/TodoModal';
 import { DateNavi, NaviPlus, StNavi, TodoHeader } from './tododetail.styled';
-import { useQueryClient } from '@tanstack/react-query';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-scroll';
 
 const TodoNavi = ({ todayFormat, getAllTodo }) => {
@@ -16,10 +15,12 @@ const TodoNavi = ({ todayFormat, getAllTodo }) => {
   let date = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 
   let makeWeek = date => {
+    //요일
     let day = date.getDay();
     let week = [];
 
     for (let i = 0; i < 7; i++) {
+      // 24*60*60*1000
       let newDate = new Date(date.valueOf() + 86400000 * (i - day));
       let dateValue;
       if (i === 0) {
@@ -69,18 +70,17 @@ const TodoNavi = ({ todayFormat, getAllTodo }) => {
   });
 
   const onPressArrowLeft = () => {
-    let newDate = new Date(state.date.valueOf() - 86400000 * (7 * 1));
+    let newDate = new Date(state.date.valueOf() - 86400000 * 7);
     let newWeek = makeWeek(newDate);
     setState({
       ...state,
       date: newDate,
       week: newWeek,
     });
-    console.log('newWeek :', newWeek);
   };
 
   const onPressArrowRight = () => {
-    let newDate = new Date(state.date.valueOf() + 86400000 * (7 * 1));
+    let newDate = new Date(state.date.valueOf() + 86400000 * 7);
     let newWeek = makeWeek(newDate);
     setState({
       ...state,
@@ -89,8 +89,8 @@ const TodoNavi = ({ todayFormat, getAllTodo }) => {
     });
   };
 
+  // 오늘 날짜 관련 값 추출
   const dateM = date.getMonth() + 1;
-  // 오늘 날짜 값 추출하기
   const dateD = date.getDate();
   const dateY = date.getFullYear();
 
@@ -106,14 +106,11 @@ const TodoNavi = ({ todayFormat, getAllTodo }) => {
 
   // 모달 외 클릭시 닫기위해 ref생성
   const todoModalRef = useRef(null);
-  /** 모달위에 있는 배경이랑 ref가 같으면 modalOn을 false로 바꾸는 함수 */
   const todoModalOutSideClick = e => {
     if (todoModalRef.current === e.target) {
       setTodoModalOn(!todoModalOn);
     }
   };
-
-  console.log(state.week);
 
   return (
     <StNavi>
@@ -150,8 +147,7 @@ const TodoNavi = ({ todayFormat, getAllTodo }) => {
                 spy={true}
                 smooth={true}
                 offset={-500}
-                className={el.includes === false ? 'day' : 'include'}
-                style={{ backgroundColor: ' rgba(255, 131, 54, 0.3)' }}>
+                className={el.includes === false ? 'day' : 'include'}>
                 <span className='label'>{el.dateValue}</span>
                 <span className='date' style={{ color: '#ff8336' }}>
                   {el.date}

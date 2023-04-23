@@ -15,28 +15,26 @@ import TeamPosiDropDown from '../global/globaldropdown/TeamPosiDropDown';
 import { OnChange } from '../global/onChange';
 import Toast from './../global/Toast';
 import { useMutation } from '@tanstack/react-query';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import ReactGA from 'react-ga4';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const Article = () => {
-  useEffect(() => {
-    const handleBeforeUnload = e => {
-      e.preventDefault();
-      e.returnValue =
-        '현재 입력중인 항목이 있습니다. 정말 새로고침 하시겠습니까?';
-    };
+  // 새로고침 막기
+  const preventClose = e => {
+    e.preventDefault();
+    e.returnValue = '';
+  };
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
+  useEffect(() => {
+    (() => {
+      window.addEventListener('beforeunload', preventClose);
+    })();
 
     return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener('beforeunload', preventClose);
     };
-  }, []);
-
-  useEffect(() => {
-    localStorage.removeItem('userInfo');
   }, []);
 
   const navigate = useNavigate();
@@ -55,19 +53,7 @@ const Article = () => {
     teamposition: '',
   });
 
-  useEffect(() => {
-    const savedFormData = JSON.parse(localStorage.getItem('userInfo'));
-    if (savedFormData) {
-      setUserInfo(savedFormData);
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('userInfo', JSON.stringify(userInfo));
-  }, [userInfo]);
-
   const [errors, setErrors] = useState({});
-
   // 유효성 검사
   const validate = () => {
     let errors = {};
@@ -106,16 +92,15 @@ const Article = () => {
 
   const { mutate: signUpMutate } = useMutation(SignUp, {
     onSuccess: response => {
-      toast('회원가입 성공!');
+      // toast('회원가입 성공!');
       if (process.env.NODE_ENV !== 'development') {
         ReactGA.event({
           category: '버튼',
           action: '회원가입',
         });
       }
-      setTimeout(() => {
-        navigate('/');
-      }, 1000);
+      alert('회원가입 성공');
+      navigate('/');
     },
 
     onError: response => {
@@ -126,7 +111,7 @@ const Article = () => {
           action: '회원가입 실패',
         });
       }
-      toast(response?.response.data);
+      alert(response?.response.data);
     },
   });
 
@@ -140,16 +125,23 @@ const Article = () => {
     }
   };
 
+  const onKeyDown = e => {
+    console.log(e);
+    if (e.key === 'Enter') {
+      handleSubmit(e);
+    }
+  };
+
   return (
     <SignWrap onSubmit={handleSubmit}>
       <MainHeader>회원가입</MainHeader>
-
       <Label htmlFor='email'>이메일</Label>
       <InputBox>
         <EmailInput
           id='email'
           type='text'
           name='email'
+          onKeyDown={onKeyDown}
           value={userInfo.email}
           placeholder='이메일을 입력하세요'
           onChange={event => {
@@ -167,6 +159,7 @@ const Article = () => {
           name='password'
           value={userInfo.password}
           placeholder='비밀번호를 입력하세요'
+          autoComplete='off'
           onChange={event => {
             OnChange(event, userInfo, setUserInfo);
           }}
@@ -187,6 +180,7 @@ const Article = () => {
           name='confirmpassword'
           value={userInfo.confirmpassword}
           placeholder='비밀번호를 입력하세요'
+          autoComplete='off'
           onChange={event => {
             OnChange(event, userInfo, setUserInfo);
           }}

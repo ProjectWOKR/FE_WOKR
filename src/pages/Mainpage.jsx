@@ -31,15 +31,15 @@ export default function Mainpage() {
     setUid(() => extractedUid);
   }, [accessToken]);
 
+  const { data: userInfo } = useQuery(['userInfo'], () => GetUserInfo(uid), {
+    enabled: !!uid,
+  });
+
   useEffect(() => {
     if (localStorage.accesstoken === undefined) {
       navigate('/');
     }
   }, []);
-
-  const { data: userInfo } = useQuery(['userInfo'], () => GetUserInfo(uid), {
-    enabled: !!uid,
-  });
 
   // const menuList = ['Dashboard', 'All OKR', 'Team OKR', 'TO - DO', 'Calendar'];
 

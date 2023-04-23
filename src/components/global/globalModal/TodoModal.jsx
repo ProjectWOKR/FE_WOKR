@@ -29,7 +29,7 @@ const TodoModal = ({
   onCloseTodoModal,
   todoModalRef,
   todoModalOutSideClick,
-  formCalendar,
+  fromCalendar,
   dateInfo,
 }) => {
   // console.log(dateInfo);
@@ -83,8 +83,8 @@ const TodoModal = ({
   const [todoInfo, setTodoInfo] = useState({
     toDo: '',
     memo: '',
-    startDate: formCalendar !== undefined ? dateInfo.start : '',
-    startDateTime: formCalendar !== undefined ? dateInfo.startDateTime : '',
+    startDate: fromCalendar !== undefined ? dateInfo.start : '',
+    startDateTime: fromCalendar !== undefined ? dateInfo.startDateTime : '',
     endDate: '',
     endDateTime: '',
     priority: '',
@@ -280,7 +280,7 @@ const TodoModal = ({
                   placeholder='시작일'
                   // value={defaultFormat.date}
                   value={
-                    formCalendar !== undefined
+                    fromCalendar !== undefined
                       ? dateInfo.start
                       : defaultFormat.date
                   }
@@ -322,7 +322,7 @@ const TodoModal = ({
                   placeholder='시작일'
                   // value={timeFormat.date}
                   value={
-                    formCalendar !== undefined
+                    fromCalendar !== undefined
                       ? dateInfo.start
                       : timeFormat.date
                   }
@@ -364,7 +364,7 @@ const TodoModal = ({
                   placeholder='종료일'
                   value={defaultFormat.date}
                   // value={
-                  //   formCalendar !== undefined
+                  //   fromCalendar !== undefined
                   //     ? dateInfo.end
                   //     : defaultFormat.date
                   // }
@@ -407,7 +407,7 @@ const TodoModal = ({
                   placeholder='종료일'
                   value={timeFormat.date}
                   // value={
-                  //   formCalendar !== undefined ? dateInfo.end : timeFormat.date
+                  //   fromCalendar !== undefined ? dateInfo.end : timeFormat.date
                   // }
                   onChange={convertEndWithTime}
                   animations={[
