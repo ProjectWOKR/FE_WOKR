@@ -1,6 +1,5 @@
 import GlobalLayout from '../components/global/GlobalLayout';
 import Header from '../components/global/header/Header';
-import Menu from '../components/mainpage/Menu';
 import Mainpage from '../pages/Mainpage';
 import Signin from '../pages/SignIn';
 import SignUp from '../pages/SignUp';

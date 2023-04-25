@@ -1,11 +1,9 @@
-import milestone from '../../assets/milestone 1.png';
-import mount from '../../assets/mount.png';
 import styled from 'styled-components';
 
 export const Container = styled.div`
   max-width: 75.8rem;
   width: 100%;
-  height: 56rem;
+  height: 55.2rem;
   border: 1px solid rgba(232, 232, 232, 1);
   box-shadow: 0 3px 15px rgba(124, 124, 124, 0.25);
   border-radius: 12px;
@@ -17,7 +15,7 @@ export const HeaderBox = styled.div`
   justify-content: space-between;
   height: 5.2rem;
   align-items: center;
-  padding: 1.3rem 3rem;
+  padding: 0 3rem;
   .btnBox {
     display: flex;
     align-items: center;
@@ -38,27 +36,24 @@ export const Header = styled.p`
 
 export const OkrContainer = styled.div`
   margin: 0 auto;
-  max-height: 485px;
+  max-height: 48.3rem;
   height: 100%;
   width: 100%;
-  overflow: auto;
+  overflow-y: auto;
   padding: 0 1.2rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   box-sizing: border-box;
 `;
 
 export const OKRBox = styled.div`
   width: 100%;
-  max-width: 75.8rem;
-  height: 236px;
+  height: 23.6rem;
   background: #f8f8f8;
-  padding: 0 6px;
-  box-sizing: border-box;
   box-shadow: 0px 3px 10px rgba(124, 124, 124, 0.25);
   border-radius: 8px;
-  margin-bottom: 13px;
+  margin-bottom: 11px;
+  padding: 0 0.6rem;
   :nth-last-child(1) {
     margin-bottom: 0;
   }
@@ -66,35 +61,29 @@ export const OKRBox = styled.div`
 
 export const Objective = styled.div`
   display: flex;
-  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  /* justify-content: space-between; */
-  padding: 17px 21px;
+  padding: 0 1.1rem;
   position: relative;
+  height: 8.5rem;
   .left {
-    width: calc(100% - 172px - 42px);
     display: flex;
     align-items: center;
     .title {
-      font-weight: 700;
-      font-size: 54.2282px;
-      line-height: 74px;
-      color: ${({ color }) => color};
       cursor: default;
-      background: url(${mount}) no-repeat center / 100%;
-      min-width: 40px;
-      height: 40px;
+      color: ${({ color }) => color};
+      font-size: 5.4rem;
+      font-weight: 700;
       margin-right: 16px;
     }
     .nameBox {
+      max-width: 300px;
       width: 100%;
       .name {
-        width: calc(100% - 56px);
+        width: 90%;
         height: 38px;
         font-weight: 500;
         font-size: 22px;
-        line-height: 33px;
-        letter-spacing: -0.01em;
         color: ${({ color }) => color};
         cursor: pointer;
         overflow: hidden;
@@ -115,12 +104,12 @@ export const Objective = styled.div`
     height: 100%;
     display: flex;
     align-items: center;
+    margin-right: 5rem;
     .percent {
       width: 35px;
       height: 25px;
       font-weight: 300;
       font-size: 18px;
-      /* line-height: 25px; */
       color: ${({ color }) => color};
       cursor: default;
       margin-left: 14px;
@@ -135,46 +124,46 @@ export const KRBox = styled.div`
   border-radius: 7px;
   margin-bottom: 8px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 0 14px;
+  padding: 0 7px 0 15px;
+  box-sizing: border-box;
 
   .left {
-    width: calc(100% - 172px - 28px);
+    max-width: 340px;
+    width: 100%;
     display: flex;
     align-items: center;
-    .mount {
-      width: 34px;
-      height: 34px;
-      background: url(${milestone}) no-repeat center / cover;
-    }
+    /* background-color: skyblue; */
     .logo {
-      width: 50px;
-      height: 27px;
       font-weight: 500;
+      font-size: 2rem;
       font-size: 16px;
-      line-height: 27px;
       text-align: center;
-      letter-spacing: -0.02em;
       color: ${({ color }) => color};
       cursor: default;
-      margin: 0 10px 0 14px;
+      margin-right: 2rem;
     }
     .name {
-      width: calc(100% - 220px);
+      width: 85%;
       height: 27px;
       font-style: normal;
       font-weight: 500;
       font-size: 20px;
       line-height: 27px;
-      letter-spacing: -0.01em;
       color: #4b4b4b;
       cursor: pointer;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
   .right {
     height: 100%;
     display: flex;
     align-items: center;
+
     .percent {
       width: 35px;
       height: 25px;
@@ -183,7 +172,6 @@ export const KRBox = styled.div`
       color: ${({ color }) => color};
       cursor: default;
       margin-left: 14px;
-      margin-right: 11px;
     }
   }
 `;
@@ -216,10 +204,6 @@ export const PersentBox = styled.div`
   display: flex;
   background-color: pink;
   //기존 디자인 없애기
-
-  /* margin-top: ${({ state }) => `${state === 'Objective' ? '34px' : '15px'}`};
-  margin-left: ${({ state }) =>
-    `${state === 'Objective' ? '29px' : '12.5px'}`}; */
   cursor: pointer;
   input[type='range'] {
     width: 100%;

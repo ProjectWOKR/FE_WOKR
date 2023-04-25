@@ -22,3 +22,8 @@ export const StWrap = styled.div`
     max-width: 147rem;
   }
 `;
+
+export const OkrContainer = styled.div`
+  width: 100%;
+  display: flex;
+`;

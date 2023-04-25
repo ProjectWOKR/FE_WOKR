@@ -1,6 +1,6 @@
 import sort from '../../assets/sort.png';
+import { StSortFilter } from '../../styles/tododetail.styled';
 import { useDropDown } from '../global/globaldropdown/dropdown';
-import { StSortFilter } from './tododetail.styled';
 import React, { useRef } from 'react';
 
 const SortFilter = () => {

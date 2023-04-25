@@ -4,10 +4,14 @@ import blue from '../../assets/todoBlue.png';
 import red from '../../assets/todoRed.png';
 import yellow from '../../assets/todoYellow.png';
 import { patchTodoInfo } from '../../store/store';
+import {
+  DDay,
+  TodoDetailHeader,
+  TodoDetailItem,
+} from '../../styles/tododetail.styled';
 import Potal from '../global/globalModal/Potal';
 import TodoPathModal from '../global/globalModal/TodoPathModal';
 import Filter from './Filter';
-import { DDay, TodoDetailHeader, TodoDetailItem } from './tododetail.styled';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import ReactGA from 'react-ga4';

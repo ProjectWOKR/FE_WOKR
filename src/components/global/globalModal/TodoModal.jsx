@@ -254,7 +254,7 @@ const TodoModal = ({
           </div>
           <div className='object itemBox'>
             <img src={memo} alt='' />
-            <textarea
+            <input
               type='text'
               placeholder='Memo 내용을 작성하세요'
               className='input'

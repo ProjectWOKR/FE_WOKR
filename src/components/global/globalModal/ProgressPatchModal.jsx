@@ -6,7 +6,7 @@ import close from '../../../assets/close.png';
 import kr from '../../../assets/kr.png';
 import { trackEvent } from '../../../router/RouteChangeTracker';
 import { patchProgressInfo } from '../../../store/store';
-import { PatchPersentBox, PesentContainer } from '../../mainpage/OKR.styled';
+import { PatchPersentBox, PesentContainer } from '../../../styles/OKR.styled';
 import { ModalBackground, ModalBox, OKRBox } from './modal.styled';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';

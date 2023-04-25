@@ -5,7 +5,7 @@ export const Layout = styled.div`
   width: 100%;
   height: 9.7rem;
   ${props => props.theme.flex_row_between}
-  padding: 0 5rem;
+  padding: 0 6.5rem 0 7.2rem;
   /* position: sticky;
   top: 0; */
   /* margin-bottom: 97px; */

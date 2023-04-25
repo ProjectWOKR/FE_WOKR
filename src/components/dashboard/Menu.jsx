@@ -1,8 +1,6 @@
-import { NowState } from '../../store/store';
-import { MenuContainer, MenuItem } from './menu.styled';
-import React, { useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { MenuContainer, MenuItem } from '../../styles/menu.styled';
+import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Menu = () => {
   const navigate = useNavigate();

@@ -1,7 +1,12 @@
 import plus from '../../assets/plus.png';
+import {
+  DateNavi,
+  NaviPlus,
+  StNavi,
+  TodoHeader,
+} from '../../styles/tododetail.styled';
 import Potal from '../global/globalModal/Potal';
 import TodoModal from '../global/globalModal/TodoModal';
-import { DateNavi, NaviPlus, StNavi, TodoHeader } from './tododetail.styled';
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-scroll';
 
@@ -112,6 +117,36 @@ const TodoNavi = ({ todayFormat, getAllTodo }) => {
     }
   };
 
+  const [dDay, setDDay] = useState(todayFormat);
+  console.log(dDay);
+
+  const clickDDay = e => {
+    if (e.currentTarget.className === 'include') {
+      setDDay(e.currentTarget.id);
+    }
+  };
+
+  const Today = ({ el }) => {
+    console.log(el.format === dDay);
+    if (
+      Number(el.date) === dateD &&
+      Number(el.month) === dateM &&
+      Number(el.year) === dateY
+    ) {
+      return (
+        <span className='date' style={{ color: '#ff8336' }}>
+          {el.date}
+        </span>
+      );
+    } else {
+      return (
+        <span className='date' style={{ color: '#4b4b4b' }}>
+          {el.date}
+        </span>
+      );
+    }
+  };
+
   return (
     <StNavi>
       <TodoHeader>
@@ -123,14 +158,7 @@ const TodoNavi = ({ todayFormat, getAllTodo }) => {
         <div className='right'>
           <div className='prev' onClick={onPressArrowLeft} />
           <div className='next' onClick={onPressArrowRight} />
-          <Link
-            className='today'
-            to={todayFormat}
-            spy={true}
-            smooth={true}
-            offset={-500}>
-            오늘
-          </Link>
+          <div className='today'>오늘</div>
           <NaviPlus onClick={createTodo}>
             <img src={plus} alt='' />
           </NaviPlus>
@@ -139,36 +167,29 @@ const TodoNavi = ({ todayFormat, getAllTodo }) => {
       <DateNavi>
         {state.week?.map((el, index) => (
           <React.Fragment key={index}>
-            {Number(el.date) === dateD &&
-            Number(el.month) === dateM &&
-            Number(el.year) === dateY ? (
-              <Link
-                to={el.format}
-                spy={true}
-                smooth={true}
-                offset={-500}
+            {el.format === dDay ? (
+              <div
+                onClick={clickDDay}
+                id={el.format}
+                style={{ border: '2px solid rgb(255,131,54)' }}
                 className={el.includes === false ? 'day' : 'include'}>
                 <span className='label'>{el.dateValue}</span>
-                <span className='date' style={{ color: '#ff8336' }}>
-                  {el.date}
-                </span>
+                <Today el={el} />
                 {el?.includes === false ? null : (
                   <div className='includeCh'></div>
                 )}
-              </Link>
+              </div>
             ) : (
-              <Link
-                className={el.includes === false ? 'day' : 'include'}
-                to={el?.format}
-                spy={true}
-                offset={-500}
-                smooth={true}>
-                <span className='label'>{el?.dateValue}</span>
-                <span className='date'>{el?.date}</span>
-                {el.includes === false ? null : (
+              <div
+                onClick={clickDDay}
+                id={el.format}
+                className={el.includes === false ? 'day' : 'include'}>
+                <span className='label'>{el.dateValue}</span>
+                <Today el={el} />
+                {el?.includes === false ? null : (
                   <div className='includeCh'></div>
                 )}
-              </Link>
+              </div>
             )}
           </React.Fragment>
         ))}

@@ -1,4 +1,4 @@
-import checkicon from '../../assets/checkFull.png';
+import checkicon from '../assets/checkFull.png';
 import styled from 'styled-components';
 
 export const Container = styled.div`

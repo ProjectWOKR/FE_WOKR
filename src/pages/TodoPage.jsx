@@ -1,4 +1,4 @@
-import Menu from '../components/mainpage/Menu';
+import Menu from '../components/dashboard/Menu';
 import Todo from '../components/todo/Todo';
 import { StWrap } from '../styles/mainpage.styled';
 import React from 'react';

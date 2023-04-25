@@ -33,7 +33,12 @@ export const ModalBox = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 1.3rem;
+    margin-bottom: 2.2rem;
+    h2 {
+      font-size: 2rem;
+      margin: 0;
+      color: #4b4b4b;
+    }
     img {
       position: absolute;
       top: 1.6rem;
@@ -131,12 +136,16 @@ export const ModalBox = styled.div`
 
 export const OKRBox = styled.div`
   width: 100%;
+  height: 16.6rem;
   background-color: #f8f8f8;
   border-radius: 7px;
-  padding: 1.3rem 0;
+  padding: 3rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
   .object {
-    margin-bottom: 2.6rem;
+    margin-bottom: 2.7rem;
   }
   & .itemBox {
     width: 100%;
@@ -144,7 +153,7 @@ export const OKRBox = styled.div`
     padding: 0.9rem 1.4rem;
     display: flex;
     align-items: center;
-    /* background-color: pink; */
+    position: relative;
     input {
       width: 100%;
       height: 4rem;
@@ -163,6 +172,24 @@ export const OKRBox = styled.div`
     }
     img {
       margin-right: 1.3rem;
+    }
+  }
+  .ObjectTooltip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* width: 44.8rem; */
+    height: 4rem;
+    background-color: #4b4b4b;
+    color: #fff;
+    font-size: 1.7rem;
+    border-radius: 7px;
+    position: absolute;
+    top: 4.8rem;
+    left: 78px;
+    padding: 0 13px;
+    img {
+      margin-right: 8px;
     }
   }
 
@@ -356,26 +383,58 @@ export const ErrorPopUp = styled.div`
   font-weight: 700;
 `;
 
-// export const TodoModalBox = styled.div`
-//   position: fixed;
-//   /* height: 470px; */
-//   width: 71.5rem;
-//   top: 50%;
-//   left: 50%;
-//   transform: translate(-50%, -50%);
-//   background-color: #fff;
-//   border-radius: 15px;
-//   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-//   /* box-shadow: var(--box-shadow); */
-//   z-index: 21;
-//   text-align: center;
-//   padding: 20px 30px;
-//   border: var(--main-border);
-//   form {
-//   }
-// `;
+export const KRBox = styled.div`
+  width: 100%;
+  background-color: #f8f8f8;
+  border-radius: 7px;
+  padding: 3rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  .krTooltip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* width: 44.8rem; */
+    height: 4rem;
+    background-color: #4b4b4b;
+    color: #fff;
+    font-size: 1.7rem;
+    border-radius: 7px;
+    position: absolute;
+    top: 4.8rem;
+    left: 78px;
+    padding: 0 13px;
+    img {
+      margin-right: 8px;
+    }
+  }
+  .kr {
+    display: flex;
+    padding: 0 13px;
+    img {
+      margin-right: 1.3rem;
+    }
+    input {
+      width: 100%;
+      height: 4rem;
+      border: 1.5px solid rgba(232, 232, 232, 1);
+      border-radius: 7px;
+      :hover {
+        border: 1.5px solid var(--main-color);
+      }
+      ::placeholder {
+        color: var(--placeholder-color);
+      }
+      :focus {
+        border: var(--input-hover);
+        /* filter: var(--input-focus); */
+      }
+    }
+  }
+`;
 
-export const NotHave = styled.div`
+export const NotHaveEl = styled.div`
   width: 100%;
   height: 100%;
   display: flex;

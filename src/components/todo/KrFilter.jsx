@@ -1,7 +1,7 @@
 import filter from '../../assets/filter1.png';
 import { okrCheckSelector } from '../../store/store';
+import { StKrFilter } from '../../styles/tododetail.styled';
 import { useDropDown } from '../global/globaldropdown/dropdown';
-import { StKrFilter } from './tododetail.styled';
 import React, { useRef, useState } from 'react';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { GrClose } from 'react-icons/gr';

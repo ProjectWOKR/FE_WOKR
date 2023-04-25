@@ -2,17 +2,26 @@ import { PatchEmotion } from '../../../apis/apiPATCH';
 import good from '../../../assets/emoji1.png';
 import bad from '../../../assets/emoji2.png';
 import normal from '../../../assets/emoji3.png';
+import info from '../../../assets/question.png';
 import { EmotionSelect } from './dropDown.styled';
 import { emotion } from './dropdown';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useEffect, useRef, useState } from 'react';
 import ReactGA from 'react-ga4';
 
 const Emotion = ({
+  setShowEmotion,
+  showEmotion,
   keyResultId,
   emotionState,
   openDropdownId,
   setOpenDropdownId,
 }) => {
+  console.log('showEmotion :', showEmotion);
+  console.log('keyResultId :', keyResultId);
+  console.log('emotionState :', emotionState);
+  console.log('openDropdownId :', openDropdownId);
+  console.log('---------');
   const queryClient = useQueryClient();
 
   // 자신감 수정
@@ -42,19 +51,27 @@ const Emotion = ({
     };
 
     return (
-      <li
-        onClick={ValueClick}
-        style={{ background: `url(${el.emotion}) no-repeat center / 100%` }}
-      />
+      <li onClick={ValueClick}>
+        <div
+          style={{
+            background: `url(${el.emotion}) no-repeat center / 100%`,
+            width: '31px',
+            height: '31px',
+            margin: '0 auto',
+          }}
+        />
+      </li>
     );
   };
 
-  const onClick = () => {
-    if (isOpen) {
-      setOpenDropdownId(null);
-    } else {
-      setOpenDropdownId(keyResultId);
-    }
+  const onClick = e => {
+    console.log(e);
+    // if (isOpen) {
+    //   setOpenDropdownId(null);
+    // } else {
+    //   setOpenDropdownId(keyResultId);
+    // }
+    setShowEmotion(!showEmotion);
   };
 
   const ImgBox = () => {
@@ -88,11 +105,47 @@ const Emotion = ({
     }
   };
 
+  const selectRef = useRef();
+
+  const [show, setShow] = useState(false);
+  // console.log(show);
+  const showTooltip = () => {
+    setShow(!show);
+  };
+
+  useEffect(() => {
+    // console.log('effect');
+    const clickOutside = e => {
+      console.log(e);
+      console.log(selectRef.current);
+      console.log(e.target);
+      if (selectRef.current !== e.target) {
+        // setIsOpen(!isOpen);
+        // isOpen = false;
+      }
+      // console.log(selectRef.current && !selectRef.current.contains(e.target));
+      // if (selectRef.current && !selectRef.current.contains(e.target)) {
+      //   setShow(!isOpen);
+      // }
+    };
+
+    if (isOpen) {
+      window.addEventListener('click', clickOutside);
+    }
+    return () => {
+      window.removeEventListener('click', clickOutside);
+    };
+  }, [isOpen]);
+
   return (
     <EmotionSelect>
       <ImgBox />
-      {isOpen && (
-        <ul>
+      {showEmotion && (
+        <ul ref={selectRef}>
+          <div className='tooltip'>
+            <span>자신감 지표</span>
+            <img src={info} alt='info' onClick={showTooltip} />
+          </div>
           {emotion.list.map((el, index) => (
             <DropDownItem
               key={index}

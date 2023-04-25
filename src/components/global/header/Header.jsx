@@ -28,12 +28,6 @@ export default function Header() {
     setLogoutImg(logoutON);
   };
 
-  // const { data } = useQuery(['userinfo'], GetUserInfo, {
-  //   onSuccess: response => {
-  //     console.log(response);
-  //   },
-  // });
-
   const logout = () => {
     if (process.env.NODE_ENV !== 'development') {
       ReactGA.event({
