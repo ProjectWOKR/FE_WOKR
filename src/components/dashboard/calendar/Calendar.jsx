@@ -1,9 +1,9 @@
-import { GetTodo } from '../../apis/apiGET';
-import { patchTodoInfo } from '../../store/store';
-import Potal from '../global/globalModal/Potal';
-import TodoModal from '../global/globalModal/TodoModal';
-import TodoPathModal from './../global/globalModal/TodoPathModal';
-import { Container } from './Calendar.styled';
+import { GetTodo } from '../../../apis/apiGET';
+import { patchTodoInfo } from '../../../store/store';
+import { Container } from '../../../styles/Calendar.styled';
+import Potal from '../../global/globalModal/Potal';
+import TodoModal from '../../global/globalModal/TodoModal';
+import TodoPathModal from '../../global/globalModal/TodoPathModal';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import FullCalendar from '@fullcalendar/react';

@@ -1,15 +1,6 @@
-import Article from '../components/signIn/Article';
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import LoginForm from '../components/member/LoginForm';
+import React from 'react';
 
 export default function SignIn() {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (localStorage.accesstoken !== undefined) {
-      navigate('/mainpage');
-    }
-  }, []);
-
-  return <Article />;
+  return <LoginForm />;
 }

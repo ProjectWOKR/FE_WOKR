@@ -4,7 +4,11 @@ import badgeS from '../../assets/badgeS.png';
 import blue from '../../assets/todoBlue.png';
 import red from '../../assets/todoRed.png';
 import yellow from '../../assets/todoYellow.png';
-import { Finsh, TodoDetailHeader, TodoDetailItem } from './tododetail.styled';
+import {
+  Finsh,
+  TodoDetailHeader,
+  TodoDetailItem,
+} from '../../styles/tododetail.styled';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';

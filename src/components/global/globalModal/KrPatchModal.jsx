@@ -2,10 +2,11 @@ import { DeleteKR } from '../../../apis/apiDELETE';
 import { PatchKR } from '../../../apis/apiPATCH';
 import { CreateKR } from '../../../apis/apiPOST';
 import close from '../../../assets/close.png';
+import info from '../../../assets/info.png';
 import kr from '../../../assets/kr.png';
 import trash from '../../../assets/trash.png';
 import { patchKRInfo } from '../../../store/store';
-import { ModalBackground, ModalBox, OKRBox } from './modal.styled';
+import { KRBox, ModalBackground, ModalBox, OKRBox } from './modal.styled';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
 import ReactGA from 'react-ga4';
@@ -72,11 +73,6 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
     keyResult: krInfo.kr,
   });
 
-  const onChangeKR = e => {
-    console.log(e.target.value);
-    setTitle({ ...title, keyResult: e.target.value });
-  };
-
   const { mutate: deleteKR } = useMutation(DeleteKR, {
     onSuccess: response => {
       if (process.env.NODE_ENV !== 'development') {
@@ -135,30 +131,72 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
     }
   };
 
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  const onMouseOverHandler = () => {
+    setShowTooltip(true);
+  };
+  const onMouseOutHandler = () => {
+    setShowTooltip(false);
+  };
+
+  const onChangeKR = e => {
+    setTitle({ ...title, keyResult: e.target.value });
+    if (e.target.value === '') {
+      setShowTooltip(true);
+    } else {
+      setShowTooltip(false);
+    }
+  };
+
+  useEffect(() => {
+    if (showTooltip && title.keyResult === '') {
+      setShowTooltip(true);
+    } else if (title.keyResult !== '') {
+      setShowTooltip(false);
+    } else {
+      setShowTooltip(false);
+    }
+  }, [showTooltip, title]);
+
   return (
     <>
       <ModalBackground ref={modalRef} onClick={modalOutSideClick} />
       <ModalBox>
         <div className='header'>
-          <h2>KR 추가/수정</h2>
-          <img src={close} alt='' onClick={onCloseModal} />
+          {krInfo.state === 'patch' ? (
+            <h2>Key Result 수정</h2>
+          ) : (
+            <h2>Key Result 추가</h2>
+          )}
+          <img src={close} alt='clsoe' onClick={onCloseModal} />
         </div>
 
-        <OKRBox>
+        <KRBox>
           <div className='kr itemBox'>
-            <img src={kr} alt='' />
+            <img src={kr} alt='kr' />
             <input
               type='text'
-              placeholder='핵심결과를 작성하세요.'
+              placeholder='ex. 매달 가입자 수 50명 추가 달성 할 거야.'
               name='first'
-              maxLength='19'
+              onMouseOver={onMouseOverHandler}
+              onMouseOut={onMouseOutHandler}
               value={title.keyResult}
-              onChange={event => {
-                onChangeKR(event);
-              }}
+              // onChange={event => {
+              //   onChangeKR(event);
+              // }}
+              onChange={onChangeKR}
             />
           </div>
-        </OKRBox>
+
+          {showTooltip && (
+            <div className='krTooltip'>
+              <img src={info} alt='info' />
+              <p>웹 방문자 수 150,000명 달성</p>
+            </div>
+          )}
+        </KRBox>
+
         <div className='btnBox'>
           <button onClick={onCloseModal} className='cancel'>
             취소

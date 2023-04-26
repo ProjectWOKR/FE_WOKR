@@ -1,3 +1,5 @@
+import Arrow from '../../../assets/dropdownArrow.png';
+import fillArrow from '../../../assets/filldropArrow.png';
 import styled from 'styled-components';
 
 export const DropdownContainer = styled.div`
@@ -79,25 +81,30 @@ export const DropdownContainer = styled.div`
   }
 `;
 
-export const DropIcon = styled.img`
-  width: 1.7rem;
-  height: 1.7rem;
-  position: absolute;
-  top: 50%;
-  right: 2.3rem;
-  transform: translateY(-50%);
+export const DropIcon = styled.div`
+  width: 14px;
+  height: 14px;
+  background: url(${Arrow}) no-repeat center / contain;
+`;
+
+export const DropFillIcon = styled.div`
+  width: 14px;
+  height: 14px;
+  background: url(${fillArrow}) no-repeat center / contain;
 `;
 
 export const ColorSelect = styled.div`
   width: 9.5rem;
   height: 4rem;
   position: relative;
-  input {
+  .customInput {
     width: 100%;
     height: 100%;
     border: none;
     border-radius: 12px;
-    text-align: start;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
     box-sizing: border-box;
     border: var(--default-bolder);
     font-size: 1.7rem;
@@ -109,7 +116,15 @@ export const ColorSelect = styled.div`
       border: var(--input-hover);
     }
     font-weight: 500;
-    /* font-size: 2.1rem; */
+    .valueFlex {
+      padding: 0 16px 0 11px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .value {
+        width: 53px;
+      }
+    }
   }
   img {
     width: 1.4rem;
@@ -348,15 +363,16 @@ export const EmotionSelect = styled.div`
   width: 35px;
   height: 35px;
   position: relative;
-  /* background-color: pink; */
+  margin-left: 19px;
+  cursor: pointer;
   .emotion {
     width: 100%;
     height: 100%;
-    background-color: skyblue;
+    /* background-color: skyblue; */
   }
   ul {
-    width: 5.4rem;
-    position: absolute;
+    width: 15.7rem;
+    position: fixed;
     z-index: 9;
     margin: 0 auto;
     padding: 1.5rem 1rem;
@@ -365,10 +381,36 @@ export const EmotionSelect = styled.div`
     box-shadow: 0px 2px 5px rgba(150, 150, 150, 0.65);
     border-radius: 12px;
     transition: all 0.3s;
+    margin: 5px;
+    /* left: 50%; */
+    /* transform: translateX(-50%); */
+    cursor: default;
+    .tooltip {
+      font-size: 1.7rem;
+      font-weight: 500;
+      color: #4b4b4b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      span {
+        margin-right: 5px;
+      }
+      img {
+        cursor: pointer;
+      }
+
+      /* text-align: center; */
+    }
     li {
-      width: 3.5rem;
-      height: 3.5rem;
+      width: 10.3rem;
+      height: 3.1rem;
+      margin: 0 auto;
+      background-color: #f8f8f8;
       margin-bottom: 1rem;
+      transition: all 0.3s;
+      border-radius: 7px;
+      cursor: pointer;
       :nth-last-child(1) {
         margin-bottom: 0rem;
       }

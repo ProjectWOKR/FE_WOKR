@@ -1,12 +1,10 @@
-import checkicon from '../../assets/checkFull.png';
+import checkicon from '../assets/checkFull.png';
 import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
   max-width: 68.2rem;
-  max-height: 56rem;
-  height: 100%;
-  /* overflow-y: auto; */
+  height: 56rem;
   border: 1px solid rgba(232, 232, 232, 1);
   margin-left: 3.9rem;
   box-shadow: 0 3px 15px rgba(124, 124, 124, 0.25);

@@ -1,34 +1,30 @@
 import { GetTodo } from '../../apis/apiGET';
 import plus from '../../assets/plus.png';
-import Potal from '../global/globalModal/Potal';
-import TodoModal from '../global/globalModal/TodoModal';
-import { NotHave } from '../global/globalModal/modal.styled';
-import TodoItem from './TodoItem';
 import {
   Container,
   Header,
   HeaderBox,
   TodoContainer,
   StTodoItem,
-} from './todo.styled';
+} from '../../styles/todo.styled';
+import Potal from '../global/globalModal/Potal';
+import TodoModal from '../global/globalModal/TodoModal';
+import { NotHave, NotHaveEl } from '../global/globalModal/modal.styled';
+import TodoItem from './TodoItem';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState, useRef } from 'react';
 
-export default function ToDo() {
-  //모달 상태관리
+export default function DashTodo() {
   const [todoModalOn, setTodoModalOn] = useState(false);
-  /**모달 닫는 함수 */
   const onCloseTodoModal = () => {
     setTodoModalOn(!todoModalOn);
   };
-  /** +버튼 누르면 OKR 생성하는 모달 띄움 */
+
   const createTodo = () => {
     setTodoModalOn(!todoModalOn);
   };
 
-  // 모달 외 클릭시 닫기위해 ref생성
   const todoModalRef = useRef(null);
-  /** 모달위에 있는 배경이랑 ref가 같으면 modalOn을 false로 바꾸는 함수 */
   const todoModalOutSideClick = e => {
     if (todoModalRef.current === e.target) {
       setTodoModalOn(!todoModalOn);
@@ -37,7 +33,9 @@ export default function ToDo() {
 
   // 임시
   const { data: getTodo } = useQuery(['TODO'], GetTodo, {
-    onSuccess: response => {},
+    onSuccess: response => {
+      // console.log(response);
+    },
     onError: response => {},
   });
   return (
@@ -46,7 +44,7 @@ export default function ToDo() {
         <Header>오늘의 To-do</Header>
         <div className='btnBox'>
           <div onClick={createTodo}>
-            <img src={plus} alt='' />
+            <img src={plus} alt='plus' />
           </div>
         </div>
       </HeaderBox>
@@ -57,13 +55,13 @@ export default function ToDo() {
             <TodoItem getTodo={getTodo} />
           </StTodoItem>
         ) : (
-          <NotHave>
+          <NotHaveEl>
             <h2>설정된 To Do 없습니다.</h2>
             <div className='btnFlex' onClick={createTodo}>
-              <img src={plus} alt='' />
+              <img src={plus} alt='plus' />
               <div>To Do추가</div>
             </div>
-          </NotHave>
+          </NotHaveEl>
         )}
       </TodoContainer>
 

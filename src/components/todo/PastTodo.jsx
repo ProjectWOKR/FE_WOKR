@@ -5,13 +5,13 @@ import blue from '../../assets/todoBlue.png';
 import red from '../../assets/todoRed.png';
 import yellow from '../../assets/todoYellow.png';
 import { patchTodoInfo } from '../../store/store';
-import Potal from '../global/globalModal/Potal';
-import TodoPathModal from '../global/globalModal/TodoPathModal';
 import {
   StPastTodo,
   TodoDetailHeader,
   TodoDetailItem,
-} from './tododetail.styled';
+} from '../../styles/tododetail.styled';
+import Potal from '../global/globalModal/Potal';
+import TodoPathModal from '../global/globalModal/TodoPathModal';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import ReactGA from 'react-ga4';

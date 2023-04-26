@@ -1,6 +1,7 @@
 import { GetOKR } from '../../../apis/apiGET';
 import Arrow from '../../../assets/dropdownArrow.png';
-import { ColorSelect, DropIcon } from './dropDown.styled';
+import fillArrow from '../../../assets/filldropArrow.png';
+import { ColorSelect, DropFillIcon, DropIcon } from './dropDown.styled';
 import { useDropDown, color } from './dropdown';
 import { useQuery } from '@tanstack/react-query';
 import { useState, useRef } from 'react';
@@ -9,13 +10,15 @@ const ColorDropDown = ({ setObjInfo, objInfo }) => {
   // 드롭다운 상태
   const dropDownRef = useRef(null);
   const [isOpen, setIsOpen] = useDropDown(dropDownRef, false);
-  const [finalValue, setFinalValue] = useState('');
+  const [finalValue, setFinalValue] = useState('색상');
   const [filterColor, setFilterColor] = useState();
-  console.log('col', color);
+  // console.log('finalValue :', finalValue);
+
+  const [onFocus, setOnFocus] = useState(false);
 
   const { data: getOKRData } = useQuery(['OKR'], GetOKR, {
     onSuccess: response => {
-      console.log('abaaa', response);
+      // console.log('abaaa', response);
       const filterColorData = response.map(data => {
         return data.color;
       });
@@ -29,7 +32,7 @@ const ColorDropDown = ({ setObjInfo, objInfo }) => {
           };
         });
       setFilterColor(result);
-      console.log('res', result);
+      // console.log('res', result);
     },
   });
 
@@ -54,14 +57,21 @@ const ColorDropDown = ({ setObjInfo, objInfo }) => {
 
   return (
     <ColorSelect ref={dropDownRef} className='ref'>
-      <input
-        type='text'
-        value={finalValue}
-        readOnly={true}
+      <div
+        className='customInput'
         onClick={() => setIsOpen(!isOpen)}
-        placeholder='색상'
-      />
-      <DropIcon src={Arrow} />
+        onMouseLeave={() => {
+          setOnFocus(!onFocus);
+        }}
+        onMouseEnter={() => {
+          setOnFocus(!onFocus);
+        }}>
+        <div className='valueFlex'>
+          <div className='value'>{finalValue}</div>
+          {onFocus ? <DropFillIcon /> : <DropIcon />}
+        </div>
+      </div>
+
       {isOpen && (
         <ul>
           {filterColor.map(el => (

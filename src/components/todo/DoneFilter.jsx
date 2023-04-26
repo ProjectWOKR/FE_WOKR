@@ -1,6 +1,6 @@
 import filter from '../../assets/filter1.png';
+import { StDoneFilter } from '../../styles/tododetail.styled';
 import { useDropDown } from '../global/globaldropdown/dropdown';
-import { StDoneFilter } from './tododetail.styled';
 import React, { useRef } from 'react';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { GrClose } from 'react-icons/gr';

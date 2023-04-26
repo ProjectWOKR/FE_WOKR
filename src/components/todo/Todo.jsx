@@ -1,4 +1,11 @@
 import { GetAllTodo, GetPostTodo, GetUser } from '../../apis/apiGET';
+import { useAllTodo } from '../../shared/useSomethingQuery';
+import {
+  AllTodoSelector,
+  allTodoListState,
+  testAllTodoSelector,
+} from '../../store/store';
+import { DetailTodoWrap, StTeam } from '../../styles/tododetail.styled';
 import Loading from '../global/Loading';
 import Toast from './../global/Toast';
 import DetailTodoItem from './DetailTodoItem';
@@ -7,33 +14,43 @@ import FinishTodo from './FinishTodo';
 import PastTodo from './PastTodo';
 import TeamTodo from './TeamTodo';
 import TodoNavi from './TodoNavi';
-import { DetailTodoWrap, StTeam } from './tododetail.styled';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 export default function Todo() {
   //todo 전부 가져오기
-  const { data: getAllTodo, isLoading } = useQuery(['ALLTODO'], GetAllTodo, {
-    onSuccess: response => {},
-    onError: response => {},
-  });
 
-  const [showLoading, setShowLoading] = useState(true);
+  // console.log(test);
 
-  useEffect(() => {
-    let timeout;
+  const [todoList, setTodoList] = useRecoilState(allTodoListState);
+  const alltodo = useRecoilValue(AllTodoSelector);
 
-    if (!isLoading) {
-      timeout = setTimeout(() => {
-        setShowLoading(false);
-      }, 700);
+  console.log('atom :', todoList);
+  console.log('selector :', alltodo);
+
+  const { data, isLoading, isError, error } = useQuery(
+    ['alltodoTest'],
+    GetAllTodo,
+    {
+      // suspense: true,
+      onSuccess: data => {
+        setTodoList(data);
+      },
+      onError: error => {
+        console.log(error);
+      },
     }
+  );
 
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [isLoading]);
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (isError) {
+    return <div>{error.message}</div>;
+  }
 
   const now = new Date();
   let today = '';
@@ -52,44 +69,30 @@ export default function Todo() {
     tomorrow = `${now.getMonth() + 1}월 ${now.getDate() + 1}일`;
   }
 
-  // const { data: getMember } = useQuery(['MEMBER'], GetUser, {
-  //   onSuccess: response => {
-  //     // console.log('user :', response);
-  //   },
-  //   onError: response => {
-  //     // console.log(response);
-  //   },
-  // });
-
-  // -------------------------- 여기서 부터 이제 무한스크롤
-
   return (
     <StSticky>
-      {getAllTodo?.length === 0 ? (
+      {alltodo?.length === 0 ? (
         <h2 className='notHave'>설정된 To Do가 없습니다.</h2>
       ) : (
         <>
-          {showLoading && <Loading />}
-          {!showLoading && (
-            <>
-              <TodoDashboard>
-                <TodoNavi todayFormat={today} getAllTodo={getAllTodo} />
-                {/* <Filter /> */}
-                {/* <PastTodo /> */}
-                {/* {getAllTodo?.map(el => (
+          <TodoDashboard>
+            {/* <TodoNavi todayFormat={today} /> */}
+            <TodoNavi todayFormat={today} getAllTodo={alltodo} />
+            {/* <Filter /> */}
+            {/* <PastTodo /> */}
+            {/* {test?.map(el => (
                   <DetailTodoWrap key={el.targetDate}>
                     <DetailTodoItem el={el} today={today} tomorrow={tomorrow} />
                     <FinishTodo el={el} />
                   </DetailTodoWrap>
                 ))} */}
 
-                <DetailTodoWrap>
-                  <DetailTodoItem />
-                </DetailTodoWrap>
-              </TodoDashboard>
-              {/* <TeamTodo /> */}
-            </>
-          )}
+            <DetailTodoWrap>
+              <DetailTodoItem />
+            </DetailTodoWrap>
+          </TodoDashboard>
+          <TeamTodo />
+
           <Toast />
         </>
       )}

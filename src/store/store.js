@@ -1,7 +1,21 @@
-import { get } from 'react-scroll/modules/mixins/scroller';
 import { atom, selector } from 'recoil';
 
-export const NowState = atom({ key: 'now', default: '0' });
+export const userInfo = atom({
+  key: 'userInfo',
+  default: null,
+});
+
+// accesstoken에서 userId값 추출
+export const userId = atom({
+  key: 'userId',
+  default: null,
+});
+
+//OKRData가져오기
+export const getOKRData = atom({
+  key: 'getOKRData',
+  default: null,
+});
 
 export const ToggleStartState = atom({ key: 'toggle', default: false });
 
@@ -53,6 +67,7 @@ export const krDataAtom = atom({
   default: null,
 });
 
+// 수정 필요
 export const okrCheckSelector = selector({
   key: 'okrCheck',
   // get: ({ get }) => {
@@ -66,4 +81,18 @@ export const okrCheckSelector = selector({
   // },
   get: ({ get }) => get(krDataAtom),
   set: ({ set }, checkList) => set(krDataAtom, checkList),
+});
+
+// TodoPage에서 모든 todo 가져오기
+export const allTodoListState = atom({
+  key: 'allTodoListState',
+  default: null,
+});
+
+export const AllTodoSelector = selector({
+  key: 'testAllTodoSelector',
+  get: ({ get }) => {
+    const todoList = get(allTodoListState);
+    return todoList;
+  },
 });

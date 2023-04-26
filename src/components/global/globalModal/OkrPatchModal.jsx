@@ -175,7 +175,7 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
       <ModalBox>
         <>
           <div className='header'>
-            <h2>OKR 추가 - 목표, 기간, 색상</h2>
+            <h2>Objective 수정</h2>
             <img src={close} alt='' onClick={onCloseModal} />
           </div>
           <OKRBox>
@@ -186,7 +186,7 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
                 placeholder='목표'
                 className='input'
                 name='objective'
-                maxLength='17'
+                // maxLength='17'
                 value={objInfo.objective}
                 onChange={event => {
                   OnChange(event, objInfo, setObjInfo);
@@ -260,7 +260,7 @@ const OkrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
               <p className='deleteName'>삭제</p>
             </div>
           </div>
-          <Toast />
+          {/* <Toast /> */}
         </>
       </ModalBox>
     </>
