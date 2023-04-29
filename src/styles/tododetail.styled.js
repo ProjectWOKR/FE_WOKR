@@ -531,14 +531,16 @@ export const StKrFilter = styled.div`
         .hash {
           /* width: 36px; */
           height: 15px;
-          background: #457eff;
-          border: 1px solid #457eff;
+          /* background: #457eff; */
+          /* border: 2px solid ${({ color }) => color}; */
+          /* border: 1px solid #457eff; */
           border-radius: 2.3px;
           color: #fff;
           display: flex;
           align-items: center;
           justify-content: center;
           padding: 2px;
+          /* background-color: pink; */
           span {
           }
           svg {

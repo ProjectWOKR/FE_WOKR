@@ -68,31 +68,83 @@ export const krDataAtom = atom({
 });
 
 // 수정 필요
-export const okrCheckSelector = selector({
-  key: 'okrCheck',
-  // get: ({ get }) => {
-  //   const datas = get(krDataAtom)?.map(el => {
-  //     console.log(el);
-  //     const data = { ...el };
-  //     data.checked = true;
-  //     return data;
-  //   });
-  //   return datas;
-  // },
-  get: ({ get }) => get(krDataAtom),
-  set: ({ set }, checkList) => set(krDataAtom, checkList),
-});
+// export const okrCheckSelector = selector({
+//   key: 'okrCheck',
+//   // get: ({ get }) => {
+//   //   const datas = get(krDataAtom)?.map(el => {
+//   //     console.log(el);
+//   //     const data = { ...el };
+//   //     data.checked = true;
+//   //     return data;
+//   //   });
+//   //   return datas;
+//   // },
+//   get: ({ get }) => get(krDataAtom),
+//   // set: ({ set }, checkList) => set(krDataAtom, checkList),
+// });
 
 // TodoPage에서 모든 todo 가져오기
-export const allTodoListState = atom({
+export const todoListState = atom({
   key: 'allTodoListState',
   default: null,
 });
 
-export const AllTodoSelector = selector({
+export const todoListSelector = selector({
   key: 'testAllTodoSelector',
   get: ({ get }) => {
-    const todoList = get(allTodoListState);
+    const todoList = get(todoListState);
     return todoList;
   },
 });
+
+//ex) 2023-01-01
+export const clickDate = atom({
+  key: 'DDay',
+  default: null,
+});
+
+export const todoDateInfo = atom({
+  key: 'todoDateInfo',
+  default: {
+    targetDate: '',
+    teamMembers: [],
+    KeyResultIds: [],
+    orderby: '',
+    orderbyrole: '',
+  },
+});
+
+//[{...},{...}]
+export const teamMemberAtom = atom({
+  key: 'teamMemberAtom',
+  default: null,
+});
+
+// 내 userId [131]
+export const myUserIdSelecctor = selector({
+  key: 'myUserIdSelecctor',
+  get: ({ get }) => {
+    const todoMember = get(teamMemberAtom);
+    const filterMyId = todoMember?.filter(el => el.myInfo);
+    let array = [];
+    if (filterMyId) {
+      array = [filterMyId[0].userId];
+    }
+    return array;
+  },
+});
+
+// 팀원들 userId
+export const filterTeamMemberSelector = selector({
+  key: 'teamMemberTodoSelector',
+  get: ({ get }) => {
+    const todoMember = get(teamMemberAtom);
+    const filterTodoMember = todoMember?.map(el => el.userId);
+    // console.log('todoMember :', todoMember);
+    // return filterTodoMember;
+    return todoMember;
+  },
+});
+
+// kr들
+// export const

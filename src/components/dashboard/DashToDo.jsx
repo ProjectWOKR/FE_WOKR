@@ -1,5 +1,6 @@
 import { GetTodo } from '../../apis/apiGET';
 import plus from '../../assets/plus.png';
+import { todoListSelector, todoListState } from '../../store/store';
 import {
   Container,
   Header,
@@ -7,12 +8,14 @@ import {
   TodoContainer,
   StTodoItem,
 } from '../../styles/todo.styled';
+import Loading from '../global/Loading.jsx';
 import Potal from '../global/globalModal/Potal';
 import TodoModal from '../global/globalModal/TodoModal';
 import { NotHave, NotHaveEl } from '../global/globalModal/modal.styled';
 import TodoItem from './TodoItem';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState, useRef } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 export default function DashTodo() {
   const [todoModalOn, setTodoModalOn] = useState(false);
@@ -31,13 +34,30 @@ export default function DashTodo() {
     }
   };
 
+  const [todoList, setTodoList] = useRecoilState(todoListState);
+  const todoSelector = useRecoilValue(todoListSelector);
+  // console.log('todoSelector :', todoSelector);
   // 임시
-  const { data: getTodo } = useQuery(['TODO'], GetTodo, {
+  const {
+    data: getTodo,
+    isLoading,
+    isError,
+    error,
+  } = useQuery(['TODO'], GetTodo, {
     onSuccess: response => {
+      setTodoList(response);
       // console.log(response);
     },
     onError: response => {},
   });
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (isError) {
+    return <div>{error.message}</div>;
+  }
   return (
     <Container>
       <HeaderBox>

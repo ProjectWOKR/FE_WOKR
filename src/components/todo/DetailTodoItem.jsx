@@ -1,24 +1,40 @@
+import { GetKR, GetUser } from '../../apis/apiGET';
 import { PatchCheck } from '../../apis/apiPATCH';
+import { PostExpirationTodo } from '../../apis/apiPOST';
 import badgeS from '../../assets/badgeS.png';
 import blue from '../../assets/todoBlue.png';
 import red from '../../assets/todoRed.png';
 import yellow from '../../assets/todoYellow.png';
-import { patchTodoInfo } from '../../store/store';
+import {
+  clickDate,
+  filterTeamMemberSelector,
+  getOKRData,
+  krDataAtom,
+  myUserIdSelecctor,
+  patchTodoInfo,
+  teamMemberTodoSelector,
+  todoDateInfo,
+  userId,
+  userInfo,
+} from '../../store/store';
 import {
   DDay,
   TodoDetailHeader,
   TodoDetailItem,
 } from '../../styles/tododetail.styled';
+import Loading from '../global/Loading';
 import Potal from '../global/globalModal/Potal';
 import TodoPathModal from '../global/globalModal/TodoPathModal';
 import Filter from './Filter';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import React, { useEffect, useState } from 'react';
 import ReactGA from 'react-ga4';
 import { toast } from 'react-toastify';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
-const DetailTodoItem = ({ el, today, tomorrow }) => {
+const DetailTodoItem = ({ el, todayFormat, tomorrow }) => {
+  // console.log(todayFormat);
+  // console.log(dateInfo);
   // const queryClient = useQueryClient();
 
   // // 우선순위
@@ -230,6 +246,77 @@ const DetailTodoItem = ({ el, today, tomorrow }) => {
   //     );
   //   }
   // };
+
+  // 날짜
+  // const date = useRecoilValue(clickDate);
+  // console.log('date :', date?.targetDate);
+
+  // const my = useRecoilValue(myUserIdSelecctor);
+  // console.log('my :', my);
+
+  // const [krState, setKrState] = useRecoilState(krDataAtom);
+  // console.log('kr :', krState);
+
+  // const [dateInfo, setDateInfo] = useState({
+  //   targetDate: '',
+  //   teamMembers: my,
+  //   keyResultIds: krState,
+  //   orderby: 'endDate',
+  //   orderbyrole: 'asce',
+  // });
+  // console.log(dateInfo);
+
+  //userId
+  // console.log(my);
+
+  // const kr = useRecoilValue(getOKRData);
+  // const jkr = useRecoilValue(krDataAtom);
+  // console.log(jkr);
+
+  // const [expirationDefault, setExpirationDefault] =
+  //   useRecoilState(todoDateInfo);
+
+  // console.log('expirationDefault :', expirationDefault);
+
+  // console.log(mock.flat(Infinity));
+
+  // const mock = jkr?.map(el => [el.keyResultId]);
+
+  // 기간 만료 todo 불러오기
+
+  const [info, setInfo] = useState({
+    targetDate: todayFormat,
+    teamMembers: [JSON.parse(sessionStorage.getItem('userId'))],
+    KeyResultIds: JSON.parse(sessionStorage.getItem('kr')),
+    orderby: 'endDate',
+    orderbyrole: 'desc',
+  });
+  // console.log(info);
+  // console.log('----------------------');
+
+  useEffect(() => {
+    // console.log(info);
+    expirationTodo({ info });
+  }, []);
+  // });
+
+  const {
+    mutate: expirationTodo,
+    isLoading,
+    isError,
+    error,
+  } = useMutation(PostExpirationTodo, {
+    onSuccess: data => {
+      // console.log(data);
+    },
+  });
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  // if (isError) {
+  //   return <div>{error.message}</div>;
+  // }
 
   return (
     <>

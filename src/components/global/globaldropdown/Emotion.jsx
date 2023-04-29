@@ -17,11 +17,11 @@ const Emotion = ({
   openDropdownId,
   setOpenDropdownId,
 }) => {
-  console.log('showEmotion :', showEmotion);
-  console.log('keyResultId :', keyResultId);
-  console.log('emotionState :', emotionState);
-  console.log('openDropdownId :', openDropdownId);
-  console.log('---------');
+  // console.log('showEmotion :', showEmotion);
+  // console.log('keyResultId :', keyResultId);
+  // console.log('emotionState :', emotionState);
+  // console.log('openDropdownId :', openDropdownId);
+  // console.log('---------');
   const queryClient = useQueryClient();
 
   // 자신감 수정

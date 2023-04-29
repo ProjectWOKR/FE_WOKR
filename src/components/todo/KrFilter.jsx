@@ -1,7 +1,10 @@
+import { GetKR } from '../../apis/apiGET';
 import filter from '../../assets/filter1.png';
+import { krDataAtom } from '../../store/store';
 import { okrCheckSelector } from '../../store/store';
 import { StKrFilter } from '../../styles/tododetail.styled';
 import { useDropDown } from '../global/globaldropdown/dropdown';
+import { useQuery } from '@tanstack/react-query';
 import React, { useRef, useState } from 'react';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { GrClose } from 'react-icons/gr';
@@ -11,26 +14,81 @@ const KrFilter = () => {
   const krDropRef = useRef(null);
   //드롭다운이 보여지는 상태관리
   const [krDropOn, setKrDropon] = useDropDown(krDropRef, false);
+  // const [krDropOn, setKrDropon] = useState(false);
 
-  const [checkData, setCheckData] = useRecoilState(okrCheckSelector);
+  // const [data, setData] = useState([]);
+  // console.log('data :', data);
 
-  // console.log(checkData);
+  // const [krData, setKrData] = useRecoilState(krDataAtom);
+  // console.log('krData :', krData);
+  // const [krData, setKrData] = useState([]);
+
+  const [checkedList, setCheckedList] = useState([]);
+  const [checkInfo, setCheckInfo] = useState([]);
+  const [forData, setForData] = useState([]);
+
+  console.log('***** forData :', forData);
+
+  console.log('checkedList :', checkedList);
+  console.log('checkInfo :', checkInfo);
+
+  const { data: getKrData } = useQuery(['KR'], GetKR, {
+    refetchOnWindowFocus: false,
+    onSuccess: response => {
+      // setCheckedList(response);
+      setCheckInfo(response);
+      console.log(response);
+      // const
+      // const filter = response.map(el => ({ ...el, check: false }));
+      // const check = response.map(el => ({
+      //   id: el.keyResultId,
+      //   data: el.keyResult,
+      // }));
+      // const check = response.map(el => el.keyResult);
+      // setCheckInfo(response);
+      // setCheckedList(check);
+      //
+      // console.log(response.indexOf(array));
+    },
+  });
+
+  const thisDelete = item => {
+    // console.log(item.keyResultId);
+    setCheckedList(checkedList.filter(el => el !== item));
+    setForData(forData.filter(el => el !== item.keyResultId));
+    // setCheckInfo(checkInfo.filter(el => el !== item));
+  };
+
+  const removeAll = () => {
+    setCheckedList([]);
+    setForData([]);
+  };
 
   // filterContainer를 누르면 Drop이 보이는 함수
   const krDroponHandler = () => {
     setKrDropon(!krDropOn);
   };
 
-  // checkbox 클릭하면 해시태그 추가
-  const addHash = e => {};
+  const onCheckedElement = (checked, item) => {
+    if (checked) {
+      // console.log(JSON.parse(item));
+      // console.log('checked이빈다');
+      setCheckedList([...checkedList, JSON.parse(item)]);
+      setForData([...forData, JSON.parse(item).keyResultId]);
+      // setCheckInfo([...checkInfo, item]);
+    } else if (!checked) {
+      // console.log(JSON.parse(item));
+      setCheckedList(checkedList.filter(el => el !== JSON.parse(item)));
 
-  const [isCheck, setIsCheck] = useState(true);
-  const onCheckHandler = e => {
-    // console.log(e);
-    setIsCheck(!isCheck);
+      // console.log(checkedList);
+
+      setForData(forData.filter(el => el !== JSON.parse(item).keyResultId));
+      // setCheckInfo(checkInfo.filter(el => el !== item));
+    }
   };
 
-  // console.log(krDrop);
+  // useEffect(()=> {
+  // })
 
   return (
     <StKrFilter ref={krDropRef}>
@@ -43,45 +101,52 @@ const KrFilter = () => {
 
       {krDropOn && (
         <div className='krDrop'>
+          <div onClick={krDroponHandler}>X</div>
           <div className='inputBox'>
             <div className='hashFlex'>
-              {/* <span>KR1</span> */}
-              {checkData.map(data => (
-                <div className='hash' key={data.keyResultId}>
+              {checkedList?.map((data, index) => (
+                <div
+                  id={data.keyResultId}
+                  className='hash'
+                  key={index}
+                  style={{
+                    backgroundColor: `${data.color}`,
+                    border: `2px solid ${data.color}`,
+                  }}>
                   <span>KR{data.krNumber}</span>
-                  <GrClose />
+                  <GrClose onClick={() => thisDelete(data)} />
                 </div>
               ))}
-
-              <div className='hash'>
-                <span>None</span>
-                <GrClose />
-              </div>
             </div>
-            {/* <div className='closeBtn'></div> */}
-            <AiFillCloseCircle className='closeBtn' />
+            <AiFillCloseCircle className='closeBtn' onClick={removeAll} />
           </div>
           <ul>
-            {checkData.map(data => (
-              <li key={data.keyResultId} onClick={addHash}>
+            {/* <input type='checkbox' checked={true} />
+            전체 */}
+            {checkInfo.map(data => (
+              <li key={data.keyResultId}>
                 <input
+                  // id={data.keyResultId}
                   type='checkbox'
-                  onChange={onCheckHandler}
-                  checked={isCheck}
+                  onChange={e =>
+                    onCheckedElement(e.target.checked, e.target.value)
+                  }
+                  value={JSON.stringify(data)}
+                  checked={forData.includes(data.keyResultId) ? true : false}
+                  // checked={true}
                 />
-                <span className='kr' style={{ color: 'rgb(69, 126, 255)' }}>
+                <span className='kr' style={{ color: `${data.color}` }}>
                   KR{data.krNumber}
                 </span>
                 :<span className='desc'>{data.keyResult}</span>
               </li>
             ))}
-
-            <li>
+            {/* <li>
               <input type='checkbox' onChange={onCheckHandler} checked />
               <span className='kr' style={{ color: 'rgb(155,155,155)' }}>
                 None
               </span>
-            </li>
+            </li> */}
           </ul>
         </div>
       )}

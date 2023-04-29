@@ -24,78 +24,79 @@ export default function Todo() {
 
   // console.log(test);
 
-  const [todoList, setTodoList] = useRecoilState(allTodoListState);
-  const alltodo = useRecoilValue(AllTodoSelector);
+  // const [todoList, setTodoList] = useRecoilState(allTodoListState);
+  // const alltodo = useRecoilValue(AllTodoSelector);
 
-  console.log('atom :', todoList);
-  console.log('selector :', alltodo);
+  // console.log('atom :', todoList);
+  // console.log('selector :', alltodo);
 
-  const { data, isLoading, isError, error } = useQuery(
-    ['alltodoTest'],
-    GetAllTodo,
-    {
-      // suspense: true,
-      onSuccess: data => {
-        setTodoList(data);
-      },
-      onError: error => {
-        console.log(error);
-      },
-    }
-  );
+  // const { data, isLoading, isError, error } = useQuery(
+  //   ['alltodoTest'],
+  //   GetAllTodo,
+  //   {
+  //     // suspense: true,
+  //     onSuccess: data => {
+  //       setTodoList(data);
+  //     },
+  //     onError: error => {
+  //       console.log(error);
+  //     },
+  //   }
+  // );
 
-  if (isLoading) {
-    return <Loading />;
-  }
+  // if (isLoading) {
+  //   return <Loading />;
+  // }
 
-  if (isError) {
-    return <div>{error.message}</div>;
-  }
+  // if (isError) {
+  //   return <div>{error.message}</div>;
+  // }
 
   const now = new Date();
   let today = '';
   let tomorrow;
   if (now.getMonth() + 1 < 10 && now.getDate() < 10) {
-    today = `0${now.getMonth() + 1}월 0${now.getDate()}일`;
+    today = `${now.getFullYear()}-0${now.getMonth() + 1}-0${now.getDate()}`;
     tomorrow = `0${now.getMonth() + 1}월 0${now.getDate() + 1}일`;
   } else if (now.getDate() < 10) {
-    today = `${now.getMonth() + 1}월 0${now.getDate()}일`;
-    tomorrow = `${now.getMonth() + 1}월 0${now.getDate() + 1}일`;
+    today = `${now.getFullYear()}-${now.getMonth() + 1}-0${now.getDate()}`;
+    tomorrow = `${now.getFullYear()}-${now.getMonth() + 1}-0${
+      now.getDate() + 1
+    }`;
   } else if (now.getMonth() + 1 < 10) {
-    today = `0${now.getMonth() + 1}월 ${now.getDate()}일`;
+    today = `${now.getFullYear()}-0${now.getMonth() + 1}-${now.getDate()}`;
     tomorrow = `0${now.getMonth() + 1}월 ${now.getDate() + 1}일`;
   } else {
-    today = `${now.getMonth() + 1}월 ${now.getDate()}일`;
+    today = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
     tomorrow = `${now.getMonth() + 1}월 ${now.getDate() + 1}일`;
   }
 
   return (
     <StSticky>
-      {alltodo?.length === 0 ? (
+      {/* {alltodo?.length === 0 ? (
         <h2 className='notHave'>설정된 To Do가 없습니다.</h2>
       ) : (
         <>
           <TodoDashboard>
-            {/* <TodoNavi todayFormat={today} /> */}
+            <TodoNavi todayFormat={today} />
             <TodoNavi todayFormat={today} getAllTodo={alltodo} />
-            {/* <Filter /> */}
-            {/* <PastTodo /> */}
-            {/* {test?.map(el => (
-                  <DetailTodoWrap key={el.targetDate}>
-                    <DetailTodoItem el={el} today={today} tomorrow={tomorrow} />
-                    <FinishTodo el={el} />
-                  </DetailTodoWrap>
-                ))} */}
 
             <DetailTodoWrap>
               <DetailTodoItem />
             </DetailTodoWrap>
           </TodoDashboard>
           <TeamTodo />
-
           <Toast />
         </>
-      )}
+      )} */}
+      <TodoDashboard>
+        <TodoNavi todayFormat={today} />
+
+        <DetailTodoWrap>
+          <DetailTodoItem todayFormat={today} />
+        </DetailTodoWrap>
+      </TodoDashboard>
+      <TeamTodo />
     </StSticky>
   );
 }

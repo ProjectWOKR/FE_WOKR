@@ -1,4 +1,5 @@
 import plus from '../../assets/plus.png';
+import { DDay, clickDate, todoDateInfo } from '../../store/store';
 import {
   DateNavi,
   NaviPlus,
@@ -7,13 +8,14 @@ import {
 } from '../../styles/tododetail.styled';
 import Potal from '../global/globalModal/Potal';
 import TodoModal from '../global/globalModal/TodoModal';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-scroll';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 const TodoNavi = ({ todayFormat, getAllTodo }) => {
-  const haveDay = getAllTodo?.map(todo => {
-    return todo.targetDate;
-  });
+  // const haveDay = getAllTodo?.map(todo => {
+  //   return todo.targetDate;
+  // });
 
   const today = new Date();
 
@@ -46,13 +48,21 @@ const TodoNavi = ({ todayFormat, getAllTodo }) => {
 
       let format = '';
       if (newDate.getMonth() + 1 < 10 && newDate.getDate() < 10) {
-        format = `0${newDate.getMonth() + 1}월 0${newDate.getDate()}일`;
+        format = `${newDate.getFullYear()}-0${
+          newDate.getMonth() + 1
+        }-0${newDate.getDate()}`;
       } else if (newDate.getMonth() + 1 < 10) {
-        format = `0${newDate.getMonth() + 1}월 ${newDate.getDate()}일`;
+        format = `${newDate.getFullYear()}-0${
+          newDate.getMonth() + 1
+        }-${newDate.getDate()}`;
       } else if (newDate.getDate() < 10) {
-        format = `${newDate.getMonth() + 1}월 0${newDate.getDate()}일`;
+        format = `${newDate.getFullYear()}-${
+          newDate.getMonth() + 1
+        }-0${newDate.getDate()}`;
       } else {
-        format = `${newDate.getMonth() + 1}월 ${newDate.getDate()}일`;
+        format = `${newDate.getFullYear()}-${
+          newDate.getMonth() + 1
+        }-${newDate.getDate()}`;
       }
 
       week.push({
@@ -61,7 +71,7 @@ const TodoNavi = ({ todayFormat, getAllTodo }) => {
         date: `${newDate.getDate()}`,
         year: `${newDate.getFullYear()}`,
         format: format,
-        includes: haveDay?.includes(format),
+        // includes: haveDay?.includes(format),
       });
     }
     return week;
@@ -118,16 +128,28 @@ const TodoNavi = ({ todayFormat, getAllTodo }) => {
   };
 
   const [dDay, setDDay] = useState(todayFormat);
-  console.log(dDay);
+  // console.log(dDay);
 
+  // const todoinfo = useRecoilValue(todoDateInfo);
+  // console.log('atom :', todoinfo);
+  const [dateInfo, setDateInfo] = useRecoilState(todoDateInfo);
+  // const setTodoDateInfo = useSetRecoilState(clickDate);
   const clickDDay = e => {
-    if (e.currentTarget.className === 'include') {
-      setDDay(e.currentTarget.id);
-    }
+    // if (e.currentTarget.className === 'include') {
+    //   setDDay(e.currentTarget.id);
+    // }
+    setDDay(e.currentTarget.id);
+    setDateInfo({ ...dateInfo, targetDate: e.currentTarget.id });
   };
 
+  useEffect(() => {
+    setDateInfo({ ...dateInfo, targetDate: todayFormat });
+  }, []);
+
+  console.log(state.week);
+
   const Today = ({ el }) => {
-    console.log(el.format === dDay);
+    // console.log(el.format === dDay);
     if (
       Number(el.date) === dateD &&
       Number(el.month) === dateM &&
@@ -172,23 +194,25 @@ const TodoNavi = ({ todayFormat, getAllTodo }) => {
                 onClick={clickDDay}
                 id={el.format}
                 style={{ border: '2px solid rgb(255,131,54)' }}
-                className={el.includes === false ? 'day' : 'include'}>
+                // className={el.includes === false ? 'day' : 'include'}
+                className='day'>
                 <span className='label'>{el.dateValue}</span>
                 <Today el={el} />
-                {el?.includes === false ? null : (
+                {/* {el?.includes === false ? null : (
                   <div className='includeCh'></div>
-                )}
+                )} */}
               </div>
             ) : (
               <div
                 onClick={clickDDay}
                 id={el.format}
-                className={el.includes === false ? 'day' : 'include'}>
+                // className={el.includes === false ? 'day' : 'include'}
+                className='day'>
                 <span className='label'>{el.dateValue}</span>
                 <Today el={el} />
-                {el?.includes === false ? null : (
+                {/* {el?.includes === false ? null : (
                   <div className='includeCh'></div>
-                )}
+                )} */}
               </div>
             )}
           </React.Fragment>

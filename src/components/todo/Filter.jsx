@@ -12,18 +12,17 @@ import React, { useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
 
 const Filter = () => {
-  const [krState, setKrState] = useRecoilState(krDataAtom);
-  // console.log(krState);
-  const { data: getOkrData } = useQuery(['krData'], GetKR, {
-    retry: 3,
-    staleTime: 60 * 1000,
-    onSuccess: response => {
-      setKrState(response);
-    },
-  });
-
-  const doneDrop = useRef(null);
-  const sortDrop = useRef(null);
+  // const [krState, setKrState] = useRecoilState(krDataAtom);
+  // // console.log(krState);
+  // const { data: getOkrData } = useQuery(['krData'], GetKR, {
+  //   retry: 3,
+  //   staleTime: 60 * 1000,
+  //   onSuccess: response => {
+  //     setKrState(response);
+  //   },
+  // });
+  // const doneDrop = useRef(null);
+  // const sortDrop = useRef(null);
 
   return (
     <StFilterContainer>

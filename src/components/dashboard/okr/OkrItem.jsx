@@ -107,11 +107,11 @@ const OkrItem = () => {
 
   const [KRArray, setKRArray] = useState([]);
   const value = useRecoilValue(krDataAtom);
-  console.log('value :', value);
-  console.log('KRArray :', KRArray);
+  // console.log('value :', value);
+  // console.log('KRArray :', KRArray);
   const { data: getOKRData } = useQuery(['OKR'], GetOKR, {
     onSuccess: response => {
-      console.log('response :', response);
+      // console.log('response :', response);
       const newArray = response.map(data => {
         const newKRArray = [...data.keyresult];
         newKRArray.sort((a, b) => a.krNumber - b.krNumber);

@@ -1,12 +1,18 @@
 import { GetUser } from '../../apis/apiGET';
 import badgeB from '../../assets/badgeB.png';
+import { teamMemberAtom } from '../../store/store';
 import { StTeam } from '../../styles/tododetail.styled';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import { useSetRecoilState } from 'recoil';
 
 const TeamTodo = () => {
+  const setTeamMemberAtom = useSetRecoilState(teamMemberAtom);
   const { data: getMember } = useQuery(['MEMBER'], GetUser, {
-    onSuccess: response => {},
+    onSuccess: response => {
+      // console.log(response);
+      setTeamMemberAtom(response);
+    },
     onError: response => {},
   });
 

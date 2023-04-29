@@ -1,11 +1,17 @@
-import { GetOKR, GetUserInfo } from '../apis/apiGET';
+import { GetKR, GetOKR, GetUser, GetUserInfo } from '../apis/apiGET';
 import DashOKR from '../components/dashboard/DashOKR';
 import DashTodo from '../components/dashboard/DashToDo';
 import Menu from '../components/dashboard/Menu';
 import Tutorial from '../components/dashboard/Tutorial';
 import DashBoardCalendar from '../components/dashboard/calendar/Calendar';
 import Portal from '../components/global/globalModal/Potal';
-import { getOKRData, userId, userInfo } from '../store/store';
+import {
+  getOKRData,
+  krDataAtom,
+  teamMemberAtom,
+  userId,
+  userInfo,
+} from '../store/store';
 import { OkrContainer, StWrap } from '../styles/mainpage.styled';
 import { useQuery } from '@tanstack/react-query';
 import jwt_decode from 'jsonwebtoken/decode';
@@ -25,8 +31,10 @@ export default function Mainpage() {
 
   //  accesstoken 디코딩
   const setUserInfo = useSetRecoilState(userInfo);
+  const setUserId = useSetRecoilState(userId);
 
   const [uid, setUid] = useRecoilState(userId);
+  // console.log(uid);
   const [accessToken, setAccessToken] = useState(
     localStorage.getItem('accesstoken')
   );
@@ -41,7 +49,10 @@ export default function Mainpage() {
   const { userinfo } = useQuery(['userInfo'], () => GetUserInfo(uid), {
     enabled: !!uid,
     onSuccess: data => {
+      // console.log(data);
       setUserInfo(data);
+      sessionStorage.setItem('userId', data.userId);
+      setUserId(data.userId);
     },
   });
 
@@ -53,9 +64,31 @@ export default function Mainpage() {
     },
   });
 
+  const setTeamMemberAtom = useSetRecoilState(teamMemberAtom);
+
+  const { data: getMember } = useQuery(['MEMBER'], GetUser, {
+    onSuccess: response => {
+      // console.log(response);
+      setTeamMemberAtom(response);
+    },
+    onError: response => {},
+  });
+
+  const [krdata, setKrData] = useRecoilState(krDataAtom);
+  console.log(krdata);
+  const { data: getKr } = useQuery(['KR'], GetKR, {
+    onSuccess: response => {
+      // setKrState(response);
+      // console.log('response :', response);
+      const filterArray = response.map(el => el.keyResultId);
+      sessionStorage.setItem('kr', JSON.stringify(filterArray));
+      setKrData(response);
+    },
+  });
+
   return (
     <StWrap>
-      {userInfo?.firstLogin ? (
+      {userinfo?.firstLogin ? (
         <Portal>
           <Tutorial />
         </Portal>
