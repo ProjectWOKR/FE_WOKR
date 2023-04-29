@@ -1,6 +1,6 @@
 import { GetKR } from '../../apis/apiGET';
 import filter from '../../assets/filter1.png';
-import { krDataAtom } from '../../store/store';
+import { krDataAtom, todoDateInfo } from '../../store/store';
 import { okrCheckSelector } from '../../store/store';
 import { StKrFilter } from '../../styles/tododetail.styled';
 import { useDropDown } from '../global/globaldropdown/dropdown';
@@ -13,55 +13,53 @@ import { useRecoilState } from 'recoil';
 const KrFilter = () => {
   const krDropRef = useRef(null);
   //드롭다운이 보여지는 상태관리
-  const [krDropOn, setKrDropon] = useDropDown(krDropRef, false);
-  // const [krDropOn, setKrDropon] = useState(false);
-
-  // const [data, setData] = useState([]);
-  // console.log('data :', data);
-
-  // const [krData, setKrData] = useRecoilState(krDataAtom);
-  // console.log('krData :', krData);
-  // const [krData, setKrData] = useState([]);
+  // const [krDropOn, setKrDropon] = useDropDown(krDropRef, false);
+  const [info, setInfo] = useRecoilState(todoDateInfo);
+  console.log(info);
+  const [krDropOn, setKrDropon] = useState(false);
 
   const [checkedList, setCheckedList] = useState([]);
   const [checkInfo, setCheckInfo] = useState([]);
   const [forData, setForData] = useState([]);
 
-  console.log('***** forData :', forData);
+  // console.log('***** forData :', forData);
 
-  console.log('checkedList :', checkedList);
-  console.log('checkInfo :', checkInfo);
+  // console.log('checkedList :', checkedList);
+  // console.log('checkInfo :', checkInfo);
 
   const { data: getKrData } = useQuery(['KR'], GetKR, {
     refetchOnWindowFocus: false,
     onSuccess: response => {
       // setCheckedList(response);
-      setCheckInfo(response);
-      console.log(response);
-      // const
-      // const filter = response.map(el => ({ ...el, check: false }));
-      // const check = response.map(el => ({
-      //   id: el.keyResultId,
-      //   data: el.keyResult,
-      // }));
-      // const check = response.map(el => el.keyResult);
-      // setCheckInfo(response);
-      // setCheckedList(check);
-      //
-      // console.log(response.indexOf(array));
+      const none = [{ keyResultId: 0, color: '#9b9b9b' }];
+      const addNone = [...response, ...none];
+      setCheckInfo(addNone);
+
+      setCheckedList(addNone);
+      // console.log(JSON.parse(sessionStorage.getItem('kr')));
+      setForData(JSON.parse(sessionStorage.getItem('kr')));
+
+      setForData(JSON.parse(sessionStorage.getItem('kr')));
     },
   });
 
   const thisDelete = item => {
     // console.log(item.keyResultId);
     setCheckedList(checkedList.filter(el => el !== item));
-    setForData(forData.filter(el => el !== item.keyResultId));
-    // setCheckInfo(checkInfo.filter(el => el !== item));
+    setForData(forData?.filter(el => el !== item.keyResultId));
+    const filter = info.KeyResultIds.filter(el => el !== item.keyResultId);
+    // console.log(typeof filter);
+    // setInfo({
+    //   ...info,
+    //   KeyResultIds: filter,
+    // });
   };
 
   const removeAll = () => {
     setCheckedList([]);
     setForData([]);
+
+    // setInfo({...info, KeyResultIds([])})
   };
 
   // filterContainer를 누르면 Drop이 보이는 함수
@@ -71,24 +69,32 @@ const KrFilter = () => {
 
   const onCheckedElement = (checked, item) => {
     if (checked) {
-      // console.log(JSON.parse(item));
-      // console.log('checked이빈다');
       setCheckedList([...checkedList, JSON.parse(item)]);
+
       setForData([...forData, JSON.parse(item).keyResultId]);
-      // setCheckInfo([...checkInfo, item]);
+      console.log('filter :', JSON.parse(item).keyResultId);
+
+      // setInfo({ ...info, KeyResultIds: JSON.parse(item).keyResultId });
+      setInfo({
+        ...info,
+        KeyResultIds: [...info.KeyResultIds, JSON.parse(item).keyResultId],
+      });
     } else if (!checked) {
-      // console.log(JSON.parse(item));
-      setCheckedList(checkedList.filter(el => el !== JSON.parse(item)));
+      const filter = checkedList.filter(el => JSON.stringify(el) !== item);
+      // console.log(
+      //   'filter :',
+      //   forData?.filter(el => el !== JSON.parse(item).keyResultId)
+      // );
+      setCheckedList(filter);
 
-      // console.log(checkedList);
+      setForData(forData?.filter(el => el !== JSON.parse(item).keyResultId));
+      const filterArray = forData?.filter(
+        el => el !== JSON.parse(item).keyResultId
+      );
 
-      setForData(forData.filter(el => el !== JSON.parse(item).keyResultId));
-      // setCheckInfo(checkInfo.filter(el => el !== item));
+      setInfo({ ...info, KeyResultIds: filterArray });
     }
   };
-
-  // useEffect(()=> {
-  // })
 
   return (
     <StKrFilter ref={krDropRef}>
@@ -113,7 +119,12 @@ const KrFilter = () => {
                     backgroundColor: `${data.color}`,
                     border: `2px solid ${data.color}`,
                   }}>
-                  <span>KR{data.krNumber}</span>
+                  {/* <span>KR{data.krNumber}</span> */}
+                  {data.keyResultId === 0 ? (
+                    <span>None</span>
+                  ) : (
+                    <span>KR{data.krNumber}</span>
+                  )}
                   <GrClose onClick={() => thisDelete(data)} />
                 </div>
               ))}
@@ -121,8 +132,6 @@ const KrFilter = () => {
             <AiFillCloseCircle className='closeBtn' onClick={removeAll} />
           </div>
           <ul>
-            {/* <input type='checkbox' checked={true} />
-            전체 */}
             {checkInfo.map(data => (
               <li key={data.keyResultId}>
                 <input
@@ -133,20 +142,24 @@ const KrFilter = () => {
                   }
                   value={JSON.stringify(data)}
                   checked={forData.includes(data.keyResultId) ? true : false}
-                  // checked={true}
                 />
-                <span className='kr' style={{ color: `${data.color}` }}>
-                  KR{data.krNumber}
-                </span>
-                :<span className='desc'>{data.keyResult}</span>
+                {data.keyResultId === 0 ? (
+                  <>
+                    <span className='kr' style={{ color: `${data.color}` }}>
+                      None
+                    </span>
+                    <span className='desc'>{data.keyResult}</span>
+                  </>
+                ) : (
+                  <>
+                    <span className='kr' style={{ color: `${data.color}` }}>
+                      KR{data.krNumber} :
+                    </span>
+                    <span className='desc'>{data.keyResult}</span>
+                  </>
+                )}
               </li>
             ))}
-            {/* <li>
-              <input type='checkbox' onChange={onCheckHandler} checked />
-              <span className='kr' style={{ color: 'rgb(155,155,155)' }}>
-                None
-              </span>
-            </li> */}
           </ul>
         </div>
       )}

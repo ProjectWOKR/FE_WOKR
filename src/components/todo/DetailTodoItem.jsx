@@ -1,10 +1,16 @@
 import { GetKR, GetUser } from '../../apis/apiGET';
 import { PatchCheck } from '../../apis/apiPATCH';
-import { PostExpirationTodo } from '../../apis/apiPOST';
+import {
+  PostCompletionTodo,
+  PostExpirationTodo,
+  PostProgressTodo,
+} from '../../apis/apiPOST';
 import badgeS from '../../assets/badgeS.png';
+import checkFull from '../../assets/checkFull.png';
 import blue from '../../assets/todoBlue.png';
 import red from '../../assets/todoRed.png';
 import yellow from '../../assets/todoYellow.png';
+import warn from '../../assets/warn.png';
 import {
   clickDate,
   filterTeamMemberSelector,
@@ -18,10 +24,17 @@ import {
   userInfo,
 } from '../../store/store';
 import {
+  StCompletionTodo,
+  StExpirationTodo,
+  StTodo,
+  StTodoItem,
+} from '../../styles/todo.styled';
+import {
   DDay,
   TodoDetailHeader,
   TodoDetailItem,
 } from '../../styles/tododetail.styled';
+import TodoItem from '../dashboard/TodoItem';
 import Loading from '../global/Loading';
 import Potal from '../global/globalModal/Potal';
 import TodoPathModal from '../global/globalModal/TodoPathModal';
@@ -31,6 +44,7 @@ import React, { useEffect, useState } from 'react';
 import ReactGA from 'react-ga4';
 import { toast } from 'react-toastify';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import styled from 'styled-components';
 
 const DetailTodoItem = ({ el, todayFormat, tomorrow }) => {
   // console.log(todayFormat);
@@ -246,60 +260,22 @@ const DetailTodoItem = ({ el, todayFormat, tomorrow }) => {
   //     );
   //   }
   // };
-
-  // 날짜
-  // const date = useRecoilValue(clickDate);
-  // console.log('date :', date?.targetDate);
-
-  // const my = useRecoilValue(myUserIdSelecctor);
-  // console.log('my :', my);
-
-  // const [krState, setKrState] = useRecoilState(krDataAtom);
-  // console.log('kr :', krState);
-
-  // const [dateInfo, setDateInfo] = useState({
-  //   targetDate: '',
-  //   teamMembers: my,
-  //   keyResultIds: krState,
-  //   orderby: 'endDate',
-  //   orderbyrole: 'asce',
-  // });
-  // console.log(dateInfo);
-
-  //userId
-  // console.log(my);
-
-  // const kr = useRecoilValue(getOKRData);
-  // const jkr = useRecoilValue(krDataAtom);
-  // console.log(jkr);
-
-  // const [expirationDefault, setExpirationDefault] =
-  //   useRecoilState(todoDateInfo);
-
-  // console.log('expirationDefault :', expirationDefault);
-
-  // console.log(mock.flat(Infinity));
-
-  // const mock = jkr?.map(el => [el.keyResultId]);
-
+  const queryClient = useQueryClient();
   // 기간 만료 todo 불러오기
 
-  const [info, setInfo] = useState({
-    targetDate: todayFormat,
-    teamMembers: [JSON.parse(sessionStorage.getItem('userId'))],
-    KeyResultIds: JSON.parse(sessionStorage.getItem('kr')),
-    orderby: 'endDate',
-    orderbyrole: 'desc',
-  });
-  // console.log(info);
-  // console.log('----------------------');
+  const [info, setInfo] = useRecoilState(todoDateInfo);
+  // console.log('info :', info);
 
-  useEffect(() => {
-    // console.log(info);
-    expirationTodo({ info });
-  }, []);
+  const [expiration, setExpiration] = useState([]);
+  const [progress, setProgress] = useState([]);
+  const [completion, setCompletion] = useState([]);
+  // console.log('expiration :', expiration);
+  // console.log('진행 중 :', progress);
+  // console.log('완료 :', completion);
+
   // });
 
+  // 기한 만료
   const {
     mutate: expirationTodo,
     isLoading,
@@ -307,31 +283,220 @@ const DetailTodoItem = ({ el, todayFormat, tomorrow }) => {
     error,
   } = useMutation(PostExpirationTodo, {
     onSuccess: data => {
-      // console.log(data);
+      setExpiration(data);
+      // console.log('response :', data);
     },
   });
-  if (isLoading) {
-    return <Loading />;
-  }
+  // if (isLoading) {
+  //   return <Loading />;
+  // }
 
   // if (isError) {
   //   return <div>{error.message}</div>;
   // }
+
+  // 진행중
+  const { mutate: progressTodo } = useMutation(PostProgressTodo, {
+    onSuccess: data => {
+      setProgress(data);
+      // console.log('response :', data);
+    },
+  });
+
+  // 완료
+  const { mutate: completionTodo } = useMutation(PostCompletionTodo, {
+    onSuccess: data => {
+      setCompletion(data);
+      // console.log('response :', data);
+    },
+  });
+
+  // 기한 만료 컴포넌트
+  const ExpirationTodo = () => {
+    if (expiration?.length === 0) {
+      return <h2>기한이 지난 todo 없음</h2>;
+    } else {
+      return expiration.map(el => (
+        <StExpirationTodo key={el.userId}>
+          {el.expirationTodo.map(data => (
+            <div className='todo' key={data.toDoId}>
+              <div className='check' data={data}></div>
+              <div className='title' style={{ color: data.color }}>
+                {data.keyResultId === null ? 'None' : `KR${data.krNumber}`}
+              </div>
+              <div className='detail'>
+                <div className='nameDate'>
+                  <div className='todoName'>{data.toDo}</div>
+                  <div className='memo'>
+                    {data.memo === '' ? '메모가 없습니다.' : `${data.memo}`}
+                  </div>
+                  <p>
+                    <img src={warn} alt='warn' />
+                    {data.fstartDate} - {data.fendDate}
+                  </p>
+                </div>
+              </div>
+              <Priority data={data} />
+            </div>
+          ))}
+        </StExpirationTodo>
+      ));
+    }
+  };
+
+  // 진행중 만료 컴포넌트
+  const ProgressTodo = () => {
+    if (progress?.length === 0) {
+      return <h2>진행중인 todo 없음</h2>;
+    } else {
+      return progress.map(el => (
+        <StExpirationTodo key={el.userId}>
+          {el.progressTodo.map(data => (
+            <div className='todo' key={data.toDoId}>
+              <div className='check' data={data}></div>
+              <div className='title' style={{ color: data.color }}>
+                {data.keyResultId === null ? 'None' : `KR${data.krNumber}`}
+              </div>
+              <div className='detail'>
+                <div className='nameDate'>
+                  <div className='todoName'>{data.toDo}</div>
+                  <div className='memo'>
+                    {data.memo === '' ? '메모가 없습니다.' : `${data.memo}`}
+                  </div>
+                  <p>
+                    {data.fstartDate} - {data.fendDate}
+                  </p>
+                </div>
+              </div>
+              <Priority data={data} />
+            </div>
+          ))}
+        </StExpirationTodo>
+      ));
+    }
+  };
+
+  //완료 컴포넌트
+  const CompletionTodo = () => {
+    if (completion?.length === 0) {
+      return <h2>진행중인 todo 없음</h2>;
+    } else {
+      return completion.map(el => (
+        <StCompletionTodo key={el.userId}>
+          {el.completionTodo.map(data => (
+            <div className='todo' key={data.toDoId}>
+              <Check data={data} />
+              {/* <div className='check' data={data}></div> */}
+              <div className='title' style={{ color: data.color }}>
+                {data.keyResultId === null ? 'None' : `KR${data.krNumber}`}
+              </div>
+              <div className='detail'>
+                <div className='nameDate'>
+                  <div className='todoName'>{data.toDo}</div>
+                  <div className='memo'>
+                    {data.memo === '' ? '메모가 없습니다.' : `${data.memo}`}
+                  </div>
+                  <p>
+                    {data.fstartDate} - {data.fendDate}
+                  </p>
+                </div>
+              </div>
+              <Priority data={data} />
+            </div>
+          ))}
+        </StCompletionTodo>
+      ));
+    }
+  };
+
+  const { mutate: patchCheckmutate } = useMutation(PatchCheck, {
+    onSuccess: response => {
+      if (process.env.NODE_ENV !== 'development') {
+        ReactGA.event({
+          category: '버튼',
+          action: 'TODO 완료',
+        });
+      }
+      queryClient.invalidateQueries(['TODO']);
+      // queryClient.invalidateQueries(['completionTodo']);
+
+      expirationTodo({ info });
+      progressTodo({ info });
+      completionTodo({ info });
+    },
+    onError: response => {
+      // console.log(response);
+    },
+  });
+
+  const Check = ({ data }) => {
+    // console.log(data)
+    const onClickCheck = () => {
+      const id = data.toDoId;
+      patchCheckmutate({ id });
+      console.log('체크 눌림');
+      // toast('할 일을 완료했습니다.');
+    };
+
+    // return <div className='completion' onClick={onClickCheck} />;
+    return (
+      <img
+        className='completion'
+        src={checkFull}
+        alt='checked'
+        onClick={onClickCheck}
+      />
+    );
+  };
+
+  const Priority = ({ data }) => {
+    if (data.priority === 1) {
+      return <img className='priority' src={red} alt='' />;
+    } else if (data.priority === 2) {
+      return <img className='priority' src={yellow} alt='' />;
+    } else if (data.priority === 3) {
+      return <img className='priority' src={blue} alt='' />;
+    } else {
+      return;
+    }
+  };
+
+  useEffect(() => {
+    // console.log('effect 들어왔어');
+    if (
+      info.targetDate !== null &&
+      info.KeyResultIds !== null &&
+      info.teamMembers !== null
+    ) {
+      // console.log('effect 변경!');
+      expirationTodo({ info });
+      progressTodo({ info });
+      completionTodo({ info });
+    }
+  }, [info]);
+
+  // useEffect(() => {
+  //   progressTodo({ info });
+  //   completionTodo({ info });
+  // }, [patchCheckmutate]);
 
   return (
     <>
       <DDay>
         <TodoDetailHeader>
           <div className='header'>
-            <div className='title'>TODAY</div>
+            <div className='title'>{info.targetDate}</div>
             <Filter />
-            {/* <div className='title' id={el.targetDate}>
-              {el.targetDate}
-            </div> */}
           </div>
         </TodoDetailHeader>
-        {/* <HavePt /> */}
       </DDay>
+      <h2>--진행중--</h2>
+      <ProgressTodo />
+      <h2>--완료--</h2>
+      <CompletionTodo />
+      <h2>--기간만료--</h2>
+      <ExpirationTodo />
+
       {/* <Potal>
         {todoModalOn ? <TodoPathModal onCloseModal={onTodoCloseModal} /> : null}
       </Potal> */}

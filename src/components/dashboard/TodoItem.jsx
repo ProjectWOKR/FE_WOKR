@@ -35,6 +35,7 @@ const TodoItem = ({ getTodo }) => {
       return null;
     }
   });
+  // console.log(filterArray);
 
   // 체크 수정
   const { mutate: patchCheckmutate } = useMutation(PatchCheck, {
@@ -63,11 +64,11 @@ const TodoItem = ({ getTodo }) => {
 
   const Priority = ({ el }) => {
     if (el.priority === 1) {
-      return <img src={red} alt='' />;
+      return <img className='priority' src={red} alt='' />;
     } else if (el.priority === 2) {
-      return <img src={yellow} alt='' />;
+      return <img className='priority' src={yellow} alt='' />;
     } else if (el.priority === 3) {
-      return <img src={blue} alt='' />;
+      return <img className='priority' src={blue} alt='' />;
     } else {
       return;
     }
@@ -119,8 +120,9 @@ const TodoItem = ({ getTodo }) => {
     <>
       {filterArray?.map(el => (
         <div className='todo' key={el.toDoId}>
+          <Check el={el} />
           <div className='title' style={{ color: el.color }}>
-            {el.keyResultId === null ? 'none' : `KR${el.krNumber}`}
+            {el.keyResultId === null ? 'None' : `KR${el.krNumber}`}
           </div>
           <div className='detail'>
             <div
@@ -137,19 +139,21 @@ const TodoItem = ({ getTodo }) => {
                   el.priority
                 );
               }}>
-              <div title={el.memo}>{el.toDo}</div>
+              <div className='todoName'>{el.toDo}</div>
+              <div className='memo'>
+                {el.memo === '' ? '메모가 없습니다.' : `${el.memo}`}
+              </div>
               <p>
-                {el.fstartDate}~{el.fendDate} 까지
+                {el.fstartDate} - {el.fendDate}
               </p>
             </div>
-            <div className='priorityBox'>
-              <Priority el={el} />
-              <Check el={el} />
-            </div>
+            {/* <div className='priorityBox'>
+            </div> */}
           </div>
+          <Priority el={el} />
         </div>
       ))}
-      {getCompletionTodo?.map(el => (
+      {/* {getCompletionTodo?.map(el => (
         <div className='todo' key={el.toDoId}>
           <div className='title' style={{ color: el.color }}>
             {el.keyResultId === null ? 'none' : `KR${el.krNumber}`}
@@ -171,7 +175,7 @@ const TodoItem = ({ getTodo }) => {
             </div>
           </div>
         </div>
-      ))}
+      ))} */}
       <Potal>
         {todoModalOn ? <TodoPathModal onCloseModal={onTodoCloseModal} /> : null}
       </Potal>

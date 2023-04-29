@@ -30,3 +30,13 @@ export async function PostExpirationTodo({ info }) {
   const { data } = await api.post(`api/todo/expiration`, info);
   return data;
 }
+
+export async function PostProgressTodo({ info }) {
+  const { data } = await api.post(`api/todo/progress`, info);
+  return data;
+}
+
+export async function PostCompletionTodo({ info }) {
+  const { data } = await api.post(`api/todo/completion`, info);
+  return data;
+}

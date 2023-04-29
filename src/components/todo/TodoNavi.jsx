@@ -12,7 +12,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-scroll';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
-const TodoNavi = ({ todayFormat, getAllTodo }) => {
+const TodoNavi = ({ todayFormat }) => {
   // const haveDay = getAllTodo?.map(todo => {
   //   return todo.targetDate;
   // });
@@ -140,13 +140,14 @@ const TodoNavi = ({ todayFormat, getAllTodo }) => {
     // }
     setDDay(e.currentTarget.id);
     setDateInfo({ ...dateInfo, targetDate: e.currentTarget.id });
+    sessionStorage.setItem('targetDate', e.currentTarget.id);
   };
 
   useEffect(() => {
     setDateInfo({ ...dateInfo, targetDate: todayFormat });
   }, []);
 
-  console.log(state.week);
+  // console.log(state.week);
 
   const Today = ({ el }) => {
     // console.log(el.format === dDay);

@@ -106,18 +106,19 @@ export const clickDate = atom({
 export const todoDateInfo = atom({
   key: 'todoDateInfo',
   default: {
-    targetDate: '',
-    teamMembers: [],
-    KeyResultIds: [],
-    orderby: '',
-    orderbyrole: '',
+    targetDate: sessionStorage.getItem('targetDate'),
+    teamMembers: [JSON.parse(sessionStorage.getItem('userId'))],
+    // teamMembers: [134, 137],
+    KeyResultIds: JSON.parse(sessionStorage.getItem('kr')),
+    orderby: 'endDate',
+    orderbyrole: 'desc',
   },
 });
 
 //[{...},{...}]
 export const teamMemberAtom = atom({
   key: 'teamMemberAtom',
-  default: null,
+  default: [],
 });
 
 // 내 userId [131]

@@ -48,13 +48,13 @@ export const TodoContainer = styled.div`
 
 export const StTodoItem = styled.div`
   width: 100%;
-  height: 5.3rem;
+  height: 11.8rem;
   .todo {
     width: 100%;
     height: 100%;
     display: flex;
-    align-items: center;
-    padding: 0 13px 0 20px;
+    position: relative;
+    padding: 14px 17px 21px 22px;
     margin-bottom: 8px;
     background-color: #f8f8f8;
     box-shadow: 0px 1px 4px rgba(210, 210, 210, 0.7);
@@ -62,39 +62,65 @@ export const StTodoItem = styled.div`
     :nth-last-child(1) {
       margin-bottom: 0;
     }
+    .check {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: #ccc;
+      position: relative;
+      cursor: pointer;
+      margin-right: 23px;
+      img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
     .title {
-      width: 43px;
+      width: 50px;
       text-align: center;
       color: #9b9b9b;
-      font-size: 14px;
+      font-size: 19px;
       font-weight: 700;
-      margin-right: 31px;
+      margin-right: 25px;
       cursor: default;
     }
     .detail {
-      width: 100%;
       height: 100%;
-      display: flex;
-      justify-content: space-between;
       box-sizing: border-box;
       padding: 3px 0 5px 0;
       .nameDate {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        font-size: 15px;
         font-weight: bold;
         color: #4b4b4b;
         font-weight: 500;
         cursor: pointer;
-        div {
+        .todoName {
           font-size: 19px;
+          margin-bottom: 10px;
         }
+        .memo {
+          font-size: 14px;
+          color: #9b9b9b;
+          margin-bottom: 8px;
+        }
+
         p {
           margin: 0;
-          font-size: 12.5px;
+          font-size: 14px;
+          display: flex;
+          align-items: center;
+          img {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+          }
         }
       }
+
       .nameDateComplitc {
         display: flex;
         flex-direction: column;
@@ -123,20 +149,7 @@ export const StTodoItem = styled.div`
           background-color: #ccc;
           border-radius: 50%;
         }
-        .check {
-          width: 30px;
-          height: 30px;
-          border-radius: 50%;
-          background-color: #ccc;
-          position: relative;
-          cursor: pointer;
-          img {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-          }
-        }
+
         .completion {
           width: 30px;
           height: 30px;
@@ -145,6 +158,264 @@ export const StTodoItem = styled.div`
           background: url(${checkicon}) no-repeat center / 100%;
         }
       }
+    }
+    .priority {
+      position: absolute;
+      top: 20px;
+      right: 18px;
+      width: 17px;
+      height: 23px;
+    }
+  }
+`;
+
+export const StExpirationTodo = styled.div`
+  width: 100%;
+  margin: 20px 0 8px 0;
+  .todo {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    position: relative;
+    padding: 14px 17px 21px 22px;
+    margin-bottom: 8px;
+    background-color: #f8f8f8;
+    box-shadow: 0px 1px 4px rgba(210, 210, 210, 0.7);
+    border-radius: 8px;
+    :nth-last-child(1) {
+      margin-bottom: 0;
+    }
+    .check {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: #ccc;
+      position: relative;
+      cursor: pointer;
+      margin-right: 23px;
+      img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+    .title {
+      width: 50px;
+      text-align: center;
+      color: #9b9b9b;
+      font-size: 19px;
+      font-weight: 700;
+      margin-right: 25px;
+      cursor: default;
+    }
+    .detail {
+      height: 100%;
+      box-sizing: border-box;
+      padding: 3px 0 5px 0;
+      .nameDate {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        font-weight: bold;
+        color: #4b4b4b;
+        font-weight: 500;
+        cursor: pointer;
+        .todoName {
+          font-size: 19px;
+          margin-bottom: 10px;
+        }
+        .memo {
+          font-size: 14px;
+          color: #9b9b9b;
+          margin-bottom: 8px;
+        }
+
+        p {
+          margin: 0;
+          font-size: 14px;
+          display: flex;
+          align-items: center;
+          img {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+    .priority {
+      position: absolute;
+      top: 20px;
+      right: 18px;
+      width: 17px;
+      height: 23px;
+    }
+  }
+`;
+
+export const StProgressTodo = styled.div`
+  width: 100%;
+  margin: 20px 0 8px 0;
+  .todo {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    position: relative;
+    padding: 14px 17px 21px 22px;
+    margin-bottom: 8px;
+    background-color: #f8f8f8;
+    box-shadow: 0px 1px 4px rgba(210, 210, 210, 0.7);
+    border-radius: 8px;
+    :nth-last-child(1) {
+      margin-bottom: 0;
+    }
+    .check {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: #ccc;
+      position: relative;
+      cursor: pointer;
+      margin-right: 23px;
+      img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+    .title {
+      width: 50px;
+      text-align: center;
+      color: #9b9b9b;
+      font-size: 19px;
+      font-weight: 700;
+      margin-right: 25px;
+      cursor: default;
+    }
+    .detail {
+      height: 100%;
+      box-sizing: border-box;
+      padding: 3px 0 5px 0;
+      .nameDate {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        font-weight: bold;
+        color: #4b4b4b;
+        font-weight: 500;
+        cursor: pointer;
+        .todoName {
+          font-size: 19px;
+          margin-bottom: 10px;
+        }
+        .memo {
+          font-size: 14px;
+          color: #9b9b9b;
+          margin-bottom: 8px;
+        }
+
+        p {
+          margin: 0;
+          font-size: 14px;
+          display: flex;
+          align-items: center;
+          img {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+    .priority {
+      position: absolute;
+      top: 20px;
+      right: 18px;
+      width: 17px;
+      height: 23px;
+    }
+  }
+`;
+export const StCompletionTodo = styled.div`
+  width: 100%;
+  margin: 20px 0 8px 0;
+  .todo {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    position: relative;
+    padding: 14px 17px 21px 22px;
+    margin-bottom: 8px;
+    background-color: #f8f8f8;
+    box-shadow: 0px 1px 4px rgba(210, 210, 210, 0.7);
+    border-radius: 8px;
+    :nth-last-child(1) {
+      margin-bottom: 0;
+    }
+    .completion {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      /* background-color: #ccc; */
+      position: relative;
+      cursor: pointer;
+      margin-right: 23px;
+      /* img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      } */
+    }
+    .title {
+      width: 50px;
+      text-align: center;
+      color: #9b9b9b;
+      font-size: 19px;
+      font-weight: 700;
+      margin-right: 25px;
+      cursor: default;
+    }
+    .detail {
+      height: 100%;
+      box-sizing: border-box;
+      padding: 3px 0 5px 0;
+      .nameDate {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        font-weight: bold;
+        color: #9b9b9b;
+        font-weight: 500;
+        cursor: pointer;
+        .todoName {
+          font-size: 19px;
+          margin-bottom: 10px;
+          text-decoration: line-through;
+        }
+        .memo {
+          font-size: 14px;
+          margin-bottom: 8px;
+          text-decoration: line-through;
+        }
+
+        p {
+          margin: 0;
+          font-size: 14px;
+          display: flex;
+          align-items: center;
+          text-decoration: line-through;
+        }
+      }
+    }
+    .priority {
+      position: absolute;
+      top: 20px;
+      right: 18px;
+      width: 17px;
+      height: 23px;
     }
   }
 `;

@@ -142,7 +142,7 @@ export const DateNavi = styled.div`
 
 export const DetailTodoWrap = styled.div`
   width: 100%;
-  border-bottom: 1px solid #e8e8e8;
+  /* border-bottom: 1px solid #e8e8e8; */
   margin-bottom: 10px;
 
   /* background-color: pink; */
@@ -332,7 +332,7 @@ export const TodoDetailItem = styled.div`
 export const DDay = styled.div`
   /* margin-bottom: 20px; */
   /* background-color: skyblue; */
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.2); */
 `;
 
 export const Finsh = styled.div`
@@ -442,6 +442,7 @@ export const StTeam = styled.div`
       border-radius: 2.3px;
       border: 1px solid #b57bff;
       background-color: #fff;
+      cursor: pointer;
     }
     .have {
       width: 23px;
@@ -450,6 +451,7 @@ export const StTeam = styled.div`
       border: 1px solid #b57bff;
       background-color: #b57bff;
       background: url(${check}) no-repeat center/ 100%;
+      cursor: pointer;
     }
 
     .name {
@@ -509,6 +511,7 @@ export const StKrFilter = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    z-index: 20;
     .inputBox {
       margin-top: 9px;
       width: 182px;
@@ -564,7 +567,6 @@ export const StKrFilter = styled.div`
       padding: 0;
       margin-top: 11px;
       margin-bottom: 0;
-      /* background-color: skyblue; */
       li {
         width: 175px;
         height: 15px;
@@ -629,6 +631,7 @@ export const StDoneFilter = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    z-index: 20;
     /* background-color: pink; */
     .inputBox {
       margin-top: 9px;
@@ -741,6 +744,7 @@ export const StSortFilter = styled.div`
     border: 0.5px solid #000000;
     border-radius: 8px;
     text-align: center;
+    z-index: 20;
     li {
       width: 100%;
       height: 30px;

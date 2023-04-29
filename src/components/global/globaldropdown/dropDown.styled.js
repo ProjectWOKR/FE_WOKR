@@ -365,6 +365,7 @@ export const EmotionSelect = styled.div`
   position: relative;
   margin-left: 19px;
   cursor: pointer;
+  background-color: pink;
   .emotion {
     width: 100%;
     height: 100%;

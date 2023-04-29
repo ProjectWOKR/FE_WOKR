@@ -24,6 +24,13 @@ const Emotion = ({
   // console.log('---------');
   const queryClient = useQueryClient();
 
+  const [open, setOpen] = useState(false);
+  // console.log(open);
+
+  // const test = () => {
+  //   setOpen(!open);
+  // };
+
   // 자신감 수정
   const { mutate: patchEmotionmutate } = useMutation(PatchEmotion, {
     onSuccess: response => {
@@ -40,7 +47,7 @@ const Emotion = ({
     },
   });
 
-  const isOpen = openDropdownId === keyResultId;
+  // const isOpen = openDropdownId === keyResultId;
 
   const DropDownItem = ({ setIsOpen, isOpen, el, name, keyResultId }) => {
     const ValueClick = () => {
@@ -65,13 +72,15 @@ const Emotion = ({
   };
 
   const onClick = e => {
-    console.log(e);
-    // if (isOpen) {
-    //   setOpenDropdownId(null);
-    // } else {
-    //   setOpenDropdownId(keyResultId);
-    // }
-    setShowEmotion(!showEmotion);
+    // console.log(e);
+    // // if (isOpen) {
+    // //   setOpenDropdownId(null);
+    // // } else {
+    // //   setOpenDropdownId(keyResultId);
+    // // }
+    // setShowEmotion(!showEmotion);
+    console.log('눌림');
+    setOpen(!open);
   };
 
   const ImgBox = () => {
@@ -116,9 +125,9 @@ const Emotion = ({
   useEffect(() => {
     // console.log('effect');
     const clickOutside = e => {
-      console.log(e);
-      console.log(selectRef.current);
-      console.log(e.target);
+      // console.log(e);
+      // console.log(selectRef.current);
+      // console.log(e.target);
       if (selectRef.current !== e.target) {
         // setIsOpen(!isOpen);
         // isOpen = false;
@@ -129,18 +138,18 @@ const Emotion = ({
       // }
     };
 
-    if (isOpen) {
+    if (open) {
       window.addEventListener('click', clickOutside);
     }
     return () => {
       window.removeEventListener('click', clickOutside);
     };
-  }, [isOpen]);
+  }, [open]);
 
   return (
     <EmotionSelect>
       <ImgBox />
-      {showEmotion && (
+      {open && (
         <ul ref={selectRef}>
           <div className='tooltip'>
             <span>자신감 지표</span>
@@ -151,7 +160,7 @@ const Emotion = ({
               key={index}
               name={el.name}
               setIsOpen={setOpenDropdownId}
-              isOpen={isOpen}
+              open={open}
               el={el}
               keyResultId={keyResultId}
             />

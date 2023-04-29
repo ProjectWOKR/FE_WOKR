@@ -1,20 +1,46 @@
 import { GetUser } from '../../apis/apiGET';
 import badgeB from '../../assets/badgeB.png';
-import { teamMemberAtom } from '../../store/store';
+import { teamMemberAtom, todoDateInfo } from '../../store/store';
 import { StTeam } from '../../styles/tododetail.styled';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 
 const TeamTodo = () => {
-  const setTeamMemberAtom = useSetRecoilState(teamMemberAtom);
+  const setMember = useSetRecoilState(teamMemberAtom);
+  // console.log('member --->', member);
+  // const setTeamMemberAtom = useSetRecoilState(teamMemberAtom);
+
+  const [info, setInfo] = useRecoilState(todoDateInfo);
+
   const { data: getMember } = useQuery(['MEMBER'], GetUser, {
     onSuccess: response => {
       // console.log(response);
-      setTeamMemberAtom(response);
+      setMember(response);
     },
     onError: response => {},
   });
+
+  const clickMember = e => {
+    const id = Number(e.target.id);
+
+    if (info.teamMembers.includes(id) === false) {
+      setInfo({
+        ...info,
+        teamMembers: [...info.teamMembers, Number(e.target.id)],
+      });
+    } else if (
+      info.teamMembers.includes(id) === true &&
+      info.teamMembers.length > 1
+    ) {
+      const removeId = info.teamMembers.filter(el => el !== id);
+
+      setInfo({
+        ...info,
+        teamMembers: removeId,
+      });
+    }
+  };
 
   const defaultDay = new Date().getDay();
   let day;
@@ -47,8 +73,13 @@ const TeamTodo = () => {
 
       {getMember?.map(el => (
         <div className='member' key={el.userId}>
-          {/* <div className={el.myInfo === true ? 'have' : 'none'}></div> */}
-          <div className='have'></div>
+          <div
+            id={el.userId}
+            className={
+              info.teamMembers.includes(el.userId) === true ? 'have' : 'none'
+            }
+            onClick={clickMember}></div>
+          {/* <div className='have'></div> */}
           <div className='name'>{el.name}</div>
           <div className='number'>{el.createToDoCount}</div>
         </div>

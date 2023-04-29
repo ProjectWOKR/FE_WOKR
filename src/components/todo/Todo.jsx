@@ -57,18 +57,22 @@ export default function Todo() {
   let tomorrow;
   if (now.getMonth() + 1 < 10 && now.getDate() < 10) {
     today = `${now.getFullYear()}-0${now.getMonth() + 1}-0${now.getDate()}`;
-    tomorrow = `0${now.getMonth() + 1}월 0${now.getDate() + 1}일`;
+    // tomorrow = `0${now.getMonth() + 1}월 0${now.getDate() + 1}일`;
+    sessionStorage.setItem('targetDate', today);
   } else if (now.getDate() < 10) {
     today = `${now.getFullYear()}-${now.getMonth() + 1}-0${now.getDate()}`;
-    tomorrow = `${now.getFullYear()}-${now.getMonth() + 1}-0${
-      now.getDate() + 1
-    }`;
+    // tomorrow = `${now.getFullYear()}-${now.getMonth() + 1}-0${
+    //   now.getDate() + 1
+    // }`;
+    sessionStorage.setItem('targetDate', today);
   } else if (now.getMonth() + 1 < 10) {
     today = `${now.getFullYear()}-0${now.getMonth() + 1}-${now.getDate()}`;
-    tomorrow = `0${now.getMonth() + 1}월 ${now.getDate() + 1}일`;
+    // tomorrow = `0${now.getMonth() + 1}월 ${now.getDate() + 1}일`;
+    sessionStorage.setItem('targetDate', today);
   } else {
     today = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
-    tomorrow = `${now.getMonth() + 1}월 ${now.getDate() + 1}일`;
+    // tomorrow = `${now.getMonth() + 1}월 ${now.getDate() + 1}일`;
+    sessionStorage.setItem('targetDate', today);
   }
 
   return (
@@ -103,6 +107,7 @@ export default function Todo() {
 
 const StSticky = styled.div`
   display: flex;
+  /* background-color: pink; */
   /* position: relative; */
   .notHave {
     width: 100%;
