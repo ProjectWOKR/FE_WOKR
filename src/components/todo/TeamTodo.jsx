@@ -1,6 +1,11 @@
 import { GetUser } from '../../apis/apiGET';
 import badgeB from '../../assets/badgeB.png';
-import { teamMemberAtom, todoDateInfo } from '../../store/store';
+import {
+  dateArray,
+  teamArray,
+  teamMemberAtom,
+  todoDateInfo,
+} from '../../store/store';
 import { StTeam } from '../../styles/tododetail.styled';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
@@ -12,6 +17,8 @@ const TeamTodo = () => {
   // const setTeamMemberAtom = useSetRecoilState(teamMemberAtom);
 
   const [info, setInfo] = useRecoilState(todoDateInfo);
+  const [team, setTeam] = useRecoilState(dateArray);
+  // console.log('team :', team);
 
   const { data: getMember } = useQuery(['MEMBER'], GetUser, {
     onSuccess: response => {
@@ -29,6 +36,10 @@ const TeamTodo = () => {
         ...info,
         teamMembers: [...info.teamMembers, Number(e.target.id)],
       });
+      setTeam({
+        ...team,
+        teamMembers: [...team.teamMembers, Number(e.target.id)],
+      });
     } else if (
       info.teamMembers.includes(id) === true &&
       info.teamMembers.length > 1
@@ -37,6 +48,10 @@ const TeamTodo = () => {
 
       setInfo({
         ...info,
+        teamMembers: removeId,
+      });
+      setTeam({
+        ...team,
         teamMembers: removeId,
       });
     }

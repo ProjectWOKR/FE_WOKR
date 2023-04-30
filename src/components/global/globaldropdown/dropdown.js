@@ -19,8 +19,11 @@ export const useDropDown = (ref, initialState) => {
     const clickOutside = e => {
       // console.log(ref.current);
       // console.log(e.target);
-
       // console.log(ref.current.contains(e.target));
+      // console.log(ref.current);
+      // if (ref.current && !ref.current.contains(e.target)) {
+      //   setIsOpen(!isOpen);
+      // }
       if (ref.current && !ref.current.contains(e.target)) {
         setIsOpen(!isOpen);
       }

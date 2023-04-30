@@ -53,7 +53,7 @@ const Emotion = ({
     const ValueClick = () => {
       let id = keyResultId;
       let value = { emoticon: Number(name) };
-      setIsOpen(false);
+      setOpen(false);
       patchEmotionmutate({ id, value });
     };
 
@@ -72,14 +72,6 @@ const Emotion = ({
   };
 
   const onClick = e => {
-    // console.log(e);
-    // // if (isOpen) {
-    // //   setOpenDropdownId(null);
-    // // } else {
-    // //   setOpenDropdownId(keyResultId);
-    // // }
-    // setShowEmotion(!showEmotion);
-    console.log('눌림');
     setOpen(!open);
   };
 
@@ -116,35 +108,36 @@ const Emotion = ({
 
   const selectRef = useRef();
 
+  // 튤팁
   const [show, setShow] = useState(false);
   // console.log(show);
   const showTooltip = () => {
     setShow(!show);
   };
 
-  useEffect(() => {
-    // console.log('effect');
-    const clickOutside = e => {
-      // console.log(e);
-      // console.log(selectRef.current);
-      // console.log(e.target);
-      if (selectRef.current !== e.target) {
-        // setIsOpen(!isOpen);
-        // isOpen = false;
-      }
-      // console.log(selectRef.current && !selectRef.current.contains(e.target));
-      // if (selectRef.current && !selectRef.current.contains(e.target)) {
-      //   setShow(!isOpen);
-      // }
-    };
+  // useEffect(() => {
+  //   // console.log('effect');
+  //   const clickOutside = e => {
+  //     // console.log(e);
+  //     // console.log(selectRef.current);
+  //     // console.log(e.target);
+  //     if (selectRef.current !== e.target) {
+  //       // setIsOpen(!isOpen);
+  //       // isOpen = false;
+  //     }
+  //     // console.log(selectRef.current && !selectRef.current.contains(e.target));
+  //     // if (selectRef.current && !selectRef.current.contains(e.target)) {
+  //     //   setShow(!isOpen);
+  //     // }
+  //   };
 
-    if (open) {
-      window.addEventListener('click', clickOutside);
-    }
-    return () => {
-      window.removeEventListener('click', clickOutside);
-    };
-  }, [open]);
+  //   if (open) {
+  //     window.addEventListener('click', clickOutside);
+  //   }
+  //   return () => {
+  //     window.removeEventListener('click', clickOutside);
+  //   };
+  // }, [open]);
 
   return (
     <EmotionSelect>
@@ -153,7 +146,7 @@ const Emotion = ({
         <ul ref={selectRef}>
           <div className='tooltip'>
             <span>자신감 지표</span>
-            <img src={info} alt='info' onClick={showTooltip} />
+            {/* <img src={info} alt='info' onClick={showTooltip} /> */}
           </div>
           {emotion.list.map((el, index) => (
             <DropDownItem

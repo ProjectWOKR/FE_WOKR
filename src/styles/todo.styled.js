@@ -38,19 +38,24 @@ export const Header = styled.p`
 export const TodoContainer = styled.div`
   margin: 0 auto;
   max-width: 68.2rem;
+  min-width: 39rem;
   width: 100%;
   max-height: 485px;
   height: 100%;
   overflow-y: auto;
   padding: 0 1.2rem;
   box-sizing: border-box;
+  /* background-color: pink; */
 `;
 
 export const StTodoItem = styled.div`
   width: 100%;
+  /* min-width: 330px; */
   height: 11.8rem;
+  /* background-color: pink; */
   .todo {
-    width: 100%;
+    max-width: 100%;
+    min-width: 39rem;
     height: 100%;
     display: flex;
     position: relative;
@@ -87,10 +92,11 @@ export const StTodoItem = styled.div`
       cursor: default;
     }
     .detail {
-      height: 100%;
+      /* height: 100%; */
       box-sizing: border-box;
       padding: 3px 0 5px 0;
       .nameDate {
+        /* width: 100%; */
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -100,12 +106,18 @@ export const StTodoItem = styled.div`
         cursor: pointer;
         .todoName {
           font-size: 19px;
-          margin-bottom: 10px;
+          margin-bottom: 7px;
         }
         .memo {
+          width: 85%;
           font-size: 14px;
           color: #9b9b9b;
           margin-bottom: 8px;
+          /* background-color: pink; */
+
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
 
         p {
@@ -171,7 +183,12 @@ export const StTodoItem = styled.div`
 
 export const StExpirationTodo = styled.div`
   width: 100%;
-  margin: 20px 0 8px 0;
+  margin: 0px 0 8px 0;
+  .label {
+    color: #ff8336;
+    font-size: 1.8rem;
+    margin: 12px 0;
+  }
   .todo {
     width: 100%;
     height: 100%;
@@ -185,7 +202,16 @@ export const StExpirationTodo = styled.div`
     :nth-last-child(1) {
       margin-bottom: 0;
     }
-    .check {
+    .notCompletion {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: #e8e8e8;
+      position: relative;
+      cursor: pointer;
+      margin-right: 23px;
+    }
+    .completion {
       width: 30px;
       height: 30px;
       border-radius: 50%;
@@ -193,12 +219,13 @@ export const StExpirationTodo = styled.div`
       position: relative;
       cursor: pointer;
       margin-right: 23px;
-      img {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
+    }
+    .lock {
+      width: 30px;
+      height: 30px;
+      position: relative;
+      cursor: default;
+      margin-right: 23px;
     }
     .title {
       width: 50px;
@@ -223,7 +250,7 @@ export const StExpirationTodo = styled.div`
         cursor: pointer;
         .todoName {
           font-size: 19px;
-          margin-bottom: 10px;
+          margin-bottom: 7px;
         }
         .memo {
           font-size: 14px;
@@ -256,7 +283,12 @@ export const StExpirationTodo = styled.div`
 
 export const StProgressTodo = styled.div`
   width: 100%;
-  margin: 20px 0 8px 0;
+  margin: 0px 0 8px 0;
+  .label {
+    color: #ff8336;
+    font-size: 1.8rem;
+    margin: 12px 0;
+  }
   .todo {
     width: 100%;
     height: 100%;
@@ -270,20 +302,31 @@ export const StProgressTodo = styled.div`
     :nth-last-child(1) {
       margin-bottom: 0;
     }
-    .check {
+    .notCompletion {
       width: 30px;
       height: 30px;
       border-radius: 50%;
-      background-color: #ccc;
+      background-color: #e8e8e8;
       position: relative;
       cursor: pointer;
       margin-right: 23px;
-      img {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
+    }
+
+    .completion {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      /* background-color: #ccc; */
+      position: relative;
+      cursor: pointer;
+      margin-right: 23px;
+    }
+    .lock {
+      width: 30px;
+      height: 30px;
+      position: relative;
+      cursor: default;
+      margin-right: 23px;
     }
     .title {
       width: 50px;
@@ -308,7 +351,7 @@ export const StProgressTodo = styled.div`
         cursor: pointer;
         .todoName {
           font-size: 19px;
-          margin-bottom: 10px;
+          margin-bottom: 7px;
         }
         .memo {
           font-size: 14px;
@@ -340,7 +383,12 @@ export const StProgressTodo = styled.div`
 `;
 export const StCompletionTodo = styled.div`
   width: 100%;
-  margin: 20px 0 8px 0;
+  margin: 0 0 8px 0;
+  .label {
+    color: #ff8336;
+    font-size: 1.8rem;
+    margin: 12px 0;
+  }
   .todo {
     width: 100%;
     height: 100%;
@@ -354,20 +402,29 @@ export const StCompletionTodo = styled.div`
     :nth-last-child(1) {
       margin-bottom: 0;
     }
+    .notCompletion {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: #e8e8e8;
+      position: relative;
+      cursor: pointer;
+      margin-right: 23px;
+    }
     .completion {
       width: 30px;
       height: 30px;
       border-radius: 50%;
-      /* background-color: #ccc; */
       position: relative;
       cursor: pointer;
       margin-right: 23px;
-      /* img {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      } */
+    }
+    .lock {
+      width: 30px;
+      height: 30px;
+      position: relative;
+      cursor: default;
+      margin-right: 23px;
     }
     .title {
       width: 50px;
@@ -383,16 +440,16 @@ export const StCompletionTodo = styled.div`
       box-sizing: border-box;
       padding: 3px 0 5px 0;
       .nameDate {
-        display: flex;
+        /* display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: space-between; */
         font-weight: bold;
         color: #9b9b9b;
         font-weight: 500;
         cursor: pointer;
         .todoName {
           font-size: 19px;
-          margin-bottom: 10px;
+          margin-bottom: 7px;
           text-decoration: line-through;
         }
         .memo {

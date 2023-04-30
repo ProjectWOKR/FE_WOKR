@@ -115,6 +115,20 @@ export const todoDateInfo = atom({
   },
 });
 
+export const dateArray = atom({
+  key: 'dateArray',
+  default: {
+    Sunday: '',
+    Saturday: '',
+    teamMembers: [JSON.parse(sessionStorage.getItem('userId'))],
+  },
+});
+
+export const isDone = atom({
+  key: 'isDone',
+  default: ['done', 'notDone'],
+});
+
 //[{...},{...}]
 export const teamMemberAtom = atom({
   key: 'teamMemberAtom',

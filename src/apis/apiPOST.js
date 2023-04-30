@@ -40,3 +40,8 @@ export async function PostCompletionTodo({ info }) {
   const { data } = await api.post(`api/todo/completion`, info);
   return data;
 }
+
+export async function PostWeek({ forData }) {
+  const { data } = await api.post(`api/todo/week`, forData);
+  return data;
+}

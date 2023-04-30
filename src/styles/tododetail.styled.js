@@ -144,6 +144,10 @@ export const DetailTodoWrap = styled.div`
   width: 100%;
   /* border-bottom: 1px solid #e8e8e8; */
   margin-bottom: 10px;
+  .noAny {
+    color: #ff8336;
+    font-size: 1.8rem;
+  }
 
   /* background-color: pink; */
 `;
@@ -172,6 +176,7 @@ export const TodoDetailHeader = styled.div`
     box-sizing: content-box;
     cursor: default;
     /* background-color: yellow; */
+    margin-bottom: 17px;
     margin-top: 33px;
     .down {
       width: 13px;
@@ -478,7 +483,7 @@ export const StFilterContainer = styled.div`
 `;
 
 export const StKrFilter = styled.div`
-  width: 143px;
+  width: 180px;
   height: 30px;
   border: 0.5px solid #000;
   border-radius: 8px;
@@ -487,6 +492,7 @@ export const StKrFilter = styled.div`
   justify-content: center;
   position: relative;
   .filterContainer {
+    /* width: 100%; */
     display: flex;
     align-items: center;
     font-size: 15px;
@@ -497,6 +503,18 @@ export const StKrFilter = styled.div`
       width: 16px;
       height: 15px;
       margin-right: 6.6px;
+    }
+    .result {
+      width: 140px;
+      font-size: 1.3rem;
+      .resultSide {
+        display: inline-block;
+        /* background-color: pink; */
+        width: 95%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
   }
   .krDrop {
@@ -596,7 +614,7 @@ export const StKrFilter = styled.div`
 `;
 
 export const StDoneFilter = styled.div`
-  width: 143px;
+  /* width: 143px; */
   height: 30px;
   border: 0.5px solid #000;
   border-radius: 8px;
@@ -605,22 +623,30 @@ export const StDoneFilter = styled.div`
   justify-content: center;
   position: relative;
   margin: 0 12px;
-  /* background-color: pink; */
   .filterContainer {
     display: flex;
     align-items: center;
     font-size: 15px;
     color: #4b4b4b;
     cursor: pointer;
-    padding: 0px 10px;
+    padding: 0px 20px;
+    /* background-color: pink; */
+
     img {
       width: 16px;
       height: 15px;
       margin-right: 6.6px;
     }
+    span {
+      font-size: 1.2rem;
+      /* background-color: skyblue; */
+    }
+    .result {
+    }
   }
   .doneDrop {
-    width: 206px;
+    /* width: 195px; */
+    width: 155px;
     /* height: 127px; */
     position: absolute;
     top: 100%;
@@ -635,7 +661,8 @@ export const StDoneFilter = styled.div`
     /* background-color: pink; */
     .inputBox {
       margin-top: 9px;
-      width: 182px;
+      /* width: 182px; */
+      width: 130px;
       white-space: normal;
       /* height: 21px; */
       background: #ffffff;
@@ -683,12 +710,15 @@ export const StDoneFilter = styled.div`
       }
     }
     ul {
+      width: 100%;
       padding: 0;
       margin-top: 11px;
       margin-bottom: 0;
+      margin-left: 35px;
       /* background-color: skyblue; */
       li {
-        width: 175px;
+        /* width: 175px; */
+        width: 100%;
         height: 15px;
         margin-bottom: 12px;
         display: flex;
@@ -755,11 +785,68 @@ export const StSortFilter = styled.div`
       color: #4b4b4b;
       border-bottom: 0.3px solid #000;
       transition: all 0.3s;
+      position: relative;
+      cursor: pointer;
+      :first-child {
+        border-radius: 8px 8px 0 0;
+      }
       :nth-last-child(1) {
-        border: none;
+        border-radius: 0 0 8px 8px;
+        border-bottom: none;
       }
       :hover {
+        text-decoration: underline;
         background: rgba(217, 217, 217, 0.45);
+      }
+      .sortTitle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        /* img {
+          position: absolute;
+          width: 11px;
+          height: 8px;
+          top: 8px;
+          left: 5px;
+        } */
+      }
+      .sideDrop {
+        width: 85px;
+        height: 50px;
+        position: absolute;
+        top: 0;
+        left: 100%;
+        border: 0.5px solid #000;
+        border-radius: 5px;
+        background-color: #fff;
+        p {
+          width: 100%;
+          height: 25px;
+          margin: 0;
+          border-bottom: 0.3px solid #000;
+          box-sizing: border-box;
+          font-size: 1.5rem;
+          position: relative;
+          transition: all 0.3s;
+          color: #4b4b4b;
+          :nth-last-child(1) {
+            border: none;
+          }
+          :hover {
+            /* background: rgba(217, 217, 217, 0.45); */
+            background: rgba(217, 217, 217, 0.25);
+          }
+          img {
+            position: absolute;
+            width: 11px;
+            height: 8px;
+            top: 8px;
+            left: 5px;
+          }
+        }
       }
     }
   }

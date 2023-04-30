@@ -13,18 +13,18 @@ import { useRecoilState } from 'recoil';
 const KrFilter = () => {
   const krDropRef = useRef(null);
   //드롭다운이 보여지는 상태관리
-  // const [krDropOn, setKrDropon] = useDropDown(krDropRef, false);
+  const [krDropOn, setKrDropon] = useDropDown(krDropRef, false);
+  // const [krDropOn, setKrDropon] = useState(false);
   const [info, setInfo] = useRecoilState(todoDateInfo);
-  console.log(info);
-  const [krDropOn, setKrDropon] = useState(false);
+  // console.log(info);
 
   const [checkedList, setCheckedList] = useState([]);
   const [checkInfo, setCheckInfo] = useState([]);
   const [forData, setForData] = useState([]);
 
-  // console.log('***** forData :', forData);
+  console.log('***** forData :', forData);
 
-  // console.log('checkedList :', checkedList);
+  console.log('checkedList :', checkedList);
   // console.log('checkInfo :', checkInfo);
 
   const { data: getKrData } = useQuery(['KR'], GetKR, {
@@ -49,17 +49,17 @@ const KrFilter = () => {
     setForData(forData?.filter(el => el !== item.keyResultId));
     const filter = info.KeyResultIds.filter(el => el !== item.keyResultId);
     // console.log(typeof filter);
-    // setInfo({
-    //   ...info,
-    //   KeyResultIds: filter,
-    // });
+    setInfo({
+      ...info,
+      KeyResultIds: filter,
+    });
   };
 
   const removeAll = () => {
     setCheckedList([]);
     setForData([]);
 
-    // setInfo({...info, KeyResultIds([])})
+    setInfo({ ...info, KeyResultIds: [] });
   };
 
   // filterContainer를 누르면 Drop이 보이는 함수
@@ -72,7 +72,7 @@ const KrFilter = () => {
       setCheckedList([...checkedList, JSON.parse(item)]);
 
       setForData([...forData, JSON.parse(item).keyResultId]);
-      console.log('filter :', JSON.parse(item).keyResultId);
+      // console.log('filter :', JSON.parse(item).keyResultId);
 
       // setInfo({ ...info, KeyResultIds: JSON.parse(item).keyResultId });
       setInfo({
@@ -100,14 +100,32 @@ const KrFilter = () => {
     <StKrFilter ref={krDropRef}>
       <div className='filterContainer' onClick={krDroponHandler}>
         <img src={filter} alt='' />
+
         <div className='result'>
-          <span>KR : 전체</span>
+          <span className='resultSide'>
+            KR : &nbsp;
+            {checkedList.length === 0 ? '선택안함' : null}
+            {checkedList.map(el => {
+              if (el.keyResultId === 0) {
+                return (
+                  <span key={el.keyResultId} style={{ color: el.color }}>
+                    None
+                  </span>
+                );
+              }
+              return (
+                <span key={el.keyResultId} style={{ color: el.color }}>
+                  KR{el.krNumber},&nbsp;
+                </span>
+              );
+            })}
+          </span>
         </div>
       </div>
 
       {krDropOn && (
         <div className='krDrop'>
-          <div onClick={krDroponHandler}>X</div>
+          {/* <div onClick={krDroponHandler}>X</div> */}
           <div className='inputBox'>
             <div className='hashFlex'>
               {checkedList?.map((data, index) => (
@@ -118,13 +136,16 @@ const KrFilter = () => {
                   style={{
                     backgroundColor: `${data.color}`,
                     border: `2px solid ${data.color}`,
-                  }}>
+                  }}
+                  // onClick={() => thisDelete(data)}
+                >
                   {/* <span>KR{data.krNumber}</span> */}
                   {data.keyResultId === 0 ? (
                     <span>None</span>
                   ) : (
                     <span>KR{data.krNumber}</span>
                   )}
+                  {/* <GrClose onClick={() => thisDelete(data)} /> */}
                   <GrClose onClick={() => thisDelete(data)} />
                 </div>
               ))}
