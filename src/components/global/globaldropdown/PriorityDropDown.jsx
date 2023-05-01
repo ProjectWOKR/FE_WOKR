@@ -1,5 +1,5 @@
 import Arrow from '../../../assets/dropdownArrow.png';
-import { PrioritySelect, DropIcon } from './dropDown.styled';
+import { PrioritySelect, DropIcon, TodoDropIcon } from './dropDown.styled';
 import { useDropDown, priority } from './dropdown';
 import { useState, useRef } from 'react';
 
@@ -50,7 +50,7 @@ const PriorityDropDown = ({ todoInfo, setTodoInfo }) => {
         onClick={() => setIsOpen(!isOpen)}
         placeholder='우선순위'
       />
-      <DropIcon src={Arrow} />
+      <TodoDropIcon />
       {isOpen && (
         <ul>
           {priority.list.map((el, index) => (

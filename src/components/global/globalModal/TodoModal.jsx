@@ -13,6 +13,7 @@ import {
   ModalBackground,
   ModalBox,
   OKRBox,
+  TodoBox,
   ToggleContainer,
 } from './modal.styled';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -234,7 +235,7 @@ const TodoModal = ({
           <h2>OKR 추가 - 목표, 기간, 색상</h2>
           <img src={close} alt='' onClick={onCloseTodoModal} />
         </div>
-        <OKRBox>
+        <TodoBox>
           <div className='object itemBox'>
             <img src={todoOkr} alt='' />
             <OkrDropDown setKid={setKid} setOid={setOid} />
@@ -441,7 +442,7 @@ const TodoModal = ({
               <PriorityDropDown todoInfo={todoInfo} setTodoInfo={setTodoInfo} />
             </div>
           </div>
-        </OKRBox>
+        </TodoBox>
 
         <div className='btnBox'>
           <button onClick={onCloseTodoModal} className='cancel'>

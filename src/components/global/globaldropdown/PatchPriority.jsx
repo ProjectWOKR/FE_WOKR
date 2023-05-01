@@ -1,6 +1,6 @@
 import { GetTodo } from '../../../apis/apiGET';
 import Arrow from '../../../assets/dropdownArrow.png';
-import { PrioritySelect, DropIcon } from './dropDown.styled';
+import { PrioritySelect, DropIcon, TodoDropIcon } from './dropDown.styled';
 import { useDropDown, priority } from './dropdown';
 import { useQuery } from '@tanstack/react-query';
 import { useState, useRef } from 'react';
@@ -56,7 +56,7 @@ const PatchPriority = ({ title, setTitle }) => {
         readOnly={true}
         onClick={() => setIsOpen(!isOpen)}
       />
-      <DropIcon src={Arrow} />
+      <TodoDropIcon src={Arrow} />
       {isOpen && (
         <ul>
           {priority.list.map((el, index) => (

@@ -6,6 +6,7 @@ import {
   OkrDropBox,
   OkrDropContainer,
   OkrItem,
+  TodoDropIcon,
 } from './dropDown.styled';
 import { useDropDown } from './dropdown';
 import { useQuery } from '@tanstack/react-query';
@@ -56,7 +57,7 @@ const OkrDropDown = ({ setKid, setOid, title }) => {
         }
       />
 
-      <DropIcon src={Arrow} />
+      <TodoDropIcon className='todoDropicon' />
       {isOpen && (
         <OkrDropContainer>
           <h2>KR 핵심 결과 선택</h2>
@@ -77,7 +78,7 @@ const OkrDropDown = ({ setKid, setOid, title }) => {
                   }}>
                   <span style={{ color: data.color }}>
                     KR{index + 1}
-                    {/* {'\u00A0'} */}
+                    {'\u00A0'}
                   </span>
                   {el.keyResult}
                 </div>

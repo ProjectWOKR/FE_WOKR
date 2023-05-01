@@ -6,6 +6,7 @@ import {
   PostProgressTodo,
 } from '../../apis/apiPOST';
 import badgeS from '../../assets/badgeS.png';
+import others from '../../assets/badgeS.png';
 import checkFull from '../../assets/checkFull.png';
 import lock from '../../assets/lock.png';
 import blue from '../../assets/todoBlue.png';
@@ -51,6 +52,37 @@ import styled from 'styled-components';
 
 const DetailTodoItem = () => {
   const queryClient = useQueryClient();
+
+  const [todoModalOn, setTodoModalOn] = useState(false);
+  const [test, setPatchTodoInfo] = useRecoilState(patchTodoInfo);
+  console.log(test);
+
+  const onTodoCloseModal = () => {
+    setTodoModalOn(!todoModalOn);
+  };
+
+  const patchTodo = (
+    id,
+    todo,
+    memo,
+    startDate,
+    startDateTime,
+    endDate,
+    endDateTime,
+    priority
+  ) => {
+    setPatchTodoInfo({
+      id,
+      toDo: todo,
+      memo,
+      startDate,
+      startDateTime,
+      endDate,
+      endDateTime,
+      priority,
+    });
+    setTodoModalOn(!todoModalOn);
+  };
   // 기간 만료 todo 불러오기
 
   const [info, setInfo] = useRecoilState(todoDateInfo);
@@ -63,7 +95,7 @@ const DetailTodoItem = () => {
   const [progress, setProgress] = useState([]);
   const [completion, setCompletion] = useState([]);
   // console.log('진행 중 :', progress);
-  // console.log('완료 :', completion);
+  console.log('완료 :', completion);
   // console.log('expiration :', expiration);
 
   // });
@@ -80,9 +112,6 @@ const DetailTodoItem = () => {
       // console.log('response :', data);
     },
   });
-  // if (isLoading) {
-  //   return <Loading />;
-  // }
 
   // if (isError) {
   //   return <div>{error.message}</div>;
@@ -121,20 +150,53 @@ const DetailTodoItem = () => {
               <div className='title' style={{ color: data.color }}>
                 {data.keyResultId === null ? 'None' : `KR${data.krNumber}`}
               </div>
-              <div className='detail'>
-                <div
-                  className='nameDate'
-                  style={el.myToDo ? null : { cursor: 'default' }}>
-                  <div className='todoName'>{data.toDo}</div>
-                  {data.memo === '' ? null : (
-                    <div className='memo'>{data.memo}</div>
-                  )}
-                  <p>
-                    <img src={warn} alt='warn' />
-                    {data.fstartDate} - {data.fendDate}
-                  </p>
+              {el.myToDo ? (
+                <div className='detail'>
+                  <div
+                    className='nameDate'
+                    onClick={() =>
+                      patchTodo(
+                        data.toDoId,
+                        data.toDo,
+                        data.memo,
+                        data.startDate,
+                        data.startDateTime,
+                        data.endDate,
+                        data.endDateTime,
+                        data.priority
+                      )
+                    }>
+                    <div className='todoName'>{data.toDo}</div>
+                    {data.memo === '' ? null : (
+                      <div className='memo'>{data.memo}</div>
+                    )}
+
+                    <p className='mine'>
+                      <img src={warn} alt='warn' className='warn' />
+                      {data.fstartDate} - {data.fendDate}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className='detail'>
+                  <div className='nameDate' style={{ cursor: 'default' }}>
+                    <div className='todoName'>{data.toDo}</div>
+                    {data.memo === '' ? null : (
+                      <div className='memo'>{data.memo}</div>
+                    )}
+
+                    <p className='notMine'>
+                      <img src={warn} alt='warn' className='warn' />
+                      <span>
+                        {data.fstartDate} - {data.fendDate}
+                      </span>
+                      <span className='createUser'>{el.createUser}</span>
+                      <img src={others} alt='others' className='other' />
+                    </p>
+                  </div>
+                </div>
+              )}
+
               <Priority data={data} />
             </div>
           ))}
@@ -161,7 +223,57 @@ const DetailTodoItem = () => {
               <div className='title' style={{ color: data.color }}>
                 {data.keyResultId === null ? 'None' : `KR${data.krNumber}`}
               </div>
-              <div className='detail'>
+
+              {el.myToDo ? (
+                <div className='detail'>
+                  <div
+                    className='nameDate'
+                    onClick={() =>
+                      patchTodo(
+                        data.toDoId,
+                        data.toDo,
+                        data.memo,
+                        data.startDate,
+                        data.startDateTime,
+                        data.endDate,
+                        data.endDateTime,
+                        data.priority
+                      )
+                    }>
+                    <div className='todoName'>{data.toDo}</div>
+                    {data.memo === '' ? null : (
+                      <div className='memo'>{data.memo}</div>
+                    )}
+
+                    <p className='mine'>
+                      {data.fstartDate} - {data.fendDate}
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <div className='detail'>
+                  <div className='nameDate' style={{ cursor: 'default' }}>
+                    <div
+                      className='todoName'
+                      style={data.memo === '' ? { marginBottom: '5px' } : null}>
+                      {data.toDo}
+                    </div>
+                    {data.memo === '' ? null : (
+                      <div className='memo'>{data.memo}</div>
+                    )}
+
+                    <p className='notMine'>
+                      <span>
+                        {data.fstartDate} - {data.fendDate}
+                      </span>
+                      <span className='createUser'>{el.createUser}</span>
+                      <img src={others} alt='others' className='other' />
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {/* <div className='detail'>
                 <div
                   className='nameDate'
                   style={el.myToDo ? null : { cursor: 'default' }}>
@@ -174,11 +286,22 @@ const DetailTodoItem = () => {
                     <div className='memo'>{data.memo}</div>
                   )}
 
-                  <p>
-                    {data.fstartDate} - {data.fendDate}
-                  </p>
+                  {el.myToDo ? (
+                    <p className='mine'>
+                      {data.fstartDate} - {data.fendDate}
+                    </p>
+                  ) : (
+                    <p className='notMine'>
+                      <span>
+                        {data.fstartDate} - {data.fendDate}
+                      </span>
+                      <span className='createUser'>{el.createUser}</span>
+                      <img src={others} alt='others' className='other' />
+                    </p>
+                  )}
                 </div>
-              </div>
+              </div> */}
+
               <Priority data={data} />
             </div>
           ))}
@@ -204,19 +327,52 @@ const DetailTodoItem = () => {
               <div className='title' style={{ color: data.color }}>
                 {data.keyResultId === null ? 'None' : `KR${data.krNumber}`}
               </div>
-              <div className='detail'>
-                <div
-                  className='nameDate'
-                  style={el.myToDo ? null : { cursor: 'default' }}>
-                  <div className='todoName'>{data.toDo}</div>
-                  {data.memo === '' ? null : (
-                    <div className='memo'>{data.memo}</div>
-                  )}
-                  <p>
-                    {data.fstartDate} - {data.fendDate}
-                  </p>
+
+              {el.myToDo ? (
+                <div className='detail'>
+                  <div
+                    className='nameDate'
+                    onClick={() =>
+                      patchTodo(
+                        data.toDoId,
+                        data.toDo,
+                        data.memo,
+                        data.startDate,
+                        data.startDateTime,
+                        data.endDate,
+                        data.endDateTime,
+                        data.priority
+                      )
+                    }>
+                    <div className='todoName'>{data.toDo}</div>
+                    {data.memo === '' ? null : (
+                      <div className='memo'>{data.memo}</div>
+                    )}
+
+                    <p className='mine'>
+                      {data.fstartDate} - {data.fendDate}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className='detail'>
+                  <div className='nameDate' style={{ cursor: 'default' }}>
+                    <div className='todoName'>{data.toDo}</div>
+                    {data.memo === '' ? null : (
+                      <div className='memo'>{data.memo}</div>
+                    )}
+
+                    <p className='notMine'>
+                      <span>
+                        {data.fstartDate} - {data.fendDate}
+                      </span>
+                      <span className='createUser'>{el.createUser}</span>
+                      <img src={others} alt='others' className='other' />
+                    </p>
+                  </div>
+                </div>
+              )}
+
               <Priority data={data} />
             </div>
           ))}
@@ -281,6 +437,8 @@ const DetailTodoItem = () => {
   };
 
   useEffect(() => {
+    // console.log(info);
+    // console.log(isCompletion);
     // console.log('effect 들어왔어');
     if (
       info.targetDate !== null &&
@@ -291,10 +449,11 @@ const DetailTodoItem = () => {
       isCompletion.includes('done') === true &&
       isCompletion.includes('notDone') === true
     ) {
-      // console.log('통신한다?');
+      console.log('통신한다?');
       expirationTodo({ info });
       progressTodo({ info });
       completionTodo({ info });
+      // window.location.reload();
       // console.log('ui 변경했다!');
     }
   }, [info, isCompletion]);
@@ -302,10 +461,10 @@ const DetailTodoItem = () => {
   // console.log(isCompletion === []);
 
   // useEffect(() => {
-  //   progressTodo({ info });
-  //   completionTodo({ info });
-  // }, [patchCheckmutate]);
-
+  // }, []);
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <>
       <DDay>
@@ -339,9 +498,9 @@ const DetailTodoItem = () => {
         </>
       )}
 
-      {/* <Potal>
+      <Potal>
         {todoModalOn ? <TodoPathModal onCloseModal={onTodoCloseModal} /> : null}
-      </Potal> */}
+      </Potal>
     </>
   );
 };

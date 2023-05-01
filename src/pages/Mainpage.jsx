@@ -9,6 +9,7 @@ import {
   getOKRData,
   krDataAtom,
   teamMemberAtom,
+  todoDateInfo,
   userId,
   userInfo,
 } from '../store/store';
@@ -33,8 +34,11 @@ export default function Mainpage() {
   const setUserInfo = useSetRecoilState(userInfo);
   const setUserId = useSetRecoilState(userId);
 
+  const [info, setInfo] = useRecoilState(todoDateInfo);
+  console.log(info);
+
   const [uid, setUid] = useRecoilState(userId);
-  // console.log(uid);
+  console.log(uid);
   const [accessToken, setAccessToken] = useState(
     localStorage.getItem('accesstoken')
   );
@@ -49,10 +53,11 @@ export default function Mainpage() {
   const { userinfo } = useQuery(['userInfo'], () => GetUserInfo(uid), {
     enabled: !!uid,
     onSuccess: data => {
-      // console.log(data);
+      console.log(data);
       setUserInfo(data);
       sessionStorage.setItem('userId', data.userId);
       setUserId(data.userId);
+      setInfo({ ...info, teamMembers: [uid] });
     },
   });
 
@@ -64,15 +69,15 @@ export default function Mainpage() {
     },
   });
 
-  // const setTeamMemberAtom = useSetRecoilState(teamMemberAtom);
+  const setTeamMemberAtom = useSetRecoilState(teamMemberAtom);
 
-  // const { data: getMember } = useQuery(['MEMBER'], GetUser, {
-  //   onSuccess: response => {
-  //     // console.log(response);
-  //     setTeamMemberAtom(response);
-  //   },
-  //   onError: response => {},
-  // });
+  const { data: getMember } = useQuery(['MEMBER'], GetUser, {
+    onSuccess: response => {
+      // console.log(response);
+      setTeamMemberAtom(response);
+    },
+    onError: response => {},
+  });
 
   const [krdata, setKrData] = useRecoilState(krDataAtom);
   // console.log(krdata);
@@ -84,6 +89,7 @@ export default function Mainpage() {
       filterArray.push(0);
       sessionStorage.setItem('kr', JSON.stringify(filterArray));
       setKrData(response);
+      setInfo({ ...info, KeyResultIds: filterArray });
     },
   });
 

@@ -87,6 +87,21 @@ export const DropIcon = styled.div`
   background: url(${Arrow}) no-repeat center / contain;
 `;
 
+export const TodoDropIcon = styled.div`
+  width: 14px;
+  height: 14px;
+  background: url(${Arrow}) no-repeat center / contain;
+  position: absolute;
+  right: 15px;
+  top: 11px;
+`;
+
+export const TodoDropFillIcon = styled.div`
+  width: 14px;
+  height: 14px;
+  background: url(${fillArrow}) no-repeat center / contain;
+`;
+
 export const DropFillIcon = styled.div`
   width: 14px;
   height: 14px;
@@ -242,6 +257,8 @@ export const OkrDropBox = styled.div`
     position: absolute;
     top: 50%;
     right: 0;
+  }
+  .todoDropicon {
   }
 `;
 

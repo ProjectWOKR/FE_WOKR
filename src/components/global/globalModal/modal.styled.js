@@ -143,6 +143,7 @@ export const OKRBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  /* background-color: pink; */
 
   .object {
     margin-bottom: 2.7rem;
@@ -496,5 +497,214 @@ export const ToggleContainer = styled.div`
   .toggle--checked {
     left: 27px;
     transition: 0.5s;
+  }
+`;
+
+export const TodoBox = styled.div`
+  width: 100%;
+  /* height: 16.6rem; */
+  background-color: #f8f8f8;
+  border-radius: 7px;
+  padding: 3rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* background-color: pink; */
+
+  .object {
+    margin-bottom: 2.7rem;
+  }
+  & .itemBox {
+    width: 100%;
+    height: 4rem;
+    padding: 0.9rem 1.4rem;
+    display: flex;
+    align-items: center;
+    position: relative;
+    /* background-color: pink; */
+    input {
+      width: 100%;
+      height: 4rem;
+      border: 1.5px solid rgba(232, 232, 232, 1);
+      border-radius: 7px;
+      :hover {
+        border: 1.5px solid var(--main-color);
+      }
+      ::placeholder {
+        color: var(--placeholder-color);
+      }
+      :focus {
+        border: var(--input-hover);
+        /* filter: var(--input-focus); */
+      }
+    }
+    img {
+      margin-right: 1.3rem;
+    }
+  }
+
+  .date {
+    width: 100%;
+    height: 4rem;
+    padding: 0.9rem 1.4rem;
+    display: flex;
+    align-items: center;
+    /* background-color: skyblue; */
+    img {
+      margin-right: 1.3rem;
+    }
+    .dateBox {
+      width: 44rem;
+      display: flex;
+      justify-content: start;
+      margin-right: 2.1rem;
+      position: relative;
+
+      .start-container {
+        .start-input {
+          width: 25rem;
+          height: 4.5rem;
+          border: none;
+          outline: none;
+          position: relative;
+          z-index: 1;
+          text-align: center;
+          background: url(${start}) no-repeat center / 100%;
+          :focus {
+            outline: none;
+          }
+          :hover {
+            background: url(${startHover}) no-repeat center / 100%;
+          }
+        }
+        .ep-arrow {
+          display: none;
+        }
+        .rmdp-wrapper {
+          position: relative;
+          top: -1rem;
+        }
+        .border {
+          width: 21.8rem;
+          height: 1px;
+          border: 1px solid #f5f5f5;
+          margin: 0 auto;
+        }
+        .timeBox {
+          width: 21.8rem;
+          margin: 0 auto;
+          font-size: 1.4rem;
+          font-weight: 500;
+          padding: 1.1rem 0;
+          box-sizing: border-box;
+
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+      }
+      .end-container {
+        .end-input {
+          width: 23rem;
+          height: 4.5rem;
+          border: none;
+          outline: none;
+          position: absolute;
+          top: 0px;
+          right: 0px;
+          text-align: center;
+          background: url(${end}) no-repeat center / 100%;
+          :hover {
+            background: url(${endHover}) no-repeat center / 100%;
+          }
+        }
+        .ep-arrow {
+          display: none;
+        }
+        .rmdp-wrapper {
+          position: absolute;
+          top: 3.5rem;
+        }
+        .border {
+          width: 21.8rem;
+          height: 1px;
+          border: 1px solid #f5f5f5;
+          margin: 0 auto;
+        }
+        .timeBox {
+          width: 21.8rem;
+          margin: 0 auto;
+          font-size: 1.4rem;
+          font-weight: 500;
+          padding: 1.1rem 0;
+          box-sizing: border-box;
+
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+      }
+      .end-container-time {
+        .end-input {
+          width: 23rem;
+          height: 4.5rem;
+          border: none;
+          outline: none;
+          position: absolute;
+          top: 0px;
+          right: 0px;
+          text-align: center;
+          background: url(${end}) no-repeat center / 100%;
+          :hover {
+            background: url(${endHover}) no-repeat center / 100%;
+          }
+        }
+        .ep-arrow {
+          display: none;
+        }
+        .rmdp-wrapper {
+          position: absolute;
+          bottom: 3.5rem;
+        }
+        .border {
+          width: 21.8rem;
+          height: 1px;
+          border: 1px solid #f5f5f5;
+          margin: 0 auto;
+        }
+        .timeBox {
+          width: 21.8rem;
+          margin: 0 auto;
+          font-size: 1.4rem;
+          font-weight: 500;
+          padding: 1.1rem 0;
+          box-sizing: border-box;
+
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+      }
+    }
+    .colorBox {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      .color {
+        width: 3.9rem;
+        height: 3.7rem;
+        border-radius: 10px;
+        background-color: #fff;
+        margin-right: 1.3rem;
+        border: 1.5px solid rgb(232, 232, 232);
+      }
+    }
+    .priorityBox {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
   }
 `;

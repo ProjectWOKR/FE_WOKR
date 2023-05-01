@@ -108,8 +108,9 @@ export const todoDateInfo = atom({
   default: {
     targetDate: sessionStorage.getItem('targetDate'),
     teamMembers: [JSON.parse(sessionStorage.getItem('userId'))],
-    // teamMembers: [134, 137],
+    // teamMembers: [],
     KeyResultIds: JSON.parse(sessionStorage.getItem('kr')),
+    // KeyResultIds: [],
     orderby: 'endDate',
     orderbyrole: 'desc',
   },

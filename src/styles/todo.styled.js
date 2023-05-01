@@ -258,7 +258,7 @@ export const StExpirationTodo = styled.div`
           margin-bottom: 8px;
         }
 
-        p {
+        /* p {
           margin: 0;
           font-size: 14px;
           display: flex;
@@ -267,6 +267,39 @@ export const StExpirationTodo = styled.div`
             width: 20px;
             height: 20px;
             margin-right: 5px;
+          }
+        } */
+        .mine {
+          margin: 0;
+          font-size: 14px;
+          display: flex;
+          align-items: center;
+          /* text-decoration: line-through; */
+          .warn {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+          }
+        }
+        .notMine {
+          margin: 0;
+          font-size: 14px;
+          display: flex;
+          align-items: center;
+          .warn {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+          }
+          /* span {
+            text-decoration: line-through;
+          } */
+          .other {
+            margin-left: 3px;
+          }
+          .createUser {
+            margin-left: 7px;
+            text-decoration: none;
           }
         }
       }
@@ -359,15 +392,27 @@ export const StProgressTodo = styled.div`
           margin-bottom: 8px;
         }
 
-        p {
+        .mine {
           margin: 0;
           font-size: 14px;
           display: flex;
           align-items: center;
+          /* text-decoration: line-through; */
+        }
+        .notMine {
+          margin: 0;
+          font-size: 14px;
+          display: flex;
+          align-items: center;
+          span {
+            /* text-decoration: line-through; */
+          }
           img {
-            width: 20px;
-            height: 20px;
-            margin-right: 5px;
+            margin-left: 3px;
+          }
+          .createUser {
+            margin-left: 7px;
+            text-decoration: none;
           }
         }
       }
@@ -458,12 +503,28 @@ export const StCompletionTodo = styled.div`
           text-decoration: line-through;
         }
 
-        p {
+        .mine {
           margin: 0;
           font-size: 14px;
           display: flex;
           align-items: center;
           text-decoration: line-through;
+        }
+        .notMine {
+          margin: 0;
+          font-size: 14px;
+          display: flex;
+          align-items: center;
+          span {
+            text-decoration: line-through;
+          }
+          img {
+            margin-left: 3px;
+          }
+          .createUser {
+            margin-left: 7px;
+            text-decoration: none;
+          }
         }
       }
     }

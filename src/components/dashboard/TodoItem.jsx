@@ -140,9 +140,7 @@ const TodoItem = ({ getTodo }) => {
                 );
               }}>
               <div className='todoName'>{el.toDo}</div>
-              <div className='memo'>
-                {el.memo === '' ? '메모가 없습니다.' : `${el.memo}`}
-              </div>
+              {el.memo === '' ? null : <div className='memo'>{el.memo}</div>}
               <p>
                 {el.fstartDate} - {el.fendDate}
               </p>

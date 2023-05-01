@@ -15,42 +15,13 @@ import PastTodo from './PastTodo';
 import TeamTodo from './TeamTodo';
 import TodoNavi from './TodoNavi';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { jwt_decode } from 'jsonwebtoken/decode';
 import { useEffect, useRef, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 export default function Todo() {
   //todo 전부 가져오기
-
-  // console.log(test);
-
-  // const [todoList, setTodoList] = useRecoilState(allTodoListState);
-  // const alltodo = useRecoilValue(AllTodoSelector);
-
-  // console.log('atom :', todoList);
-  // console.log('selector :', alltodo);
-
-  // const { data, isLoading, isError, error } = useQuery(
-  //   ['alltodoTest'],
-  //   GetAllTodo,
-  //   {
-  //     // suspense: true,
-  //     onSuccess: data => {
-  //       setTodoList(data);
-  //     },
-  //     onError: error => {
-  //       console.log(error);
-  //     },
-  //   }
-  // );
-
-  // if (isLoading) {
-  //   return <Loading />;
-  // }
-
-  // if (isError) {
-  //   return <div>{error.message}</div>;
-  // }
 
   const now = new Date();
   let today = '';
@@ -77,22 +48,6 @@ export default function Todo() {
 
   return (
     <StSticky>
-      {/* {alltodo?.length === 0 ? (
-        <h2 className='notHave'>설정된 To Do가 없습니다.</h2>
-      ) : (
-        <>
-          <TodoDashboard>
-            <TodoNavi todayFormat={today} />
-            <TodoNavi todayFormat={today} getAllTodo={alltodo} />
-
-            <DetailTodoWrap>
-              <DetailTodoItem />
-            </DetailTodoWrap>
-          </TodoDashboard>
-          <TeamTodo />
-          <Toast />
-        </>
-      )} */}
       <TodoDashboard>
         <TodoNavi todayFormat={today} />
 
@@ -101,6 +56,7 @@ export default function Todo() {
         </DetailTodoWrap>
       </TodoDashboard>
       <TeamTodo />
+      <Toast />
     </StSticky>
   );
 }

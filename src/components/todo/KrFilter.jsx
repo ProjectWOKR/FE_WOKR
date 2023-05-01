@@ -22,9 +22,9 @@ const KrFilter = () => {
   const [checkInfo, setCheckInfo] = useState([]);
   const [forData, setForData] = useState([]);
 
-  console.log('***** forData :', forData);
+  // console.log('***** forData :', forData);
 
-  console.log('checkedList :', checkedList);
+  // console.log('checkedList :', checkedList);
   // console.log('checkInfo :', checkInfo);
 
   const { data: getKrData } = useQuery(['KR'], GetKR, {
