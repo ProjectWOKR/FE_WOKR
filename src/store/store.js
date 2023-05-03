@@ -129,9 +129,12 @@ export const myTodo = atom({
   key: 'myTodo',
   default: {
     targetDate: sessionStorage.getItem('targetDate'),
+    // targetDate: '',
     teamMembers: [JSON.parse(sessionStorage.getItem('userId'))],
     // teamMembers: [],
+    // teamMembers: [],
     KeyResultIds: JSON.parse(sessionStorage.getItem('kr')),
+    // KeyResultIds: [],
     // KeyResultIds: [],
     orderby: 'endDate',
     orderbyrole: 'desc',

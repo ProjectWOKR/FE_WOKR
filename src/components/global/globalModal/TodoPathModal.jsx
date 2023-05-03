@@ -7,6 +7,7 @@ import todo from '../../../assets/todoTODO.png';
 import trash from '../../../assets/trash.png';
 import {
   change,
+  myChange,
   patchTodoInfo,
   ToggleEndState,
   ToggleStartState,
@@ -158,6 +159,7 @@ const TodoPathModal = ({ onCloseModal }) => {
   const queryClient = useQueryClient();
 
   const [count, setCount] = useRecoilState(change);
+  const [myCount, setMyCount] = useRecoilState(myChange);
   console.log(count);
 
   const { mutate: patchTodo } = useMutation(PatchTodo, {
@@ -171,6 +173,7 @@ const TodoPathModal = ({ onCloseModal }) => {
       queryClient.invalidateQueries(['TODO']);
       queryClient.setQueryData(['patchTodo'], title);
       setCount(count + 1);
+      setMyCount(myCount + 1);
       // console.log(queryClient.getQueriesData(['patchTodo']));
       // console.log('---------------', queryClient.getQueryData(['TODO']));
       // queryClient.invalidateQueries(['ALLTODO']);

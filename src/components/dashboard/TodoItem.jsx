@@ -6,6 +6,7 @@ import blue from '../../assets/todoBlue.png';
 import red from '../../assets/todoRed.png';
 import yellow from '../../assets/todoYellow.png';
 import { change, myChange, myTodo, patchTodoInfo } from '../../store/store';
+import Loading from '../global/Loading';
 import Toast from '../global/Toast';
 import Potal from '../global/globalModal/Potal';
 import TodoPathModal from '../global/globalModal/TodoPathModal';
@@ -15,35 +16,51 @@ import ReactGA from 'react-ga4';
 import { toast } from 'react-toastify';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
-const TodoItem = () => {
+const TodoItem = ({ todayFormat }) => {
+  // console.log(todayFormat);
   const queryClient = useQueryClient();
 
-  const [count, setCount] = useRecoilState(change);
+  const [count, setCount] = useRecoilState(myChange);
   // console.log(count);
 
   const [info, setInfo] = useRecoilState(myTodo);
-  // console.log('myTodoInfo :', info);
+  // setInfo({ ...info, targetDate: todayFormat });
+  // const [info, setInfo] = useState({
+  //   targetDate: sessionStorage.getItem('targetDate'),
+  //   // teamMembers: [JSON.parse(sessionStorage.getItem('userId'))],
+  //   teamMembers: [sessionStorage.getItem('userId')],
+  //   // KeyResultIds: JSON.parse(sessionStorage.getItem('kr')),
+  //   KeyResultIds: sessionStorage.getItem('kr'),
+  //   orderby: 'endDate',
+  //   orderbyrole: 'desc',
+  // });
+  console.log('myTodoInfo :', info);
   const [progress, setProgress] = useState([]);
   const [completion, setCompletion] = useState([]);
 
-  // console.log('진행 중 :', progress);
-  // console.log('완료 :', completion);
+  console.log('진행 중 :', progress);
+  console.log('완료 :', completion);
 
-  const { mutate: progressTodo } = useMutation(PostProgressTodo, {
+  const { mutate: progressTodo, isLoading } = useMutation(PostProgressTodo, {
     onSuccess: data => {
-      // console.log(data);
+      console.log('진행중 불러오는 중');
       setProgress(data);
     },
   });
 
   const { mutate: completionTodo } = useMutation(PostCompletionTodo, {
     onSuccess: data => {
-      // console.log(data);
+      console.log('완료 불러오는중');
       setCompletion(data);
     },
   });
 
+  // const today = `${new Date().getFullYear()}-${new Date().getMonth() + 1}`;
+  // console.log(today);
+
   useEffect(() => {
+    // console.log(info);
+    // window.location.reload();
     if (
       info.targetDate !== null &&
       info.KeyResultIds !== null &&
@@ -53,8 +70,11 @@ const TodoItem = () => {
       console.log('통신한다');
       progressTodo({ info });
       completionTodo({ info });
+    } else {
+      console.log('info바꿔야해요');
+      setInfo({ ...info, targetDate: todayFormat });
     }
-  }, [count, info]);
+  }, [count]);
 
   // 체크 수정
   const { mutate: patchCheckmutate } = useMutation(PatchCheck, {
@@ -142,8 +162,13 @@ const TodoItem = () => {
     setTodoModalOn(!todoModalOn);
   };
 
+  // if (isLoading) {
+  //   return <Loading />;
+  // }
+
   return (
     <>
+      {/* {progress} */}
       {progress?.map(el => (
         <React.Fragment key={el.userId}>
           {el.progressTodo.map(data => (

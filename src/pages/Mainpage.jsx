@@ -4,10 +4,13 @@ import DashTodo from '../components/dashboard/DashToDo';
 import Menu from '../components/dashboard/Menu';
 import Tutorial from '../components/dashboard/Tutorial';
 import DashBoardCalendar from '../components/dashboard/calendar/Calendar';
+import Loading from '../components/global/Loading';
 import Portal from '../components/global/globalModal/Potal';
 import {
   getOKRData,
   krDataAtom,
+  myChange,
+  myTodo,
   teamMemberAtom,
   todoDateInfo,
   userDetail,
@@ -36,6 +39,7 @@ export default function Mainpage() {
   // const setUserId = useSetRecoilState(userId);
 
   const [info, setInfo] = useRecoilState(todoDateInfo);
+  const [myInfo, setMyInfo] = useRecoilState(myTodo);
   // console.log(info);
 
   const [uid, setUid] = useRecoilState(userId);
@@ -60,17 +64,22 @@ export default function Mainpage() {
   }, [accessToken]);
 
   //userInfo
-  const { userinfo } = useQuery(['userInfo'], () => GetUserInfo(uid), {
-    enabled: !!uid,
-    onSuccess: data => {
-      // console.log('성공');
-      // console.log(data);
-      setUserInfo(data);
-      sessionStorage.setItem('userId', data.userId);
-      setUid(data.userId);
-      setInfo({ ...info, teamMembers: [uid] });
-    },
-  });
+  const { userinfo, isLoading } = useQuery(
+    ['userInfo'],
+    () => GetUserInfo(uid),
+    {
+      enabled: !!uid,
+      onSuccess: data => {
+        // console.log('성공');
+        // console.log(data);
+        setUserInfo(data);
+        sessionStorage.setItem('userId', data.userId);
+        setUid(data.userId);
+        setInfo({ ...info, teamMembers: [uid] });
+        setMyInfo({ ...myInfo, teamMembers: [uid] });
+      },
+    }
+  );
 
   //okrData
   const setOkrList = useSetRecoilState(getOKRData);
@@ -90,6 +99,7 @@ export default function Mainpage() {
     onError: response => {},
   });
 
+  const [count, setCount] = useRecoilState(myChange);
   const [krdata, setKrData] = useRecoilState(krDataAtom);
   // console.log(krdata);
   const { data: getKr } = useQuery(['KR'], GetKR, {
@@ -101,9 +111,39 @@ export default function Mainpage() {
       sessionStorage.setItem('kr', JSON.stringify(filterArray));
       setKrData(response);
       setInfo({ ...info, KeyResultIds: filterArray });
+      setMyInfo({ ...myInfo, KeyResultIds: filterArray });
+      setCount(count + 1);
     },
   });
 
+  const now = new Date();
+  let today = '';
+  let tomorrow;
+  if (now.getMonth() + 1 < 10 && now.getDate() < 10) {
+    today = `${now.getFullYear()}-0${now.getMonth() + 1}-0${now.getDate()}`;
+    // tomorrow = `0${now.getMonth() + 1}월 0${now.getDate() + 1}일`;
+    sessionStorage.setItem('targetDate', today);
+    // setMyInfo({ ...myInfo, targetDate: today });
+  } else if (now.getDate() < 10) {
+    today = `${now.getFullYear()}-${now.getMonth() + 1}-0${now.getDate()}`;
+    // tomorrow = `${now.getFullYear()}-${now.getMonth() + 1}-0${
+    //   now.getDate() + 1
+    // }`;
+    sessionStorage.setItem('targetDate', today);
+    // setMyInfo({ ...myInfo, targetDate: today });
+  } else if (now.getMonth() + 1 < 10) {
+    today = `${now.getFullYear()}-0${now.getMonth() + 1}-${now.getDate()}`;
+    // tomorrow = `0${now.getMonth() + 1}월 ${now.getDate() + 1}일`;
+    sessionStorage.setItem('targetDate', today);
+    // setMyInfo({ ...myInfo, targetDate: today });
+  } else {
+    today = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+    // tomorrow = `${now.getMonth() + 1}월 ${now.getDate() + 1}일`;
+    sessionStorage.setItem('targetDate', today);
+    // setMyInfo({ ...myInfo, targetDate: today });
+  }
+
+  console.log(uid);
   return (
     <StWrap>
       {userinfo?.firstLogin ? (
@@ -119,7 +159,7 @@ export default function Mainpage() {
           <main>
             <OkrContainer>
               <DashOKR />
-              <DashTodo />
+              <DashTodo todayFormat={today} />
             </OkrContainer>
             <DashBoardCalendar />
           </main>

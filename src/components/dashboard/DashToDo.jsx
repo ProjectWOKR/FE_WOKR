@@ -17,7 +17,7 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useState, useRef } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-export default function DashTodo() {
+export default function DashTodo({ todayFormat }) {
   const [todoModalOn, setTodoModalOn] = useState(false);
   const onCloseTodoModal = () => {
     setTodoModalOn(!todoModalOn);
@@ -72,7 +72,7 @@ export default function DashTodo() {
       <TodoContainer>
         {getTodo?.length !== 0 ? (
           <StTodoItem>
-            <TodoItem />
+            <TodoItem todayFormat={todayFormat} />
           </StTodoItem>
         ) : (
           <NotHaveEl>

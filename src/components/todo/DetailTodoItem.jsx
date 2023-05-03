@@ -141,23 +141,7 @@ const DetailTodoItem = ({ todayFormat }) => {
       // console.log(data);
       setProgress(data);
       queryClient.setQueryData(['progress'], data);
-
-      // if(queryClient.getQueryData(['progress'])){
-
-      // }
     },
-    // onMutate: async newTodo => {
-    //   await queryClient.cancelQueries(['progress']);
-    //   const previous = queryClient.getQueryData(['progress']);
-    //   console.log('previous :', previous);
-    //   // queryClient.setQueryData(['progress'], old => [...old, newTodo]);
-
-    //   // 스냅샷 값을 담은 컨텍스트 객체를 반환
-    //   return { previous };
-    // },
-    // onSettled: () => {
-    //   queryClient.invalidateQueries(['progress']);
-    // },
   });
 
   // 완료
@@ -446,25 +430,25 @@ const DetailTodoItem = ({ todayFormat }) => {
   // }
   // console.log(patchtodoInfo);
   // console.log(queryClient.getQueryData(['progress']));
-  const { mutate: patchMytodo } = useMutation(PatchTodo, {
-    onSuccess: response => {
-      if (process.env.NODE_ENV !== 'development') {
-        ReactGA.event({
-          category: '버튼',
-          action: 'TODO 수정',
-        });
-      }
-      console.log('patch성공');
-    },
-    onError: response => {
-      if (process.env.NODE_ENV !== 'development') {
-        ReactGA.event({
-          category: '버튼',
-          action: 'TODO 수정 실패',
-        });
-      }
-    },
-  });
+  // const { mutate: patchMytodo } = useMutation(PatchTodo, {
+  //   onSuccess: response => {
+  //     if (process.env.NODE_ENV !== 'development') {
+  //       ReactGA.event({
+  //         category: '버튼',
+  //         action: 'TODO 수정',
+  //       });
+  //     }
+  //     console.log('patch성공');
+  //   },
+  //   onError: response => {
+  //     if (process.env.NODE_ENV !== 'development') {
+  //       ReactGA.event({
+  //         category: '버튼',
+  //         action: 'TODO 수정 실패',
+  //       });
+  //     }
+  //   },
+  // });
 
   const Check = ({ data }) => {
     // console.log(data);
@@ -503,7 +487,7 @@ const DetailTodoItem = ({ todayFormat }) => {
   // console.log(queryClient.getQueryState);
   // console.log(queryClient.getQueryData(['patchTodo']));
   const count = useRecoilValue(change);
-  // console.log(count);
+  console.log(info);
   // const test = queryClient.getQueryData(['patchTodo']);
   useEffect(() => {
     if (
@@ -524,53 +508,16 @@ const DetailTodoItem = ({ todayFormat }) => {
     }
   }, [info, isCompletion, count]);
 
-  // useEffect(() => {
-  //   console.log('처음 이펙트');
-  //   expirationTodo({ info });
-  //   progressTodo({ info });
-  //   completionTodo({ info });
-  // }, []);
-
-  // console.log(isCompletion === []);
-
-  // useEffect(() => {
-  // }, []);
-  // if (isLoading) {
-  //   return <Loading />;
-  // }
-
-  // const clickUpdate = ({ data }) => {
-  //   console.log(data);
-  //   patchTodo(
-  //     data.toDoId,
-  //     data.toDo,
-  //     data.memo,
-  //     data.startDate,
-  //     data.startDateTime,
-  //     data.endDate,
-  //     data.endDateTime,
-  //     data.priority
-  //   );
-  //   expirationTodo({ info });
-  //   progressTodo({ info });
-  //   completionTodo({ info });
-  // };
-  // console.log(info.targetDate == new Date());
-  // const day = `${new Date().getFullYear()}-${
-  //   new Date().getMonth() + 1
-  // }`;
-  console.log(info.targetDate.split('-'));
-  // console.log(new Date().getFullYear());
   return (
     <>
       <DDay>
         <TodoDetailHeader>
           <div className='header'>
             <div className='title'>
-              {info.targetDate === todayFormat
+              {info?.targetDate === todayFormat
                 ? 'Today'
-                : `${info.targetDate.split('-')[1]}월 ${
-                    info.targetDate.split('-')[2]
+                : `${info?.targetDate?.split('-')[1]}월 ${
+                    info?.targetDate?.split('-')[2]
                   }일`}
             </div>
             <Filter />
