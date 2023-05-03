@@ -1,5 +1,5 @@
 import plus from '../../assets/plus.png';
-import { getOKRData, userInfo } from '../../store/store.js';
+import { getOKRData, userDetail } from '../../store/store.js';
 import {
   Container,
   Header,
@@ -20,7 +20,7 @@ export default function DashOKR() {
   const [okrModalOn, setOkrModalOn] = useState(false);
   const [alertModalOn, setAlertModalOn] = useState(false);
 
-  const info = useRecoilValue(userInfo);
+  const info = useRecoilValue(userDetail);
   const okrData = useRecoilValue(getOKRData);
 
   /**모달 닫는 함수 */

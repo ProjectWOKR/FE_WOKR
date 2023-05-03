@@ -53,7 +53,7 @@ const OkrDropDown = ({ setKid, setOid, title }) => {
         placeholder={
           title
             ? '선택하지 않으면 기존과 동일합니다.'
-            : 'none 핵심결과 선택하지 않고 To Do 작성'
+            : 'none Key Result 선택하지 않고 To-Do 추가하기'
         }
       />
 

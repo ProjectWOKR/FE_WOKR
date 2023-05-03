@@ -23,13 +23,13 @@ const KrFilter = () => {
   const [forData, setForData] = useState([]);
 
   // console.log('***** forData :', forData);
-
   // console.log('checkedList :', checkedList);
   // console.log('checkInfo :', checkInfo);
 
   const { data: getKrData } = useQuery(['KR'], GetKR, {
     refetchOnWindowFocus: false,
     onSuccess: response => {
+      // console.log('getKr 함');
       // setCheckedList(response);
       const none = [{ keyResultId: 0, color: '#9b9b9b' }];
       const addNone = [...response, ...none];
@@ -37,7 +37,7 @@ const KrFilter = () => {
 
       setCheckedList(addNone);
       // console.log(JSON.parse(sessionStorage.getItem('kr')));
-      setForData(JSON.parse(sessionStorage.getItem('kr')));
+      // setForData(JSON.parse(sessionStorage.getItem('kr')));
 
       setForData(JSON.parse(sessionStorage.getItem('kr')));
     },
@@ -166,7 +166,7 @@ const KrFilter = () => {
                 />
                 {data.keyResultId === 0 ? (
                   <>
-                    <span className='kr' style={{ color: `${data.color}` }}>
+                    <span className='none' style={{ color: `${data.color}` }}>
                       None
                     </span>
                     <span className='desc'>{data.keyResult}</span>

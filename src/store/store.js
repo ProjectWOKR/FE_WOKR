@@ -1,6 +1,6 @@
 import { atom, selector } from 'recoil';
 
-export const userInfo = atom({
+export const userDetail = atom({
   key: 'userInfo',
   default: null,
 });
@@ -67,6 +67,15 @@ export const krDataAtom = atom({
   default: null,
 });
 
+export const change = atom({
+  key: 'change',
+  default: 0,
+});
+export const myChange = atom({
+  key: 'change',
+  default: 0,
+});
+
 // 수정 필요
 // export const okrCheckSelector = selector({
 //   key: 'okrCheck',
@@ -89,13 +98,13 @@ export const todoListState = atom({
   default: null,
 });
 
-export const todoListSelector = selector({
-  key: 'testAllTodoSelector',
-  get: ({ get }) => {
-    const todoList = get(todoListState);
-    return todoList;
-  },
-});
+// export const todoListSelector = selector({
+//   key: 'testAllTodoSelector',
+//   get: ({ get }) => {
+//     const todoList = get(todoListState);
+//     return todoList;
+//   },
+// });
 
 //ex) 2023-01-01
 export const clickDate = atom({
@@ -105,6 +114,19 @@ export const clickDate = atom({
 
 export const todoDateInfo = atom({
   key: 'todoDateInfo',
+  default: {
+    targetDate: sessionStorage.getItem('targetDate'),
+    teamMembers: [JSON.parse(sessionStorage.getItem('userId'))],
+    // teamMembers: [],
+    KeyResultIds: JSON.parse(sessionStorage.getItem('kr')),
+    // KeyResultIds: [],
+    orderby: 'endDate',
+    orderbyrole: 'desc',
+  },
+});
+
+export const myTodo = atom({
+  key: 'myTodo',
   default: {
     targetDate: sessionStorage.getItem('targetDate'),
     teamMembers: [JSON.parse(sessionStorage.getItem('userId'))],
@@ -162,5 +184,18 @@ export const filterTeamMemberSelector = selector({
   },
 });
 
-// kr들
-// export const
+// --------------
+// export const expirationAtom = atom({
+//   key: 'expiration',
+//   default: null,
+// });
+
+// export const progressAtom = atom({
+//   key: 'expiration',
+//   default: null,
+// });
+
+// export const completionAtom = atom({
+//   key: 'expiration',
+//   default: null,
+// });

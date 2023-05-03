@@ -170,8 +170,9 @@ const TodoModal = ({
         });
       }
       queryClient.invalidateQueries(['TODO']);
-      queryClient.invalidateQueries(['ALLTODO']);
-      queryClient.invalidateQueries(['PASTTODO']);
+
+      // queryClient.invalidateQueries(['ALLTODO']);
+      // queryClient.invalidateQueries(['PASTTODO']);
       toast('TODO가 생성되었습니다.');
     },
     onError: response => {
@@ -244,7 +245,7 @@ const TodoModal = ({
             <img src={todo} alt='' />
             <input
               type='text'
-              placeholder='To Do 내용을 작성하세요'
+              placeholder='할 일을 작성해 주세요'
               className='input'
               name='toDo'
               maxLength='25'
@@ -257,7 +258,7 @@ const TodoModal = ({
             <img src={memo} alt='' />
             <input
               type='text'
-              placeholder='Memo 내용을 작성하세요'
+              placeholder='메모를 작성해 주세요'
               className='input'
               name='memo'
               onChange={event => {

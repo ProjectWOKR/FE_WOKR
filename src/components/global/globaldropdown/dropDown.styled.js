@@ -377,8 +377,8 @@ export const OkrItem = styled.div`
 `;
 
 export const EmotionSelect = styled.div`
-  width: 35px;
-  height: 35px;
+  width: 31px;
+  height: 31px;
   position: relative;
   margin-left: 19px;
   cursor: pointer;

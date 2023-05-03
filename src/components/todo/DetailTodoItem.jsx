@@ -1,5 +1,5 @@
 import { GetKR, GetUser } from '../../apis/apiGET';
-import { PatchCheck } from '../../apis/apiPATCH';
+import { PatchCheck, PatchTodo } from '../../apis/apiPATCH';
 import {
   PostCompletionTodo,
   PostExpirationTodo,
@@ -14,6 +14,7 @@ import red from '../../assets/todoRed.png';
 import yellow from '../../assets/todoYellow.png';
 import warn from '../../assets/warn.png';
 import {
+  change,
   clickDate,
   filterTeamMemberSelector,
   getOKRData,
@@ -50,12 +51,14 @@ import { toast } from 'react-toastify';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
-const DetailTodoItem = () => {
+const DetailTodoItem = ({ todayFormat }) => {
   const queryClient = useQueryClient();
 
   const [todoModalOn, setTodoModalOn] = useState(false);
-  const [test, setPatchTodoInfo] = useRecoilState(patchTodoInfo);
-  console.log(test);
+  const [patchtodoInfo, setPatchTodoInfo] = useRecoilState(patchTodoInfo);
+  // const [ dateInfo, setDateInfo] = useRecoilState(todoDateInfo)
+  // console.log('patchtodoInfo :', patchtodoInfo);
+  // console.log(patchtodoInfo);
 
   const onTodoCloseModal = () => {
     setTodoModalOn(!todoModalOn);
@@ -94,11 +97,18 @@ const DetailTodoItem = () => {
   const [expiration, setExpiration] = useState([]);
   const [progress, setProgress] = useState([]);
   const [completion, setCompletion] = useState([]);
+
   // console.log('진행 중 :', progress);
-  console.log('완료 :', completion);
+  // console.log('완료 :', completion);
   // console.log('expiration :', expiration);
 
   // });
+  // console.log(queryClient);
+
+  // const { test } = useQuery(['progress'], info);
+  // console.log(test);
+
+  // const queryClient = useQueryClient()
 
   // 기한 만료
   const {
@@ -109,6 +119,13 @@ const DetailTodoItem = () => {
   } = useMutation(PostExpirationTodo, {
     onSuccess: data => {
       setExpiration(data);
+
+      // queryClient.setQueryData(['expiration'], oldData => {
+      //   return {
+      //     ...oldData,
+      //     data: [...oldData.data, data.data],
+      //   };
+      // });
       // console.log('response :', data);
     },
   });
@@ -120,15 +137,35 @@ const DetailTodoItem = () => {
   // 진행중
   const { mutate: progressTodo } = useMutation(PostProgressTodo, {
     onSuccess: data => {
+      // console.log('성공했음요');
+      // console.log(data);
       setProgress(data);
-      // console.log('response :', data);
+      queryClient.setQueryData(['progress'], data);
+
+      // if(queryClient.getQueryData(['progress'])){
+
+      // }
     },
+    // onMutate: async newTodo => {
+    //   await queryClient.cancelQueries(['progress']);
+    //   const previous = queryClient.getQueryData(['progress']);
+    //   console.log('previous :', previous);
+    //   // queryClient.setQueryData(['progress'], old => [...old, newTodo]);
+
+    //   // 스냅샷 값을 담은 컨텍스트 객체를 반환
+    //   return { previous };
+    // },
+    // onSettled: () => {
+    //   queryClient.invalidateQueries(['progress']);
+    // },
   });
 
   // 완료
   const { mutate: completionTodo } = useMutation(PostCompletionTodo, {
     onSuccess: data => {
       setCompletion(data);
+
+      // queryClient.setQueryData(['completion'], data);
       // console.log('response :', data);
     },
   });
@@ -228,7 +265,7 @@ const DetailTodoItem = () => {
                 <div className='detail'>
                   <div
                     className='nameDate'
-                    onClick={() =>
+                    onClick={() => {
                       patchTodo(
                         data.toDoId,
                         data.toDo,
@@ -238,8 +275,11 @@ const DetailTodoItem = () => {
                         data.endDate,
                         data.endDateTime,
                         data.priority
-                      )
-                    }>
+                      );
+                      expirationTodo({ info });
+                      progressTodo({ info });
+                      completionTodo({ info });
+                    }}>
                     <div className='todoName'>{data.toDo}</div>
                     {data.memo === '' ? null : (
                       <div className='memo'>{data.memo}</div>
@@ -401,13 +441,38 @@ const DetailTodoItem = () => {
     },
   });
 
+  // const patchT = () =>{
+  //   patchMytodo({{}})
+  // }
+  // console.log(patchtodoInfo);
+  // console.log(queryClient.getQueryData(['progress']));
+  const { mutate: patchMytodo } = useMutation(PatchTodo, {
+    onSuccess: response => {
+      if (process.env.NODE_ENV !== 'development') {
+        ReactGA.event({
+          category: '버튼',
+          action: 'TODO 수정',
+        });
+      }
+      console.log('patch성공');
+    },
+    onError: response => {
+      if (process.env.NODE_ENV !== 'development') {
+        ReactGA.event({
+          category: '버튼',
+          action: 'TODO 수정 실패',
+        });
+      }
+    },
+  });
+
   const Check = ({ data }) => {
     // console.log(data);
     const onClickCheck = () => {
       const id = data.toDoId;
       patchCheckmutate({ id });
       // console.log('체크 눌림');
-      // toast('할 일을 완료했습니다.');
+      toast('할 일을 완료했습니다.');
     };
 
     if (data.completion) {
@@ -435,11 +500,12 @@ const DetailTodoItem = () => {
       return;
     }
   };
-
+  // console.log(queryClient.getQueryState);
+  // console.log(queryClient.getQueryData(['patchTodo']));
+  const count = useRecoilValue(change);
+  // console.log(count);
+  // const test = queryClient.getQueryData(['patchTodo']);
   useEffect(() => {
-    // console.log(info);
-    // console.log(isCompletion);
-    // console.log('effect 들어왔어');
     if (
       info.targetDate !== null &&
       info.KeyResultIds !== null &&
@@ -449,28 +515,64 @@ const DetailTodoItem = () => {
       isCompletion.includes('done') === true &&
       isCompletion.includes('notDone') === true
     ) {
-      console.log('통신한다?');
+      // console.log('통신한다?');
       expirationTodo({ info });
       progressTodo({ info });
       completionTodo({ info });
       // window.location.reload();
       // console.log('ui 변경했다!');
     }
-  }, [info, isCompletion]);
+  }, [info, isCompletion, count]);
+
+  // useEffect(() => {
+  //   console.log('처음 이펙트');
+  //   expirationTodo({ info });
+  //   progressTodo({ info });
+  //   completionTodo({ info });
+  // }, []);
 
   // console.log(isCompletion === []);
 
   // useEffect(() => {
   // }, []);
-  if (isLoading) {
-    return <Loading />;
-  }
+  // if (isLoading) {
+  //   return <Loading />;
+  // }
+
+  // const clickUpdate = ({ data }) => {
+  //   console.log(data);
+  //   patchTodo(
+  //     data.toDoId,
+  //     data.toDo,
+  //     data.memo,
+  //     data.startDate,
+  //     data.startDateTime,
+  //     data.endDate,
+  //     data.endDateTime,
+  //     data.priority
+  //   );
+  //   expirationTodo({ info });
+  //   progressTodo({ info });
+  //   completionTodo({ info });
+  // };
+  // console.log(info.targetDate == new Date());
+  // const day = `${new Date().getFullYear()}-${
+  //   new Date().getMonth() + 1
+  // }`;
+  console.log(info.targetDate.split('-'));
+  // console.log(new Date().getFullYear());
   return (
     <>
       <DDay>
         <TodoDetailHeader>
           <div className='header'>
-            <div className='title'>{info.targetDate}</div>
+            <div className='title'>
+              {info.targetDate === todayFormat
+                ? 'Today'
+                : `${info.targetDate.split('-')[1]}월 ${
+                    info.targetDate.split('-')[2]
+                  }일`}
+            </div>
             <Filter />
           </div>
         </TodoDetailHeader>

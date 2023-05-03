@@ -182,7 +182,7 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
                 onMouseOver={onMouseOverHandler}
                 onMouseOut={onMouseOutHandler}
                 type='text'
-                placeholder='ex. 독특한 관점으로 세상을 바라고 싶은 사람들의 커뮤니티를 만들거야'
+                placeholder='ex. 제품의 브랜드 이미지 높이기'
                 className='input'
                 name='objective'
                 onChange={onChangeHandler}
@@ -192,7 +192,7 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
             {showTooltip && (
               <div className='ObjectTooltip'>
                 <img src={info} alt='info' />
-                <p>Objective : 우리는 기간 안에 `Objective`하고 싶습니다.</p>
+                <p>Objective : 우리가 최종적으로 이루고자 하는 정성적 목표</p>
               </div>
             )}
 
@@ -259,7 +259,7 @@ const OkrModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
               확인
             </button>
           </div>
-          <Toast />
+          {/* <Toast /> */}
         </>
       </ModalBox>
     </>

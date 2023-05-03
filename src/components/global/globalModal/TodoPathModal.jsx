@@ -6,6 +6,7 @@ import memo from '../../../assets/memo.png';
 import todo from '../../../assets/todoTODO.png';
 import trash from '../../../assets/trash.png';
 import {
+  change,
   patchTodoInfo,
   ToggleEndState,
   ToggleStartState,
@@ -91,7 +92,7 @@ const TodoPathModal = ({ onCloseModal }) => {
     toDo: todoInfo.toDo,
   });
 
-  console.log(title);
+  // console.log(title);
 
   const [startWithTime, setStartWithTime] = useState(false);
   const [endWithTime, setEndWithTime] = useState(false);
@@ -156,6 +157,9 @@ const TodoPathModal = ({ onCloseModal }) => {
 
   const queryClient = useQueryClient();
 
+  const [count, setCount] = useRecoilState(change);
+  console.log(count);
+
   const { mutate: patchTodo } = useMutation(PatchTodo, {
     onSuccess: response => {
       if (process.env.NODE_ENV !== 'development') {
@@ -165,8 +169,14 @@ const TodoPathModal = ({ onCloseModal }) => {
         });
       }
       queryClient.invalidateQueries(['TODO']);
-      queryClient.invalidateQueries(['ALLTODO']);
+      queryClient.setQueryData(['patchTodo'], title);
+      setCount(count + 1);
+      // console.log(queryClient.getQueriesData(['patchTodo']));
+      // console.log('---------------', queryClient.getQueryData(['TODO']));
+      // queryClient.invalidateQueries(['ALLTODO']);
       queryClient.invalidateQueries(['PASTTODO']);
+
+      // queryClient.invalidateQueries(['progress']);
     },
     onError: response => {
       if (process.env.NODE_ENV !== 'development') {
@@ -227,7 +237,7 @@ const TodoPathModal = ({ onCloseModal }) => {
           action: 'TODO 삭제 실패',
         });
       }
-      alert('팀장 및 본인이 작성한 OKR만 수정가능합니다.');
+      // alert('팀장 및 본인이 작성한 OKR만 수정가능합니다.');
     },
   });
 
@@ -252,7 +262,7 @@ const TodoPathModal = ({ onCloseModal }) => {
             <img src={todo} alt='' />
             <input
               type='text'
-              placeholder='To Do 내용을 작성하세요'
+              placeholder='할 일을 작성해 주세요'
               className='input'
               name='toDo'
               maxLength='25'
@@ -267,7 +277,7 @@ const TodoPathModal = ({ onCloseModal }) => {
             <img src={memo} alt='' />
             <input
               type='text'
-              placeholder='Memo 내용을 작성하세요'
+              placeholder='메모를 작성해 주세요'
               className='input'
               name='memo'
               defaultValue={title.memo}

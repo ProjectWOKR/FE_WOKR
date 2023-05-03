@@ -86,9 +86,9 @@ const RegisterForm = () => {
     } else if (userInfo.team.length < 2) {
       errors.team = '팀명은 최소 두글자 이상이에요.';
     }
-    if (!userInfo.teamposition.trim()) {
-      errors.teamposition = '직급을 선택해주세요.';
-    }
+    // if (!userInfo.teamposition.trim()) {
+    //   errors.teamposition = '직급을 선택해주세요.';
+    // }
     return errors;
   };
 

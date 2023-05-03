@@ -35,7 +35,7 @@ export default function DashTodo() {
   };
 
   const [todoList, setTodoList] = useRecoilState(todoListState);
-  const todoSelector = useRecoilValue(todoListSelector);
+  // const todoSelector = useRecoilValue(todoListSelector);
   // console.log('todoSelector :', todoSelector);
   // 임시
   const {
@@ -51,13 +51,13 @@ export default function DashTodo() {
     onError: response => {},
   });
 
-  if (isLoading) {
-    return <Loading />;
-  }
+  // if (isLoading) {
+  //   return <Loading />;
+  // }
 
-  if (isError) {
-    return <div>{error.message}</div>;
-  }
+  // if (isError) {
+  //   return <div>{error.message}</div>;
+  // }
   return (
     <Container>
       <HeaderBox>
@@ -72,7 +72,7 @@ export default function DashTodo() {
       <TodoContainer>
         {getTodo?.length !== 0 ? (
           <StTodoItem>
-            <TodoItem getTodo={getTodo} />
+            <TodoItem />
           </StTodoItem>
         ) : (
           <NotHaveEl>

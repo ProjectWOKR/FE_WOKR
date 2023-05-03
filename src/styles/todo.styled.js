@@ -41,7 +41,7 @@ export const TodoContainer = styled.div`
   min-width: 39rem;
   width: 100%;
   max-height: 485px;
-  height: 100%;
+  height: 55.2rem;
   overflow-y: auto;
   padding: 0 1.2rem;
   box-sizing: border-box;
@@ -51,11 +51,11 @@ export const TodoContainer = styled.div`
 export const StTodoItem = styled.div`
   width: 100%;
   /* min-width: 330px; */
-  height: 11.8rem;
+  /* height: 11.8rem; */
   /* background-color: pink; */
   .todo {
     max-width: 100%;
-    min-width: 39rem;
+    min-width: 46.1rem;
     height: 100%;
     display: flex;
     position: relative;
@@ -66,6 +66,24 @@ export const StTodoItem = styled.div`
     border-radius: 8px;
     :nth-last-child(1) {
       margin-bottom: 0;
+    }
+    .completion {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: #ccc;
+      position: relative;
+      cursor: pointer;
+      margin-right: 23px;
+    }
+    .notCompletion {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: #e8e8e8;
+      position: relative;
+      cursor: pointer;
+      margin-right: 23px;
     }
     .check {
       width: 30px;
@@ -92,11 +110,11 @@ export const StTodoItem = styled.div`
       cursor: default;
     }
     .detail {
-      /* height: 100%; */
+      height: 100%;
       box-sizing: border-box;
       padding: 3px 0 5px 0;
       .nameDate {
-        /* width: 100%; */
+        /* width: 80%; */
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -104,9 +122,15 @@ export const StTodoItem = styled.div`
         color: #4b4b4b;
         font-weight: 500;
         cursor: pointer;
+        /* background-color: pink; */
+
         .todoName {
+          width: 280px;
           font-size: 19px;
           margin-bottom: 7px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
         .memo {
           width: 85%;

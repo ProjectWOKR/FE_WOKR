@@ -177,7 +177,7 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
             <img src={kr} alt='kr' />
             <input
               type='text'
-              placeholder='ex. 매달 가입자 수 50명 추가 달성 할 거야.'
+              placeholder='ex. 고객 후기 5점 만점에 4.5점 만들기'
               name='first'
               onMouseOver={onMouseOverHandler}
               onMouseOut={onMouseOutHandler}
@@ -192,7 +192,7 @@ const KrPatchModal = ({ onCloseModal, modalRef, modalOutSideClick }) => {
           {showTooltip && (
             <div className='krTooltip'>
               <img src={info} alt='info' />
-              <p>웹 방문자 수 150,000명 달성</p>
+              <p>Key Result : Objective를 달성하기 위한 정량적인 측정 지표</p>
             </div>
           )}
         </KRBox>

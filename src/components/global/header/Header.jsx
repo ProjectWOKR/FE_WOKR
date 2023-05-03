@@ -28,22 +28,16 @@ export default function Header() {
     setLogoutImg(logoutON);
   };
 
-  const logout = () => {
-    if (process.env.NODE_ENV !== 'development') {
-      ReactGA.event({
-        category: '버튼',
-        action: '로그아웃',
-      });
+  const gomain = () => {
+    if (localStorage.getItem('accesstoken') === undefined) {
+      alert('로그인 후 이용해주세요.');
+    } else {
+      navigate('/');
     }
-    navigate('/signin');
   };
   return (
     <Layout>
-      <LogoImg
-        onClick={() => {
-          logout();
-        }}
-      />
+      <LogoImg onClick={gomain} />
       <div>
         <Guide
           onClick={() => {

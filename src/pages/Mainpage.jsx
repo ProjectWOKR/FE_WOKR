@@ -10,8 +10,8 @@ import {
   krDataAtom,
   teamMemberAtom,
   todoDateInfo,
+  userDetail,
   userId,
-  userInfo,
 } from '../store/store';
 import { OkrContainer, StWrap } from '../styles/mainpage.styled';
 import { useQuery } from '@tanstack/react-query';
@@ -24,39 +24,50 @@ export default function Mainpage() {
   const navigate = useNavigate();
 
   // localStorage에 accesstoken 여부 확인(리다이렉트)
-  useEffect(() => {
-    if (localStorage.accesstoken === undefined) {
-      navigate('/signin');
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (localStorage.getItem('accesstoken') === undefined) {
+  //     navigate('/signin');
+  //   }
+  // }, []);
 
   //  accesstoken 디코딩
-  const setUserInfo = useSetRecoilState(userInfo);
-  const setUserId = useSetRecoilState(userId);
+  const [userInfo, setUserInfo] = useRecoilState(userDetail);
+  // console.log('userInfo :', userInfo);
+  // const setUserId = useSetRecoilState(userId);
 
   const [info, setInfo] = useRecoilState(todoDateInfo);
-  console.log(info);
+  // console.log(info);
 
   const [uid, setUid] = useRecoilState(userId);
-  console.log(uid);
+  // console.log('uid :', uid);
+
   const [accessToken, setAccessToken] = useState(
     localStorage.getItem('accesstoken')
   );
 
   useEffect(() => {
-    const decodeToken = jwt_decode(accessToken);
-    const extractedUid = decodeToken.userId;
-    setUid(() => extractedUid);
-  }, []);
+    // console.log(localStorage.accessToken);
+    // console.log(localStorage.getItem('accesstoken'));
+    if (localStorage.getItem('accesstoken')) {
+      // console.log('디코딩한다');
+      const decodeToken = jwt_decode(accessToken);
+      const extractedUid = decodeToken.userId;
+      setUid(() => extractedUid);
+    } else {
+      // console.log('어세스토큰 없다');
+      navigate('/signin');
+    }
+  }, [accessToken]);
 
   //userInfo
   const { userinfo } = useQuery(['userInfo'], () => GetUserInfo(uid), {
     enabled: !!uid,
     onSuccess: data => {
-      console.log(data);
+      // console.log('성공');
+      // console.log(data);
       setUserInfo(data);
       sessionStorage.setItem('userId', data.userId);
-      setUserId(data.userId);
+      setUid(data.userId);
       setInfo({ ...info, teamMembers: [uid] });
     },
   });

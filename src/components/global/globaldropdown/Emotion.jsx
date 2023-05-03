@@ -1,7 +1,7 @@
 import { PatchEmotion } from '../../../apis/apiPATCH';
-import good from '../../../assets/emoji1.png';
-import bad from '../../../assets/emoji2.png';
-import normal from '../../../assets/emoji3.png';
+import good from '../../../assets/newemoji1.png';
+import normal from '../../../assets/newemoji2.png';
+import bad from '../../../assets/newemoji3.png';
 import info from '../../../assets/question.png';
 import { EmotionSelect } from './dropDown.styled';
 import { emotion } from './dropdown';

@@ -46,6 +46,8 @@ export default function Todo() {
     sessionStorage.setItem('targetDate', today);
   }
 
+  console.log(today);
+
   return (
     <StSticky>
       <TodoDashboard>

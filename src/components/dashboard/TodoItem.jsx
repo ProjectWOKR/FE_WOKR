@@ -1,41 +1,60 @@
-import { GetCompletionTodo } from '../../apis/apiGET';
+import { GetCompletionTodo, GetTodo } from '../../apis/apiGET';
 import { PatchCheck } from '../../apis/apiPATCH';
+import { PostCompletionTodo, PostProgressTodo } from '../../apis/apiPOST';
+import checkFull from '../../assets/checkFull.png';
 import blue from '../../assets/todoBlue.png';
 import red from '../../assets/todoRed.png';
 import yellow from '../../assets/todoYellow.png';
-import { patchTodoInfo } from '../../store/store';
+import { change, myChange, myTodo, patchTodoInfo } from '../../store/store';
 import Toast from '../global/Toast';
 import Potal from '../global/globalModal/Potal';
 import TodoPathModal from '../global/globalModal/TodoPathModal';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactGA from 'react-ga4';
 import { toast } from 'react-toastify';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 
-const TodoItem = ({ getTodo }) => {
+const TodoItem = () => {
   const queryClient = useQueryClient();
 
-  // filter 함수 사용
-  const now = new Date();
-  const filterArray = getTodo?.filter(el => {
-    if (el.completion === false) {
-      // return el;
-      if (new Date(now.setDate(now.getDate())) < new Date(el.startDate)) {
-        return null;
-      } else if (
-        new Date(el.startDate).getMonth() === now.getMonth() &&
-        new Date(el.startDate).getDate() === now.getDate()
-      ) {
-        return el;
-      } else {
-        return el;
-      }
-    } else {
-      return null;
-    }
+  const [count, setCount] = useRecoilState(change);
+  // console.log(count);
+
+  const [info, setInfo] = useRecoilState(myTodo);
+  // console.log('myTodoInfo :', info);
+  const [progress, setProgress] = useState([]);
+  const [completion, setCompletion] = useState([]);
+
+  // console.log('진행 중 :', progress);
+  // console.log('완료 :', completion);
+
+  const { mutate: progressTodo } = useMutation(PostProgressTodo, {
+    onSuccess: data => {
+      // console.log(data);
+      setProgress(data);
+    },
   });
-  // console.log(filterArray);
+
+  const { mutate: completionTodo } = useMutation(PostCompletionTodo, {
+    onSuccess: data => {
+      // console.log(data);
+      setCompletion(data);
+    },
+  });
+
+  useEffect(() => {
+    if (
+      info.targetDate !== null &&
+      info.KeyResultIds !== null &&
+      info.teamMembers !== null &&
+      info.KeyResultIds.length !== 0
+    ) {
+      console.log('통신한다');
+      progressTodo({ info });
+      completionTodo({ info });
+    }
+  }, [count, info]);
 
   // 체크 수정
   const { mutate: patchCheckmutate } = useMutation(PatchCheck, {
@@ -48,26 +67,43 @@ const TodoItem = ({ getTodo }) => {
       }
       queryClient.invalidateQueries(['TODO']);
       queryClient.invalidateQueries(['completionTodo']);
+      setCount(count - 1);
     },
     onError: response => {},
   });
 
-  const Check = ({ el }) => {
+  const Check = ({ data }) => {
     const onClickCheck = () => {
-      const id = el.toDoId;
+      // console.log('누름');
+      const id = data.toDoId;
       patchCheckmutate({ id });
-      toast('할 일을 완료했습니다.');
+      // progressTodo({ info });
+      // completionTodo({ info });
+      // toast('할 일을 완료했습니다.');
     };
 
-    return <div className='check' onClick={onClickCheck} />;
+    if (data.completion) {
+      return (
+        <img
+          className='completion'
+          src={checkFull}
+          alt='checked'
+          onClick={onClickCheck}
+        />
+      );
+    } else {
+      return <div className='notCompletion' onClick={onClickCheck}></div>;
+    }
+
+    // return <div className='check' onClick={onClickCheck} />;
   };
 
-  const Priority = ({ el }) => {
-    if (el.priority === 1) {
+  const Priority = ({ data }) => {
+    if (data.priority === 1) {
       return <img className='priority' src={red} alt='' />;
-    } else if (el.priority === 2) {
+    } else if (data.priority === 2) {
       return <img className='priority' src={yellow} alt='' />;
-    } else if (el.priority === 3) {
+    } else if (data.priority === 3) {
       return <img className='priority' src={blue} alt='' />;
     } else {
       return;
@@ -106,74 +142,96 @@ const TodoItem = ({ getTodo }) => {
     setTodoModalOn(!todoModalOn);
   };
 
-  const { data: getCompletionTodo } = useQuery(
-    ['completionTodo'],
-    GetCompletionTodo,
-    {
-      onSuccess: response => {
-        // console.log('completionTodo', response);
-      },
-      onError: response => {},
-    }
-  );
   return (
     <>
-      {filterArray?.map(el => (
-        <div className='todo' key={el.toDoId}>
-          <Check el={el} />
-          <div className='title' style={{ color: el.color }}>
-            {el.keyResultId === null ? 'None' : `KR${el.krNumber}`}
-          </div>
-          <div className='detail'>
-            <div
-              className='nameDate'
-              onClick={() => {
-                patchTodo(
-                  el.toDoId,
-                  el.toDo,
-                  el.memo,
-                  el.startDate,
-                  el.startDateTime,
-                  el.endDate,
-                  el.endDateTime,
-                  el.priority
-                );
-              }}>
-              <div className='todoName'>{el.toDo}</div>
-              {el.memo === '' ? null : <div className='memo'>{el.memo}</div>}
-              <p>
-                {el.fstartDate} - {el.fendDate}
-              </p>
-            </div>
-            {/* <div className='priorityBox'>
-            </div> */}
-          </div>
-          <Priority el={el} />
-        </div>
-      ))}
-      {/* {getCompletionTodo?.map(el => (
-        <div className='todo' key={el.toDoId}>
-          <div className='title' style={{ color: el.color }}>
-            {el.keyResultId === null ? 'none' : `KR${el.krNumber}`}
-          </div>
-          <div className='detail'>
-            <div className='nameDateComplitc'>
-              <div
-                title={el.memo}
-                style={{ textDecoration: 'line-through', color: '#a9a9a9' }}>
-                {el.toDo}
+      {progress?.map(el => (
+        <React.Fragment key={el.userId}>
+          {el.progressTodo.map(data => (
+            <div className='todo' key={data.toDoId}>
+              <Check data={data} />
+              <div className='title' style={{ color: data.color }}>
+                {data.keyResultId === null ? 'None' : `KR${data.krNumber}`}
               </div>
-              <p style={{ textDecoration: 'line-through', color: '#a9a9a9' }}>
-                {el.fstartDate}~{el.fendDate}
-              </p>
+              <div className='detail'>
+                <div
+                  className='nameDate'
+                  onClick={() => {
+                    patchTodo(
+                      data.toDoId,
+                      data.toDo,
+                      data.memo,
+                      data.startDate,
+                      data.startDateTime,
+                      data.endDate,
+                      data.endDateTime,
+                      data.priority
+                    );
+                  }}>
+                  <div className='todoName'>{data.toDo}</div>
+                  {data.memo === '' ? null : (
+                    <div className='memo'>{data.memo}</div>
+                  )}
+                  <p>
+                    {data.fstartDate} - {data.fendDate}
+                  </p>
+                </div>
+              </div>
+              <Priority data={data} />
             </div>
-            <div className='priorityBox'>
-              <Priority el={el} />
-              <div className='completion'></div>
+          ))}
+        </React.Fragment>
+      ))}
+
+      {completion?.map(el => (
+        <React.Fragment key={el.userId}>
+          {el.completionTodo.map(data => (
+            <div className='todo' key={data.toDoId}>
+              <Check data={data} />
+              <div className='title' style={{ color: data.color }}>
+                {data.keyResultId === null ? 'None' : `KR${data.krNumber}`}
+              </div>
+              <div
+                className='detail'
+                style={{
+                  textDecoration: 'line-through',
+                  color: 'rgb(155, 155, 155)',
+                }}>
+                <div
+                  className='nameDate'
+                  onClick={() => {
+                    patchTodo(
+                      data.toDoId,
+                      data.toDo,
+                      data.memo,
+                      data.startDate,
+                      data.startDateTime,
+                      data.endDate,
+                      data.endDateTime,
+                      data.priority
+                    );
+                  }}>
+                  <div
+                    className='todoName'
+                    style={{ color: 'rgb(155, 155, 155)' }}>
+                    {data.toDo}
+                  </div>
+                  {data.memo === '' ? null : (
+                    <div
+                      className='memo'
+                      style={{ color: 'rgb(155, 155, 155)' }}>
+                      {data.memo}
+                    </div>
+                  )}
+                  <p style={{ color: 'rgb(155, 155, 155)' }}>
+                    {data.fstartDate} - {data.fendDate}
+                  </p>
+                </div>
+              </div>
+              <Priority data={data} />
             </div>
-          </div>
-        </div>
-      ))} */}
+          ))}
+        </React.Fragment>
+      ))}
       <Potal>
         {todoModalOn ? <TodoPathModal onCloseModal={onTodoCloseModal} /> : null}
       </Potal>

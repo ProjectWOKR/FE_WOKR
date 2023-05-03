@@ -587,10 +587,11 @@ export const StKrFilter = styled.div`
       margin-bottom: 0;
       li {
         width: 175px;
-        height: 15px;
+        /* height: 15px; */
         margin-bottom: 12px;
         display: flex;
         align-items: center;
+        /* flex-wrap: wrap; */
         font-size: 15px;
         font-weight: 500;
         /* :nth-last-child(1) {
@@ -604,9 +605,19 @@ export const StKrFilter = styled.div`
         }
         .kr {
           margin-right: 2px;
+          width: 35px;
+          height: 20px;
+          /* background-color: skyblue; */
+        }
+        .none {
+          width: 50px;
         }
         .desc {
           margin-left: 2px;
+          /* width: calc(100% - 23px - 35px); */
+          width: 65%;
+          /* height: auto; */
+          /* background-color: pink; */
         }
       }
     }

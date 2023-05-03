@@ -28,6 +28,9 @@ const TodoNavi = ({ todayFormat }) => {
   const [includeData, setIncludeData] = useState([]);
   // console.log('includeData :', includeData);
 
+  const [dateInfo, setDateInfo] = useRecoilState(todoDateInfo);
+  // console.log(dateInfo);
+
   const today = new Date();
 
   let date = new Date(today.getFullYear(), today.getMonth(), today.getDate());
@@ -109,6 +112,7 @@ const TodoNavi = ({ todayFormat }) => {
       ...forData,
       Sunday: state.week[0].format,
       Saturday: state.week[6].format,
+      teamMembers: dateInfo.teamMembers,
     });
   }, [state]);
 
@@ -118,6 +122,7 @@ const TodoNavi = ({ todayFormat }) => {
   //include 보내기
   const { mutate: weekDateInfo } = useMutation(PostWeek, {
     onSuccess: data => {
+      // console.log('넌 언제 동작함?');
       setIncludeData(data);
     },
   });
@@ -184,7 +189,7 @@ const TodoNavi = ({ todayFormat }) => {
 
   // const todoinfo = useRecoilValue(todoDateInfo);
   // console.log('atom :', todoinfo);
-  const [dateInfo, setDateInfo] = useRecoilState(todoDateInfo);
+
   // const setTodoDateInfo = useSetRecoilState(clickDate);
   const clickDDay = e => {
     // if (e.currentTarget.className === 'include') {
@@ -196,6 +201,7 @@ const TodoNavi = ({ todayFormat }) => {
   };
 
   useEffect(() => {
+    // console.log('네비꺼');
     setDateInfo({ ...dateInfo, targetDate: todayFormat });
     // setForData({ info });
   }, []);
@@ -205,7 +211,7 @@ const TodoNavi = ({ todayFormat }) => {
     if (forData.Sunday !== '' && forData.Saturday !== '') {
       weekDateInfo({ forData });
     }
-  }, [forData]);
+  }, [forData, dateInfo]);
 
   const Today = ({ el }) => {
     // console.log(el.format === dDay);
@@ -239,7 +245,7 @@ const TodoNavi = ({ todayFormat }) => {
         <div className='right'>
           <div className='prev' onClick={onPressArrowLeft} />
           <div className='next' onClick={onPressArrowRight} />
-          <div className='today'>오늘</div>
+          {/* <div className='today'>오늘</div> */}
           <NaviPlus onClick={createTodo}>
             <img src={plus} alt='' />
           </NaviPlus>
