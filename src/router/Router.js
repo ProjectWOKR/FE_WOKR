@@ -1,4 +1,3 @@
-import GlobalLayout from '../components/global/GlobalLayout';
 import Header from '../components/global/header/Header';
 import Mainpage from '../pages/Mainpage';
 import Signin from '../pages/SignIn';
@@ -9,7 +8,7 @@ import { Route, Routes } from 'react-router-dom';
 
 export default function Router() {
   return (
-    <GlobalLayout>
+    <>
       <Header />
       <Routes>
         <Route path='/' element={<Mainpage />} />
@@ -17,6 +16,6 @@ export default function Router() {
         <Route path='/signup' element={<SignUp />} />
         <Route path='/todo' element={<TodoPage />} />
       </Routes>
-    </GlobalLayout>
+    </>
   );
 }

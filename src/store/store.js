@@ -1,8 +1,9 @@
 import { atom, selector } from 'recoil';
 
+// 유저 정보
 export const userDetail = atom({
   key: 'userInfo',
-  default: null,
+  default: undefined,
 });
 
 // accesstoken에서 userId값 추출
@@ -72,7 +73,7 @@ export const change = atom({
   default: 0,
 });
 export const myChange = atom({
-  key: 'change',
+  key: 'myChange',
   default: 0,
 });
 
@@ -112,6 +113,7 @@ export const clickDate = atom({
   default: null,
 });
 
+//
 export const todoDateInfo = atom({
   key: 'todoDateInfo',
   default: {

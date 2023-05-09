@@ -3,12 +3,13 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
-  max-width: 68.2rem;
+  /* max-width: 50%; */
   height: 56rem;
   border: 1px solid rgba(232, 232, 232, 1);
   margin-left: 3.9rem;
   box-shadow: 0 3px 15px rgba(124, 124, 124, 0.25);
   border-radius: 12px;
+  background-color: #fff;
 `;
 
 export const HeaderBox = styled.div`

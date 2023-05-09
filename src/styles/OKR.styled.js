@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  max-width: 75.8rem;
+  /* max-width: 50%; */
   width: 100%;
   /* height: 55.2rem; */
   height: 56rem;
@@ -9,6 +9,7 @@ export const Container = styled.div`
   box-shadow: 0 3px 15px rgba(124, 124, 124, 0.25);
   border-radius: 12px;
   box-sizing: border-box;
+  background-color: #fff;
 `;
 
 export const HeaderBox = styled.div`

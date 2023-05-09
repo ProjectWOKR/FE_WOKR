@@ -14,6 +14,7 @@ const GlobalStyle = createGlobalStyle`
   --bg-color : #ffffff;
   --main-color : #FF8336;
   --main-bg : #BEBEBE;
+  --main-gray : #f3efef;
   --font-style: 'Noto Sans KR';
   --text-color : #2b2b2b;
   --default-bolder : 1.5px solid #d9d9d9;

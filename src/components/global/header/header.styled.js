@@ -3,12 +3,13 @@ import styled from 'styled-components';
 
 export const Layout = styled.div`
   width: 100%;
-  height: 9.7rem;
-  ${props => props.theme.flex_row_between}
-  padding: 0 6.5rem 0 7.2rem;
-  /* position: sticky;
-  top: 0; */
-  /* margin-bottom: 97px; */
+  height: 7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 7rem;
+  position: relative;
+  /* margin-bottom: 30px; */
   div {
     display: flex;
     align-items: center;
@@ -44,4 +45,41 @@ export const LogoImg = styled.div`
 export const Logout = styled.button`
   width: 8rem;
   height: 5rem;
+`;
+
+export const StMenu = styled.div`
+  margin: 0 0 0 auto;
+`;
+
+export const StNavi = styled.div`
+  width: 100%;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const StNaviBar = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  div {
+    border-radius: 15px 15px 0 0;
+    height: 100%;
+    font-size: 1.8rem;
+    padding: 5px 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+    &.active {
+      color: #000;
+      background-color: #f3efef;
+      font-weight: bold;
+    }
+    &:hover {
+      background-color: #f3efef;
+    }
+  }
 `;
