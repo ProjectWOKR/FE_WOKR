@@ -1,80 +1,33 @@
-import { GetCompletionTodo, GetTodo } from '../../apis/apiGET';
+import { GetMyTodo } from '../../apis/apiGET';
 import { PatchCheck } from '../../apis/apiPATCH';
-import { PostCompletionTodo, PostProgressTodo } from '../../apis/apiPOST';
 import checkFull from '../../assets/checkFull.png';
 import blue from '../../assets/todoBlue.png';
 import red from '../../assets/todoRed.png';
 import yellow from '../../assets/todoYellow.png';
-import { change, myChange, myTodo, patchTodoInfo } from '../../store/store';
-import Loading from '../global/Loading';
+import { patchTodoInfo } from '../../store/store';
 import Toast from '../global/Toast';
 import Potal from '../global/globalModal/Potal';
 import TodoPathModal from '../global/globalModal/TodoPathModal';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ReactGA from 'react-ga4';
 import { toast } from 'react-toastify';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 
 const TodoItem = ({ todayFormat }) => {
   // console.log(todayFormat);
   const queryClient = useQueryClient();
 
-  const [count, setCount] = useRecoilState(myChange);
+  // const [count, setCount] = useRecoilState(myChange);
   // console.log(count);
 
-  const [info, setInfo] = useRecoilState(myTodo);
-  // setInfo({ ...info, targetDate: todayFormat });
-  // const [info, setInfo] = useState({
-  //   targetDate: sessionStorage.getItem('targetDate'),
-  //   // teamMembers: [JSON.parse(sessionStorage.getItem('userId'))],
-  //   teamMembers: [sessionStorage.getItem('userId')],
-  //   // KeyResultIds: JSON.parse(sessionStorage.getItem('kr')),
-  //   KeyResultIds: sessionStorage.getItem('kr'),
-  //   orderby: 'endDate',
-  //   orderbyrole: 'desc',
-  // });
-  // console.log('myTodoInfo :', info);
-  const [progress, setProgress] = useState([]);
-  const [completion, setCompletion] = useState([]);
+  // const [info, setInfo] = useRecoilState(myTodo);
 
-  // console.log('진행 중 :', progress);
-  // console.log('완료 :', completion);
-
-  const { mutate: progressTodo, isLoading } = useMutation(PostProgressTodo, {
-    onSuccess: data => {
-      // console.log('진행중 불러오는 중');
-      setProgress(data);
+  const { data: myTodo } = useQuery(['ToDo'], GetMyTodo, {
+    onSuccess: response => {
+      // console.log(response);
     },
   });
-
-  const { mutate: completionTodo } = useMutation(PostCompletionTodo, {
-    onSuccess: data => {
-      // console.log('완료 불러오는중');
-      setCompletion(data);
-    },
-  });
-
-  // const today = `${new Date().getFullYear()}-${new Date().getMonth() + 1}`;
-  // console.log(today);
-
-  useEffect(() => {
-    // console.log(info);
-    // window.location.reload();
-    if (
-      info.targetDate !== null &&
-      info.KeyResultIds !== null &&
-      info.teamMembers !== null &&
-      info.KeyResultIds.length !== 0
-    ) {
-      // console.log('통신한다');
-      progressTodo({ info });
-      completionTodo({ info });
-    } else {
-      // console.log('info바꿔야해요');
-      setInfo({ ...info, targetDate: todayFormat });
-    }
-  }, [count]);
 
   // 체크 수정
   const { mutate: patchCheckmutate } = useMutation(PatchCheck, {
@@ -85,24 +38,20 @@ const TodoItem = ({ todayFormat }) => {
           action: 'TODO 완료',
         });
       }
-      queryClient.invalidateQueries(['TODO']);
-      queryClient.invalidateQueries(['completionTodo']);
-      setCount(count - 1);
+      queryClient.invalidateQueries(['ToDo']);
+      queryClient.invalidateQueries(['OKR']);
     },
     onError: response => {},
   });
 
-  const Check = ({ data }) => {
+  const Check = ({ el }) => {
     const onClickCheck = () => {
-      // console.log('누름');
-      const id = data.toDoId;
+      const id = el.toDoId;
       patchCheckmutate({ id });
-      // progressTodo({ info });
-      // completionTodo({ info });
-      // toast('할 일을 완료했습니다.');
+      toast('수정되었습니다.');
     };
 
-    if (data.completion) {
+    if (el.completion) {
       return (
         <img
           className='completion'
@@ -114,16 +63,14 @@ const TodoItem = ({ todayFormat }) => {
     } else {
       return <div className='notCompletion' onClick={onClickCheck}></div>;
     }
-
-    // return <div className='check' onClick={onClickCheck} />;
   };
 
-  const Priority = ({ data }) => {
-    if (data.priority === 1) {
+  const Priority = ({ el }) => {
+    if (el.priority === 1) {
       return <img className='priority' src={red} alt='' />;
-    } else if (data.priority === 2) {
+    } else if (el.priority === 2) {
       return <img className='priority' src={yellow} alt='' />;
-    } else if (data.priority === 3) {
+    } else if (el.priority === 3) {
       return <img className='priority' src={blue} alt='' />;
     } else {
       return;
@@ -168,95 +115,81 @@ const TodoItem = ({ todayFormat }) => {
 
   return (
     <>
-      {/* {progress} */}
-      {progress?.map(el => (
-        <React.Fragment key={el.userId}>
-          {el.progressTodo.map(data => (
-            <div className='todo' key={data.toDoId}>
-              <Check data={data} />
-              <div className='title' style={{ color: data.color }}>
-                {data.keyResultId === null ? 'None' : `KR${data.krNumber}`}
-              </div>
-              <div className='detail'>
-                <div
-                  className='nameDate'
-                  onClick={() => {
-                    patchTodo(
-                      data.toDoId,
-                      data.toDo,
-                      data.memo,
-                      data.startDate,
-                      data.startDateTime,
-                      data.endDate,
-                      data.endDateTime,
-                      data.priority
-                    );
-                  }}>
-                  <div className='todoName'>{data.toDo}</div>
-                  {data.memo === '' ? null : (
-                    <div className='memo'>{data.memo}</div>
-                  )}
-                  <p>
-                    {data.fstartDate} - {data.fendDate}
-                  </p>
-                </div>
-              </div>
-              <Priority data={data} />
+      {myTodo?.progressTodo.map(el => (
+        <div className='todo' key={el.toDoId}>
+          <Check el={el} />
+          <div className='title' style={{ color: el.color }}>
+            {el.keyResultId === null ? 'None' : `KR${el.krNumber}`}
+          </div>
+          <div className='detail'>
+            <div
+              className='nameDate'
+              onClick={() => {
+                patchTodo(
+                  el.toDoId,
+                  el.toDo,
+                  el.memo,
+                  el.startDate,
+                  el.startDateTime,
+                  el.endDate,
+                  el.endDateTime,
+                  el.priority
+                );
+              }}>
+              <div className='todoName'>{el.toDo}</div>
+              {el.memo === '' ? null : <div className='memo'>{el.memo}</div>}
+              <p>
+                {el.fstartDate} - {el.fendDate}
+              </p>
             </div>
-          ))}
-        </React.Fragment>
+          </div>
+          <Priority el={el} />
+        </div>
       ))}
 
-      {completion?.map(el => (
-        <React.Fragment key={el.userId}>
-          {el.completionTodo.map(data => (
-            <div className='todo' key={data.toDoId}>
-              <Check data={data} />
-              <div className='title' style={{ color: data.color }}>
-                {data.keyResultId === null ? 'None' : `KR${data.krNumber}`}
+      {myTodo?.completionTodo?.map(el => (
+        <div className='todo' key={el.toDoId}>
+          <Check el={el} />
+          <div className='title' style={{ color: el.color }}>
+            {el.keyResultId === null ? 'None' : `KR${el.krNumber}`}
+          </div>
+          <div
+            className='detail'
+            style={{
+              textDecoration: 'line-through',
+              color: 'rgb(155, 155, 155)',
+            }}>
+            <div
+              className='nameDate'
+              onClick={() => {
+                patchTodo(
+                  el.toDoId,
+                  el.toDo,
+                  el.memo,
+                  el.startDate,
+                  el.startDateTime,
+                  el.endDate,
+                  el.endDateTime,
+                  el.priority
+                );
+              }}>
+              <div className='todoName' style={{ color: 'rgb(155, 155, 155)' }}>
+                {el.toDo}
               </div>
-              <div
-                className='detail'
-                style={{
-                  textDecoration: 'line-through',
-                  color: 'rgb(155, 155, 155)',
-                }}>
-                <div
-                  className='nameDate'
-                  onClick={() => {
-                    patchTodo(
-                      data.toDoId,
-                      data.toDo,
-                      data.memo,
-                      data.startDate,
-                      data.startDateTime,
-                      data.endDate,
-                      data.endDateTime,
-                      data.priority
-                    );
-                  }}>
-                  <div
-                    className='todoName'
-                    style={{ color: 'rgb(155, 155, 155)' }}>
-                    {data.toDo}
-                  </div>
-                  {data.memo === '' ? null : (
-                    <div
-                      className='memo'
-                      style={{ color: 'rgb(155, 155, 155)' }}>
-                      {data.memo}
-                    </div>
-                  )}
-                  <p style={{ color: 'rgb(155, 155, 155)' }}>
-                    {data.fstartDate} - {data.fendDate}
-                  </p>
+              {el.memo === '' ? null : (
+                <div className='memo' style={{ color: 'rgb(155, 155, 155)' }}>
+                  {el.memo}
                 </div>
-              </div>
-              <Priority data={data} />
+              )}
+              <p style={{ color: 'rgb(155, 155, 155)' }}>
+                {el.fstartDate} - {el.fendDate}
+              </p>
             </div>
-          ))}
-        </React.Fragment>
+          </div>
+          <Priority el={el} />
+        </div>
       ))}
+
       <Potal>
         {todoModalOn ? <TodoPathModal onCloseModal={onTodoCloseModal} /> : null}
       </Potal>

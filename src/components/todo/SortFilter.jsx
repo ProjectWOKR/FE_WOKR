@@ -115,20 +115,20 @@ const SortFilter = () => {
                     <>
                       <p id='desc' onClick={clickRole}>
                         <img src={check} alt='check' />
-                        높은순
+                        오래된 순
                       </p>
                       <p id='asc' onClick={clickRole}>
-                        낮은순
+                        최신 순
                       </p>
                     </>
                   ) : (
                     <>
                       <p id='desc' onClick={clickRole}>
-                        높은순
+                        오래된 순
                       </p>
                       <p id='asc' onClick={clickRole}>
                         <img src={check} alt='check' />
-                        낮은순
+                        최신 순
                       </p>
                     </>
                   )}
@@ -148,10 +148,10 @@ const SortFilter = () => {
               {showCreateDate && (
                 <div className='sideDrop'>
                   <p id='desc' onClick={clickRole}>
-                    높은순
+                    오래된 순
                   </p>
                   <p id='asc' onClick={clickRole}>
-                    낮은순
+                    최신 순
                   </p>
                 </div>
               )}
@@ -173,20 +173,20 @@ const SortFilter = () => {
                     <>
                       <p id='desc' onClick={clickRole}>
                         <img src={check} alt='check' />
-                        높은순
+                        이른 순
                       </p>
                       <p id='asc' onClick={clickRole}>
-                        낮은순
+                        늦은 순
                       </p>
                     </>
                   ) : (
                     <>
                       <p id='desc' onClick={clickRole}>
-                        높은순
+                        이른 순
                       </p>
                       <p id='asc' onClick={clickRole}>
                         <img src={check} alt='check' />
-                        낮은순
+                        늦은 순
                       </p>
                     </>
                   )}
@@ -203,10 +203,10 @@ const SortFilter = () => {
               {showEndDate && (
                 <div className='sideDrop'>
                   <p id='desc' onClick={clickRole}>
-                    높은순
+                    이른 순
                   </p>
                   <p id='asc' onClick={clickRole}>
-                    낮은순
+                    늦은 순
                   </p>
                 </div>
               )}

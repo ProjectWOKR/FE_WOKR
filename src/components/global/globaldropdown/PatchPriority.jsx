@@ -10,10 +10,10 @@ const PatchPriority = ({ title, setTitle }) => {
   const [isOpen, setIsOpen] = useDropDown(dropDownRef, false);
   const [finalValue, setFinalValue] = useState(`${title.priority}순위`);
 
-  const { data: getTodoData } = useQuery(['TODO'], GetTodo, {
-    onSuccess: response => {},
-    onError: response => {},
-  });
+  // const { data: getTodoData } = useQuery(['TODO'], GetTodo, {
+  //   onSuccess: response => {},
+  //   onError: response => {},
+  // });
   const DropDownItem = ({
     value,
     setFinalValue,
@@ -53,7 +53,7 @@ const PatchPriority = ({ title, setTitle }) => {
       <input
         type='text'
         value={finalValue}
-        readOnly={true}
+        // readOnly
         onClick={() => setIsOpen(!isOpen)}
       />
       <TodoDropIcon src={Arrow} />

@@ -27,10 +27,10 @@ export async function GetOKR() {
   return data;
 }
 
-export async function GetTodo() {
-  const { data } = await api.get(`api/todo`);
-  return data;
-}
+// export async function GetTodo() {
+//   const { data } = await api.get(`api/todo`);
+//   return data;
+// }
 
 export async function GetAllTodo() {
   const { data } = await api.get(`api/todo/progress`);
@@ -60,5 +60,10 @@ export async function GetCompletionTodo() {
 
 export async function GetUserInfo(uid) {
   const { data } = await api.get(`api/user/${uid}`);
+  return data;
+}
+
+export async function GetMyTodo() {
+  const { data } = await api.get(`api/todo`);
   return data;
 }

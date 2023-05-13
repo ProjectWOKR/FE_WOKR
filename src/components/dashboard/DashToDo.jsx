@@ -1,4 +1,4 @@
-import { GetTodo } from '../../apis/apiGET';
+import { GetMyTodo, GetTodo } from '../../apis/apiGET';
 import plus from '../../assets/plus.png';
 import { todoListSelector, todoListState } from '../../store/store';
 import {
@@ -13,8 +13,8 @@ import Potal from '../global/globalModal/Potal';
 import TodoModal from '../global/globalModal/TodoModal';
 import { NotHave, NotHaveEl } from '../global/globalModal/modal.styled';
 import TodoItem from './TodoItem';
-import { useQuery } from '@tanstack/react-query';
-import React, { useState, useRef } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import React, { useState, useRef, useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 export default function DashTodo({ todayFormat }) {
@@ -35,33 +35,19 @@ export default function DashTodo({ todayFormat }) {
   };
 
   const [todoList, setTodoList] = useRecoilState(todoListState);
-  // const todoSelector = useRecoilValue(todoListSelector);
-  // console.log('todoSelector :', todoSelector);
-  // 임시
-  const {
-    data: getTodo,
-    isLoading,
-    isError,
-    error,
-  } = useQuery(['TODO'], GetTodo, {
+
+  const { data: myTodo } = useQuery(['ToDo'], GetMyTodo, {
     onSuccess: response => {
-      setTodoList(response);
       // console.log(response);
+      setTodoList(response);
+      // queryClient.invalidateQueries(['TODO']);
     },
-    onError: response => {},
   });
 
-  // if (isLoading) {
-  //   return <Loading />;
-  // }
-
-  // if (isError) {
-  //   return <div>{error.message}</div>;
-  // }
   return (
     <Container>
       <HeaderBox>
-        <Header>오늘의 To-do</Header>
+        <Header>To-do</Header>
         <div className='btnBox'>
           <div onClick={createTodo}>
             <img src={plus} alt='plus' />
@@ -70,11 +56,8 @@ export default function DashTodo({ todayFormat }) {
       </HeaderBox>
 
       <TodoContainer>
-        {getTodo?.length !== 0 ? (
-          <StTodoItem>
-            <TodoItem todayFormat={todayFormat} />
-          </StTodoItem>
-        ) : (
+        {todoList?.completionTodo.length === 0 &&
+        todoList?.progressTodo.length === 0 ? (
           <NotHaveEl>
             <h2>설정된 To Do 없습니다.</h2>
             <div className='btnFlex' onClick={createTodo}>
@@ -82,6 +65,10 @@ export default function DashTodo({ todayFormat }) {
               <div>To Do추가</div>
             </div>
           </NotHaveEl>
+        ) : (
+          <StTodoItem>
+            <TodoItem todayFormat={todayFormat} />
+          </StTodoItem>
         )}
       </TodoContainer>
 

@@ -23,38 +23,15 @@ import styled from 'styled-components';
 export default function Todo() {
   //todo 전부 가져오기
 
-  const now = new Date();
-  let today = '';
-  let tomorrow;
-  if (now.getMonth() + 1 < 10 && now.getDate() < 10) {
-    today = `${now.getFullYear()}-0${now.getMonth() + 1}-0${now.getDate()}`;
-    // tomorrow = `0${now.getMonth() + 1}월 0${now.getDate() + 1}일`;
-    sessionStorage.setItem('targetDate', today);
-  } else if (now.getDate() < 10) {
-    today = `${now.getFullYear()}-${now.getMonth() + 1}-0${now.getDate()}`;
-    // tomorrow = `${now.getFullYear()}-${now.getMonth() + 1}-0${
-    //   now.getDate() + 1
-    // }`;
-    sessionStorage.setItem('targetDate', today);
-  } else if (now.getMonth() + 1 < 10) {
-    today = `${now.getFullYear()}-0${now.getMonth() + 1}-${now.getDate()}`;
-    // tomorrow = `0${now.getMonth() + 1}월 ${now.getDate() + 1}일`;
-    sessionStorage.setItem('targetDate', today);
-  } else {
-    today = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
-    // tomorrow = `${now.getMonth() + 1}월 ${now.getDate() + 1}일`;
-    sessionStorage.setItem('targetDate', today);
-  }
-
-  console.log(today);
-
   return (
     <StSticky>
       <TodoDashboard>
-        <TodoNavi todayFormat={today} />
+        {/* <TodoNavi todayFormat={today} /> */}
+        <TodoNavi />
 
         <DetailTodoWrap>
-          <DetailTodoItem todayFormat={today} />
+          {/* <DetailTodoItem todayFormat={today} /> */}
+          <DetailTodoItem />
         </DetailTodoWrap>
       </TodoDashboard>
       <TeamTodo />
@@ -65,21 +42,16 @@ export default function Todo() {
 
 const StSticky = styled.div`
   display: flex;
-  /* background-color: pink; */
-  /* position: relative; */
   .notHave {
     width: 100%;
     font-size: 2.4rem;
     font-weight: 700;
     color: var(--main-color);
-    /* background-color: skyblue; */
   }
 `;
 
 const TodoDashboard = styled.div`
   max-width: 1195px;
   width: 100%;
-  /* padding: 0 27px; */
   position: relative;
-  /* background-color: gray; */
 `;

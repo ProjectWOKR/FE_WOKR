@@ -1,12 +1,6 @@
 import { PostWeek } from '../../apis/apiPOST';
 import plus from '../../assets/plus.png';
-import {
-  DDay,
-  clickDate,
-  dateArray,
-  teamArray,
-  todoDateInfo,
-} from '../../store/store';
+import { dateArray, todayFormat, todoDateInfo } from '../../store/store';
 import {
   DateNavi,
   NaviPlus,
@@ -17,19 +11,13 @@ import Potal from '../global/globalModal/Potal';
 import TodoModal from '../global/globalModal/TodoModal';
 import { useMutation } from '@tanstack/react-query';
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-scroll';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-const TodoNavi = ({ todayFormat }) => {
-  // const haveDay = getAllTodo?.map(todo => {
-  //   return todo.targetDate;
-  // })
-  // console.log(team);
+const TodoNavi = () => {
+  const todayFormatData = useRecoilValue(todayFormat);
   const [includeData, setIncludeData] = useState([]);
-  // console.log('includeData :', includeData);
 
   const [dateInfo, setDateInfo] = useRecoilState(todoDateInfo);
-  // console.log(dateInfo);
 
   const today = new Date();
 
@@ -39,9 +27,6 @@ const TodoNavi = ({ todayFormat }) => {
     //요일
     let day = date.getDay();
     let week = [];
-
-    // const haveDay = includeData?.map(date => date);
-    // console.log(haveDay);
 
     for (let i = 0; i < 7; i++) {
       // 24*60*60*1000
@@ -83,15 +68,12 @@ const TodoNavi = ({ todayFormat }) => {
         dateValue = '토';
       }
 
-      // console.log(haveDay?.includes(format));
-
       week.push({
         dateValue,
         month: `${newDate.getMonth() + 1}`,
         date: `${newDate.getDate()}`,
         year: `${newDate.getFullYear()}`,
         format: format,
-        // includes: haveDay?.includes(format),
       });
     }
     return week;
@@ -105,7 +87,6 @@ const TodoNavi = ({ todayFormat }) => {
   });
 
   const [forData, setForData] = useRecoilState(dateArray);
-  // console.log(forData);
 
   useEffect(() => {
     setForData({
@@ -116,13 +97,9 @@ const TodoNavi = ({ todayFormat }) => {
     });
   }, [state]);
 
-  // console.log(test);
-  // console.log(state.week);
-
-  //include 보내기
+  //include 백에게 요청
   const { mutate: weekDateInfo } = useMutation(PostWeek, {
     onSuccess: data => {
-      // console.log('넌 언제 동작함?');
       setIncludeData(data);
     },
   });
@@ -130,7 +107,6 @@ const TodoNavi = ({ todayFormat }) => {
   const onPressArrowLeft = () => {
     let newDate = new Date(state.date.valueOf() - 86400000 * 7);
     let newWeek = makeWeek(newDate);
-    // console.log('newWeek :', newWeek);
     setState({
       ...state,
       date: newDate,
@@ -147,7 +123,6 @@ const TodoNavi = ({ todayFormat }) => {
   const onPressArrowRight = () => {
     let newDate = new Date(state.date.valueOf() + 86400000 * 7);
     let newWeek = makeWeek(newDate);
-    console.log('newWeek :', newWeek);
     setState({
       ...state,
       date: newDate,
@@ -184,52 +159,59 @@ const TodoNavi = ({ todayFormat }) => {
     }
   };
 
-  const [dDay, setDDay] = useState(todayFormat);
-  // console.log(dDay);
+  // 날짜누르면 D-Day가 바뀌는 함수
+  const [dDay, setDDay] = useState(todayFormatData);
 
-  // const todoinfo = useRecoilValue(todoDateInfo);
-  // console.log('atom :', todoinfo);
-
-  // const setTodoDateInfo = useSetRecoilState(clickDate);
   const clickDDay = e => {
-    // if (e.currentTarget.className === 'include') {
-    //   setDDay(e.currentTarget.id);
-    // }
     setDDay(e.currentTarget.id);
     setDateInfo({ ...dateInfo, targetDate: e.currentTarget.id });
-    sessionStorage.setItem('targetDate', e.currentTarget.id);
+    localStorage.setItem('targetDate', e.currentTarget.id);
   };
 
   useEffect(() => {
-    // console.log('네비꺼');
-    setDateInfo({ ...dateInfo, targetDate: todayFormat });
-    // setForData({ info });
-  }, []);
-
-  useEffect(() => {
-    // console.log(forData);
     if (forData.Sunday !== '' && forData.Saturday !== '') {
       weekDateInfo({ forData });
     }
-  }, [forData, dateInfo]);
+  }, [weekDateInfo, forData]);
 
   const Today = ({ el }) => {
-    // console.log(el.format === dDay);
     if (
       Number(el.date) === dateD &&
       Number(el.month) === dateM &&
       Number(el.year) === dateY
     ) {
       return (
-        <span className='date' style={{ color: '#ff8336' }}>
-          {el.date}
-        </span>
+        <>
+          <span className='label' style={{ color: '#ff8336' }}>
+            {el.dateValue}
+          </span>
+          <span className='date' style={{ color: '#ff8336' }}>
+            {el.date}
+          </span>
+        </>
       );
     } else {
       return (
-        <span className='date' style={{ color: '#4b4b4b' }}>
-          {el.date}
-        </span>
+        <>
+          <span
+            className='label'
+            style={
+              el.dateValue === '일'
+                ? {
+                    color: '#ff0000',
+                  }
+                : el.dateValue === '토'
+                ? {
+                    color: '#0000ff',
+                  }
+                : null
+            }>
+            {el.dateValue}
+          </span>
+          <span className='date' style={{ color: '#4b4b4b' }}>
+            {el.date}
+          </span>
+        </>
       );
     }
   };
@@ -245,7 +227,6 @@ const TodoNavi = ({ todayFormat }) => {
         <div className='right'>
           <div className='prev' onClick={onPressArrowLeft} />
           <div className='next' onClick={onPressArrowRight} />
-          {/* <div className='today'>오늘</div> */}
           <NaviPlus onClick={createTodo}>
             <img src={plus} alt='' />
           </NaviPlus>
@@ -258,7 +239,6 @@ const TodoNavi = ({ todayFormat }) => {
               <div
                 onClick={clickDDay}
                 id={el.format}
-                // style={{ border: '2px solid rgb(255,131,54)' }}
                 style={
                   el.dateValue === '일'
                     ? {
@@ -275,7 +255,6 @@ const TodoNavi = ({ todayFormat }) => {
                 className={
                   includeData?.includes(el.format) === false ? 'day' : 'include'
                 }>
-                <span className='label'>{el.dateValue}</span>
                 <Today el={el} />
                 {includeData?.includes(el.format) === false ? null : (
                   <div className='includeCh'></div>
@@ -288,7 +267,6 @@ const TodoNavi = ({ todayFormat }) => {
                 className={
                   includeData?.includes(el.format) === false ? 'day' : 'include'
                 }>
-                <span className='label'>{el.dateValue}</span>
                 <Today el={el} />
                 {includeData?.includes(el.format) === false ? null : (
                   <div className='includeCh'></div>

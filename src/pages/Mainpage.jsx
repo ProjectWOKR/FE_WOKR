@@ -12,6 +12,7 @@ import {
   myChange,
   myTodo,
   teamMemberAtom,
+  todayFormat,
   todoDateInfo,
   userDetail,
   userId,
@@ -34,15 +35,11 @@ export default function Mainpage() {
 
   //  accesstoken 디코딩
   const [userInfo, setUserInfo] = useRecoilState(userDetail);
-  // 지울 가능성 있음
-  const [info, setInfo] = useRecoilState(todoDateInfo);
-  // console.log('info :', info);
-  // 지울 가능성 있음
-  const [myInfo, setMyInfo] = useRecoilState(myTodo);
-  // console.log('myInfo :', myInfo);
 
   // 유저 id 상태관리
-  const [uid, setUid] = useRecoilState(userId);
+  const setUid = useSetRecoilState(userId);
+
+  const [decodeId, setDecodeId] = useState(0);
 
   const [accessToken, setAccessToken] = useState(
     localStorage.getItem('accesstoken')
@@ -52,77 +49,65 @@ export default function Mainpage() {
     if (localStorage.getItem('accesstoken')) {
       const decodeToken = jwt_decode(accessToken);
       const extractedUid = decodeToken.userId;
-      setUid(() => extractedUid);
+      setDecodeId(extractedUid);
     } else {
       navigate('/signin');
     }
-  }, [localStorage.getItem('accesstoken')]);
+  }, [accessToken]);
 
   //userInfo
   const { userinfo, isLoading } = useQuery(
     ['userInfo'],
-    () => GetUserInfo(uid),
+    () => GetUserInfo(decodeId),
     {
-      enabled: !!uid,
+      enabled: !!decodeId,
       onSuccess: data => {
         setUserInfo(data);
-        // sessionStorage.setItem('userId', data.userId);
+        localStorage.setItem('userId', data.userId);
         setUid(data.userId);
-        setInfo({ ...info, teamMembers: [uid] });
-        setMyInfo({ ...myInfo, teamMembers: [uid] });
       },
     }
   );
 
   //okrData
-  const setOkrList = useSetRecoilState(getOKRData);
-  const { getokrdata } = useQuery(['OKR'], GetOKR, {
-    onSuccess: data => {
-      setOkrList(data);
-    },
-  });
+  const setKrData = useSetRecoilState(krDataAtom);
 
-  // const setTeamMemberAtom = useSetRecoilState(teamMemberAtom);
-
-  // const { data: getMember } = useQuery(['MEMBER'], GetUser, {
-  //   onSuccess: response => {
-  //     console.log(response);
-  //     setTeamMemberAtom(response);
-  //   },
-  //   onError: response => {},
-  // });
-
-  // const [count, setCount] = useRecoilState(myChange);
-  const [krdata, setKrData] = useRecoilState(krDataAtom);
-  // console.log(krdata);
   const { data: getKr } = useQuery(['KR'], GetKR, {
     onSuccess: response => {
-      // setKrState(response);
-      // console.log('response :', response);
+      // console.log(response);
+      setKrData(response);
+      // todo페이지에서 필요한 kr id
       const filterArray = response.map(el => el.keyResultId);
       filterArray.push(0);
-      sessionStorage.setItem('kr', JSON.stringify(filterArray));
-      setKrData(response);
-      setInfo({ ...info, KeyResultIds: filterArray });
-      setMyInfo({ ...myInfo, KeyResultIds: filterArray });
-      // setCount(count + 1);
+      localStorage.setItem('kr', JSON.stringify(filterArray));
     },
   });
+
+  // 오늘 날짜 포맷 2023-01-01
+  const setTodayFormat = useSetRecoilState(todayFormat);
 
   const now = new Date();
   let today = '';
   if (now.getMonth() + 1 < 10 && now.getDate() < 10) {
     today = `${now.getFullYear()}-0${now.getMonth() + 1}-0${now.getDate()}`;
-    sessionStorage.setItem('targetDate', today);
+    localStorage.setItem('targetDate', today);
+    localStorage.setItem('today', today);
+    setTodayFormat(today);
   } else if (now.getDate() < 10) {
     today = `${now.getFullYear()}-${now.getMonth() + 1}-0${now.getDate()}`;
-    sessionStorage.setItem('targetDate', today);
+    localStorage.setItem('targetDate', today);
+    localStorage.setItem('today', today);
+    setTodayFormat(today);
   } else if (now.getMonth() + 1 < 10) {
     today = `${now.getFullYear()}-0${now.getMonth() + 1}-${now.getDate()}`;
-    sessionStorage.setItem('targetDate', today);
+    localStorage.setItem('targetDate', today);
+    localStorage.setItem('today', today);
+    setTodayFormat(today);
   } else {
     today = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
-    sessionStorage.setItem('targetDate', today);
+    localStorage.setItem('targetDate', today);
+    localStorage.setItem('today', today);
+    setTodayFormat(today);
   }
 
   if (isLoading) {

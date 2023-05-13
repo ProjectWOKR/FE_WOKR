@@ -57,14 +57,15 @@ export const StNavi = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0 15rem;
 `;
 
 export const StNaviBar = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  /* align-items: center; */
+  /* justify-content: center; */
   gap: 50px;
   div {
     border-radius: 15px 15px 0 0;

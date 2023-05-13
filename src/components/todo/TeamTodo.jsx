@@ -80,25 +80,27 @@ const TeamTodo = () => {
   }월 ${new Date().getDate()}일 ${day}`;
   return (
     <StTeam>
-      <div className='title'>
-        <img src={badgeB} alt='' />
-        <div>나의 팀 To - Do 현황</div>
-      </div>
-      <div className='today'>{today}</div>
-
-      {getMember?.map(el => (
-        <div className='member' key={el.userId}>
-          <div
-            id={el.userId}
-            className={
-              info.teamMembers.includes(el.userId) === true ? 'have' : 'none'
-            }
-            onClick={clickMember}></div>
-          {/* <div className='have'></div> */}
-          <div className='name'>{el.name}</div>
-          <div className='number'>{el.createToDoCount}</div>
+      <div className='teamWrap'>
+        <div className='title'>
+          <img src={badgeB} alt='' />
+          <div>나의 팀 To - Do 현황</div>
         </div>
-      ))}
+        <div className='today'>{today}</div>
+
+        {getMember?.map(el => (
+          <div className='member' key={el.userId}>
+            <div
+              id={el.userId}
+              className={
+                info.teamMembers.includes(el.userId) === true ? 'have' : 'none'
+              }
+              onClick={clickMember}></div>
+            {/* <div className='have'></div> */}
+            <div className='name'>{el.name}</div>
+            <div className='number'>{el.createToDoCount}</div>
+          </div>
+        ))}
+      </div>
     </StTeam>
   );
 };

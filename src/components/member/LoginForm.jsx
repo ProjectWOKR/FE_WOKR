@@ -78,7 +78,6 @@ const LoginForm = () => {
           action: '로그인',
         });
       }
-      localStorage.setItem('Id', userInfo.email);
       localStorage.setItem('accesstoken', response.accessToken);
       toast('로그인이 성공적으로 되었습니다.');
       navigate('/');

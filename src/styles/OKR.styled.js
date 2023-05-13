@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  /* max-width: 50%; */
   width: 100%;
-  /* height: 55.2rem; */
   height: 56rem;
   border: 1px solid rgba(232, 232, 232, 1);
   box-shadow: 0 3px 15px rgba(124, 124, 124, 0.25);
@@ -38,7 +36,7 @@ export const Header = styled.p`
 
 export const OkrContainer = styled.div`
   margin: 0 auto;
-  max-height: 48.3rem;
+  max-height: 49rem;
   height: 100%;
   width: 100%;
   overflow-y: auto;
@@ -68,24 +66,29 @@ export const Objective = styled.div`
   padding: 0 1.1rem;
   position: relative;
   height: 8.5rem;
+
+  /* background-color: pink; */
   .left {
     display: flex;
     align-items: center;
     .title {
       cursor: default;
       color: ${({ color }) => color};
-      font-size: 5.4rem;
+      font-size: 5rem;
       font-weight: 700;
       margin-right: 16px;
     }
     .nameBox {
       max-width: 300px;
+      min-width: 150px;
+      /* min-width: 180px; */
       width: 100%;
+      /* background-color: skyblue; */
       .name {
-        width: 90%;
-        height: 38px;
+        width: 98%;
+        height: 30px;
         font-weight: 500;
-        font-size: 22px;
+        font-size: 1.8rem;
         color: ${({ color }) => color};
         cursor: pointer;
         overflow: hidden;
@@ -93,6 +96,7 @@ export const Objective = styled.div`
         white-space: nowrap;
       }
       .date {
+        width: 98%;
         height: 18px;
         font-style: normal;
         font-weight: 500;
@@ -106,7 +110,7 @@ export const Objective = styled.div`
     height: 100%;
     display: flex;
     align-items: center;
-    margin-right: 5rem;
+    /* margin-right: 5rem; */
     .percent {
       width: 35px;
       height: 25px;
@@ -128,18 +132,16 @@ export const KRBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 7px 0 15px;
+  padding: 0px 11px;
   box-sizing: border-box;
 
   .left {
-    max-width: 340px;
     width: 100%;
     display: flex;
     align-items: center;
-    /* background-color: skyblue; */
     .logo {
+      width: 40px;
       font-weight: 500;
-      font-size: 2rem;
       font-size: 16px;
       text-align: center;
       color: ${({ color }) => color};
@@ -147,13 +149,14 @@ export const KRBox = styled.div`
       margin-right: 2rem;
     }
     .name {
-      width: 85%;
+      max-width: 300px;
+      width: 100%;
       height: 27px;
       font-style: normal;
       font-weight: 500;
-      font-size: 20px;
+      font-size: 1.8rem;
       line-height: 27px;
-      color: #4b4b4b;
+      color: ${({ color }) => color};
       cursor: pointer;
 
       overflow: hidden;

@@ -3,10 +3,9 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
-  /* max-width: 50%; */
   height: 56rem;
   border: 1px solid rgba(232, 232, 232, 1);
-  margin-left: 3.9rem;
+  /* margin-left: 3.9rem; */
   box-shadow: 0 3px 15px rgba(124, 124, 124, 0.25);
   border-radius: 12px;
   background-color: #fff;
@@ -17,7 +16,7 @@ export const HeaderBox = styled.div`
   justify-content: space-between;
   height: 5.2rem;
   align-items: center;
-  padding: 1.3rem 3rem;
+  padding: 0 3rem;
   .btnBox {
     display: flex;
     align-items: center;
@@ -38,15 +37,12 @@ export const Header = styled.p`
 
 export const TodoContainer = styled.div`
   margin: 0 auto;
-  max-width: 68.2rem;
-  min-width: 39rem;
+  max-height: 49rem;
+  height: 100%;
   width: 100%;
-  max-height: 485px;
-  height: 55.2rem;
   overflow-y: auto;
   padding: 0 1.2rem;
   box-sizing: border-box;
-  /* background-color: pink; */
 `;
 
 export const StTodoItem = styled.div`
@@ -55,7 +51,8 @@ export const StTodoItem = styled.div`
   /* height: 11.8rem; */
   /* background-color: pink; */
   .todo {
-    max-width: 100%;
+    /* max-width: 100%; */
+    width: 100%;
     min-width: 46.1rem;
     height: 100%;
     display: flex;
@@ -72,7 +69,6 @@ export const StTodoItem = styled.div`
       width: 30px;
       height: 30px;
       border-radius: 50%;
-      background-color: #ccc;
       position: relative;
       cursor: pointer;
       margin-right: 23px;
@@ -109,13 +105,15 @@ export const StTodoItem = styled.div`
       font-weight: 700;
       margin-right: 25px;
       cursor: default;
+      /* background-color: pink; */
     }
     .detail {
+      width: 70%;
       height: 100%;
       box-sizing: border-box;
       padding: 3px 0 5px 0;
       .nameDate {
-        /* width: 80%; */
+        width: 98%;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -123,22 +121,19 @@ export const StTodoItem = styled.div`
         color: #4b4b4b;
         font-weight: 500;
         cursor: pointer;
-        /* background-color: pink; */
 
         .todoName {
-          width: 280px;
-          font-size: 19px;
+          font-size: 1.8rem;
           margin-bottom: 7px;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
         .memo {
-          width: 85%;
+          width: 95%;
           font-size: 14px;
           color: #9b9b9b;
           margin-bottom: 8px;
-          /* background-color: pink; */
 
           overflow: hidden;
           text-overflow: ellipsis;

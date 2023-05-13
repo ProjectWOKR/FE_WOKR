@@ -12,7 +12,6 @@ import {
   HelpBox,
 } from '../../styles/sign.styled';
 import Toast from '../global/Toast';
-import TeamPosiDropDown from '../global/globaldropdown/TeamPosiDropDown';
 import { OnChange } from '../global/onChange';
 import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
@@ -217,14 +216,6 @@ const RegisterForm = () => {
         />
       </InputBox>
       {errors.team && <div className='valid'>{errors.team}</div>}
-
-      {/* <Label htmlFor='teamPosition'>직급</Label>
-      <InputBox>
-        <TeamPosiDropDown setUserInfo={setUserInfo} userInfo={userInfo} />
-      </InputBox>
-      {errors.teamposition && (
-        <div className='valid'>{errors.teamposition}</div>
-      )} */}
 
       <LoginBtn type='submit'>회원가입</LoginBtn>
       <HelpBox style={{ marginBottom: '100px' }}>

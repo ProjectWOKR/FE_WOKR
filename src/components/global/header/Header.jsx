@@ -15,8 +15,7 @@ export default function Header() {
   }, [token]);
 
   const onLogout = () => {
-    localStorage.removeItem('accesstoken');
-    setToken(null);
+    localStorage.clear();
     navigate('/signin');
   };
 
@@ -50,7 +49,7 @@ export default function Header() {
             }}>
             사용 가이드
           </Guide>
-          {token !== null || undefined ? (
+          {token !== null ? (
             <>
               <img
                 src={logoutImg}

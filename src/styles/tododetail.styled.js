@@ -13,6 +13,9 @@ export const StNavi = styled.div`
   padding-bottom: 3px;
   box-sizing: content-box;
   background-color: #fff;
+  border-radius: 12px;
+  padding: 0 10px 10px 10px;
+  box-sizing: border-box;
 `;
 export const TodoHeader = styled.div`
   width: 100%;
@@ -84,11 +87,11 @@ export const DateNavi = styled.div`
   width: 100%;
   height: 92px;
   background-color: #fff;
-  /* border: 0.8px solid rgba(124, 124, 124, 0.25); */
   box-shadow: 0px 3px 10px rgba(124, 124, 124, 0.25);
   border-radius: 8px;
   display: flex;
   overflow: hidden;
+  /* background-color: pink; */
   .day {
     width: calc(100% / 7);
     height: 100%;
@@ -96,7 +99,12 @@ export const DateNavi = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    cursor: default;
+    cursor: pointer;
+    transition-property: background-color;
+    transition-duration: 0.4s;
+    :hover {
+      background-color: #e8e8e8;
+    }
     .label {
       color: #4b4b4b;
       font-size: 1.5rem;
@@ -116,7 +124,8 @@ export const DateNavi = styled.div`
     justify-content: center;
     position: relative;
     cursor: pointer;
-    /* transition: all 0.3s; */
+    transition-property: background-color;
+    transition-duration: 0.4s;
     :hover {
       background-color: #e8e8e8;
     }
@@ -142,11 +151,21 @@ export const DateNavi = styled.div`
 
 export const DetailTodoWrap = styled.div`
   width: 100%;
-  /* border-bottom: 1px solid #e8e8e8; */
   margin-bottom: 10px;
+  padding: 0 10px;
   .noAny {
-    color: #ff8336;
+    /* color: #ff8336; */
+    color: #000;
+    font-weight: bold;
+    font-size: 2rem;
+  }
+  h2 {
+    font-size: 1.7rem;
+    font-weight: 500;
+  }
+  h3 {
     font-size: 1.8rem;
+    font-weight: bold;
   }
 
   /* background-color: pink; */
@@ -335,9 +354,8 @@ export const TodoDetailItem = styled.div`
 `;
 
 export const DDay = styled.div`
-  /* margin-bottom: 20px; */
-  /* background-color: skyblue; */
-  /* border-bottom: 1px solid rgba(0, 0, 0, 0.2); */
+  /* padding: 0 10px; */
+  /* box-sizing: border-box; */
 `;
 
 export const Finsh = styled.div`
@@ -361,111 +379,109 @@ export const Finsh = styled.div`
 export const StTeam = styled.div`
   width: 312px;
   min-width: 312px;
-  height: 408px;
-  /* height: 100%; */
+  height: 100vh;
   display: flex;
   flex-direction: column;
   margin-left: 28px;
   position: sticky;
   top: 0px;
-  /* position: fixed;
-  top: 0;
-  right: 0; */
-  padding: 24px 15px 15px 15px;
-  box-sizing: border-box;
-  background-color: #fff;
-  /* box-shadow: 0px 3px 15px rgba(124, 124, 124, 0.25);
-  border-radius: 8px; */
+  /* background-color: pink; */
 
-  .title {
-    width: 100%;
-    height: 45px;
-    background-color: #f8f8f8;
-    box-shadow: 0px 1px 4px rgba(210, 210, 210, 0.7);
-    border-radius: 8px;
-    margin-bottom: 10px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    color: #b57bff;
-    img {
-      width: 21px;
-      height: 21px;
-      position: absolute;
-      top: 12px;
-      left: 14px;
+  .teamWrap {
+    background-color: #fff;
+    padding: 24px 15px 15px 15px;
+    box-sizing: border-box;
+    border-radius: 12px;
+    .title {
+      width: 100%;
+      height: 45px;
+      background-color: #f8f8f8;
+      box-shadow: 0px 1px 4px rgba(210, 210, 210, 0.7);
+      border-radius: 8px;
+      margin-bottom: 10px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: #b57bff;
+      img {
+        width: 21px;
+        height: 21px;
+        position: absolute;
+        top: 12px;
+        left: 14px;
+      }
     }
-  }
-  .today {
-    width: 100%;
-    height: 37px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #f8f8f8;
-    box-shadow: 0px 1px 4px rgba(210, 210, 210, 0.7);
-    border-radius: 8px;
-    margin-bottom: 10px;
-    font-size: 2rem;
-  }
-  .table {
-    width: 100%;
-    height: 37px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #f8f8f8;
-    box-shadow: 0px 1px 4px rgba(210, 210, 210, 0.7);
-    border-radius: 8px;
-    margin-bottom: 10px;
-    font-size: 1.4rem;
-  }
-  .member {
-    width: 100%;
-    height: 37px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #f8f8f8;
-    box-shadow: 0px 1px 4px rgba(210, 210, 210, 0.7);
-    border-radius: 8px;
-    margin-bottom: 10px;
-    font-size: 2rem;
-    color: #4b4b4b;
-    padding: 0 16px 0 14px;
-    /* .checkBox {
+    .today {
+      width: 100%;
+      height: 37px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f8f8f8;
+      box-shadow: 0px 1px 4px rgba(210, 210, 210, 0.7);
+      border-radius: 8px;
+      margin-bottom: 10px;
+      font-size: 2rem;
+    }
+    .table {
+      width: 100%;
+      height: 37px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #f8f8f8;
+      box-shadow: 0px 1px 4px rgba(210, 210, 210, 0.7);
+      border-radius: 8px;
+      margin-bottom: 10px;
+      font-size: 1.4rem;
+    }
+    .member {
+      width: 100%;
+      height: 37px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #f8f8f8;
+      box-shadow: 0px 1px 4px rgba(210, 210, 210, 0.7);
+      border-radius: 8px;
+      margin-bottom: 10px;
+      font-size: 2rem;
+      color: #4b4b4b;
+      padding: 0 16px 0 14px;
+      /* .checkBox {
       width: 23px;
       height: 23px;
       border-radius: 2.3px;
       border: 1px solid #b57bff;
     } */
-    .none {
-      width: 23px;
-      height: 23px;
-      border-radius: 2.3px;
-      border: 1px solid #b57bff;
-      background-color: #fff;
-      cursor: pointer;
-    }
-    .have {
-      width: 23px;
-      height: 23px;
-      border-radius: 2.3px;
-      border: 1px solid #b57bff;
-      background-color: #b57bff;
-      background: url(${check}) no-repeat center/ 100%;
-      cursor: pointer;
-    }
+      .none {
+        width: 23px;
+        height: 23px;
+        border-radius: 2.3px;
+        border: 1px solid #b57bff;
+        background-color: #fff;
+        cursor: pointer;
+      }
+      .have {
+        width: 23px;
+        height: 23px;
+        border-radius: 2.3px;
+        border: 1px solid #b57bff;
+        background-color: #b57bff;
+        background: url(${check}) no-repeat center/ 100%;
+        cursor: pointer;
+      }
 
-    .name {
-      color: #4b4b4b;
-      font-size: 1.9rem;
-    }
-    .number {
-      color: #b57bff;
-      font-size: 2rem;
+      .name {
+        color: #4b4b4b;
+        font-size: 1.9rem;
+      }
+      .number {
+        color: #b57bff;
+        font-size: 2rem;
+      }
     }
   }
 `;
@@ -774,6 +790,9 @@ export const StSortFilter = styled.div`
       height: 14px;
       margin-right: 7px;
     }
+    .result {
+      font-size: 1.2rem;
+    }
   }
   .sortDrop {
     padding: 0;
@@ -825,7 +844,7 @@ export const StSortFilter = styled.div`
         } */
       }
       .sideDrop {
-        width: 85px;
+        width: 100px;
         height: 50px;
         position: absolute;
         top: 0;
@@ -843,6 +862,7 @@ export const StSortFilter = styled.div`
           position: relative;
           transition: all 0.3s;
           color: #4b4b4b;
+          /* background-color: pink; */
           :nth-last-child(1) {
             border: none;
           }

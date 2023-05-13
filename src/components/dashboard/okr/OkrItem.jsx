@@ -19,8 +19,6 @@ import {
 import KrPatchModal from '../../global/globalModal/KrPatchModal.jsx';
 import OkrPatchModal from '../../global/globalModal/OkrPatchModal.jsx';
 import Portal from '../../global/globalModal/Potal.jsx';
-import ProgressPatchModal from '../../global/globalModal/ProgressPatchModal.jsx';
-import Emotion from '../../global/globaldropdown/Emotion.jsx';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import jwt_decode from 'jsonwebtoken/decode';
 import React, { useState, useRef, useEffect } from 'react';
@@ -35,7 +33,7 @@ const OkrItem = () => {
   const setPatchkrInfo = useSetRecoilState(patchKRInfo);
   const setPatchProgressInfo = useSetRecoilState(patchProgressInfo);
 
-  const [openDropdownId, setOpenDropdownId] = useState(null);
+  // const [openDropdownId, setOpenDropdownId] = useState(null);
 
   /**O 모달 닫는 함수 */
   const onObjectiveCloseModal = () => {
@@ -207,17 +205,7 @@ const OkrItem = () => {
                 </div>
 
                 <div className='right'>
-                  <PersentBox
-                    ObColor={Obdata.color}
-                    state='Objective'
-                    onClick={() => {
-                      patchProgress(
-                        Obdata.objectiveId,
-                        Obdata.progress,
-                        'Objective',
-                        Obdata.color
-                      );
-                    }}>
+                  <PersentBox ObColor={Obdata.color} state='Objective'>
                     <input
                       type='range'
                       min={0}
@@ -238,7 +226,6 @@ const OkrItem = () => {
               return (
                 <KRBox key={data.keyResultId} color={Obdata.color}>
                   <div className='left'>
-                    {/* <div className='mount'></div> */}
                     <div className='logo'>KR{data.krNumber}</div>
                     <div
                       className='name'
@@ -250,17 +237,7 @@ const OkrItem = () => {
                   </div>
 
                   <div className='right'>
-                    <PersentBox
-                      onClick={() => {
-                        patchProgress(
-                          data.keyResultId,
-                          data.progress,
-                          'KR',
-                          Obdata.color
-                        );
-                      }}
-                      ObColor={Obdata.color}
-                      state='KR'>
+                    <PersentBox ObColor={Obdata.color} state='KR'>
                       <input
                         type='range'
                         min={0}
@@ -273,17 +250,6 @@ const OkrItem = () => {
                         style={{ width: `${data.progress}%` }}></div>
                     </PersentBox>
                     <div className='percent'>{data.progress}%</div>
-
-                    {KRArray && (
-                      <Emotion
-                        showEmotion={showEmotion}
-                        setShowEmotion={setShowEmotion}
-                        keyResultId={data.keyResultId}
-                        emotionState={data.emotion}
-                        openDropdownId={openDropdownId}
-                        setOpenDropdownId={setOpenDropdownId}
-                      />
-                    )}
                   </div>
                 </KRBox>
               );
@@ -313,12 +279,6 @@ const OkrItem = () => {
             onCloseModal={onKRCloseModal}
             modalRef={krModalRef}
             modalOutSideClick={krModalOutSideClick}
-          />
-        ) : progressModalOn ? (
-          <ProgressPatchModal
-            onCloseModal={onProgressCloseModal}
-            modalRef={progressModalRef}
-            modalOutSideClick={progressModalOutSideClick}
           />
         ) : null}
       </Portal>
