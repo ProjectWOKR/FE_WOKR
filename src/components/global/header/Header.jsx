@@ -1,7 +1,13 @@
 import logoutON from '../../../assets/logoutoff.png';
 import logoutOFF from '../../../assets/logouton.png';
-import Navibar from '../Navibar';
-import { Guide, Layout, LogoImg, StMenu, StNavi } from './header.styled';
+import {
+  Guide,
+  Layout,
+  LogoImg,
+  StMenu,
+  StNavi,
+} from '../../../styles/header.styled';
+import Navibar from './Navibar';
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 

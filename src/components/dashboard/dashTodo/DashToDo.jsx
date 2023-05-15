@@ -1,21 +1,20 @@
-import { GetMyTodo, GetTodo } from '../../apis/apiGET';
-import plus from '../../assets/plus.png';
-import { todoListSelector, todoListState } from '../../store/store';
+import { GetMyTodo } from '../../../apis/apiGET';
+import plus from '../../../assets/plus.png';
+import { todoListState } from '../../../store/store';
 import {
   Container,
   Header,
   HeaderBox,
   TodoContainer,
   StTodoItem,
-} from '../../styles/todo.styled';
-import Loading from '../global/Loading.jsx';
-import Potal from '../global/globalModal/Potal';
-import TodoModal from '../global/globalModal/TodoModal';
-import { NotHave, NotHaveEl } from '../global/globalModal/modal.styled';
+} from '../../../styles/todo.styled';
+import Potal from '../../global/globalModal/Potal';
+import TodoModal from '../../global/globalModal/TodoModal';
+import { NotHaveEl } from '../../global/globalModal/modal.styled';
 import TodoItem from './TodoItem';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import React, { useState, useRef, useEffect } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useQuery } from '@tanstack/react-query';
+import React, { useState, useRef } from 'react';
+import { useRecoilState } from 'recoil';
 
 export default function DashTodo({ todayFormat }) {
   const [todoModalOn, setTodoModalOn] = useState(false);

@@ -1,4 +1,4 @@
-import { StNaviBar } from './header/header.styled';
+import { StNaviBar } from '../../../styles/header.styled';
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 

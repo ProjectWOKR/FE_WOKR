@@ -1,9 +1,9 @@
 import { GetKR, GetUserInfo } from '../apis/apiGET';
-import DashOKR from '../components/dashboard/DashOKR';
-import DashTodo from '../components/dashboard/DashToDo';
 import DashBoardCalendar from '../components/dashboard/calendar/Calendar';
+import DashTodo from '../components/dashboard/dashTodo/DashToDo';
+import DashOKR from '../components/dashboard/okr/DashOKR';
 import Loading from '../components/global/Loading';
-import { krDataAtom, todayFormat, userDetail, userId } from '../store/store';
+import { krDataAtom, userDetail, userId } from '../store/store';
 import {
   OkrContainer,
   StWrap,

@@ -1,20 +1,20 @@
-import { GetOKR } from '../../apis/apiGET';
-import plus from '../../assets/plus.png';
-import { okrDataAtom, userDetail } from '../../store/store.js';
+import { GetOKR } from '../../../apis/apiGET';
+import plus from '../../../assets/plus.png';
+import { okrDataAtom, userDetail } from '../../../store/store.js';
 import {
   Container,
   Header,
   HeaderBox,
   OkrContainer,
-} from '../../styles/OKR.styled.js';
-import OkrModal from '../global/globalModal/OkrModal.jsx';
-import Potal from '../global/globalModal/Potal.jsx';
-import { NotHaveEl } from '../global/globalModal/modal.styled.js';
-import OkrItem from './okr/OkrItem';
+} from '../../../styles/OKR.styled.js';
+import OkrModal from '../../global/globalModal/OkrModal.jsx';
+import Potal from '../../global/globalModal/Potal.jsx';
+import { NotHaveEl } from '../../global/globalModal/modal.styled.js';
+import OkrItem from './OkrItem';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useState, useRef } from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 export default function DashOKR() {
   //모달 상태관리
