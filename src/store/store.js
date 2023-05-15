@@ -62,6 +62,11 @@ export const patchTodoInfo = atom({
   },
 });
 
+export const okrDataAtom = atom({
+  key: 'okrDataAtom',
+  default: null,
+});
+
 export const krDataAtom = atom({
   key: 'krData',
   default: null,

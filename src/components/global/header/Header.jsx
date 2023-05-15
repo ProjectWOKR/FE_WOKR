@@ -49,7 +49,8 @@ export default function Header() {
             }}>
             사용 가이드
           </Guide>
-          {token !== null ? (
+
+          {localStorage.getItem('accesstoken') ? (
             <>
               <img
                 src={logoutImg}

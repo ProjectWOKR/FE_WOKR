@@ -462,14 +462,14 @@ const DetailTodoItem = () => {
       ) : // kr을 하나 이상 선택하고, 완료를 선택했는데, 데이터가 없을 때
       isCompletion.length === 1 &&
         isCompletion.includes('done') &&
-        completion.length === 0 &&
+        completion?.length === 0 &&
         info.KeyResultIds.length !== 0 ? (
         <h2>해당 kr의 todo가 없음</h2>
       ) : // kr을 하나 이상 선택하고, 미완료를 선택했는데, 데이터가 없을 때
       isCompletion.length === 1 &&
         isCompletion.includes('notDone') &&
-        progress.length === 0 &&
-        expiration.length === 0 &&
+        progress?.length === 0 &&
+        expiration?.length === 0 &&
         info.KeyResultIds.length !== 0 ? (
         <h2>해당 kr의 todo가 없음</h2>
       ) : // 완료 필터가 둘 다 선택되지 않았을 때
@@ -490,9 +490,9 @@ const DetailTodoItem = () => {
           <h2 className='result'>검색결과 없음</h2>
           <h3 className='errorMsg'>KR을 선택하지 않았습니다.</h3>
         </>
-      ) : expiration.length === 0 &&
-        progress.length === 0 &&
-        completion.length === 0 ? (
+      ) : expiration?.length === 0 &&
+        progress?.length === 0 &&
+        completion?.length === 0 ? (
         <>
           <h2 className='noAny'>등록된 To-Do가 없습니다.</h2>
           <h3>To - Do를 생성해주세요.</h3>

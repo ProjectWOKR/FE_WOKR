@@ -1,33 +1,18 @@
-import { GetKR, GetOKR, GetUser, GetUserInfo } from '../apis/apiGET';
+import { GetKR, GetUserInfo } from '../apis/apiGET';
 import DashOKR from '../components/dashboard/DashOKR';
 import DashTodo from '../components/dashboard/DashToDo';
-import Tutorial from '../components/dashboard/Tutorial';
 import DashBoardCalendar from '../components/dashboard/calendar/Calendar';
 import Loading from '../components/global/Loading';
-import Navibar from '../components/global/Navibar';
-import Portal from '../components/global/globalModal/Potal';
-import {
-  getOKRData,
-  krDataAtom,
-  myChange,
-  myTodo,
-  teamMemberAtom,
-  todayFormat,
-  todoDateInfo,
-  userDetail,
-  userId,
-} from '../store/store';
+import { krDataAtom, todayFormat, userDetail, userId } from '../store/store';
 import {
   OkrContainer,
   StWrap,
   StWrapBackground,
 } from '../styles/mainpage.styled';
-import { StNavi } from '../styles/tododetail.styled';
 import { useQuery } from '@tanstack/react-query';
 import jwt_decode from 'jsonwebtoken/decode';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
 export default function Mainpage() {
@@ -84,7 +69,7 @@ export default function Mainpage() {
   });
 
   // 오늘 날짜 포맷 2023-01-01
-  const setTodayFormat = useSetRecoilState(todayFormat);
+  // const setTodayFormat = useSetRecoilState(todayFormat);
 
   const now = new Date();
   let today = '';
@@ -92,22 +77,22 @@ export default function Mainpage() {
     today = `${now.getFullYear()}-0${now.getMonth() + 1}-0${now.getDate()}`;
     localStorage.setItem('targetDate', today);
     localStorage.setItem('today', today);
-    setTodayFormat(today);
+    // setTodayFormat(today);
   } else if (now.getDate() < 10) {
     today = `${now.getFullYear()}-${now.getMonth() + 1}-0${now.getDate()}`;
     localStorage.setItem('targetDate', today);
     localStorage.setItem('today', today);
-    setTodayFormat(today);
+    // setTodayFormat(today);
   } else if (now.getMonth() + 1 < 10) {
     today = `${now.getFullYear()}-0${now.getMonth() + 1}-${now.getDate()}`;
     localStorage.setItem('targetDate', today);
     localStorage.setItem('today', today);
-    setTodayFormat(today);
+    // setTodayFormat(today);
   } else {
     today = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
     localStorage.setItem('targetDate', today);
     localStorage.setItem('today', today);
-    setTodayFormat(today);
+    // setTodayFormat(today);
   }
 
   if (isLoading) {
@@ -116,19 +101,19 @@ export default function Mainpage() {
   return (
     <StWrapBackground>
       <StWrap>
-        {userInfo?.firstLogin === true ? (
+        {/* {userInfo?.firstLogin === true ? (
           <Portal>
             <Tutorial />
           </Portal>
-        ) : (
-          <main>
-            <OkrContainer>
-              <DashOKR />
-              <DashTodo todayFormat={today} />
-            </OkrContainer>
-            <DashBoardCalendar />
-          </main>
-        )}
+        ) : ( */}
+        <main>
+          <OkrContainer>
+            <DashOKR />
+            <DashTodo todayFormat={today} />
+          </OkrContainer>
+          <DashBoardCalendar />
+        </main>
+        {/* )} */}
       </StWrap>
     </StWrapBackground>
   );

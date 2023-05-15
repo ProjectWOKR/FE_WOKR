@@ -1,6 +1,6 @@
 import { GetOKR } from '../../apis/apiGET';
 import plus from '../../assets/plus.png';
-import { userDetail } from '../../store/store.js';
+import { okrDataAtom, userDetail } from '../../store/store.js';
 import {
   Container,
   Header,
@@ -14,19 +14,22 @@ import OkrItem from './okr/OkrItem';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useState, useRef } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 export default function DashOKR() {
   //모달 상태관리
   const [okrModalOn, setOkrModalOn] = useState(false);
-  const [alertModalOn, setAlertModalOn] = useState(false);
+  console.log('okrModalOn :', okrModalOn);
+  // const [alertModalOn, setAlertModalOn] = useState(false);
 
   const info = useRecoilValue(userDetail);
   // const okrData = useRecoilValue(getOKRData);
 
-  const { getokrdata } = useQuery(['OKR'], GetOKR, {
+  const [okrData, setOkrData] = useRecoilState(okrDataAtom);
+
+  const { getOkrData } = useQuery(['OKR'], GetOKR, {
     onSuccess: data => {
-      // console.log(data);
+      setOkrData(data);
     },
   });
 
@@ -37,11 +40,13 @@ export default function DashOKR() {
 
   /** +버튼 누르면 OKR 생성하는 모달 띄우는 함수 */
   const createOKR = () => {
-    if (getokrdata?.length < 4) {
+    console.log('누림');
+    if (okrData?.length < 4) {
       setOkrModalOn(!okrModalOn);
-    } else {
-      setAlertModalOn(!alertModalOn);
     }
+    // else {
+    //   setAlertModalOn(!alertModalOn);
+    // }
   };
 
   // createModal
@@ -65,7 +70,7 @@ export default function DashOKR() {
   //   }
   // };
 
-  // const setOkrList = useSetRecoilState(getOKRData);
+  // const setOkrList = useSetRecoilState(getOkrData);
 
   return (
     <Container>
@@ -79,7 +84,7 @@ export default function DashOKR() {
       </HeaderBox>
 
       <OkrContainer>
-        {getokrdata?.length === 0 ? (
+        {okrData?.length === 0 ? (
           <NotHaveEl>
             <h2>설정된 OKR이 없습니다.</h2>
             <div className='btnFlex' onClick={createOKR}>
