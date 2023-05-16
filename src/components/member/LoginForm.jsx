@@ -43,7 +43,7 @@ const LoginForm = () => {
     const regemail =
       /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
     let regpw =
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,12}$/;
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,15}$/;
 
     if (!userInfo.email.trim()) {
       errors.email = '이메일을 입력해주세요.';
@@ -54,7 +54,7 @@ const LoginForm = () => {
       errors.password = '비밀번호를 입력해주세요.';
     } else if (!regpw.test(userInfo.password)) {
       errors.password =
-        '비밀번호를 8자리 이상 12자리 이하, 숫자/대문자 또는 소문자/특수문자를 포함하여 입력해주세요.';
+        '비밀번호를 8자리 이상 15자리 이하, 영문/숫자/특수문자를 포함하여 입력해주세요.';
     }
     return errors;
   };
@@ -78,7 +78,6 @@ const LoginForm = () => {
           action: '로그인',
         });
       }
-      localStorage.setItem('Id', userInfo.email);
       localStorage.setItem('accesstoken', response.accessToken);
       toast('로그인이 성공적으로 되었습니다.');
       navigate('/');

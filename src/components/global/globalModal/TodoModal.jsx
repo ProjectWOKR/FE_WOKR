@@ -163,13 +163,14 @@ const TodoModal = ({
 
   const { mutate: createTodo } = useMutation(CreateTodo, {
     onSuccess: response => {
+      console.log('생성됨');
       if (process.env.NODE_ENV !== 'development') {
         ReactGA.event({
           category: '버튼',
           action: 'TODO 생성',
         });
       }
-      queryClient.invalidateQueries(['TODO']);
+      queryClient.invalidateQueries(['ToDo']);
 
       // queryClient.invalidateQueries(['ALLTODO']);
       // queryClient.invalidateQueries(['PASTTODO']);

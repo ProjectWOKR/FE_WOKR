@@ -1,30 +1,29 @@
-import { MenuContainer, MenuItem } from '../../styles/menu.styled';
+import { StNaviBar } from '../../../styles/header.styled';
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-const Menu = () => {
+const Navibar = () => {
   const navigate = useNavigate();
   // url 정보를 이용해 active 주기
   const location = useLocation();
-
   return (
-    <MenuContainer>
-      <MenuItem
+    <StNaviBar>
+      <div
         className={location.pathname === '/' ? 'active' : ''}
         onClick={e => {
           navigate('/');
         }}>
         Dashboard
-      </MenuItem>
-      <MenuItem
+      </div>
+      <div
         className={location.pathname === '/todo' ? 'active' : ''}
         onClick={e => {
           navigate('/todo');
         }}>
         To - do
-      </MenuItem>
-    </MenuContainer>
+      </div>
+    </StNaviBar>
   );
 };
 
-export default Menu;
+export default Navibar;

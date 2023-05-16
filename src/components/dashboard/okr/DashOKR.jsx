@@ -1,27 +1,37 @@
-import plus from '../../assets/plus.png';
-import { getOKRData, userDetail } from '../../store/store.js';
+import { GetOKR } from '../../../apis/apiGET';
+import plus from '../../../assets/plus.png';
+import { okrDataAtom, userDetail } from '../../../store/store.js';
 import {
   Container,
   Header,
   HeaderBox,
   OkrContainer,
-} from '../../styles/OKR.styled.js';
-import AlertModal from '../global/globalModal/AlertModal.jsx';
-import OkrModal from '../global/globalModal/OkrModal.jsx';
-import Potal from '../global/globalModal/Potal.jsx';
-import { NotHaveEl } from '../global/globalModal/modal.styled.js';
-import OkrItem from './okr/OkrItem';
+} from '../../../styles/OKR.styled.js';
+import OkrModal from '../../global/globalModal/OkrModal.jsx';
+import Potal from '../../global/globalModal/Potal.jsx';
+import { NotHaveEl } from '../../global/globalModal/modal.styled.js';
+import OkrItem from './OkrItem';
+import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useState, useRef } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 export default function DashOKR() {
   //모달 상태관리
   const [okrModalOn, setOkrModalOn] = useState(false);
-  const [alertModalOn, setAlertModalOn] = useState(false);
+  console.log('okrModalOn :', okrModalOn);
+  // const [alertModalOn, setAlertModalOn] = useState(false);
 
   const info = useRecoilValue(userDetail);
-  const okrData = useRecoilValue(getOKRData);
+  // const okrData = useRecoilValue(getOKRData);
+
+  const [okrData, setOkrData] = useRecoilState(okrDataAtom);
+
+  const { getOkrData } = useQuery(['OKR'], GetOKR, {
+    onSuccess: data => {
+      setOkrData(data);
+    },
+  });
 
   /**모달 닫는 함수 */
   const onCloseModal = () => {
@@ -30,11 +40,13 @@ export default function DashOKR() {
 
   /** +버튼 누르면 OKR 생성하는 모달 띄우는 함수 */
   const createOKR = () => {
+    console.log('누림');
     if (okrData?.length < 4) {
       setOkrModalOn(!okrModalOn);
-    } else {
-      setAlertModalOn(!alertModalOn);
     }
+    // else {
+    //   setAlertModalOn(!alertModalOn);
+    // }
   };
 
   // createModal
@@ -46,17 +58,19 @@ export default function DashOKR() {
   };
 
   /**모달 닫는 함수 */
-  const onCloseAlertModal = () => {
-    setAlertModalOn(!alertModalOn);
-  };
+  // const onCloseAlertModal = () => {
+  //   setAlertModalOn(!alertModalOn);
+  // };
 
   //alertModal
-  const alertModalRef = useRef(null);
-  const alertModalOutSideClick = e => {
-    if (alertModalRef.current === e.target) {
-      setAlertModalOn(!alertModalOn);
-    }
-  };
+  // const alertModalRef = useRef(null);
+  // const alertModalOutSideClick = e => {
+  //   if (alertModalRef.current === e.target) {
+  //     setAlertModalOn(!alertModalOn);
+  //   }
+  // };
+
+  // const setOkrList = useSetRecoilState(getOkrData);
 
   return (
     <Container>
@@ -68,6 +82,7 @@ export default function DashOKR() {
           </div>
         </div>
       </HeaderBox>
+
       <OkrContainer>
         {okrData?.length === 0 ? (
           <NotHaveEl>
@@ -81,6 +96,7 @@ export default function DashOKR() {
           <OkrItem />
         )}
       </OkrContainer>
+
       <Potal>
         {okrModalOn && (
           <OkrModal
@@ -90,7 +106,8 @@ export default function DashOKR() {
           />
         )}
       </Potal>
-      <Potal>
+
+      {/* <Potal>
         {alertModalOn && (
           <AlertModal
             onCloseModal={onCloseAlertModal}
@@ -98,7 +115,7 @@ export default function DashOKR() {
             modalOutSideClick={alertModalOutSideClick}
           />
         )}
-      </Potal>
+      </Potal> */}
     </Container>
   );
 }

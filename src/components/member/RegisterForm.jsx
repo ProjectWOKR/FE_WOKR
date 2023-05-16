@@ -12,7 +12,6 @@ import {
   HelpBox,
 } from '../../styles/sign.styled';
 import Toast from '../global/Toast';
-import TeamPosiDropDown from '../global/globaldropdown/TeamPosiDropDown';
 import { OnChange } from '../global/onChange';
 import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
@@ -60,7 +59,7 @@ const RegisterForm = () => {
     const regemail =
       /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
     let regpw =
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,12}$/;
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,15}$/;
     const regname = userInfo.name.length >= 2 && userInfo.name.length < 6;
     if (!userInfo.email.trim()) {
       errors.email = '이메일을 입력해주세요.';
@@ -71,7 +70,7 @@ const RegisterForm = () => {
       errors.password = '비밀번호를 입력해주세요.';
     } else if (!regpw.test(userInfo.password)) {
       errors.password =
-        '비밀번호를 8자리 이상 12자리 이하, 숫자/대문자 또는 소문자/특수문자를 포함하여 입력해주세요.';
+        '비밀번호를 8자리 이상 15자리 이하, 영문/숫자/특수문자를 포함하여 입력해주세요.';
     }
     if (userInfo.password !== userInfo.confirmpassword) {
       errors.confirmpassword = '비밀번호가 일치하지 않습니다.';
@@ -218,17 +217,9 @@ const RegisterForm = () => {
       </InputBox>
       {errors.team && <div className='valid'>{errors.team}</div>}
 
-      <Label htmlFor='teamPosition'>직급</Label>
-      <InputBox>
-        <TeamPosiDropDown setUserInfo={setUserInfo} userInfo={userInfo} />
-      </InputBox>
-      {errors.teamposition && (
-        <div className='valid'>{errors.teamposition}</div>
-      )}
-
       <LoginBtn type='submit'>회원가입</LoginBtn>
       <HelpBox style={{ marginBottom: '100px' }}>
-        <span onClick={() => navigate('/')}>로그인 하러가기</span>
+        <span onClick={() => navigate('/signin')}>로그인 하러가기</span>
       </HelpBox>
       <Toast />
     </SignWrap>

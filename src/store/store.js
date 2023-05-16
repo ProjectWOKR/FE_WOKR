@@ -1,20 +1,20 @@
 import { atom, selector } from 'recoil';
 
+// 유저 정보
 export const userDetail = atom({
   key: 'userInfo',
-  default: null,
+  default: undefined,
 });
 
 // accesstoken에서 userId값 추출
 export const userId = atom({
   key: 'userId',
-  default: null,
+  default: localStorage.getItem('userId'),
 });
 
-//OKRData가져오기
-export const getOKRData = atom({
-  key: 'getOKRData',
-  default: null,
+export const todayFormat = atom({
+  key: 'todayFormat',
+  default: localStorage.getItem('targetDate'),
 });
 
 export const ToggleStartState = atom({ key: 'toggle', default: false });
@@ -62,6 +62,11 @@ export const patchTodoInfo = atom({
   },
 });
 
+export const okrDataAtom = atom({
+  key: 'okrDataAtom',
+  default: null,
+});
+
 export const krDataAtom = atom({
   key: 'krData',
   default: null,
@@ -72,90 +77,56 @@ export const change = atom({
   default: 0,
 });
 export const myChange = atom({
-  key: 'change',
+  key: 'myChange',
   default: 0,
 });
 
-// 수정 필요
-// export const okrCheckSelector = selector({
-//   key: 'okrCheck',
-//   // get: ({ get }) => {
-//   //   const datas = get(krDataAtom)?.map(el => {
-//   //     console.log(el);
-//   //     const data = { ...el };
-//   //     data.checked = true;
-//   //     return data;
-//   //   });
-//   //   return datas;
-//   // },
-//   get: ({ get }) => get(krDataAtom),
-//   // set: ({ set }, checkList) => set(krDataAtom, checkList),
-// });
-
-// TodoPage에서 모든 todo 가져오기
+// 나의 todoList(진행중, 완료) 가져오기
 export const todoListState = atom({
   key: 'allTodoListState',
   default: null,
 });
 
-// export const todoListSelector = selector({
-//   key: 'testAllTodoSelector',
-//   get: ({ get }) => {
-//     const todoList = get(todoListState);
-//     return todoList;
-//   },
-// });
-
-//ex) 2023-01-01
 export const clickDate = atom({
   key: 'DDay',
   default: null,
 });
 
+//
 export const todoDateInfo = atom({
   key: 'todoDateInfo',
   default: {
-    targetDate: sessionStorage.getItem('targetDate'),
-    teamMembers: [JSON.parse(sessionStorage.getItem('userId'))],
-    // teamMembers: [],
-    KeyResultIds: JSON.parse(sessionStorage.getItem('kr')),
-    // KeyResultIds: [],
+    targetDate: localStorage.getItem('targetDate'),
+    teamMembers: [JSON.parse(localStorage.getItem('userId'))],
+    KeyResultIds: JSON.parse(localStorage.getItem('kr')),
     orderby: 'endDate',
     orderbyrole: 'desc',
   },
 });
 
-export const myTodo = atom({
-  key: 'myTodo',
-  default: {
-    targetDate: sessionStorage.getItem('targetDate'),
-    // targetDate: '',
-    teamMembers: [JSON.parse(sessionStorage.getItem('userId'))],
-    // teamMembers: [],
-    // teamMembers: [],
-    KeyResultIds: JSON.parse(sessionStorage.getItem('kr')),
-    // KeyResultIds: [],
-    // KeyResultIds: [],
-    orderby: 'endDate',
-    orderbyrole: 'desc',
-  },
-});
-
+// todo navi(토,일)
 export const dateArray = atom({
   key: 'dateArray',
   default: {
     Sunday: '',
     Saturday: '',
-    teamMembers: [JSON.parse(sessionStorage.getItem('userId'))],
+    teamMembers: [Number(localStorage.getItem('userId'))],
   },
 });
 
+// 해당일자의 kr들
+export const allKr = atom({
+  key: 'allKr',
+  default: [],
+});
+
+// 필터링 완료, 미완료
 export const isDone = atom({
   key: 'isDone',
   default: ['done', 'notDone'],
 });
 
-//[{...},{...}]
+// 팀원들 정보
 export const teamMemberAtom = atom({
   key: 'teamMemberAtom',
   default: [],
@@ -187,18 +158,34 @@ export const filterTeamMemberSelector = selector({
   },
 });
 
+// get 여러개 test
+export const test = selector({
+  key: 'test',
+  get: ({ get }) => {
+    const id = get(userId);
+    const obj = {
+      // targetDate: sessionStorage.getItem('targetDate'),
+      teamMembers: [id],
+      // KeyResultIds: JSON.parse(sessionStorage.getItem('kr')),
+      orderby: 'endDate',
+      orderbyrole: 'desc',
+    };
+    return obj;
+  },
+});
+
 // --------------
-// export const expirationAtom = atom({
-//   key: 'expiration',
-//   default: null,
-// });
+export const expirationAtom = atom({
+  key: 'expirationAtom',
+  default: [],
+});
 
-// export const progressAtom = atom({
-//   key: 'expiration',
-//   default: null,
-// });
+export const progressAtom = atom({
+  key: 'progressAtom',
+  default: [],
+});
 
-// export const completionAtom = atom({
-//   key: 'expiration',
-//   default: null,
-// });
+export const completionAtom = atom({
+  key: 'completionAtom',
+  default: [],
+});

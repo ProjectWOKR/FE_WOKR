@@ -1,4 +1,4 @@
-import { GetTodo } from '../../../apis/apiGET';
+import { GetMyTodo, GetTodo } from '../../../apis/apiGET';
 import { patchTodoInfo } from '../../../store/store';
 import { Container } from '../../../styles/Calendar.styled';
 import Potal from '../../global/globalModal/Potal';
@@ -14,7 +14,6 @@ import { useSetRecoilState } from 'recoil';
 export default function Calendar() {
   const [todoModalOn, setTodoModalOn] = useState(false);
   const [createModalOn, setCreateModalOn] = useState(false);
-  const array = [];
   const [calendarData, setCalendarData] = useState();
 
   const [fromCalendar, setFromCalendar] = useState(true);
@@ -22,6 +21,8 @@ export default function Calendar() {
     start: '',
     startDateTime: '',
   });
+
+  const array = [];
 
   const setPatchTodoInfo = useSetRecoilState(patchTodoInfo);
 
@@ -56,13 +57,16 @@ export default function Calendar() {
     setTodoModalOn(!todoModalOn);
   };
 
-  const { data: getTodo } = useQuery(['TODO'], GetTodo, {
+  const { data: myTodo } = useQuery(['ToDo'], GetMyTodo, {
     onSuccess: response => {
-      response?.map(el => {
+      // console.log(response);
+      const completion = [...response.completionTodo];
+      const progress = [...response.progressTodo];
+      const newArray = [...completion, ...progress];
+
+      newArray?.map(el => {
         const endDate = new Date(el.endDate);
         endDate.setDate(endDate.getDate() + 1);
-        // console.log(endDate.toISOString());
-        // console.log('----');
         const newEndDate = endDate.toISOString().split('T')[0];
 
         let obj = {
@@ -87,7 +91,6 @@ export default function Calendar() {
         return setCalendarData(array);
       });
     },
-    onError: response => {},
   });
 
   const handleDateClick = clickDateInfo => {
@@ -96,13 +99,10 @@ export default function Calendar() {
       start: clickDateInfo.startStr,
       startDateTime: '00:00',
     });
-    // console.log('생성');
     setCreateModalOn(true);
   };
 
   const handleEventClick = clickDateInfo => {
-    // console.log(clickDateInfo.event.id);
-    // console.log('수정');
     patchTodo(
       clickDateInfo.event.id,
       clickDateInfo.event.extendedProps.todo,

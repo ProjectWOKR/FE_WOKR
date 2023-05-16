@@ -8,9 +8,10 @@ const Toast = () => {
     <>
       <StToastContainer
         position='top-center'
-        limit={1}
+        // position='bottom-left'
+        // limit={1}
         closeButton={false}
-        autoClose={700}
+        autoClose={800}
         hideProgressBar={false}
         closeOnClick
         pauseOnFocusLoss

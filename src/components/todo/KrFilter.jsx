@@ -36,10 +36,8 @@ const KrFilter = () => {
       setCheckInfo(addNone);
 
       setCheckedList(addNone);
-      // console.log(JSON.parse(sessionStorage.getItem('kr')));
-      // setForData(JSON.parse(sessionStorage.getItem('kr')));
 
-      setForData(JSON.parse(sessionStorage.getItem('kr')));
+      setForData(JSON.parse(localStorage.getItem('kr')));
     },
   });
 

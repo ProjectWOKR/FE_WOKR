@@ -46,7 +46,7 @@ const PriorityDropDown = ({ todoInfo, setTodoInfo }) => {
       <input
         type='text'
         value={finalValue}
-        readOnly={true}
+        // readOnly={true}
         onClick={() => setIsOpen(!isOpen)}
         placeholder='우선순위'
       />

@@ -1,5 +1,10 @@
 import { DeleteTodo } from '../../../apis/apiDELETE';
 import { PatchTodo } from '../../../apis/apiPATCH';
+import {
+  PostCompletionTodo,
+  PostExpirationTodo,
+  PostProgressTodo,
+} from '../../../apis/apiPOST';
 import calender from '../../../assets/calender.png';
 import close from '../../../assets/close.png';
 import memo from '../../../assets/memo.png';
@@ -7,8 +12,12 @@ import todo from '../../../assets/todoTODO.png';
 import trash from '../../../assets/trash.png';
 import {
   change,
+  completionAtom,
+  expirationAtom,
   myChange,
   patchTodoInfo,
+  progressAtom,
+  todoDateInfo,
   ToggleEndState,
   ToggleStartState,
 } from '../../../store/store';
@@ -28,7 +37,7 @@ import ReactGA from 'react-ga4';
 import DatePicker, { DateObject } from 'react-multi-date-picker';
 import TimePicker from 'react-multi-date-picker/plugins/time_picker';
 import { toast } from 'react-toastify';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 const TodoPathModal = ({ onCloseModal }) => {
   useEffect(() => {
@@ -158,9 +167,35 @@ const TodoPathModal = ({ onCloseModal }) => {
 
   const queryClient = useQueryClient();
 
-  const [count, setCount] = useRecoilState(change);
-  const [myCount, setMyCount] = useRecoilState(myChange);
-  console.log(count);
+  // const [count, setCount] = useRecoilState(change);
+  // const [myCount, setMyCount] = useRecoilState(myChange);
+  // console.log(count);
+
+  const setExpiration = useSetRecoilState(expirationAtom);
+  const setProgress = useSetRecoilState(progressAtom);
+  const setCompletion = useSetRecoilState(completionAtom);
+  // 기한 만료
+  const { mutate: expirationTodo } = useMutation(PostExpirationTodo, {
+    onSuccess: response => {
+      setExpiration(response);
+    },
+  });
+
+  // 진행중
+  const { mutate: progressTodo } = useMutation(PostProgressTodo, {
+    onSuccess: response => {
+      setProgress(response);
+    },
+  });
+
+  // 완료
+  const { mutate: completionTodo } = useMutation(PostCompletionTodo, {
+    onSuccess: response => {
+      setCompletion(response);
+    },
+  });
+
+  const [info, setInfo] = useRecoilState(todoDateInfo);
 
   const { mutate: patchTodo } = useMutation(PatchTodo, {
     onSuccess: response => {
@@ -228,8 +263,8 @@ const TodoPathModal = ({ onCloseModal }) => {
           action: 'TODO 삭제',
         });
       }
-      queryClient.invalidateQueries(['TODO']);
-      queryClient.invalidateQueries(['ALLTODO']);
+      queryClient.invalidateQueries(['ToDo']);
+      // queryClient.invalidateQueries(['ALLTODO']);
       onCloseModal();
       toast('해당 To Do가 삭제가 완료되었습니다.');
     },
