@@ -46,7 +46,7 @@ export default function DashTodo({ todayFormat }) {
   } = useQuery(['TODO'], GetTodo, {
     onSuccess: response => {
       setTodoList(response);
-      // console.log(response);
+      console.log(response);
     },
     onError: response => {},
   });

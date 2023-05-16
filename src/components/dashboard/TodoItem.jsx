@@ -34,23 +34,23 @@ const TodoItem = ({ todayFormat }) => {
   //   orderby: 'endDate',
   //   orderbyrole: 'desc',
   // });
-  console.log('myTodoInfo :', info);
+  // console.log('myTodoInfo :', info);
   const [progress, setProgress] = useState([]);
   const [completion, setCompletion] = useState([]);
 
-  console.log('진행 중 :', progress);
-  console.log('완료 :', completion);
+  // console.log('진행 중 :', progress);
+  // console.log('완료 :', completion);
 
   const { mutate: progressTodo, isLoading } = useMutation(PostProgressTodo, {
     onSuccess: data => {
-      console.log('진행중 불러오는 중');
+      // console.log('진행중 불러오는 중');
       setProgress(data);
     },
   });
 
   const { mutate: completionTodo } = useMutation(PostCompletionTodo, {
     onSuccess: data => {
-      console.log('완료 불러오는중');
+      // console.log('완료 불러오는중');
       setCompletion(data);
     },
   });
@@ -67,11 +67,11 @@ const TodoItem = ({ todayFormat }) => {
       info.teamMembers !== null &&
       info.KeyResultIds.length !== 0
     ) {
-      console.log('통신한다');
+      // console.log('통신한다');
       progressTodo({ info });
       completionTodo({ info });
     } else {
-      console.log('info바꿔야해요');
+      // console.log('info바꿔야해요');
       setInfo({ ...info, targetDate: todayFormat });
     }
   }, [count]);

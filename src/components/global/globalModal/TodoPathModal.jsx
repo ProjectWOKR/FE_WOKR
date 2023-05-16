@@ -172,8 +172,8 @@ const TodoPathModal = ({ onCloseModal }) => {
       }
       queryClient.invalidateQueries(['TODO']);
       queryClient.setQueryData(['patchTodo'], title);
-      setCount(count + 1);
-      setMyCount(myCount + 1);
+      // setCount(count + 1);
+      // setMyCount(myCount + 1);
       // console.log(queryClient.getQueriesData(['patchTodo']));
       // console.log('---------------', queryClient.getQueryData(['TODO']));
       // queryClient.invalidateQueries(['ALLTODO']);
