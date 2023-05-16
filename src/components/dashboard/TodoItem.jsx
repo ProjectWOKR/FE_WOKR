@@ -87,7 +87,6 @@ const TodoItem = ({ todayFormat }) => {
       }
       queryClient.invalidateQueries(['TODO']);
       queryClient.invalidateQueries(['completionTodo']);
-      setCount(count - 1);
     },
     onError: response => {},
   });
@@ -97,7 +96,7 @@ const TodoItem = ({ todayFormat }) => {
       // console.log('누름');
       const id = data.toDoId;
       patchCheckmutate({ id });
-      // progressTodo({ info });
+      progressTodo({ info });
       // completionTodo({ info });
       // toast('할 일을 완료했습니다.');
     };
