@@ -1,4 +1,7 @@
 # 📅 WOKR
+Disquiet : https://disquiet.io/product/%EC%9B%8C%EC%BC%80%EC%9D%B4%EC%95%8C </br>
+randing : https://wokr.softr.app/ </br>
+guide : https://wokrguide.notion.site/WOKR-efb64b5da5e842a3a10d7844023e60de </br>
 SA : [https://docs.google.com/spreadsheets/d/1USRapaeN9yf-7opsdcRqZCSdSzRHu4KRvUTAucPB5R8/edit?usp=sharing](https://docs.google.com/spreadsheets/d/1H-CD4Buk0E0MNhbW9y8sitnzES89lddnydBOOHobKp8/edit#gid=716942419) </br>
 MVP Wireframe : https://1drv.ms/p/s!AonMNKpvAJ7vhMcLD-JLZVGSie35vg?e=B34y1v </br>
 API : https://moons-organization-3.gitbook.io/wokr-api/mvp-1/user/undefined </br>
@@ -62,9 +65,10 @@ Work + OKR의 줄임말로, OKR을 관리하고 싶지만 적당한 툴이 없�
 | 조병민 | FE   |https://github.com/merrybmc      |
 | 문범수 | BE   |https://github.com/guluming      |
 | 박민정 | BE   |https://github.com/minjpark3      |
-| 김재희 | PM   |      |
-| 전유리 | PM   |      |
+| 김재희 | PM   |https://disquiet.io/@da48da      |
+| 전유리 | PM   |https://disquiet.io/@yooree      |
 | 이서영 | PM   |      |
-| 정혜민 | PM   |      |
-| 심성철 | PM   |      |
+| 정혜민 | PM   |https://disquiet.io/@muni      |
+| 심성철 | PM   |https://disquiet.io/@heycharles328      |
 | 한윤진 | Designer   |      |
+
